@@ -1,0 +1,19 @@
+.dashboard-container {background-color: rgba(108,139,87,0.10);border-bottom: 1px solid rgba(0,0,0,0.08);}
+
+.dashboard-message-notification ul.d-flex li {list-style-type: none;width: 200px;display: flex;flex-flow: column;align-items: center;height: 200px;
+justify-content: center;border-radius: 15px;overflow: hidden;color: var(--white);row-gap: 20px;}
+
+.dashboard-message-notification ul.d-flex li:first-child {background-color: #4B5945;background-blend-mode: multiply;background-image: url(../src/images/dashTexture01.svg);background-position: left 165px center;background-size: 100px;background-repeat: no-repeat;}
+
+.dashboard-message-notification ul.d-flex li:nth-child(2) {background-color: #66785F;
+background-blend-mode: multiply;background-image: url(../src/images/dashTexture02.svg);background-position: top -65px center;background-repeat: no-repeat;
+background-size: 170px;}
+
+.dashboard-message-notification ul.d-flex li:nth-child(3) {background-color: #91AC8F;background-blend-mode: multiply;background-image: url(../src/images/dashTexture03.svg);background-position: left -75px bottom -35px;background-size: 190px;background-repeat: no-repeat;}
+
+.dashboard-message-notification ul.d-flex li:last-child {background-color: #B2C9AD;background-blend-mode: multiply;background-image: url(../src/images/dashTexture04.svg);background-size: 100px;background-position: left -50px center;background-repeat: no-repeat;}
+
+.dashboard-message-notification ul.d-flex li h3 {font-size: 2.5rem;font-weight: 400;}
+
+.dashboard-message-notification ul.d-flex li strong {text-transform: capitalize;font-weight: 500;font-size: 1rem;}
+

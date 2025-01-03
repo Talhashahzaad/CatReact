@@ -1,0 +1,48 @@
+span.contactMessage {
+    background-color: var(--green25);
+    border-radius: 12px;
+    border-top: 1px solid var(--jetGreen);
+    border-left: 1px solid var(--jetGreen);
+    border-right: 1px solid var(--jetGreen);
+    border-bottom: 6px solid var(--jetGreen);
+}
+.contactForm .form-group input[type="text"],
+.contactForm .form-group input[type="email"],
+.contactForm .form-group input[type="tel"] {
+    height: 60px;
+    border-radius: 0;
+    border-bottom: 4px solid var(--green25);
+    border-top: 1px solid var(--green25);
+    border-left: 1px solid var(--green25);
+    border-right: 1px solid var(--green25);
+}
+
+.contactForm .form-group input[type="text"]:hover, .contactForm .form-group input[type="text"]:focus,
+.contactForm .form-group input[type="email"]:hover, .contactForm .form-group input[type="email"]:focus,
+.contactForm .form-group input[type="tel"]:hover, .contactForm .form-group input[type="tel"]:focus {
+    box-shadow: none;
+}
+
+.contactForm .form-group textarea,
+.contactForm .form-group textarea:hover,
+.contactForm .form-group textarea:focus {
+    box-shadow: none;
+}
+
+.contactForm .form-group textarea {
+    height: 120px;
+    resize: none;
+    border-radius: 0;
+    border-bottom: 4px solid var(--green25);
+    border-left: 1px solid var(--green25);
+    border-top: 1px solid var(--green25);
+    border-right: 1px solid var(--green25);
+}
+
+.contactForm .form-group input[type="submit"]{
+    background-color: var(--jetGreen);
+    color: var(--white);
+    border-radius: 0;
+    border: none;
+    height: 60px;
+}
