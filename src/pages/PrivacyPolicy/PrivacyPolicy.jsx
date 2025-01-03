@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../../App.css";
 
 const PrivacyPolicy = () => {
-    const contactEmail = "test@test.com";
+    const contactEmail = "support@checkatreatment.com";
     return (
         <>
             <div className="feature-banner w-100 h-auto d-block position-relative">

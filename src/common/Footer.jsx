@@ -32,10 +32,9 @@ function Footer(){
                                             <Col xxl={4} xl={4} lg={4} md={6} sm={12} xs={12}>
                                                 <h3>For Business</h3>
                                                 <ul className="ps-0 mb-0">
-                                                    <li><Link to="/">For Partners</Link></li>
-                                                    <li><Link to="/">Pricing</Link></li>
-                                                    <li><Link to="/">Support</Link></li>
-                                                    <li><Link to="/">Status</Link></li>
+                                                    <li><Link to="/for-business">For Business</Link></li>
+                                                    <li><Link to="/faq">FAQ</Link></li>
+                                                    <li><Link to="/contact-us">contact us</Link></li>
                                                 </ul>
                                             </Col>
                                         </Row>
@@ -48,8 +47,6 @@ function Footer(){
                                                 <ul className="ps-0 mb-0">
                                                     <li><Link to="/privacy-policy">Privacy Policy</Link></li>
                                                     <li><Link to="/terms-and-conditions">Terms &amp; Conditions</Link></li>
-                                                    <li><Link to="/">shipping policy</Link></li>
-                                                    <li><Link to="/">return policy</Link></li>
                                                 </ul>
                                             </Col>
 

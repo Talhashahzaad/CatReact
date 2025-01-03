@@ -97,5 +97,6 @@ span.submitYourData {width: 100%;text-align: center;}
 .inner-page-content ol li h3 {font-size: 20px;}
 .inner-page-content ol ol {padding-inline-start: 10px;}
 .feature-banner {background-size: 250px;background-position: center top -75px;}
+.featureProducts {background-image: unset;}
 /* inner pages end */
 }
