@@ -23,7 +23,7 @@ function Footer(){
                                                 <h3>About CaT</h3>
                                                 <ul className="ps-0 mb-0">
                                                     <li><Link to="/about-us">about us</Link></li>
-                                                    <li><Link to="/">Tuesdays Treatments</Link></li>
+                                                    <li><Link to="/">Beyond the Treatment</Link></li>
                                                     <li><Link to="/">Blog</Link></li>
                                                     <li><Link to="/">Sitemap</Link></li>
                                                 </ul>
@@ -33,7 +33,7 @@ function Footer(){
                                                 <h3>For Business</h3>
                                                 <ul className="ps-0 mb-0">
                                                     <li><Link to="/for-business">For Business</Link></li>
-                                                    <li><Link to="/faq">FAQ</Link></li>
+                                                    <li><Link to="/frequently-asked-question">FAQ</Link></li>
                                                     <li><Link to="/contact-us">contact us</Link></li>
                                                 </ul>
                                             </Col>

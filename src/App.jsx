@@ -1,7 +1,7 @@
 import './App.css'
 import Home from './pages/Home'
 import Footer from './common/Footer'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import Login from './pages/LoginPage/Login';
 import Register from './pages/RegisterPage/Register';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
@@ -12,9 +12,8 @@ import TermsConditions from './pages/TermsConditions/TermsConditions';
 import ContactUs from './pages/ContactUs/ContactUs';
 import "./Responsive.css";
 import ForBusiness from './pages/ForBusiness/ForBusiness';
-//import CustomerSupport from './pages/CustomerSupport/CustomerSupport';
 import AboutUs from './pages/AboutUs/AboutUs';
-
+import FrequentlyAskedQuestion from './pages/FrequentlyAskedQuestion/FrequentlyAskedQuestion';
 
 
 
@@ -34,7 +33,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/for-business" element={<ForBusiness/>} />
           <Route path="/about-us" element={<AboutUs/>} />
-          {/* <Route path="/customer-support" element={<CustomerSupport/>} /> */}
+          <Route path="/frequently-asked-question" element={<FrequentlyAskedQuestion/>} />
         </Routes>
       </main>
       <Footer/>

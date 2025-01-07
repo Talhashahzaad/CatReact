@@ -25,8 +25,7 @@ function Home(){
             <Container>
                 <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <h1 className="text-center display-3 lh-base text-capitalize pb-5">Your ultimate destination for all things beauty, hair and wellness.
-                        </h1>
+                        <h1 className="text-center display-1 lh-base text-capitalize pb-5">Your One Stop Solution <br/>For All Things, Treatment</h1>
                     </Col>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <form>
@@ -77,8 +76,92 @@ function Home(){
                 </Row>
             </Container>
 
-            <div className="bannerCaptionAnimate position-absolute w-100 h-auto d-flex align-items-center justify-content-center bottom-0 pt-2 pb-4 overflow-hidden">
-            <h2 className="display-1 marquee-text"><img src={catDoubleCircles} alt="bannerCaptionVector" /> Your one stop solution for all things beauty, hair and wellness. <img src={catDoubleCircles} alt="bannerCaptionVector" /></h2>
+            <div className="bannerCaptionAnimate position-absolute w-100 h-auto d-flex align-items-center justify-content-center bottom-0 pt-2">
+            <h2 className="display-1 marquee-text">
+                <ul className="d-flex ps-0 mb-0">
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Hair</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Barbers</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Nails</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>L&#39;s & B&#39;s</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Injectables</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>SPMU</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Skincare</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Hair removal</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Teeth</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Training</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Spa &amp; Sauna</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Retreats</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Healthcare</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Children</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Animals</span>
+                    </li>
+
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>MUA (Makeup Artist)</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Surgery</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Keep fit</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Therapy</span>
+                    </li>
+                    <li>
+                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <span>Nutrition</span>
+                    </li>
+                </ul>
+            </h2>
             </div>
         </div>
 

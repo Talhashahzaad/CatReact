@@ -26,6 +26,7 @@ a,a:hover,a:focus{text-decoration: none; outline: none; transition: all linear .
 .buttonStyle {padding-block: 16px; padding-inline: 24px; display: inline-block; border-radius: 100px;}
 .icon {font-size: 20px;}
 a.anchorGreen {color: var(--anchorGreen); text-decoration: none;}
+a.anchorBlack {color: var(--black);text-decoration: none;font-weight: 500;}
 a.anchorGreen:hover, a.anchorGreen:focus {color: var(--black); text-decoration: underline;}
 
 /* header start */
@@ -55,11 +56,15 @@ border-radius: 8px;border-top: 1px solid var(--jetGreen);border-left: 1px solid 
 
 /* site banner start */
 .siteBanner {height: 100vh;background-color: rgba(108,139,87,0.10);background-blend-mode: multiply;background-image: url('src/images/bannerCaptionVector.svg');background-position: center center;background-repeat: no-repeat;background-size: 40%;}
-.bannerCaptionAnimate h2>img {max-width: 100px;height: 100px;}
+.bannerCaptionAnimate h2>img {max-width: 150px;height: 150px;}
 .bannerCaptionAnimate h2::first-letter {text-transform: uppercase;}
-.bannerCaptionAnimate h2 {word-break: break-all;white-space: nowrap;}
-.bannerCaptionAnimate {overflow-x: hidden;}
-.marquee-text {white-space: nowrap;animation: marquee 20s linear infinite;}
+.bannerCaptionAnimate h2 {word-break: break-all;white-space: nowrap;font-size: 70px;line-height: 50px;}
+.bannerCaptionAnimate {overflow-x: hidden; padding-bottom: 70px;}
+.marquee-text {white-space: nowrap;animation: marquee 50s linear infinite;}
+h2.display-1.marquee-text ul li {list-style-type: none;margin-inline: 20px;line-height: 100px;font-weight: 700;font-family: var(--defaultHeading);
+display: flex;justify-content: center;align-items: flex-start; padding-block-start: 20px;}
+h2.display-1.marquee-text ul li span { font-weight: 500; font-family: var(--defaultHeading);}
+h2.display-1.marquee-text ul li img {padding-inline-end: 50px; min-width: 110px;}
 
 @keyframes marquee {
   0% {

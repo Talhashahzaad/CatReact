@@ -9,8 +9,9 @@ import wishlist from "../../images/wishlist.svg";
 import profile from "../../images/profile.svg";
 import order from "../../images/order.svg";
 import myPackage from "../../images/package.svg";
-import message from "../../images/message.svg";
+//import message from "../../images/message.svg";
 import profileLogo from "../../images/logo.svg";
+import profileFace from "../../images/profile-picture.jpeg";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -67,7 +68,11 @@ const Dashboard = () => {
                             <Row>
                                 <Col xxl={3} xl={3} lg={4} md={4} sm={12} className="d-block position-relative">
                                     <div className="dashboard-sidebar">
-                                        <h2>Sidebar</h2>
+                                        <div className="dashboard-sidebar-profile-picture w-100 h-auto position-relative">
+                                            <img src={profileFace} alt="User Profile Picture" title="User Profile Picture" />
+                                            <h4 className="dashboard-sidebar-profile-picture-name">Beatrice</h4>
+                                            <Link to="/" className="dashboard-user-logout-link">logout</Link>
+                                        </div>
                                         
                                         <div className="dashboard-sidebar-tabs">
                                             <ul className="d-flex flex-column w-100 h-auto position-relative ps-0 mb-0">
@@ -181,19 +186,6 @@ const Dashboard = () => {
                                                     className="dashboard-sidebar-tabs-link"
                                                         onClick={(e) => {
                                                             e.preventDefault();
-                                                            scrollToSection('message-content-dashboard');
-                                                        }}
-                                                    >
-                                                    <img src={message} alt="dashboard" className="dashboard-sidebar-tabs-icon" />
-                                                    message
-                                                </Link>
-                                                </li>
-                                                
-                                                <li>
-                                                    <Link to="#"
-                                                    className="dashboard-sidebar-tabs-link"
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
                                                             scrollToSection('logo-content-dashboard');
                                                         }}
                                                     >
@@ -242,21 +234,48 @@ const Dashboard = () => {
                                                     <tr><th>Package name</th><th>Free</th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td>Price</td><td>&pound; 50</td></tr>
-                                                    <tr><td>Purchase Date</td><td>15 October, 2021</td></tr>
-                                                    <tr><td>Expired Date</td><td>14 November, 2021</td></tr>
-                                                    <tr><td>Package name</td><td>free</td></tr>
-                                                    <tr><td>Maximum Listing</td><td>10</td></tr>
-                                                    <tr><td>Maximum Aminities</td><td>5</td></tr>
-                                                    <tr><td>Maximum Photo</td><td>5</td></tr>
-                                                    <tr><td>Maximum Video</td><td>10</td></tr>
-                                                    <tr><td>Featured Listing Available</td><td>no</td></tr>
+                                                    <tr>
+<td>Price</td>
+<td>&pound; 50</td></tr>
+                                                    <tr>
+<td>Purchase Date</td>
+<td>15 October, 2021</td></tr>
+                                                    <tr>
+<td>Expired Date</td>
+<td>14 November, 2021</td></tr>
+                                                    <tr>
+<td>Package name</td>
+<td>free</td></tr>
+                                                    <tr>
+<td>Maximum Listing</td>
+<td>10</td></tr>
+                                                    <tr>
+<td>Maximum Aminities</td>
+<td>5</td></tr>
+                                                    <tr>
+<td>Maximum Photo</td>
+<td>5</td></tr>
+                                                    <tr>
+<td>Maximum Video</td>
+<td>10</td></tr>
+                                                    <tr>
+<td>Featured Listing Available</td>
+<td>no</td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
 
                                         <div id="my-listing-content-dashboard">
-                                            <h4>My Listing 2</h4>
+                                            <h4>My Listing</h4>
+                                            <Row>
+                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12} className="position-relative">
+                                                    demo 1
+                                                </Col>
+
+                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12} className="position-relative">
+                                                    demo 2
+                                                </Col>
+                                            </Row>
                                         </div>
 
                                         <div id="create-listing-content-dashboard">
@@ -280,11 +299,87 @@ const Dashboard = () => {
                                         </div>
 
                                         <div id="packages-content-dashboard">
-                                            <h4>Packages</h4>
-                                        </div>
+                                            <table className="table table-bordered table-striped table-hover table-responsive">
+                                                <thead>
+                                                    <tr className="text-center">
+                                                        <th className="text-start">Feature</th><th>Freemium <br/> (Free)</th>
+                                                        <th>CaT Premium <br/>(£ 15/month)</th>
+                                                        <th>CaT Elite <br/>(£ 35/month)</th>
+                                                    </tr>
+                                                </thead>
+                                                
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Business profile listing</td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td>CaT Pro social media</td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
 
-                                        <div id="message-content-dashboard">
-                                            <h4>Message</h4>
+                                                    <tr>
+                                                        <td>Check a Treatment Marketplace access</td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓ <small className="d-block fs-6 text-dark">(10% commission)</small></span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓ <small className="d-block fs-6 text-dark">(4% commission)</small></span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓ <small className="d-block fs-6 text-dark">(0% commission)</small></span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Calendar integration</td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Social media autouploads <sup>TM</sup></td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Priority listing in search results</td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Maximized business profile</td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Unlimited personal business Live Chat for client enquiries</td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Multiple locations</td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Opportunity to Feature on Beyond the Treatment<sup>TM</sup></td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-1 text-danger">×</span></td>
+                                                        <td><span className="text-center d-block fs-4 text-success">✓</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
 
                                         <div id="logo-content-dashboard">
