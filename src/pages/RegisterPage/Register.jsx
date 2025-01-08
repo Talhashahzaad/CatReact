@@ -1,22 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
-import {Col, Row} from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import eyeOpen from "../RegisterPage/eyeOpen.svg";
 import eyeClose from "../RegisterPage/eyeClose.svg";
 import signUpGoogle from "../../images/signUpGoogle.svg";
 import signUpFacebook from "../../images/signUpFacebook.svg";
 
-
-
-
-
-const Register =()=> {
+const Register = () => {
+    const navigate = useNavigate(); // Initialize useNavigate
     const [password, setPassword] = React.useState('');
     const [passwordStrength, setPasswordStrength] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [error, setError] = React.useState('');
 
     const checkPasswordStrength = (password) => {
         if (password.length === 0) {
@@ -37,39 +37,78 @@ const Register =()=> {
         setPasswordsMatch(password === confirmPwd);
     };
 
-    return(
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(''); // Reset error message
+
+        // Check for empty fields
+        if (!name || !email || !password || !confirmPassword) {
+            setError('All fields are required.');
+            return;
+        }
+
+        // Check if passwords match
+        if (!passwordsMatch) {
+            setError('Passwords do not match.');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8000/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, password }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                setError(errorData.message || 'Registration failed.'); // Display error message from server
+            } else {
+                alert('Registration successful!');
+                navigate('/login'); // Redirect to the login page
+            }
+        } catch (error) {
+            setError('An error occurred. Please try again later.');
+        }
+    };
+
+    return (
         <>
             <div className="registerPage">
                 <h1 className="pb-2">create your account!</h1>
                 <small>sign up to continue</small>
-                <hr/>
-                <form>
+                <hr />
+                {error && <div className="alert alert-danger">{error}</div>}
+                <form onSubmit={handleSubmit}>
                     <Row>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
-
                             <label className="w-100 d-block h-auto lh-lg text-capitalize">name</label>
-                            <input type="text" name="signupNameField" placeholder="Enter your name" className="form-control" required="required" />
+                            <input type="text" name="signupNameField" placeholder="Enter your name" className="form-control"
+                                value={name} onChange={(e) => setName(e.target.value)} required />
                         </Col>
 
                         <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
                             <label className="w-100 d-block h-auto lh-lg text-capitalize">email</label>
-                            <input type="email" name="signupEmailAddress" placeholder="Enter your email address" className="form-control" required="required" />
+                            <input type="email" name="signupEmailAddress" placeholder="Enter your email address" className="form-control"
+                                value={email} onChange={(e) => setEmail(e.target.value)} required />
                         </Col>
 
                         <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
                             <label className="w-100 d-block h-auto lh-lg text-capitalize">password</label>
                             <div className="position-relative">
-                                <input 
+                                <input
                                     type={showPassword ? "text" : "password"}
-                                    name="signupPassword1" 
-                                    placeholder="**********"  
-                                    className="form-control" 
-                                    required="required"
+                                    name="signupPassword1"
+                                    placeholder="**********"
+                                    className="form-control"
                                     value={password}
                                     onChange={(e) => {
                                         setPassword(e.target.value);
                                         checkPasswordStrength(e.target.value);
                                     }}
+                                    required
                                 />
                                 <button
                                     type="button"
@@ -89,14 +128,14 @@ const Register =()=> {
 
                         <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
                             <label className="w-100 d-block h-auto lh-lg text-capitalize">confirm password</label>
-                            <input 
-                                type="password" 
-                                name="signupPassword2" 
-                                placeholder="**********"  
-                                className="form-control" 
-                                required="required"
+                            <input
+                                type="password"
+                                name="signupPassword2"
+                                placeholder="**********"
+                                className="form-control"
                                 value={confirmPassword}
                                 onChange={(e) => checkPasswordMatch(e.target.value)}
+                                required
                             />
                             {confirmPassword && (
                                 <small className={`d-block mt-1 ${passwordsMatch ? 'text-success' : 'text-danger'}`}>
@@ -128,9 +167,6 @@ const Register =()=> {
             </div>
         </>
     )
-
-    
 }
-
 
 export default Register;

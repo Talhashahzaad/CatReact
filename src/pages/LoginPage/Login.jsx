@@ -1,34 +1,83 @@
+
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Added useNavigate for redirection
 import "./Login.css";
 import eyeOpen from "../LoginPage/eyeOpen.svg";
 import eyeClose from "../LoginPage/eyeClose.svg";
 import signInWithGoogle from "../../images/signInWithGoogle.svg";
 import signInWithFacebook from "../../images/signInWithFacebook.svg";
 
-
-function Login(){
+function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
+    const [email, setEmail] = React.useState(""); // State for email
+    const [password, setPassword] = React.useState(""); // State for password
+    const [errorMessage, setErrorMessage] = React.useState(""); // State for error message
+    const navigate = useNavigate(); // Initialize useNavigate
 
-    return(
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        setErrorMessage(""); // Clear previous error messages
+        try {
+            const response = await fetch("http://localhost:8000/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }), // Send email and password
+            });
+
+            if (response.ok) {
+                // If login is successful, redirect to dashboard
+                navigate("/dashboard");
+            } else {
+                const errorData = await response.json(); // Parse the error response
+                if (errorData.message) {
+                    setErrorMessage(errorData.message); // Set the error message from the response
+                } else {
+                    setErrorMessage("Login failed. Please try again."); // Generic error message
+                }
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+            setErrorMessage("An error occurred. Please try again."); // Handle network errors
+        }
+    };
+
+    return (
         <>
             <div className="loginPage">
                 <h1 className="pb-2">hi, there!</h1>
                 <small>sign in to continue</small>
-                <hr/>
-                <form>
+                <hr />
+                {errorMessage && <div className="alert alert-danger">{errorMessage}</div>} {/* Display error message */}
+                <form onSubmit={handleSubmit}> {/* Updated to handle form submission */}
                     <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label className="w-100 d-block h-auto lh-lg text-capitalize">email address</label>
-                        <input type="email" name="loginEmailAddress" placeholder="Your Email Address" className="form-control" required="required" />
+                        <input
+                            type="email"
+                            name="loginEmailAddress"
+                            placeholder="Your Email Address"
+                            className="form-control"
+                            required="required"
+                            value={email} // Bind email state
+                            onChange={(e) => setEmail(e.target.value)} // Update email state
+                        />
                     </div>
 
                     <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label className="w-100 d-block h-auto lh-lg text-capitalize">password</label>
                         <div className="position-relative">
-                            <input type={showPassword ? "text" : "password"} name="loginPassword" placeholder="**********"  className="form-control" 
-                                required="required" />
-                            <span 
-                                className="position-absolute top-50 end-0 translate-middle-y pe-3" 
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                name="loginPassword"
+                                placeholder="**********"
+                                className="form-control"
+                                required="required"
+                                value={password} // Bind password state
+                                onChange={(e) => setPassword(e.target.value)} // Update password state
+                            />
+                            <span
+                                className="position-absolute top-50 end-0 translate-middle-y pe-3"
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => setShowPassword(!showPassword)}
                             >
