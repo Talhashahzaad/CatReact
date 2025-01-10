@@ -24,6 +24,7 @@ p,ul,ol,li,span,aside,div,samp,a, strong {font-family: var(--defaultFont); line-
 a,a:hover,a:focus{text-decoration: none; outline: none; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}
 
 .buttonStyle {padding-block: 16px; padding-inline: 24px; display: inline-block; border-radius: 100px;}
+.headingFont {font-family: "Playfair Display", serif;}
 .icon {font-size: 20px;}
 a.anchorGreen {color: var(--anchorGreen); text-decoration: none;}
 a.anchorBlack {color: var(--black);text-decoration: none;font-weight: 500;}

@@ -22,7 +22,7 @@ function Footer(){
                                             <Col xxl={4} xl={4} lg={4} md={6} sm={12} xs={12}>
                                                 <h3>About CaT</h3>
                                                 <ul className="ps-0 mb-0">
-                                                    <li><Link to="/about-us">about us</Link></li>
+                                                    <li><Link to="/about-us" onClick={() => window.scrollTo(0, 0)}>about us</Link></li>
                                                     <li><Link to="/">Beyond the Treatment</Link></li>
                                                     <li><Link to="/">Blog</Link></li>
                                                     <li><Link to="/">Sitemap</Link></li>
@@ -32,9 +32,9 @@ function Footer(){
                                             <Col xxl={4} xl={4} lg={4} md={6} sm={12} xs={12}>
                                                 <h3>For Business</h3>
                                                 <ul className="ps-0 mb-0">
-                                                    <li><Link to="/for-business">For Business</Link></li>
-                                                    <li><Link to="/frequently-asked-question">FAQ</Link></li>
-                                                    <li><Link to="/contact-us">contact us</Link></li>
+                                                    <li><Link to="/for-business" onClick={() => window.scrollTo(0, 0)}>For Business</Link></li>
+                                                    <li><Link to="/frequently-asked-question" onClick={() => window.scrollTo(0, 0)}>FAQ</Link></li>
+                                                    <li><Link to="/contact-us" onClick={() => window.scrollTo(0, 0)}>contact us</Link></li>
                                                 </ul>
                                             </Col>
                                         </Row>
@@ -45,8 +45,8 @@ function Footer(){
                                             <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
                                                 <h3>Legal</h3>
                                                 <ul className="ps-0 mb-0">
-                                                    <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-                                                    <li><Link to="/terms-and-conditions">Terms &amp; Conditions</Link></li>
+                                                    <li><Link to="/privacy-policy" onClick={() => window.scrollTo(0, 0)}>Privacy Policy</Link></li>
+                                                    <li><Link to="/terms-and-conditions" onClick={() => window.scrollTo(0, 0)}>Terms &amp; Conditions</Link></li>
                                                 </ul>
                                             </Col>
 

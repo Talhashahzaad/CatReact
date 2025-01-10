@@ -17,9 +17,12 @@ import FrequentlyAskedQuestion from './pages/FrequentlyAskedQuestion/FrequentlyA
 
 
 
+
+
 function App() {
   return (
     <>
+      
       <Header/>
       <main>
         <Routes>
