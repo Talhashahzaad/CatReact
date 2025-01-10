@@ -1,5 +1,6 @@
 import React from "react";
-import {Col, Row, Tab, Container} from 'react-bootstrap';
+import {Col, Row, Tab, Container, Nav} from 'react-bootstrap';
+
 import "./Dashboard.css";
 import "../../App.css";
 import DashboardSidebar from "./DashboardSidebar/DashboardSidebar";
@@ -110,5 +111,6 @@ const Dashboard = () =>{
         </>
     );
 }
+    
 
 export default Dashboard;
