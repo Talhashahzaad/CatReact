@@ -57,6 +57,7 @@ function Footer(){
                                                     <li><Link to="/"><img src={linkIcon} alt="" title="" /> linkedin</Link></li>
                                                     <li><Link to="/"><img src={linkIcon} alt="" title="" /> instagram</Link></li>
                                                     <li><Link to="/"><img src={linkIcon} alt="" title="" /> youTube</Link></li>
+                                                    <li><Link to="/"><img src={linkIcon} alt="" title="" /> TikTok</Link></li>
                                                 </ul>
                                             </Col>
                                         </Row>

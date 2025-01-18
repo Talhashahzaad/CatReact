@@ -1,4 +1,5 @@
-import React from "react";
+import {React, useState} from "react";
+import axios from 'axios';
 import { Container, Row, Col } from "react-bootstrap";
 import {Link} from "react-router-dom";
 import facebookIcon from "../../images/facebook.svg";
@@ -7,14 +8,60 @@ import youtubeIcon from "../../images/youtube.svg";
 import linkedinIcon from "../../images/linkedin.svg";
 import phoneIconTiny from "../../images/phoneIcon-tiny.svg";
 import envelopeIconTiny from "../../images/envelopeIcon-tiny.svg";
+import tiktokIcon from "../../images/tiktok.svg";
 
 import "../../App.css";
 import "./ContactUs.css";
 
 const ContactUs = () => {
+
+    const [formData, setFormData] = useState({
+        contactName: '',
+        contactEmail: '',
+        contactPhone: '',
+        textMessage: ''
+      });
+      const [isSubmitting, setIsSubmitting] = useState(false);
+      const [submitStatus, setSubmitStatus] = useState({ message: '', isError: false });
+    
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+          ...prevState,
+          [name]: value
+        }));
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus({ message: '', isError: false });
+    
+        try {
+          const response = await axios.post('http://localhost:8000/api/contact-store', formData);
+          setSubmitStatus({ 
+            message: 'Message sent successfully!', 
+            isError: false 
+          });
+          setFormData({
+            contactName: '',
+            contactEmail: '',
+            contactPhone: '',
+            textMessage: ''
+          });
+        } catch (error) {
+          setSubmitStatus({ 
+            message: 'Failed to send message. Please try again.', 
+            isError: true 
+          });
+        } finally {
+          setIsSubmitting(false);
+        }
+      };
+
     return (
         <>
-            <div className="feature-banner w-100 h-auto d-block position-relative">
+            <div className="feature-banner w-100 h-auto d-block position-relative contact-us-page">
                 <Container>
                     <Row>
                         <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
@@ -43,6 +90,7 @@ const ContactUs = () => {
                                     <li><Link to="/"><img src={instagramIcon} alt="" /></Link></li>
                                     <li><Link to="/"><img src={linkedinIcon} alt="" /></Link></li>
                                     <li><Link to="/"><img src={youtubeIcon} alt="" /></Link></li>
+                                    <li><Link to="/"><img src={tiktokIcon} alt="" /></Link></li>
                                 </ul>
                             </div>
 
@@ -74,41 +122,52 @@ const ContactUs = () => {
                         <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
                             <h3 className="text-normal">Send a Message</h3>
                             <hr/>
-                            <form method="post" action="javascript:void(0)" className="contactForm mb-5">
+                            <form className="contactForm mb-5" onSubmit={handleSubmit}>
                                 <Row>
                                     <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className="mb-3">
                                         <div className="form-group">
                                             <label className="mb-2" htmlFor="contactName">Full Name</label>
-                                            <input type="text" id="contactName" name="contactName" className="form-control" placeholder="Name" required="required" />
+                                            <input type="text" id="contactName" name="contactName" className="form-control" placeholder="Name" required="required" value={formData.contactName} onChange={handleChange} />
                                         </div>
                                     </Col>
 
                                     <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className="mb-3">
                                         <div className="form-group">
                                             <label className="mb-2" htmlFor="contactEmail">Email Address</label>
-                                            <input type="email" id="contactEmail" name="contactEmail" className="form-control" placeholder="Email" required="required" />
+                                            <input type="email" id="contactEmail" name="contactEmail" className="form-control" placeholder="Email" required="required" value={formData.contactEmail} onChange={handleChange} />
                                         </div>
                                     </Col>
 
                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12} className="mb-3">
                                         <div className="form-group">
                                             <label className="mb-2" htmlFor="contactPhone">Phone Number</label>
-                                            <input type="tel" id="contactPhone" name="contactPhone" minLength={10} maxLength={12} className="form-control" placeholder="Phone" required="required" />
+                                            <input type="tel" id="contactPhone" name="contactPhone" minLength={10} maxLength={12} className="form-control" placeholder="Phone" required="required" value={formData.contactPhone} onChange={handleChange} />
                                         </div>
                                     </Col>
 
                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12} className="mb-4">
                                         <div className="form-group">
                                             <label className="mb-2" htmlFor="textMessage">Message</label>
-                                            <textarea id="textMessage" name="textMessage" className="form-control" placeholder="Text your message here..."></textarea>
+                                            <textarea id="textMessage" name="textMessage" className="form-control" placeholder="Text your message here..." value={formData.textMessage} onChange={handleChange}></textarea>
                                         </div>
                                     </Col>
 
                                     <Col xxl={4} xl={4} lg={4} md={4} sm={12} xs={12}>
                                         <div className="form-group">
-                                            <input type="submit" value="submit message" className="form-control text-capitalize" />
+                                        <input
+                                                type="submit"
+                                                value={isSubmitting ? "Sending..." : "Submit Message"}
+                                                className="form-control text-capitalize"
+                                                disabled={isSubmitting}
+                                            />
                                         </div>
                                     </Col>
+
+                                    {submitStatus.message && (
+                                    <div className={`mt-3 alert ${submitStatus.isError ? 'alert-danger' : 'alert-success'}`}>
+                                        {submitStatus.message}
+                                    </div>
+                                    )}
                                 </Row>
                             </form>
                         </Col>
