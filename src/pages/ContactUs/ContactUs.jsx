@@ -172,8 +172,10 @@ const ContactUs = () => {
                             </form>
                         </Col>
 
-                        <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
-                            
+                        <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                            <div className="contact-us-map">
+                            <iframe src="https://www.google.com/maps/d/embed?mid=1LaIpxs9XJ9Bod98XJ9PsOQZrlZaDTCU&ehbc=2E312F=en&z=7" className="w-100" height="480"></iframe>
+                            </div>
                         </Col>
                     </Row>
 

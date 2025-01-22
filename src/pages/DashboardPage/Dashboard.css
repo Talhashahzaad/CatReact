@@ -25,10 +25,10 @@ padding-block: 8px;padding-inline: 12px;color: var(--white); border-radius: 4px;
 .dashboard-message-notification ul.ps-0.mb-0 li {list-style-type: none;width: 200px;height: 175px;display: flex;flex-flow: column;justify-content: center;
 align-items: center;border-radius: 8px;border: 1px solid rgba(0,0,0,0.12);row-gap: 16px;}
 
-.dashboard-message-notification ul.ps-0.mb-0 li:first-child {background-color: var(--jetGreen);background-blend-mode: multiply; background-image: url('src/images/vector.png'); background-repeat: no-repeat; background-size: 100px; background-position: center left -50px;}
-.dashboard-message-notification ul.ps-0.mb-0 li:nth-child(2) {background-color: var(--green25);background-blend-mode: multiply; background-image: url('src/images/bannerCaptionVector.svg'); background-repeat: no-repeat; background-size: 225px; background-position: bottom -70px left 10px;}
-.dashboard-message-notification ul.ps-0.mb-0 li:nth-child(3) {background-color: #91AC8F;background-blend-mode: multiply; background-image: url('src/images/bannerCaptionVector.svg'); background-repeat: no-repeat; background-size: 225px; background-position: center left -50px;}
-.dashboard-message-notification ul.ps-0.mb-0 li:last-child {background-color: #B2C9AD; background-blend-mode: multiply; background-image: url('src/images/textureOfLeaf.svg'); background-repeat: no-repeat; background-size: 100px; background-position: center left -50px;}
+.dashboard-message-notification ul.ps-0.mb-0 li:first-child {background-color: var(--jetGreen);background-blend-mode: multiply; background-image: url('../src/images/vector.png'); background-repeat: no-repeat; background-size: 100px; background-position: center left -50px;}
+.dashboard-message-notification ul.ps-0.mb-0 li:nth-child(2) {background-color: var(--green25);background-blend-mode: multiply; background-image: url('../src/images/bannerCaptionVector.svg'); background-repeat: no-repeat; background-size: 225px; background-position: bottom -70px left 10px;}
+.dashboard-message-notification ul.ps-0.mb-0 li:nth-child(3) {background-color: #91AC8F;background-blend-mode: multiply; background-image: url('../src/images/bannerCaptionVector.svg'); background-repeat: no-repeat; background-size: 225px; background-position: center left -50px;}
+.dashboard-message-notification ul.ps-0.mb-0 li:last-child {background-color: #B2C9AD; background-blend-mode: multiply; background-image: url('../src/images/textureOfLeaf.svg'); background-repeat: no-repeat; background-size: 100px; background-position: center left -50px;}
 .dashboard-message-notification ul.ps-0.mb-0 li:first-child h3,
 .dashboard-message-notification ul.ps-0.mb-0 li:first-child strong {color: var(--white);}
 .dashboard-message-notification ul.ps-0.mb-0 li h3 {font-weight: 300;font-size: 60px;line-height: 60px;padding: 0;margin: 0;}
@@ -72,7 +72,7 @@ border-right: 1px solid rgba(0,0,0,0.12);border-bottom: 3px solid rgba(0,0,0,0.0
 .sidebar-listing-form form input[type="tel"],
 .sidebar-listing-form form input[type="email"],
 .sidebar-listing-form form input[type="url"],
-
+.sidebar-listing-form form input[type="number"],
 .sidebar-listing-form form input[type="file"] {border-radius: 0;height: 45px;border-top: 1px solid rgba(0,0,0,0.12);border-left: 1px solid rgba(0,0,0,0.12);
 border-right: 1px solid rgba(0,0,0,0.12);border-bottom: 3px solid rgba(0,0,0,0.08);}
 
@@ -90,3 +90,15 @@ span.all-listing-create-button-plus {width: 20px;height: 20px;display: inline-fl
 align-items: center;justify-content: center;border-radius: 10px; font-size: 16px; margin-inline-end: 6px;}
 
 .sidebar-listing-form {display: none;}
+
+.dashboard-content-table button.btn-next, .dashboard-content-table button.btn-previous {background-color: var(--jetGreen);border: 1px solid rgba(255,255,255,0.50);color: var(--white);font-size: 12px;}
+.dashboard-content-table button.btn-next:hover, .dashboard-content-table button.btn-previous:hover {background-color: var(--black);}
+
+.pricing-and-duration-form-row ol.d-flex {list-style-type: none;}
+.pricing-and-duration-form-row ol.d-flex select, .pricing-and-duration-form-row ol.d-flex input[type="number"] {width: 175px;}
+.blackHoverEffect:hover, .blackHoverEffect:focus {background-color: var(--black);}
+.dashboard-all-listing-create-form-body form input[type="submit"]:hover,
+.dashboard-all-listing-create-form-body form input[type="submit"]:focus {background-color: var(--black);}
+.dashboard-all-listing-create-form-body form input[type="checkbox"] {width: 20px;height: 25px;margin-inline-end: 15px;}
+.dashboard-all-listing-create-form-body form input[type="checkbox"] {width: 24px;height: 24px;margin-inline-end: 15px;appearance: auto;border-radius: 4px;
+overflow: hidden;box-shadow: none;outline: none;cursor: pointer;}

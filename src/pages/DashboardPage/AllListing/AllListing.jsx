@@ -6,16 +6,38 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import defaultImage from "../../../images/defaultPicture.jpg";
 import defaultThumbnailImage from "../../../images/defaultPicture.jpg";
 import ReactQuill from 'react-quill';
-
 import '../../../../node_modules/react-quill/dist/quill.snow.css';
-
-
 
 const AllListing = () => {
     const [bodyPicture, setBodyPicture] = useState(defaultImage);
     const [thumbnailImage, setThumbnailImage] = useState(defaultThumbnailImage);
-    const [description, setDescription] = useState('');
     
+    const [description, setDescription] = useState('');
+    const [entries, setEntries] = useState([5]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [entriesPerPage, setEntriesPerPage] = useState(5);
+    const [search, setSearch] = useState('');
+    const indexOfLastEntry = currentPage * entriesPerPage;
+    const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+    const currentEntries = entries.slice(indexOfFirstEntry, indexOfLastEntry);
+    const totalPages = Math.ceil(entries.length / entriesPerPage);
+
+    const handleEntriesPerPageChange = (event) => {
+        setEntriesPerPage(parseInt(event.target.value));
+    };
+
+    const handleSearch = (value) => {
+        setSearch(value);
+    };
+
+    const handlePreviousPage = () => {
+        setCurrentPage(currentPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(currentPage + 1);
+    };
+
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -31,7 +53,7 @@ const AllListing = () => {
             setThumbnailImage(thumbnailImageUrl);
         }
     };
-
+    
     return (
         <>
             <Container fluid>
@@ -63,14 +85,34 @@ const AllListing = () => {
                                                 document.querySelector('.sidebar-listing-form').style.display = 'block';
                                             }}
                                         >
-                                            <span className="all-listing-create-button-plus">&#43;</span> Create Listing  
+                                            <span className="all-listing-create-button-plus">&#43;</span> Create   
                                         </button>
                                     </div>
                                 </Row>
                                 <hr />
+
+                                <Row className="d-flex justify-content-between align-items-center mb-3">    
+                                    <Col>
+                                        <label htmlFor="entriesPerPage">Show entries:</label>
+                                        <select id="entriesPerPage" onChange={handleEntriesPerPageChange} value={entriesPerPage}>
+                                            <option value={5}>5</option>
+                                            <option value={10}>10</option>
+                                            <option value={20}>20</option>
+                                        </select>
+                                    </Col>
+                                    <Col className="text-end">
+                                        <input 
+                                            type="text" 
+                                            placeholder="Search..." 
+                                            onChange={(e) => handleSearch(e.target.value)} 
+                                            value={search}
+                                        />
+                                    </Col>
+                                </Row>
+                                
                                 <table className="table table-bordered">
                                     <thead>
-                                        <tr>
+                                        <tr key="">
                                             <th>id</th>
                                             <th>image</th>
                                             <th>title</th>
@@ -84,23 +126,37 @@ const AllListing = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><img src="https://fastly.picsum.photos/id/892/536/354.jpg?hmac=60WxlDjmsmE707hkhf2GjWSxc4kxxl4ggWFAxnQ-vd0" alt="" className="img-fluid" /></td>
-                                            <td>shop</td>
-                                            <td>spa</td>
-                                            <td>india</td>
-                                            <td>active</td>
-                                            <td>yes</td>
-                                            <td>yes</td>
-                                            <td>admin</td>
-                                            <td>
-                                                <button className="btn btn-success"><FaEdit /></button>
-                                                <button className="btn btn-danger"><FaTrash /></button>
-                                            </td>
-                                        </tr>
+                                        {/* Map through entries data to display rows */}
+                                        {currentEntries.map((entry, index) => (
+                                            <tr key={index}>
+                                                <td>{entry.id}</td>
+                                                <td><img src={entry.image} alt="" className="img-fluid" /></td>
+                                                <td>{entry.title}</td>
+                                                <td>{entry.category}</td>
+                                                <td>{entry.location}</td>
+                                                <td>{entry.status}</td>
+                                                <td>{entry.isFeatured ? 'yes' : 'no'}</td>
+                                                <td>{entry.isVerified ? 'yes' : 'no'}</td>
+                                                <td>{entry.by}</td>
+                                                <td>
+                                                    <button className="btn btn-success"><FaEdit /></button>
+                                                    <button className="btn btn-danger"><FaTrash /></button>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
+                                {/* Pagination controls */}
+                                <div className="d-flex justify-content-between align-items-center pagination-controls">
+                                    <div>
+                                        Showing {indexOfFirstEntry + 1} to {Math.min(indexOfLastEntry, entries.length)} of {entries.length} entries
+                                    </div>
+                                    <div>
+                                        <button onClick={handlePreviousPage} disabled={currentPage === 1} className="btn btn-previous">Previous</button>
+                                        <span className="pagination-controls-page-number">Page {currentPage} of {totalPages}</span>
+                                        <button onClick={handleNextPage} disabled={currentPage === totalPages} className="btn btn-next">Next</button>
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -109,17 +165,17 @@ const AllListing = () => {
 
                                 <div className="dashboard-all-listing-create-form">
                                     <Row>
-                                        <div className="d-flex justify-content-between align-items-center listing-header">
-                                        <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font">Create Listing</h2>
+                                        <div className="d-flex justify-content-flex-start align-items-center listing-header">
                                             <button 
-                                                className="btn bg-jetGreen text-white all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center" 
+                                                className="btn bg-jetGreen text-white all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
                                                 onClick={() => {
                                                     document.querySelector('.sidebar-listing-form').style.display = 'none';
                                                     document.querySelector('.dashboard-content-table').style.display = 'block';
                                                 }}
                                             >
-                                                <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back to all listing
+                                                <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back 
                                             </button>
+                                            <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">create all listing</h2>
                                         </div>
                                     </Row>
                                     <hr />
@@ -147,7 +203,8 @@ const AllListing = () => {
 
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
-                                                        <label htmlFor="title" className="form-label text-capitalize fw-bold small">thumbnail image <sup className="text-danger">*</sup></label>
+                                                        <label htmlFor="thumbnailImage" className="form-label text-capitalize fw-bold small">background image <sup className="text-danger">*</sup></label>
+
                                                         <div className="dashboard-all-listing-create-form-body-row-image-upload position-relative">
                                                             <img src={thumbnailImage} alt="" className="img-fluid all-listing-create-form-body-row-image-upload-img" />
                                                             <input 
@@ -348,7 +405,7 @@ const AllListing = () => {
 
                                                 <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
                                                     <div className="form-group my-2">
-                                                        <input type="submit" className="btn text-white rounded-0 bg-jetGreen" value="Create Listing" />
+                                                        <input type="submit" className="btn text-white rounded-0 bg-jetGreen" value="Create" />
                                                     </div>
                                                 </Col>
                                             </Row>

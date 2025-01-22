@@ -9,7 +9,10 @@ import Header from './common/Header';
 import Dashboard from './pages/DashboardPage/Dashboard';
 import AllListing from './pages/DashboardPage/AllListing/AllListing';
 import TreatmentCategories from './pages/DashboardPage/TreatmentCategories/TreatmentCategories';
-
+import Treatment from './pages/DashboardPage/Treatment/Treatment';
+import ProfessionalAffiliationsCertificates from './pages/DashboardPage/ProfessionalAffiliationsCertificates/ProfessionalAffiliationsCertificates';
+import Practitioner from './pages/DashboardPage/Practitioner/Practitioner';
+import Tag from './pages/DashboardPage/Tag/Tag';
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions/TermsConditions';
 import ContactUs from './pages/ContactUs/ContactUs';
@@ -42,6 +45,10 @@ function App () {
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/dashboard/all-listing" element={<AllListing/>} />
             <Route path="/dashboard/treatment-categories" element={<TreatmentCategories/>} />
+            <Route path="/dashboard/treatment" element={<Treatment/>} />
+            <Route path="/dashboard/certificate" element={<ProfessionalAffiliationsCertificates/>} />
+            <Route path="/dashboard/practitioner" element={<Practitioner/>} />
+            <Route path="/dashboard/tag" element={<Tag/>} />
           </Routes>
       </main>
       <Footer/>

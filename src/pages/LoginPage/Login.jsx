@@ -18,7 +18,7 @@ function Login() {
         e.preventDefault(); // Prevent default form submission
         setErrorMessage(""); // Clear previous error messages
         try {
-            const response = await fetch("http://localhost:8000/api/login", {
+            const response = await fetch("http://18.175.255.203:8000/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
