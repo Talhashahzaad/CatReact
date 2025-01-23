@@ -59,6 +59,8 @@ const Sidebar = () => {
                             <Link to="/dashboard/all-listing" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>all listing</Link>
                             <Link to="/dashboard/treatment-categories" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>treatment categories</Link>
                             <Link to="/dashboard/treatment" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>treatment</Link>
+                            <Link to="/dashboard/location" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>location</Link>
+                            <Link to="/dashboard/amenity" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>Amenities</Link>
                             <Link to="/dashboard/tag" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>tags</Link>
                             <Link to="/dashboard/practitioner" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>practitioner qualifications</Link>
                             <Link to="/dashboard/certificate" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>professional affiliations</Link>

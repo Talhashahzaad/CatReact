@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
-import Breadcrumb from "../../DashboardPage/Breadcrumb/Breadcrumb";
+import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 

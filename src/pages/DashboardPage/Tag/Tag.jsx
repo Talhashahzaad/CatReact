@@ -120,80 +120,80 @@ const Tag = () => {
                         </div>
 
                         <div className="sidebar-listing-form">
-                                <div className="dashboard-all-listing-create-form">
-                                    <Row>
-                                        <div className="d-flex justify-content-flex-start align-items-center listing-header">
-                                            <button 
-                                                className="btn bg-jetGreen text-white all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
-                                                onClick={() => {
-                                                    document.querySelector('.sidebar-listing-form').style.display = 'none';
-                                                    document.querySelector('.dashboard-content-table').style.display = 'block';
-                                                }}
-                                            >
-                                                <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back 
-                                            </button>
-                                            <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">create Tags</h2>
-                                        </div>
-                                    </Row>
-                                    <hr />
-
-                                    <div className="dashboard-all-listing-create-form-body">
-                                        <form>
-                                            <Row>
-                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                    <div className="form-group my-2">
-                                                        <label htmlFor="tagName" className="form-label text-capitalize fw-bold small">name <sup className="text-danger">*</sup></label>
-                                                        <input type="text" className="form-control" id="tagName" name="tagName" required />
-                                                    </div>
-                                                </Col>
-                                            
-                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                    <div className="form-group my-2">
-                                                        <label htmlFor="tagStatus" className="form-label text-capitalize fw-bold small">status <sup className="text-danger">*</sup></label>
-                                                        <select className="form-control text-capitalize" id="tagStatus" name="tagStatus" required>
-                                                            <option value="active">active</option>
-                                                            <option value="inactive">inactive</option>
-                                                        </select>
-                                                    </div>
-                                                </Col>
-                                            </Row>
-
-                                            <Row>
-                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                    <div className="form-group my-2">
-                                                        <label htmlFor="parantTag" className="form-label text-capitalize fw-bold small">parant tag</label>
-                                                        <input type="text" className="form-control" id="parantTag" name="parantTag" />
-                                                    </div>
-                                                </Col>
-                                            
-                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                    <div className="form-group my-2">
-                                                        <label htmlFor="parantCategory" className="form-label text-capitalize fw-bold small">parant category</label>
-                                                        <input type="text" className="form-control" id="parantCategory" name="parantCategory" />
-                                                    </div>
-                                                </Col>
-                                            </Row>
-
-                                            <Row>
-                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                    <div className="form-group my-2 d-flex flex-column align-items-start">
-                                                        <label htmlFor="tagDescription" className="form-label text-capitalize fw-bold small">description</label>
-                                                        <textarea className="form-control" id="tagDescription" name="tagDescription"></textarea>
-                                                    </div>
-                                                </Col>
-                                            </Row>
-                                            
-                                            <Row>
-                                                <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
-                                                    <div className="form-group my-2">
-                                                        <input type="submit" className="btn text-white rounded-0 bg-jetGreen" value="Create" />
-                                                    </div>
-                                                </Col>
-                                            </Row>
-                                        </form>
+                            <div className="dashboard-all-listing-create-form">
+                                <Row>
+                                    <div className="d-flex justify-content-flex-start align-items-center listing-header">
+                                        <button 
+                                            className="btn bg-jetGreen text-white all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
+                                            onClick={() => {
+                                                document.querySelector('.sidebar-listing-form').style.display = 'none';
+                                                document.querySelector('.dashboard-content-table').style.display = 'block';
+                                            }}
+                                        >
+                                            <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back 
+                                        </button>
+                                        <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">create Tags</h2>
                                     </div>
+                                </Row>
+                                <hr />
+
+                                <div className="dashboard-all-listing-create-form-body">
+                                    <form>
+                                        <Row>
+                                            <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                <div className="form-group my-2">
+                                                    <label htmlFor="tagName" className="form-label text-capitalize fw-bold small">name <sup className="text-danger">*</sup></label>
+                                                    <input type="text" className="form-control" id="tagName" name="tagName" required />
+                                                </div>
+                                            </Col>
+                                        
+                                            <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                <div className="form-group my-2">
+                                                    <label htmlFor="tagStatus" className="form-label text-capitalize fw-bold small">status <sup className="text-danger">*</sup></label>
+                                                    <select className="form-control text-capitalize" id="tagStatus" name="tagStatus" required>
+                                                        <option value="active">active</option>
+                                                        <option value="inactive">inactive</option>
+                                                    </select>
+                                                </div>
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+                                            <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                <div className="form-group my-2">
+                                                    <label htmlFor="parantTag" className="form-label text-capitalize fw-bold small">parant tag</label>
+                                                    <input type="text" className="form-control" id="parantTag" name="parantTag" />
+                                                </div>
+                                            </Col>
+                                        
+                                            <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                <div className="form-group my-2">
+                                                    <label htmlFor="parantCategory" className="form-label text-capitalize fw-bold small">parant category</label>
+                                                    <input type="text" className="form-control" id="parantCategory" name="parantCategory" />
+                                                </div>
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+                                            <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                <div className="form-group my-2 d-flex flex-column align-items-start">
+                                                    <label htmlFor="tagDescription" className="form-label text-capitalize fw-bold small">description</label>
+                                                    <textarea className="form-control" id="tagDescription" name="tagDescription"></textarea>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                        
+                                        <Row>
+                                            <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
+                                                <div className="form-group my-2">
+                                                    <input type="submit" className="btn text-white rounded-0 bg-jetGreen" value="Create" />
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </Container>

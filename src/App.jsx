@@ -13,6 +13,9 @@ import Treatment from './pages/DashboardPage/Treatment/Treatment';
 import ProfessionalAffiliationsCertificates from './pages/DashboardPage/ProfessionalAffiliationsCertificates/ProfessionalAffiliationsCertificates';
 import Practitioner from './pages/DashboardPage/Practitioner/Practitioner';
 import Tag from './pages/DashboardPage/Tag/Tag';
+import Location from './pages/DashboardPage/Location/Location';
+import Amenity from './pages/DashboardPage/Amenity/Amenity';
+
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions/TermsConditions';
 import ContactUs from './pages/ContactUs/ContactUs';
@@ -26,7 +29,6 @@ import FrequentlyAskedQuestion from './pages/FrequentlyAskedQuestion/FrequentlyA
 function App () {
   return (
     <>
-      
       <Header/>
       <main>
           <Routes>
@@ -49,6 +51,8 @@ function App () {
             <Route path="/dashboard/certificate" element={<ProfessionalAffiliationsCertificates/>} />
             <Route path="/dashboard/practitioner" element={<Practitioner/>} />
             <Route path="/dashboard/tag" element={<Tag/>} />
+            <Route path="/dashboard/location" element={<Location/>} />
+            <Route path="/dashboard/amenity" element={<Amenity/>} />
           </Routes>
       </main>
       <Footer/>
