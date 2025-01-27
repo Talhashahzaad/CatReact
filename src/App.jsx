@@ -23,7 +23,7 @@ import "./Responsive.css";
 import ForBusiness from './pages/ForBusiness/ForBusiness';
 import AboutUs from './pages/AboutUs/AboutUs';
 import FrequentlyAskedQuestion from './pages/FrequentlyAskedQuestion/FrequentlyAskedQuestion';
-
+import PricingPackage from './pages/PricingPackage/PricingPackage';
 
 
 function App () {
@@ -44,6 +44,7 @@ function App () {
             <Route path="/for-business" element={<ForBusiness/>} />
             <Route path="/about-us" element={<AboutUs/>} />
             <Route path="/frequently-asked-question" element={<FrequentlyAskedQuestion/>} />
+            <Route path="/pricing-package" element={<PricingPackage/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/dashboard/all-listing" element={<AllListing/>} />
             <Route path="/dashboard/treatment-categories" element={<TreatmentCategories/>} />
