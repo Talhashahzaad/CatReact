@@ -1,11 +1,12 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import "./PricingPackage.css";
 
 const PricingPackage = () => {
     return (
         <div>
-            <div className="inner-feature-banner w-100 h-auto d-block position-relative">
+            <div className="inner-feature-banner w-100 h-auto d-block position-relative pricing-package-banner">
                 <Container>
                     <Row>
                         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -20,16 +21,101 @@ const PricingPackage = () => {
                     <Row>
                         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                             <small className="animate__fadeInUp animate__animated text-center fw-bold mb-3 w-100 h-auto d-block position-relative text-capitalize">simple affordable pricing</small>
-                            <h2 className="animate__fadeInUp animate__animated text-center fw-normal w-100 h-auto d-block position-relative text-capitalize">select your plan</h2>
+                            <h2 className="animate__fadeInUp animate__animated text-center fw-normal w-100 h-auto d-block position-relative text-capitalize">Subscription Plans</h2>
                             <p className="animate__fadeInUp animate__animated text-center fw-normal w-100 h-auto d-block position-relative text-capitalize">select from best plans, ensuring perfect match. Need more or less? <br/>
                             Customize your subscription for a seamless fit.</p>
                         </Col>
 
-                        <Col xxl={4} xl={4} lg={4} md={4} sm={12} xs={12}>
-                            <div className="pricing-card w-100 h-auto d-block position-relative">
-                                <div className="pricing-card-header w-100 h-auto d-block position-relative">
-                                    <h3>basic</h3>
-                                </div>
+                        <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                            <div className="w-100 h-auto d-block position-relative">
+                                <ul className="w-100 h-auto d-flex position-relative ps-0 mb-0 justify-content-evenly align-items-flex-start pricing-card">
+                                    <li className="w-100 h-auto d-block position-relative">
+                                        <div className="w-100 h-auto d-block position-relative">
+                                            <small className='mb-1 d-inline-flex'>for beginners</small>
+                                            <h6 className="my-2">Free</h6>
+                                            <h3 className="mt-2 mb-0 default-font">&#163; (No cost)</h3>
+
+                                            <div className="ps-0 mt-3 mb-0 packageListing">
+                                                <dd>Business profile listing</dd>
+                                                <dd>CaT Pro social media</dd>
+                                                <dd>Check a Treatment Marketplace access</dd>
+                                                <dd>Calendar integration</dd>
+                                                <dd><s>Social media autouploads <sup>TM</sup></s></dd>
+                                                <dd><s>Priority listing in search results</s></dd>
+                                                <dd><s>Maximized business profile</s></dd>
+                                                <dd><s>Unlimited personal business Live Chat for client enquiries</s></dd>
+                                                <dd><s>Multiple locations</s></dd>
+                                                <dd><s>Opportunity to Feature on Beyond the Treatment<sup>TM</sup></s></dd>
+                                            </div>
+
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <Link to="/sign-up" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
+                                                
+                                                <Link to="/about-us" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>learn more</Link>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li className="w-100 h-auto d-block position-relative">
+                                        <div className="w-100 h-auto d-block position-relative">
+                                            <small className='mb-1 d-inline-flex'>recommended</small>
+                                            <h6 className="my-2">CaT Premium</h6>
+                                            <h3 className="mt-2 mb-0 default-font">&#163; 15/<span className="text-capitalize fw-bold h6">month</span></h3>
+
+                                            <div className="ps-0 mt-3 mb-0 packageListing">
+                                            <dd>Business profile listing</dd>
+                                                <dd>CaT Pro social media</dd>
+                                                <dd>Check a Treatment Marketplace access</dd>
+                                                <dd>Calendar integration</dd>
+                                                <dd>Social media autouploads <sup>TM</sup></dd>
+                                                <dd>Priority listing in search results</dd>
+                                                <dd><s>Maximized business profile</s></dd>
+                                                <dd><s>Unlimited personal business Live Chat for client enquiries</s></dd>
+                                                <dd><s>Multiple locations</s></dd>
+                                                <dd><s>Opportunity to Feature on Beyond the Treatment<sup>TM</sup></s></dd>
+                                            </div>
+                                            
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <Link to="/sign-up" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
+                                                
+                                                <Link to="/about-us" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>learn more</Link>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li className="w-100 h-auto d-block position-relative">
+                                        <div className="w-100 h-auto d-block position-relative">
+                                            <small className='mb-1 d-inline-flex'>best value offer</small>
+                                            <h6 className="my-2">CaT Elite</h6>
+                                            <h3 className="mt-2 mb-0 default-font">&#163; 35/<span className="text-capitalize fw-bold h6">month</span></h3>
+
+                                            <div className="ps-0 mt-3 mb-0 packageListing">
+                                            <dd>Business profile listing</dd>
+                                                <dd>CaT Pro social media</dd>
+                                                <dd>Check a Treatment Marketplace access</dd>
+                                                <dd>Calendar integration</dd>
+                                                <dd>Social media autouploads <sup>TM</sup></dd>
+                                                <dd>Priority listing in search results</dd>
+                                                <dd>Maximized business profile</dd>
+                                                <dd>Unlimited personal business Live Chat for client enquiries</dd>
+                                                <dd>Multiple locations</dd>
+                                                <dd>Opportunity to Feature on Beyond the Treatment<sup>TM</sup></dd>
+                                            </div>
+                                            
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <Link to="/sign-up" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
+                                                
+                                                <Link to="/about-us" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>learn more</Link>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </Col>
+
+                        <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                            <div className="w-100 h-auto d-block position-relative">
+                                <h4 className="animate__fadeInUp animate__animated text-center fw-normal w-100 h-auto d-block position-relative text-normal pt-5">* Plan change available at any time</h4>
                             </div>
                         </Col>
                     </Row>
