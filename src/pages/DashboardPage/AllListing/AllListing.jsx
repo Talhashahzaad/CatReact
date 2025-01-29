@@ -8,6 +8,7 @@ import defaultThumbnailImage from "../../../images/defaultPicture.jpg";
 import ReactQuill from 'react-quill';
 import '../../../../node_modules/react-quill/dist/quill.snow.css';
 
+
 const AllListing = () => {
     const [bodyPicture, setBodyPicture] = useState(defaultImage);
     const [thumbnailImage, setThumbnailImage] = useState(defaultThumbnailImage);
@@ -164,22 +165,6 @@ const AllListing = () => {
                             <div className="sidebar-listing-form">
 
                                 <div className="dashboard-all-listing-create-form">
-                                    <Row>
-                                        <div className="d-flex justify-content-flex-start align-items-center listing-header">
-                                            <button 
-                                                className="btn bg-jetGreen text-white all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
-                                                onClick={() => {
-                                                    document.querySelector('.sidebar-listing-form').style.display = 'none';
-                                                    document.querySelector('.dashboard-content-table').style.display = 'block';
-                                                }}
-                                            >
-                                                <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back 
-                                            </button>
-                                            <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">create all listing</h2>
-                                        </div>
-                                    </Row>
-                                    <hr />
-
                                     <div className="dashboard-all-listing-create-form-body">
                                         <form>
                                             <Row>

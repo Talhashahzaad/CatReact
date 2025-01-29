@@ -33,6 +33,7 @@ function Footer(){
                                                 <h3>For Business</h3>
                                                 <ul className="ps-0 mb-0">
                                                     <li><Link to="/for-business" onClick={() => window.scrollTo(0, 0)}>For Business</Link></li>
+                                                    <li><Link to="/pricing-packages" onClick={() => window.scrollTo(0, 0)}>Pricing Packages</Link></li>
                                                     <li><Link to="/frequently-asked-question" onClick={() => window.scrollTo(0, 0)}>FAQ</Link></li>
                                                     <li><Link to="/contact-us" onClick={() => window.scrollTo(0, 0)}>contact us</Link></li>
                                                 </ul>

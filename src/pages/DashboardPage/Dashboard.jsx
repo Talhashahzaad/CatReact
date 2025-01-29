@@ -55,6 +55,59 @@ const Dashboard = () =>{
                                 </li>
                             </ul>
                         </div>
+
+                        <div className="dashboard-active-packages">
+                            <h5 className="default-font fw-bold mt-5">Active Packages</h5>
+                            <hr/>
+
+                            <table className="table table-responsive table-bordered table-striped table-hover">
+                                <thead className="text-capitalize">
+                                    <tr>
+                                        <th>details</th>
+                                        <th>summary</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-capitalize">
+
+                                    <tr>
+                                        <td>Package name</td>
+                                        <td>basic</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Package price</td>
+                                        <td>&#163; 0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>purchase date</td>
+                                        <td>24 dec 2024</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expiry date</td>
+                                        <td>23 dec 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>maximum listing</td>
+                                        <td>10</td>
+                                    </tr>
+                                    <tr>
+                                        <td>maximum amenities</td>
+                                        <td>10</td>
+                                    </tr>
+                                    <tr>
+                                        <td>maximum photos</td>
+                                        <td>10</td>
+                                    </tr>
+                                    <tr>
+                                        <td>maximum videos</td>
+                                        <td>10</td>
+                                    </tr>
+                                    <tr>
+                                        <td>feature listing available</td>
+                                        <td>yes</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

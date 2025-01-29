@@ -15,6 +15,8 @@ import Practitioner from './pages/DashboardPage/Practitioner/Practitioner';
 import Tag from './pages/DashboardPage/Tag/Tag';
 import Location from './pages/DashboardPage/Location/Location';
 import Amenity from './pages/DashboardPage/Amenity/Amenity';
+import Order from './pages/DashboardPage/Order/Order';
+import MyProfile from './pages/DashboardPage/MyProfile/MyProfile';
 
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions/TermsConditions';
@@ -44,7 +46,7 @@ function App () {
             <Route path="/for-business" element={<ForBusiness/>} />
             <Route path="/about-us" element={<AboutUs/>} />
             <Route path="/frequently-asked-question" element={<FrequentlyAskedQuestion/>} />
-            <Route path="/pricing-package" element={<PricingPackage/>} />
+            <Route path="/pricing-packages" element={<PricingPackage/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/dashboard/all-listing" element={<AllListing/>} />
             <Route path="/dashboard/treatment-categories" element={<TreatmentCategories/>} />
@@ -54,6 +56,8 @@ function App () {
             <Route path="/dashboard/tag" element={<Tag/>} />
             <Route path="/dashboard/location" element={<Location/>} />
             <Route path="/dashboard/amenity" element={<Amenity/>} />
+            <Route path="/dashboard/order" element={<Order/>} />
+            <Route path="/dashboard/my-profile" element={<MyProfile/>} />
           </Routes>
       </main>
       <Footer/>

@@ -55,6 +55,8 @@ color: var(--white);padding-inline: 8px;border-radius: 50px;font-size: 12px;max-
 .dashboard-content-table table tbody td {vertical-align: middle;text-transform: capitalize;font-weight: 500;font-size: 14px;text-align: center;}
 .dashboard-content-table table tbody td img {max-width: 80px;border-radius: 4px;}
 .dashboard-content-table table tbody td button {padding: 0px;font-size: 12px;width: 24px;height: 24px;text-align: center;margin-inline: 2px;}
+.pagination-controls-page-number {margin-inline: 8px; font-size: 12px; font-weight: 500; color: var(--black);}
+.dashboard-content-body .d-flex.justify-content-between.align-items-center.pagination-controls {font-size: 12px;font-weight: 500;}
 
 .sidebar-listing-form form img {width: 200px; min-height: 175px;background-color: rgba(255,255,255,1);overflow: hidden;border-radius: 4px; object-fit: cover;border: 2px dashed rgba(0,0,0,0.25);padding: 1px;}
 .sidebar-listing-form form input[type="file"] {cursor: pointer;max-width: 200px;}
