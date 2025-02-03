@@ -6,6 +6,7 @@ import Login from './pages/LoginPage/Login';
 import Register from './pages/RegisterPage/Register';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import Header from './common/Header';
+import Blogs from './pages/Blogs/Blogs';
 import Dashboard from './pages/DashboardPage/Dashboard';
 import AllListing from './pages/DashboardPage/AllListing/AllListing';
 import TreatmentCategories from './pages/DashboardPage/TreatmentCategories/TreatmentCategories';
@@ -38,6 +39,7 @@ function App () {
             <Route path="/login" element={<Login/>} />
             <Route path="/sign-up" element={<Register/>} />
             <Route path="/forget-password" element={<ForgetPassword/>} />
+            <Route path="/blogs" element={<Blogs/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
             
             <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
