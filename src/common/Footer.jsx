@@ -24,7 +24,7 @@ function Footer(){
                                                 <ul className="ps-0 mb-0">
                                                     <li><Link to="/about-us" onClick={() => window.scrollTo(0, 0)}>about us</Link></li>
                                                     <li><Link to="/">Beyond the Treatment</Link></li>
-                                                    <li><Link to="/">Blog</Link></li>
+                                                    <li><Link to="/blogs" onClick={() => window.scrollTo(0, 0)}>Blogs</Link></li>
                                                     <li><Link to="/">Sitemap</Link></li>
                                                 </ul>
                                             </Col>
