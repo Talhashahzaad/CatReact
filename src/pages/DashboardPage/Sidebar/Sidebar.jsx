@@ -44,7 +44,7 @@ const Sidebar = () => {
             <div className="dashboard-sidebar-menu">
                 <ul className="list-unstyled mb-0">
                     <li>
-                        <Link to="/dashboard">dashboard</Link>
+                        <Link to="/dashboard" onClick={window.scrollTo(0, 0)}>dashboard</Link>
                     </li>
 
                     <li>
@@ -56,25 +56,25 @@ const Sidebar = () => {
                         </Link>
 
                         <div className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-                            <Link to="/dashboard/my-profile" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>my profile</Link>
+                            <Link to="/dashboard/my-profile" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>my profile</Link>
                             
-                            <Link to="/dashboard/all-listing" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>all listing</Link>
+                            <Link to="/dashboard/all-listing" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>create listing</Link>
                             
-                            <Link to="/dashboard/treatment-categories" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>treatment categories</Link>
+                            <Link to="/dashboard/treatment-categories" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>treatment categories</Link>
                             
                             <Link to="/dashboard/treatment" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>treatment</Link>
                             
-                            <Link to="/dashboard/order" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>order</Link>
+                            <Link to="/dashboard/order" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>order</Link>
                             
-                            <Link to="/dashboard/location" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>location</Link>
+                            <Link to="/dashboard/location" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>location</Link>
 
-                            <Link to="/dashboard/amenity" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>Amenities</Link>
+                            <Link to="/dashboard/amenity" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>Amenities</Link>
 
-                            <Link to="/dashboard/tag" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>tags</Link>
+                            <Link to="/dashboard/tag" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>tags</Link>
 
-                            <Link to="/dashboard/practitioner" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>practitioner qualifications</Link>
+                            <Link to="/dashboard/practitioner" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>practitioner qualifications</Link>
 
-                            <Link to="/dashboard/certificate" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>professional affiliations</Link>
+                            <Link to="/dashboard/certificate" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>professional affiliations</Link>
                         </div>
                     </li>
                 </ul>

@@ -1,0 +1,21 @@
+.listing-details-feature-banner figure img {height: 350px;object-fit: cover;image-rendering: -webkit-optimize-contrast;filter: brightness(0.5);}
+.listing-details-feature-banner-content .breadcrumb-container span {color: var(--white);text-transform: capitalize; position: relative; z-index: 1; padding-inline-start: 30px;}
+.listing-details-feature-banner-content .breadcrumb-container > div > span > span:first-child::before {position: absolute;content: '\2713';
+left: 0;top: -3px;background-color: var(--jetGreen);width: 24px;height: 24px;text-align: center;border-radius: 30px;}
+.breadcrumb-container {display: flex;justify-content: center;}
+
+.listing-details-content-right-contact-details ul.list-unstyled li .fw-bold svg {background-color: var(--green25);width: 40px;height: 40px;
+padding: 10px;border-radius: 50px; margin-inline-end: 8px;}
+.listing-details-content-right-contact-details ul.list-unstyled li .fw-bold svg > path {transform: scale(0.95);fill: var(--jetGreen);}
+.listing-details-content-right-contact-details ul.list-unstyled li span:last-child {line-height: 20px;margin-block-end: 2px;}
+
+.listing-details-content-right-contact-details ul.list-unstyled li:hover span:last-child {transition: all linear .4s;color: var(--jetGreen); cursor: pointer;}
+
+.listing-details-content-right-contact-details {background-color: #f8f8f8;padding-block: 35px;padding-inline: 15px;border-radius: 4px;
+border-bottom: 5px solid var(--jetGreen);box-shadow: 0px 16px 24px rgba(0,0,0,0.04);outline: 1px solid rgba(0,0,0,0.08);}
+
+.listing-details-content-right-social-media-links ul.list-unstyled li img {max-width: 24px; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}
+.listing-details-content-right-social-media-links ul.list-unstyled li img:hover {transform: rotate(360deg) scale(1.25); cursor: pointer; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}
+
+.business-details-listing-content-left figure.mb-4 img {width: 150px;height: 150px;outline: 8px solid var(--white);
+box-shadow: 0px 8px 25px rgba(0,0,0,0.12);}

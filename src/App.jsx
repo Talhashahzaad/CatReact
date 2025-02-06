@@ -1,12 +1,13 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
 import Home from './pages/Home'
 import Footer from './common/Footer'
-import {Routes, Route } from 'react-router-dom';
 import Login from './pages/LoginPage/Login';
 import Register from './pages/RegisterPage/Register';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import Header from './common/Header';
 import Blogs from './pages/Blogs/Blogs';
+import SinglePost from './pages/Blogs/SinglePost';
 import Dashboard from './pages/DashboardPage/Dashboard';
 import AllListing from './pages/DashboardPage/AllListing/AllListing';
 import TreatmentCategories from './pages/DashboardPage/TreatmentCategories/TreatmentCategories';
@@ -18,7 +19,8 @@ import Location from './pages/DashboardPage/Location/Location';
 import Amenity from './pages/DashboardPage/Amenity/Amenity';
 import Order from './pages/DashboardPage/Order/Order';
 import MyProfile from './pages/DashboardPage/MyProfile/MyProfile';
-
+import Error404Page from './pages/Error404/Error404';
+import ListingDetails from './pages/ListingDetails/ListingDetails';
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions/TermsConditions';
 import ContactUs from './pages/ContactUs/ContactUs';
@@ -41,7 +43,7 @@ function App () {
             <Route path="/forget-password" element={<ForgetPassword/>} />
             <Route path="/blogs" element={<Blogs/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
-            
+            <Route path="/blog/:title" element={<SinglePost/>} />
             <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
             <Route path="/terms-and-conditions" element={<TermsConditions/>} />
             <Route path="/contact-us" element={<ContactUs/>} />
@@ -60,6 +62,8 @@ function App () {
             <Route path="/dashboard/amenity" element={<Amenity/>} />
             <Route path="/dashboard/order" element={<Order/>} />
             <Route path="/dashboard/my-profile" element={<MyProfile/>} />
+            <Route path="/not-found" element={<Error404Page/>} />
+            <Route path="/listing-details" element={<ListingDetails/>} />
           </Routes>
       </main>
       <Footer/>

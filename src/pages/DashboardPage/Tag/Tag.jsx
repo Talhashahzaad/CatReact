@@ -29,7 +29,7 @@ const Tag = () => {
 
     return (
         <>
-            <Container fluid>
+            <Container>
                 <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
                     <Sidebar />
 

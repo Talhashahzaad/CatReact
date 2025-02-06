@@ -1,0 +1,10 @@
+.not-found-container .d-flex {
+    padding-block: 150px;
+}
+.not-found-container .d-flex a{
+    background-color: var(--jetGreen);
+    color: var(--white);
+}
+.not-found-container .d-flex a svg {
+    transform: scale(1.75);
+}

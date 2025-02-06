@@ -7,89 +7,109 @@ import blog6 from '../../images/blog-6.jpg';
 import blog7 from '../../images/blog-7.jpg';
 import blog8 from '../../images/blog-8.jpg';
 import blog9 from '../../images/blog-9.jpg';
-// import blog10 from '../../images/blog-10.jpg'; // Comment out or remove this line if the file doesn't exist
+import blogFeature from '../../images/blogFeature.jpg';
 
 const BlogListing = [
-
     {
         id: 0,
-        title: 'the quick brown fox jumps over the lazy dog',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 1: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>" +
+        "<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>",
         image: blog1,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Healthcare',
     },
     {
         id: 1,
-        title: 'Blog 2',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 2: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
         image: blog2,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Nails',
     },
     {
         id: 2,
-        title: 'Blog 3',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 3: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
         image: blog3,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Hair',
     },
     {
         id: 3,
-        title: 'Blog 4',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 4: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
         image: blog4,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Lashes & Brows',
     },
     {
         id: 4,
-        title: 'Blog 5',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 5: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
         image: blog5,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Skincare',
     },
     {
         id: 5,
-        title: 'Blog 6',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 6: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
         image: blog6,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Retreats',
     },
     {
         id: 6,
-        title: 'Blog 7',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 7: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
         image: blog7,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Keep fit',
     },
     {
         id: 7,
-        title: 'Blog 8',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 8: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
         image: blog8,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Barbers',
     },
     {
         id: 8,
-        title: 'Blog 9',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
+        title: 'blog 9: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
         image: blog9,
-        date: '2025-01-31',
-        author: 'John Doe'
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Healthcare',
     },
     {
         id: 9,
-        title: 'Blog 10',
-        description: 'Lorem Ipsum is simply dummy of the printing typesetting industry. Lorem Ipsum has been simply dummy of the printing',
-        image: blog9, // Use an existing image or update with the correct path
-        date: '2025-01-31',
-        author: 'John Doe'
+        title: 'blog 10: The Quick Brown Fox Jumps Over The Lazy Dog',
+        description: "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
+        image: blogFeature,
+        author: 'John Doe',
+        slug: 'the-quick-brown-fox-jumps-over-the-lazy-dog',
+        date: new Date().toISOString(),
+        category: 'Keep fit',
     }
 ];
 

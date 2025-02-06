@@ -1,18 +1,26 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
 
-const BlogCard = (props) => {
+const BlogCard = ({image, title, description, date, author, slug, category}) => {
+    
+    const navigate = useNavigate();
 
-    const {image, title, description, date, author} = props;
+    const handleClick = () => {
+        navigate(`/blog/${slug}`);
+    };
+
+    //const {image, title, description, date, author, slug} = props;
 
     return(
         <>
-            <div className='blog-card'>
-                <figure className='blog-card-image mb-0 overflow-hidden'><img src={image} alt='blog-card-image' className='img-fluid' /></figure>
+            <div className='blog-card' onClick={handleClick} style={{ cursor: 'pointer' }}>
+                <figure className='blog-card-image mb-0 overflow-hidden'><img src={image} alt='{title}' title='{title}' className='img-fluid' /></figure>
                 <h3>{title}</h3>
-                <article>{description}</article>
+                <div className='blog-card-description' dangerouslySetInnerHTML={{ __html: description }} />
                 <div className='blog-card-footer d-flex justify-content-between align-items-center px-2'>
                     <p className='blog-card-footer-date'>{date}</p>
                     <p className='blog-card-footer-author text-capitalize'>by: {author}</p>
+                    <p className='blog-card-footer-category text-capitalize position-absolute'>category: {category}</p>
                 </div>
             </div>
         </>

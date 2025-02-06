@@ -28,19 +28,16 @@ const Blogs = () => {
             <Container className='py-5'>
 
                 <Row>
-
                     {currentBlogs.map((blog) => (
-
-                        <Col xxl={4} xl={4} lg={4} md={6} sm={12} xs={12}>
-
-                            <Link to={`/blog/${blog.id}`}>
+                        <Col key={blog.title} xxl={4} xl={4} lg={4} md={6} sm={12} xs={12}>
+                            <Link to={`/blog/${blog.title}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
                                 <BlogCard
-                                    key={blog.id}
                                     image={blog.image}
                                     title={blog.title.split(' ').slice(0, 5).join(' ') + '...'}
                                     description={blog.description.split(' ').slice(0, 10).join(' ') + '...'}
                                     date={new Date(blog.date).toLocaleDateString('en-US')}
                                     author={blog.author}
+                                    category={blog.category}
                                 />
                             </Link>
                         </Col>

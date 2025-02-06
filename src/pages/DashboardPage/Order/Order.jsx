@@ -34,7 +34,7 @@ const Order = () =>{
 
     return(
         <>
-            <Container fluid className="dashboard-page-main">
+            <Container className="dashboard-page-main">
                 <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
                     <Sidebar />
 
