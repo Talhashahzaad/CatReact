@@ -4,12 +4,13 @@ import {Link} from "react-router-dom";
 //import Breadcrumb from "../DashboardPage/Breadcrumb/Breadcrumb";
 import salonStorePicture from '../../images/salonStore.jpg';
 import './ListingDetails.css';
-import { FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt, FaGlobe } from "react-icons/fa";
+import { FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt, FaGlobe, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import facebookIcon from "../../images/facebook.svg";
 import instagramIcon from "../../images/instagram.svg";
 import youtubeIcon from "../../images/youtube.svg";
 import linkedinIcon from "../../images/linkedin.svg";
 import tiktokIcon from "../../images/tiktok.svg";
+import verifiedIcon from "../../images/check-circle.svg";
 import "../../App.css";
 
 
@@ -43,7 +44,37 @@ const ListingDetails = () =>{
                                 <figure className="mb-4">
                                     <img src={salonStorePicture} alt="" title="" width="" height="" className="img-fluid rounded-circle" />
                                 </figure>
+                                <small className="d-block text-capitalize text-muted pb-2"><strong>hosted by:</strong> super admin</small>
+
+                                <div className="star-rating mb-2">
+                                    <span className="d-flex gap-1 align-items-center">
+                                        <FaStar />
+                                        <FaStar />
+                                        <FaStar />
+                                        <FaStar />
+                                        <FaStarHalfAlt />
+                                    </span>
+                                    <span className="d-block text-capitalize text-muted rating-text small">
+                                        <strong>4.5</strong> 
+                                        <Link to="#" className="text-decoration-none text-capitalize text-muted rating-text ms-2">
+                                            (100 reviews)
+                                        </Link>
+                                    </span>
+                                </div>
+
+                                {/* our practisnus
+
+                                certifications */}
+
                                 <h2 className="h3 default-font text-capitalize fw-bold mb-3 h5">Discover serenity: spa wisdom inside</h2>
+
+                                <div className="verified-badge">
+                                    <span className="d-flex gap-2 align-items-center">
+                                        <img src={verifiedIcon} alt="" title="" width="" height="" className="img-fluid" />
+                                        <span className="text-capitalize rating-text small">verified</span>
+                                    </span>
+                                </div>
+
                                 <hr />
                                 <div className="listing-details-content-left-description">
                                     <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>

@@ -10,13 +10,9 @@ import Blogs from './pages/Blogs/Blogs';
 import SinglePost from './pages/Blogs/SinglePost';
 import Dashboard from './pages/DashboardPage/Dashboard';
 import AllListing from './pages/DashboardPage/AllListing/AllListing';
-import TreatmentCategories from './pages/DashboardPage/TreatmentCategories/TreatmentCategories';
 import Treatment from './pages/DashboardPage/Treatment/Treatment';
 import ProfessionalAffiliationsCertificates from './pages/DashboardPage/ProfessionalAffiliationsCertificates/ProfessionalAffiliationsCertificates';
 import Practitioner from './pages/DashboardPage/Practitioner/Practitioner';
-import Tag from './pages/DashboardPage/Tag/Tag';
-import Location from './pages/DashboardPage/Location/Location';
-import Amenity from './pages/DashboardPage/Amenity/Amenity';
 import Order from './pages/DashboardPage/Order/Order';
 import MyProfile from './pages/DashboardPage/MyProfile/MyProfile';
 import Error404Page from './pages/Error404/Error404';
@@ -53,13 +49,10 @@ function App () {
             <Route path="/pricing-packages" element={<PricingPackage/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/dashboard/all-listing" element={<AllListing/>} />
-            <Route path="/dashboard/treatment-categories" element={<TreatmentCategories/>} />
+            
             <Route path="/dashboard/treatment" element={<Treatment/>} />
             <Route path="/dashboard/certificate" element={<ProfessionalAffiliationsCertificates/>} />
             <Route path="/dashboard/practitioner" element={<Practitioner/>} />
-            <Route path="/dashboard/tag" element={<Tag/>} />
-            <Route path="/dashboard/location" element={<Location/>} />
-            <Route path="/dashboard/amenity" element={<Amenity/>} />
             <Route path="/dashboard/order" element={<Order/>} />
             <Route path="/dashboard/my-profile" element={<MyProfile/>} />
             <Route path="/not-found" element={<Error404Page/>} />

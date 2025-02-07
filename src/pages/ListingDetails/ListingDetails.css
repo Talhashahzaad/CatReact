@@ -19,3 +19,7 @@ border-bottom: 5px solid var(--jetGreen);box-shadow: 0px 16px 24px rgba(0,0,0,0.
 
 .business-details-listing-content-left figure.mb-4 img {width: 150px;height: 150px;outline: 8px solid var(--white);
 box-shadow: 0px 8px 25px rgba(0,0,0,0.12);}
+
+.star-rating {display: flex;column-gap: 10px;align-items: center;}
+.star-rating .d-flex.gap-1.align-items-center svg {color: #fba420;}
+.verified-badge .d-flex.gap-2.align-items-center img {max-width: 24px;}

@@ -48,6 +48,10 @@ const Sidebar = () => {
                     </li>
 
                     <li>
+                    <Link to="/dashboard/my-profile" onClick={(e) => (e).stopPropagation() && window.scrollTo(0, 0)}>my profile</Link>
+                    </li>
+
+                    <li>
                         <Link to="#" className="d-flex justify-content-between align-items-center" onClick={handleDropdownToggle}>
                             listings
                             <button className="btn btn-sm bg-jetGreen">
@@ -56,22 +60,12 @@ const Sidebar = () => {
                         </Link>
 
                         <div className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-                            <Link to="/dashboard/my-profile" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>my profile</Link>
-                            
                             <Link to="/dashboard/all-listing" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>create listing</Link>
-                            
-                            <Link to="/dashboard/treatment-categories" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>treatment categories</Link>
                             
                             <Link to="/dashboard/treatment" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>treatment</Link>
                             
                             <Link to="/dashboard/order" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>order</Link>
                             
-                            <Link to="/dashboard/location" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>location</Link>
-
-                            <Link to="/dashboard/amenity" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>Amenities</Link>
-
-                            <Link to="/dashboard/tag" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>tags</Link>
-
                             <Link to="/dashboard/practitioner" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>practitioner qualifications</Link>
 
                             <Link to="/dashboard/certificate" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>professional affiliations</Link>
