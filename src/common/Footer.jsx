@@ -5,6 +5,8 @@ import linkIcon from "../images/linkIcon.svg"
 import catLogo from "../images/catLogo.svg"
 
 function Footer(){
+
+    const currentYear = new Date().getFullYear();
     return(
         <>
             <footer>
@@ -23,7 +25,7 @@ function Footer(){
                                                 <h3>About CaT</h3>
                                                 <ul className="ps-0 mb-0">
                                                     <li><Link to="/about-us" onClick={() => window.scrollTo(0, 0)}>about us</Link></li>
-                                                    <li><Link to="/">Beyond the Treatment</Link></li>
+                                                    <li><Link to="/beyond-the-treatments" onClick={() => window.scrollTo(0, 0)}>Beyond the Treatment</Link></li>
                                                     <li><Link to="/blogs" onClick={() => window.scrollTo(0, 0)}>Blogs</Link></li>
                                                     <li><Link to="/">Sitemap</Link></li>
                                                 </ul>
@@ -73,7 +75,7 @@ function Footer(){
                     <Container>
                         <Row>
                             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                                <p className="mb-0 text-center text-white">Copyright &copy; 2024 | All Rights Reserved by Check a Treatment &amp; Designed by <Link to="https://remoteresource.com/" target="_blank" className="text-white">Remote Resource</Link></p>
+                                <p className="mb-0 text-center text-white">Copyright &copy; {currentYear} | All Rights Reserved by Check a Treatment &amp; Designed by <Link to="https://remoteresource.com/" target="_blank" className="text-white">Remote Resource</Link></p>
                             </Col>
                         </Row>
                     </Container>

@@ -21,7 +21,7 @@
 body {font-size: 16px; line-height: 24px; font-weight: 400; font-family: var(--defaultFont); margin: 0px; padding: 0px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
 h1,h2,h3,h4 {font-family: var(--defaultHeading);margin-block: 0px; margin-inline: 0px; padding-inline: 0px; padding-block: 0px; line-height: 36px; font-weight: 600;}
 p,ul,ol,li,span,aside,div,samp,a, strong {font-family: var(--defaultFont); line-height: 24px;}
-a,a:hover,a:focus{text-decoration: none; outline: none; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}
+a,a:hover,a:focus{text-decoration: none !important; outline: none; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}
 
 .buttonStyle {padding-block: 16px; padding-inline: 24px; display: inline-block; border-radius: 100px;}
 .headingFont {font-family: "Playfair Display", serif;}
@@ -37,6 +37,7 @@ a,a:hover,a:focus{text-decoration: none; outline: none; transition: all linear .
 /* header start */
 .siteHeader {box-shadow: 0px 35px 90px rgba(0,0,0,0.05);z-index: 1;}
 .header-menu ul.d-flex li {list-style-type: none;margin-inline-end: 24px;}
+.header-menu ul.d-flex li a {text-decoration: none;}
 .header-menu ul.d-flex li:last-child {margin-inline-end: 0;}
 .header-menu ul.d-flex li:nth-child(2) a {padding-block: 16px;padding-inline: 24px;border: 2px solid var(--jetGreen);border-radius: 100px;
 color: var(--jetGreen);background-color: var(--white);}

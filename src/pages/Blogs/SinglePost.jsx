@@ -51,7 +51,7 @@ const SinglePost = () => {
                             <div className='single-blog-post-description' dangerouslySetInnerHTML={{ __html: blog.description }} />
                             
                         </div>
-                        <div className='single-blog-post-next-prev'>
+                        {/* <div className='single-blog-post-next-prev'>
                             {previousBlog && (
                                 <Link to={`/blog/${previousBlog.title}`} className='single-blog-post-prev-link me-3' onClick={() => { window.scrollTo(0, 0); }}>
                                     <IoIosArrowRoundBack className='me-2' /> Previous
@@ -62,7 +62,7 @@ const SinglePost = () => {
                                     Next <IoIosArrowRoundForward className='ms-2' />
                                 </Link>
                             )}
-                        </div>
+                        </div> */}
                     </Col>
                     
                     <SingleSidebar />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import './Blogs.css';
-import blogFeatureImage from '../../images/blogFeature.jpg';
+import blogFeatureImage from '../../images/blogFeature.webp';
 import BlogListing from './BlogListing';
 import BlogCard from './BlogCard';
 import { Link } from 'react-router-dom';

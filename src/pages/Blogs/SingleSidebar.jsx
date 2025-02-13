@@ -21,7 +21,6 @@ const SingleSidebar = () => {
             <Col xxl={4} xl={4} lg={4} md={4} sm={12} xs={12}>
                 <div className='sidebar-blog-post-related-posts'>
                     <div className='sidebar-blog-post-related-posts-search'>
-                        <h3>Search:</h3>
                         <div className='sidebar-blog-post-related-posts-search-input w-100 h-auto position-relative mb-5'>
                             <form className='d-flex justify-content-between align-items-center'>
                                 <input type='text' placeholder='Search your blog' className='form-control' />
@@ -33,9 +32,9 @@ const SingleSidebar = () => {
                         </div>
                     </div>
 
-                    <div className='sidebar-blog-post-related-posts-related'>
-                        <h3>Related Posts:</h3>
-                        <div className='related-posts-list'>
+                    <div className='sidebar-blog-post-categories'>
+                        <h3>Categories:</h3>
+                        <div className='categories-list'>
                             <ul className='list-unstyled'>
                                 {BlogListing
                                     .sort((a, b) => b.id - a.id)

@@ -25,7 +25,7 @@ import ForBusiness from './pages/ForBusiness/ForBusiness';
 import AboutUs from './pages/AboutUs/AboutUs';
 import FrequentlyAskedQuestion from './pages/FrequentlyAskedQuestion/FrequentlyAskedQuestion';
 import PricingPackage from './pages/PricingPackage/PricingPackage';
-
+import BeyondTheTreatments from './pages/BeyondTreatments/BeyondTheTreatments';
 
 function App () {
   return (
@@ -57,6 +57,7 @@ function App () {
             <Route path="/dashboard/my-profile" element={<MyProfile/>} />
             <Route path="/not-found" element={<Error404Page/>} />
             <Route path="/listing-details" element={<ListingDetails/>} />
+            <Route path="/beyond-the-treatments" element={<BeyondTheTreatments/>} />
           </Routes>
       </main>
       <Footer/>

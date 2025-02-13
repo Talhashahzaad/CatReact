@@ -30,8 +30,7 @@ const TrendingTreatments = [
         "blogReviews": "910 reviews",
         "blogAddress": "114 Hillmorton Rd, Rugby, Warwickshire, UK",
         "categoryName": "hair salon",
-    }
-    
+    },
 ]
 
 export default TrendingTreatments;

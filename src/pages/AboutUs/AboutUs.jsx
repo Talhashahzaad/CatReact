@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {Link} from "react-router-dom";
-import InspiredBySuccess from '../../images/Inspired-by-Success.png';
-import SimplifyingBeautySearches from '../../images/Simplifying-Beauty-Searches.png';
+import InspiredBySuccess from '../../images/Inspired-by-Success.webp';
+import SimplifyingBeautySearches from '../../images/Simplifying-Beauty-Searches.webp';
 import OurMission from '../../images/Our-Mission.png';
 
 import './AboutUs.css';
