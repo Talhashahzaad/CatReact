@@ -34,9 +34,10 @@ const Order = () =>{
 
     return(
         <>
-            <Container className="dashboard-page-main">
-                <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
-                    <Sidebar />
+            <Container fluid className="dashboard-page-main">
+                <Row>
+                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
+                        <Sidebar />
 
                     <div className="dashboard-content">
                         <div className="dashboard-content-body">
@@ -114,6 +115,7 @@ const Order = () =>{
                         </div>
                     </div>
                 </div>
+                </Row>
             </Container>
         </>
     )

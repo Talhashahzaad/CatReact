@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css'
 import Home from './pages/Home'
 import Footer from './common/Footer'
@@ -28,41 +28,54 @@ import PricingPackage from './pages/PricingPackage/PricingPackage';
 import BeyondTheTreatments from './pages/BeyondTreatments/BeyondTheTreatments';
 
 function App () {
+
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith('/dashboard');
+
   return (
-    <>
-      <Header/>
+    <div style={dashboardPageMain.app}>
+      {!isDashboard && <Header />}
       <main>
-          <Routes>
-            <Route exact path="/" element={<Home/>} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/sign-up" element={<Register/>} />
-            <Route path="/forget-password" element={<ForgetPassword/>} />
-            <Route path="/blogs" element={<Blogs/>} />
-            <Route path="/dashboard" element={<Dashboard/>} />
-            <Route path="/blog/:title" element={<SinglePost/>} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
-            <Route path="/terms-and-conditions" element={<TermsConditions/>} />
-            <Route path="/contact-us" element={<ContactUs/>} />
-            <Route path="/for-business" element={<ForBusiness/>} />
-            <Route path="/about-us" element={<AboutUs/>} />
-            <Route path="/frequently-asked-question" element={<FrequentlyAskedQuestion/>} />
-            <Route path="/pricing-packages" element={<PricingPackage/>} />
-            <Route path="/dashboard" element={<Dashboard/>} />
-            <Route path="/dashboard/all-listing" element={<AllListing/>} />
-            
-            <Route path="/dashboard/treatment" element={<Treatment/>} />
-            <Route path="/dashboard/certificate" element={<ProfessionalAffiliationsCertificates/>} />
-            <Route path="/dashboard/practitioner" element={<Practitioner/>} />
-            <Route path="/dashboard/order" element={<Order/>} />
-            <Route path="/dashboard/my-profile" element={<MyProfile/>} />
-            <Route path="/not-found" element={<Error404Page/>} />
-            <Route path="/listing-details" element={<ListingDetails/>} />
-            <Route path="/beyond-the-treatments" element={<BeyondTheTreatments/>} />
-          </Routes>
+        <Routes>
+          <Route exact path="/" element={<Home/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/sign-up" element={<Register/>} />
+          <Route path="/forget-password" element={<ForgetPassword/>} />
+          <Route path="/blogs" element={<Blogs/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/blog/:title" element={<SinglePost/>} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+          <Route path="/terms-and-conditions" element={<TermsConditions/>} />
+          <Route path="/contact-us" element={<ContactUs/>} />
+          <Route path="/for-business" element={<ForBusiness/>} />
+          <Route path="/about-us" element={<AboutUs/>} />
+          <Route path="/frequently-asked-question" element={<FrequentlyAskedQuestion/>} />
+          <Route path="/pricing-packages" element={<PricingPackage/>} />
+          <Route path="/dashboard/all-listing" element={<AllListing/>} />
+          <Route path="/dashboard/treatment" element={<Treatment/>} />
+          <Route path="/dashboard/certificate" element={<ProfessionalAffiliationsCertificates/>} />
+          <Route path="/dashboard/practitioner" element={<Practitioner/>} />
+          <Route path="/dashboard/order" element={<Order/>} />
+          <Route path="/dashboard/my-profile" element={<MyProfile/>} />
+          <Route path="/not-found" element={<Error404Page/>} />
+          <Route path="/listing-details" element={<ListingDetails/>} />
+          <Route path="/beyond-the-treatments" element={<BeyondTheTreatments/>} />
+        </Routes>
       </main>
-      <Footer/>
-    </>
+      {!isDashboard && <Footer />}
+    </div>
   )
 }
+
+const dashboardPageMain = {
+  app: {
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  main: {
+    flex: '1'
+  }
+};
 
 export default App;

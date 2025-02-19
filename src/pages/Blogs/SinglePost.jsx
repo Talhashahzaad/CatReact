@@ -44,7 +44,7 @@ const SinglePost = () => {
                                 <ul className='d-flex ps-0 mb-0 align-items-center justify-content-start'>
                                     <li className='d-flex align-items-center justify-content-start'><FaUserCircle className='me-2' /> By: {blog.author}</li>
                                     <li className='d-flex align-items-center justify-content-start'><MdDateRange className='me-2' /> Date: {new Date(blog.date).toLocaleDateString('en-US')}</li>
-                                    <li className='d-flex align-items-center justify-content-start'><FaTag className='me-2' /> Tag: {categories} Category</li>
+                                    <li className='d-flex align-items-center justify-content-start'><FaTag className='me-2' /> Category: {categories} Category</li>
                                 </ul>
                             </div>
                             

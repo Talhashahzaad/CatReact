@@ -30,9 +30,10 @@ const Practitioner = () => {
 
     return (
         <>
-            <Container>
-                <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
-                    <Sidebar />
+            <Container fluid className="dashboard-page-main">
+                <Row>
+                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
+                        <Sidebar />
 
                     <div className="dashboard-content">
                         <div className="dashboard-content-body">
@@ -46,7 +47,7 @@ const Practitioner = () => {
                                 <div className="d-flex justify-content-between align-items-center listing-header">
                                     <h1 className="dashboard-content-title mb-0 h5 fw-bold default-font">Practitioner</h1>
                                     <button 
-                                        className="btn bg-jetGreen text-white all-listing-create-button d-flex align-items-center justify-content-center" 
+                                        className="btn bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center" 
                                         onClick={() => {
                                             document.querySelector('.dashboard-content-table').style.display = 'none';
                                             document.querySelector('.sidebar-listing-form').style.display = 'block';
@@ -121,7 +122,7 @@ const Practitioner = () => {
                                 <Row>
                                     <div className="d-flex justify-content-flex-start align-items-center listing-header">
                                         <button 
-                                            className="btn bg-jetGreen text-white all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
+                                            className="btn bg-jetGreen all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
                                             onClick={() => {
                                                 document.querySelector('.sidebar-listing-form').style.display = 'none';
                                                 document.querySelector('.dashboard-content-table').style.display = 'block';
@@ -175,7 +176,7 @@ const Practitioner = () => {
                                         <Row>
                                             <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
                                                 <div className="form-group my-2">
-                                                    <input type="submit" className="btn text-white rounded-0 bg-jetGreen" value="Create" />
+                                                    <input type="submit" className="text-white rounded-0 bg-jetGreen border-0 py-2 px-3" value="Create" />
                                                 </div>
                                             </Col>
                                         </Row>
@@ -185,6 +186,7 @@ const Practitioner = () => {
                         </div>
                     </div>
                 </div>
+                </Row>
             </Container>
         </>
     );

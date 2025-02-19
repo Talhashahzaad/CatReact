@@ -19,6 +19,10 @@
 }
 
 body {font-size: 16px; line-height: 24px; font-weight: 400; font-family: var(--defaultFont); margin: 0px; padding: 0px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
+body::-webkit-scrollbar { width: 8px; background-color: var(--green25);}
+body::-webkit-scrollbar-thumb { background-color: var(--jetGreen);}
+body::-webkit-scrollbar-thumb:hover { background-color: #a2a2a2;}
+
 h1,h2,h3,h4 {font-family: var(--defaultHeading);margin-block: 0px; margin-inline: 0px; padding-inline: 0px; padding-block: 0px; line-height: 36px; font-weight: 600;}
 p,ul,ol,li,span,aside,div,samp,a, strong {font-family: var(--defaultFont); line-height: 24px;}
 a,a:hover,a:focus{text-decoration: none !important; outline: none; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}

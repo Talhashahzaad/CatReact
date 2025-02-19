@@ -35,7 +35,7 @@ border-radius: 100px;border: 2px solid rgba(255,255,255,0.25);font-size: 14px;fo
 .single-blog-post-next-link {background-color: var(--jetGreen);display: inline-block;padding-block: 8px;padding-inline: 20px;border-radius: 100px;color: var(--white);}
 
 .sidebar-blog-post-related-posts h3 {background-color: var(--jetGreen);border-radius: 4px;margin-bottom: 15px;font-size: 18px;
-color: var(--white);font-family: var(--defaultFont);padding-inline: 15px; border-bottom: 5px solid rgba(0,0,0,0.08);}
+color: var(--white);font-family: var(--defaultFont);padding-inline: 15px; border-bottom: 5px solid rgba(0,0,0,0.08); padding-block: 12px;}
 
 .sidebar-blog-post-related-posts-search-input input[type="text"] {height: 60px;background-color: #f6f6f6;border-right: none;border-top-right-radius: 0;
 border-bottom-right-radius: 0;}
