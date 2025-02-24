@@ -1,0 +1,7 @@
+button.popup-button.btn.btn-primary {
+    background-color: var(--jetGreen);
+    border-color: var(--jetGreen);
+}
+.price-and-duration-footer ul li {
+    list-style-type: none;
+}

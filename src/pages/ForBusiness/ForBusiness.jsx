@@ -85,70 +85,63 @@ const ForBusiness = () => {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Business profile listing</td>
+                                            <td>Advanced Business Profile Listing</td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td>CaT Pro social media</td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Check a Treatment Marketplace access</td>
+                                            <td>Check a Treatment Online Store front</td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003; <small className="d-block fs-6 text-dark">(10% commission)</small></span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003; <small className="d-block fs-6 text-dark">(4% commission)</small></span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003; <small className="d-block fs-6 text-dark">(0% commission)</small></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td>Calendar integration</td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Social media autouploads <sup>TM</sup></td>
+                                            <td>CaT Pro Social Media</td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td>Priority listing in search results</td>
+                                            <td>Social media</td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td>Maximized business profile</td>
+                                            <td>Priority listing in search results </td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td>Unlimited personal business Live Chat for client enquiries</td>
+                                            <td>Maximized Business Profile</td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td>Multiple locations</td>
+                                            <td>Unlimited Personal Business Live Chat for Client Enquiries </td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td>Opportunity to Feature on Beyond the Treatment<sup>TM</sup></td>
+                                            <td>Multiple Locations </td>
+                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
+                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
+                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Opportunity to Feature on Beyond the Treatment</td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>

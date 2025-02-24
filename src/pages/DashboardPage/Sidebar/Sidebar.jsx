@@ -99,6 +99,13 @@ const Sidebar = () => {
                             
                             <Link to="/dashboard/treatment" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>
                                 <span className="item-icon">
+                                    <img src={treatmentDashIcon} alt="Treatment" />
+                                </span>
+                                <span className="item-text">treatment</span>
+                            </Link>
+
+                            <Link to="/dashboard/treatment-package" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false)}>
+                                <span className="item-icon">
                                     <img src={packageDashIcon} alt="Treatment" />
                                 </span>
                                 <span className="item-text">treatment packages</span>

@@ -39,6 +39,8 @@ left: -125px;bottom: 190px;border-radius: 100%;z-index: 0;}
 
 .d-flex a.mt-2.w-25.blackHoverEffect {max-width: 150px;min-width: 150px;}
 
+ul.pricing-card li .packageListing dd h6 {line-height: 30px;font-size: 12px;font-weight: 700;}
+
 @media (max-width: 1200px) {
 .d-flex a.mt-2.w-25.blackHoverEffect {max-width: 125px;min-width: 125px;}
 ul.pricing-card li {margin-block-end: 40px;}

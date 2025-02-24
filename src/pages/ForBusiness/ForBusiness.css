@@ -1,6 +1,6 @@
 .inner-page h2 { font-size: 40px; padding-bottom: 12px;}
 
-.inner-feature-banner.for-business {background-color: var(--green25);padding-block-end: 0px; background-image: unset;}
+.inner-feature-banner.for-business {background-color: var(--green25);padding-block-start: 0px; padding-block-end: 0px; background-image: unset;}
 .for-business.inner-feature-banner h1 {margin-bottom: 20px;text-transform: capitalize;font-size: 55px;color: var(--black);line-height: 72px;
 font-family: var(--defaultHeading);font-weight: 400;font-style: normal;text-align: left;}
 .for-business.inner-feature-banner p {padding-inline: 0em;text-align: left;}

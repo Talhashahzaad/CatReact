@@ -30,7 +30,7 @@ const Dashboard = () =>{
                             <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-jetGreen mb-3 rounded">
                                 <Breadcrumb />
                             </div>
-                            <h1 className="dashboard-content-title mb-3 h3 default-font">Dashboard</h1>
+                            <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">Dashboard</h1>
                             <hr />
 
 

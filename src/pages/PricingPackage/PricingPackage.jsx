@@ -36,16 +36,15 @@ const PricingPackage = () => {
                                             <h3 className="mt-2 mb-0 default-font">&#163; (No cost)</h3>
 
                                             <div className="ps-0 mt-3 mb-0 packageListing">
-                                                <dd>Business profile listing</dd>
-                                                <dd>CaT Pro social media</dd>
-                                                <dd>Check a Treatment Marketplace access</dd>
-                                                <dd>Calendar integration</dd>
-                                                <dd><s>Social media autouploads <sup>TM</sup></s></dd>
+                                                <dd>Advanced Business Profile Listing</dd>
+                                                <dd>Check a Treatment Online Storefront <h6 className="d-block text-dark text-capitalize">(10% commission) </h6></dd>
+                                                <dd><s>CaT Pro Social Media</s></dd>
+                                                <dd><s>Social media</s></dd>
                                                 <dd><s>Priority listing in search results</s></dd>
-                                                <dd><s>Maximized business profile</s></dd>
-                                                <dd><s>Unlimited personal business Live Chat for client enquiries</s></dd>
-                                                <dd><s>Multiple locations</s></dd>
-                                                <dd><s>Opportunity to Feature on Beyond the Treatment<sup>TM</sup></s></dd>
+                                                <dd><s>Maximized Business Profile</s></dd>
+                                                <dd><s>Unlimited Personal Business Live Chat for Client Enquiries</s></dd>
+                                                <dd><s>Multiple Locations</s></dd>
+                                                <dd><s>Opportunity to Feature on Beyond the Treatment</s></dd>
                                             </div>
 
                                             <div className='d-flex justify-content-between align-items-center'>
@@ -63,16 +62,15 @@ const PricingPackage = () => {
                                             <h3 className="mt-2 mb-0 default-font">&#163; 15/<span className="text-capitalize fw-bold h6">month</span></h3>
 
                                             <div className="ps-0 mt-3 mb-0 packageListing">
-                                            <dd>Business profile listing</dd>
-                                                <dd>CaT Pro social media</dd>
-                                                <dd>Check a Treatment Marketplace access</dd>
-                                                <dd>Calendar integration</dd>
-                                                <dd>Social media autouploads <sup>TM</sup></dd>
-                                                <dd>Priority listing in search results</dd>
-                                                <dd><s>Maximized business profile</s></dd>
-                                                <dd><s>Unlimited personal business Live Chat for client enquiries</s></dd>
-                                                <dd><s>Multiple locations</s></dd>
-                                                <dd><s>Opportunity to Feature on Beyond the Treatment<sup>TM</sup></s></dd>
+                                                <dd>Advanced Business Profile Listing</dd>
+                                                <dd>Check a Treatment Online Storefront <h6 className="d-block text-dark text-capitalize">(4% commission) </h6></dd>
+                                                <dd>CaT Pro Social Media</dd>
+                                                <dd>Social media</dd>
+                                                <dd><s>Priority listing in search results</s></dd>
+                                                <dd><s>Maximized Business Profile</s></dd>
+                                                <dd><s>Unlimited Personal Business Live Chat for Client Enquiries</s></dd>
+                                                <dd><s>Multiple Locations</s></dd>
+                                                <dd><s>Opportunity to Feature on Beyond the Treatment</s></dd>
                                             </div>
                                             
                                             <div className='d-flex justify-content-between align-items-center'>
@@ -90,16 +88,15 @@ const PricingPackage = () => {
                                             <h3 className="mt-2 mb-0 default-font">&#163; 35/<span className="text-capitalize fw-bold h6">month</span></h3>
 
                                             <div className="ps-0 mt-3 mb-0 packageListing">
-                                            <dd>Business profile listing</dd>
-                                                <dd>CaT Pro social media</dd>
-                                                <dd>Check a Treatment Marketplace access</dd>
-                                                <dd>Calendar integration</dd>
-                                                <dd>Social media autouploads <sup>TM</sup></dd>
+                                                <dd>Advanced Business Profile Listing</dd>
+                                                <dd>Check a Treatment Online Storefront <h6 className="d-block text-dark text-capitalize">(zero commission) </h6></dd>
+                                                <dd>CaT Pro Social Media</dd>
+                                                <dd>Social media</dd>
                                                 <dd>Priority listing in search results</dd>
-                                                <dd>Maximized business profile</dd>
-                                                <dd>Unlimited personal business Live Chat for client enquiries</dd>
-                                                <dd>Multiple locations</dd>
-                                                <dd>Opportunity to Feature on Beyond the Treatment<sup>TM</sup></dd>
+                                                <dd>Maximized Business Profile</dd>
+                                                <dd>Unlimited Personal Business Live Chat for Client Enquiries</dd>
+                                                <dd>Multiple Locations</dd>
+                                                <dd>Opportunity to Feature on Beyond the Treatment</dd>
                                             </div>
                                             
                                             <div className='d-flex justify-content-between align-items-center'>
@@ -116,6 +113,7 @@ const PricingPackage = () => {
                         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                             <div className="w-100 h-auto d-block position-relative">
                                 <h4 className="animate__fadeInUp animate__animated text-center fw-normal w-100 h-auto d-block position-relative text-normal pt-5">* Plan change available at any time</h4>
+                                <p className="animate__fadeInUp animate__animated text-center fw-normal w-100 h-auto d-block position-relative text-normal pt-3">We are an Advanced Directory, Online Storefront, and Professional’s Social Media for the Treatment Industry, Spanning Across Beauty, Wellness and Healthcare, and Covering the Whole of the UK.</p>
                             </div>
                         </Col>
                     </Row>

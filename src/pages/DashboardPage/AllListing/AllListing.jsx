@@ -75,7 +75,7 @@ const AllListing = () => {
                                 <div className="dashboard-content-table">
                                     <Row>
                                         <div className="d-flex justify-content-between align-items-center listing-header">
-                                            <h1 className="dashboard-content-title mb-0 h5 fw-bold default-font">All Listing</h1>
+                                            <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">All Listing</h1>
                                             <button 
                                                 className="btn bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center" 
                                                 onClick={() => {

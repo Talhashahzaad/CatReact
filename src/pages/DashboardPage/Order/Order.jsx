@@ -45,7 +45,7 @@ const Order = () =>{
                                 <Breadcrumb />
                             </div>
 
-                            <h1 className="dashboard-content-title mb-0 h5 fw-bold default-font text-capitalize">order</h1>
+                            <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">order</h1>
                             <hr />
 
                             <div className="dashboard-content-table">
