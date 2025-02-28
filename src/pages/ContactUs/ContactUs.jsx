@@ -1,7 +1,7 @@
-import {React, useState} from "react";
+import { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Container, Row, Col } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import facebookIcon from "../../images/facebook.svg";
 import instagramIcon from "../../images/instagram.svg";
 import youtubeIcon from "../../images/youtube.svg";
@@ -16,48 +16,73 @@ import "./ContactUs.css";
 const ContactUs = () => {
 
     const [formData, setFormData] = useState({
-        contactName: '',
-        contactEmail: '',
-        contactPhone: '',
-        textMessage: ''
-      });
-      const [isSubmitting, setIsSubmitting] = useState(false);
-      const [submitStatus, setSubmitStatus] = useState({ message: '', isError: false });
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+    });
+
+    const [responseMessage, setResponseMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
     
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-          ...prevState,
-          [name]: value
-        }));
-      };
-    
-      const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
-        setSubmitStatus({ message: '', isError: false });
-    
+        setResponseMessage('');
+        setErrorMessage('');
+
         try {
-          const response = await axios.post('http://localhost:8000/api/contact-store', formData);
-          setSubmitStatus({ 
-            message: 'Message sent successfully!', 
-            isError: false 
-          });
-          setFormData({
-            contactName: '',
-            contactEmail: '',
-            contactPhone: '',
-            textMessage: ''
-          });
+            const response = await axios.post('http://3.8.140.227:8000/api/contact-store', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.status === 201 || response.status === 200) {
+                setResponseMessage('Your message has been sent successfully!');
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    message: ''
+                });
+                console.log(response);
+            } 
         } catch (error) {
-          setSubmitStatus({ 
-            message: 'Failed to send message. Please try again.', 
-            isError: true 
-          });
-        } finally {
-          setIsSubmitting(false);
+            if (error.response) {
+                setErrorMessage(error.response.data.message || 'An error occurred while sending the message. Please try again later.');
+            } else {
+                setErrorMessage('Server is not responding. Please check your connection.');
+            }
         }
-      };
+    };
+    
+    useEffect(() => {
+        if (responseMessage) {
+            const timer = setTimeout(() => {
+                window.location.href = '/thank-you';
+            }, 500);
+            return () => clearTimeout(timer);
+        }
+    }, [responseMessage]);
+
+    // Load Google Maps JavaScript API asynchronously
+    // useEffect(() => {
+    //     const loadGoogleMapsAPI = () => {
+    //         const script = document.createElement('script');
+    //         script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap`;
+    //         script.async = true;
+    //         script.defer = true;
+    //         document.body.appendChild(script);
+    //     };
+
+    //     loadGoogleMapsAPI();
+    // }, []);
 
     return (
         <>
@@ -126,64 +151,100 @@ const ContactUs = () => {
                                 <Row>
                                     <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className="mb-3">
                                         <div className="form-group">
-                                            <label className="mb-2" htmlFor="contactName">Full Name</label>
-                                            <input type="text" id="contactName" name="contactName" className="form-control" placeholder="Name" required="required" value={formData.contactName} onChange={handleChange} />
+                                            <label className="mb-2" htmlFor="name">Full Name</label>
+                                            <input 
+                                                type="text" 
+                                                id="name" 
+                                                name="name" 
+                                                className="form-control contact-name" 
+                                                placeholder="Name" 
+                                                required="required" 
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                            />
                                         </div>
                                     </Col>
 
                                     <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className="mb-3">
                                         <div className="form-group">
-                                            <label className="mb-2" htmlFor="contactEmail">Email Address</label>
-                                            <input type="email" id="contactEmail" name="contactEmail" className="form-control" placeholder="Email" required="required" value={formData.contactEmail} onChange={handleChange} />
+                                            <label className="mb-2" htmlFor="email">Email Address</label>
+                                            <input 
+                                                type="email" 
+                                                id="email" 
+                                                name="email" 
+                                                className="form-control contact-email" 
+                                                placeholder="Email" 
+                                                required="required" 
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                            />
                                         </div>
                                     </Col>
 
                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12} className="mb-3">
                                         <div className="form-group">
-                                            <label className="mb-2" htmlFor="contactPhone">Phone Number</label>
-                                            <input type="tel" id="contactPhone" name="contactPhone" minLength={10} maxLength={12} className="form-control" placeholder="Phone" required="required" value={formData.contactPhone} onChange={handleChange} />
+                                            <label className="mb-2" htmlFor="phone">Phone Number</label>
+                                            <input 
+                                                type="tel" 
+                                                id="phone" 
+                                                name="phone" 
+                                                minLength={10} 
+                                                maxLength={12} 
+                                                className="form-control contact-phone" 
+                                                placeholder="Phone" 
+                                                required="required" 
+                                                value={formData.phone}
+                                                onChange={handleChange}
+                                            />
                                         </div>
                                     </Col>
 
                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12} className="mb-4">
                                         <div className="form-group">
-                                            <label className="mb-2" htmlFor="textMessage">Message</label>
-                                            <textarea id="textMessage" name="textMessage" className="form-control" placeholder="Text your message here..." value={formData.textMessage} onChange={handleChange}></textarea>
+                                            <label className="mb-2" htmlFor="message">Message</label>
+                                            <textarea 
+                                                id="message" 
+                                                name="message" 
+                                                className="form-control contact-message" 
+                                                placeholder="Text your message here..." 
+                                                value={formData.message}
+                                                onChange={handleChange}
+                                                required="required"
+                                            ></textarea>
                                         </div>
                                     </Col>
 
-                                    <Col xxl={4} xl={4} lg={4} md={4} sm={12} xs={12}>
+                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                                         <div className="form-group">
-                                        <input
+                                            <input
                                                 type="submit"
-                                                value={isSubmitting ? "Sending..." : "Submit Message"}
+                                                value='Submit Message'
                                                 className="form-control text-capitalize"
-                                                disabled={isSubmitting}
                                             />
                                         </div>
                                     </Col>
 
-                                    {submitStatus.message && (
-                                    <div className={`mt-3 alert ${submitStatus.isError ? 'alert-danger' : 'alert-success'}`}>
-                                        {submitStatus.message}
-                                    </div>
+                                    {responseMessage && ( 
+                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                                            <div className={`mt-3 alert ${responseMessage ? 'alert-success' : errorMessage ? 'alert-danger' : ''}`}>
+                                                {responseMessage || errorMessage}
+                                            </div>
+                                        </Col>
                                     )}
                                 </Row>
                             </form>
                         </Col>
 
-                        <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                        {/* <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                             <div className="contact-us-map">
-                            <iframe src="https://www.google.com/maps/d/embed?mid=1LaIpxs9XJ9Bod98XJ9PsOQZrlZaDTCU&ehbc=2E312F=en&z=7" className="w-100" height="480"></iframe>
+                                <iframe src="https://www.google.com/maps/d/embed?mid=1LaIpxs9XJ9Bod98XJ9PsOQZrlZaDTCU&ehbc=2E312F=en&z=7" className="w-100" height="480"></iframe>
                             </div>
-                        </Col>
+                        </Col> */}
                     </Row>
-
-                    
                 </Container>
             </div>
         </>
     )
-}
+}   
 
 export default ContactUs;

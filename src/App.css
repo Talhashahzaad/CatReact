@@ -4,6 +4,7 @@
 :root{
   --jetGreen: #6C8B57;
   --green25: rgba(108,139,87,.25);
+  --green08: rgba(108,139,87,0.08);
   --white: #ffffff;
   --black: #14212a;
   --bazeLight: #FAF5F6;
@@ -40,11 +41,12 @@ a,a:hover,a:focus{text-decoration: none !important; outline: none; transition: a
 
 /* header start */
 .siteHeader {box-shadow: 0px 35px 90px rgba(0,0,0,0.05);z-index: 1;}
-.header-menu ul.d-flex li {list-style-type: none;margin-inline-end: 24px;}
-.header-menu ul.d-flex li a {text-decoration: none;}
+.header-menu ul.d-flex li {list-style-type: none;margin-inline-end: 24px; text-transform: capitalize;}
+.header-menu ul.d-flex li:first-child a,.header-menu ul.d-flex li:nth-child(2) a {text-decoration: none; padding-block: 16px;  padding-inline: 24px;  border: 2px solid var(--jetGreen);  border-radius: 100px;
+  color: var(--jetGreen);  background-color: var(--white);}
 .header-menu ul.d-flex li:last-child {margin-inline-end: 0;}
-.header-menu ul.d-flex li:nth-child(2) a {padding-block: 16px;padding-inline: 24px;border: 2px solid var(--jetGreen);border-radius: 100px;
-color: var(--jetGreen);background-color: var(--white);}
+/* .header-menu ul.d-flex li:nth-child(2) a {padding-block: 16px;padding-inline: 24px;border: 2px solid var(--jetGreen);border-radius: 100px;
+color: var(--jetGreen);background-color: var(--white);} */
 .header-menu ul.d-flex li:nth-child(2) a:hover,.header-menu ul.d-flex li:nth-child(2) a:focus {background-color: var(--jetGreen);color: var(--white);outline: none;}
 .header-menu ul.d-flex li a.nav-menu-button {padding-block: 16px;padding-inline: 24px;border: 2px solid var(--jetGreen);border-radius: 100px;
 color: var(--white);background-color: var(--jetGreen);}
@@ -52,7 +54,7 @@ color: var(--white);background-color: var(--jetGreen);}
 
 .menu-arrow {transition: transform 0.3s ease;}
 .menu-arrow.rotated {transform: rotate(180deg);}
-.dropdown-content {position: absolute;top: 100%;background: white;min-width: 200px;box-shadow: 0 2px 5px rgba(0,0,0,0.2);opacity: 0;visibility: hidden;
+.dropdown-content {position: absolute;top: 100%;background: white;min-width: 225px;box-shadow: 0 2px 5px rgba(0,0,0,0.2);opacity: 0;visibility: hidden;
 transition: all 0.3s ease;transform: translateY(-10px);}
 
 .dropdown-content.show {opacity: 1;visibility: visible;transform: translateY(0);box-shadow: 0 4px 8px 0 #0d161905,0 12px 20px 0 rgba(13,22,25,.059);
@@ -186,6 +188,15 @@ width: 20px;height: 20px;left: -30px;background-repeat: no-repeat;background-siz
 .whyJoinAsCustomer a.buttonStyle {background-color: var(--jetGreen);color: var(--white);}
 .whyJoinAsCustomer a.buttonStyle:hover, .whyJoinAsCustomer a.buttonStyle:focus {background-color: var(--black);outline: none;}
 /* why join as customer end here */
+
+/* beyond the treatment start here */
+.beyond-the-treatment-section {background-color: var(--bazeLight);padding-block: 100px;}
+.beyond-the-treatment-section h3 {font-size: 50px;font-weight: 400;color: var(--black);text-align: center;line-height: 50px;}
+.beyond-the-treatment-section h5 {font-size: 20px;font-weight: 400;color: var(--black);text-align: center;line-height: 50px;}
+.beyond-the-treatment-section aside {margin-top: 24px;}
+.beyond-the-treatment-section aside a.buttonStyle {background-color: var(--jetGreen);color: var(--white);padding-block: 16px;padding-inline: 24px;border-radius: 100px;}
+.beyond-the-treatment-section aside a.buttonStyle:hover, .beyond-the-treatment-section aside a.buttonStyle:focus {background-color: var(--black);outline: none;}
+/* beyond the treatment end here */
 
 
 /* blog and news start here */

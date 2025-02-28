@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
@@ -21,13 +21,34 @@ const TreatmentPackage = () => {
     const handleCloseModalPopUp = () => setShowModalPopUp(false);
     const handleShowModalPopUp = () => setShowModalPopUp(true);
 
-    const [treatmentPackageMinutes, setTreatmentPackageMinutes] = useState(5);
-    const [treatmentPackageSeconds, setTreatmentPackageSeconds] = useState(20);
-    //const [treatmentPackagePriceType, setTreatmentPackagePriceType] = useState('Treatment pricing');
     const [retailPrice, setRetailPrice] = useState();
-    const [selectedPriceType, setSelectedPriceType] = useState('Free');
+    const [selectedPriceType, setSelectedPriceType] = useState('');
     const [discountPercentage, setDiscountPercentage] = useState(0);
 
+    const [totalDuration, setTotalDuration] = useState({ hours: 0, minutes: 0 });
+
+    const [selectedTreatments, setSelectedTreatments] = useState([]);
+
+    const calculateTotalDuration = () => {
+        const totalMinutes = selectedTreatments.reduce((total, treatment) => {
+            const [hours, minutes] = treatment.duration.split('h').map(part => parseInt(part));
+            return total + (hours * 60) + minutes;
+        }, 0);
+
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        return { hours, minutes };
+    };
+
+    useEffect(() => {
+        const calculateTotalDuration = () => {
+            const hours = selectedTreatments.reduce((total, treatment) => total + treatment.duration.split('h')[0], 0);
+            const minutes = selectedTreatments.reduce((total, treatment) => total + parseInt(treatment.duration.split('h')[1].split('min')[0]), 0);
+            setTotalDuration({ hours, minutes });
+        };
+
+        calculateTotalDuration();
+    }, []);
 
     const handleEntriesPerPageChange = useCallback((event) => {
         setEntriesPerPage(parseInt(event.target.value));
@@ -69,6 +90,19 @@ const TreatmentPackage = () => {
         }
     ]
     
+    // Function to handle checkbox change
+    const handleCheckboxChange = (treatment, isChecked) => {
+        setSelectedTreatments(prevSelected => {
+            if (isChecked) {
+                return [...prevSelected, treatment];
+            } else {
+                return prevSelected.filter(item => item.id !== treatment.id);
+            }
+        });
+    };
+
+    // Calculate total price
+    const totalPrice = selectedTreatments.reduce((total, treatment) => total + treatment.price, 0);
 
   return (
     <>
@@ -220,22 +254,56 @@ const TreatmentPackage = () => {
                                                         <h4 className="text-capitalize fw-bold default-font pt-3 h5">Treatments</h4>
                                                         <p>Select which treatments to include in this package and how they should be sequenced when booked.</p>
 
-                                                        <Button className="popup-button" onClick={handleShowModalPopUp}>
+                                                        <Button className="popup-button rounded-0" onClick={handleShowModalPopUp}>
                                                             Add Treatment
                                                         </Button>
 
-                                                        <Modal show={showModalPopUp} onHide={handleCloseModalPopUp} size="lg"       aria-labelledby="contained-modal-title-vcenter" centered>
+                                                        <Modal show={showModalPopUp} onHide={handleCloseModalPopUp} size="lg"       aria-labelledby="contained-modal-title-vcenter" centered id="add-treatment-packages-modal">
                                                             <Modal.Header closeButton>
-                                                                <Modal.Title><h5 className="text-capitalize fw-bold default-font">Add Treatment</h5></Modal.Title>
+                                                                <Modal.Title><h5 className="text-capitalize fw-bold default-font mb-0">Add Treatment</h5></Modal.Title>
                                                             </Modal.Header>
-                                                            <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+
+                                                            <Modal.Body>
+                                                                <div className="selected-treatments-package-details">
+                                                                    <ul className="d-flex align-items-start justify-content-start ps-0 mb-0 flex-column gap-2">
+                                                                        {[
+                                                                            { id: 1, name: 'jameson stokes - service', duration: '5h 30min', price: 380 },
+                                                                            { id: 2, name: 'Jameson Stokes - Ocean Yates', duration: '1h 15min', price: 75 }
+                                                                        ].map(treatment => (
+                                                                            <li key={treatment.id} className='d-flex flex-column'>
+                                                                                <label htmlFor={`treatmentName-${treatment.id}`} className='form-label text-capitalize fw-bold small'></label>
+                                                                                <input 
+                                                                                    type="checkbox" 
+                                                                                    className="form-control" 
+                                                                                    id={`treatmentName-${treatment.id}`} 
+                                                                                    placeholder="treatment name" 
+                                                                                    name="treatmentName" 
+                                                                                    onChange={(e) => handleCheckboxChange(treatment, e.target.checked)}
+                                                                                />
+                                                                                <h6 className='text-capitalize fw-bold default-font'>{treatment.name}</h6>
+                                                                                <small className='text-capitalize fw-normal default-font'>  
+                                                                                    <span id="selected-treatment-duration">{treatment.duration}</span> - 
+                                                                                    <span id="selected-treatment-price">&pound; {treatment.price}</span>
+                                                                                </small>
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                </div>
+                                                            </Modal.Body>
+                                                            
                                                             <Modal.Footer className='d-flex flex-column gap-2 align-items-start justify-content-start price-and-duration-footer'>
                                                                 <ul className='d-flex flex-column gap-2 ps-0 mb-0'>
                                                                     <li>
-                                                                        <label htmlFor="TotalPrice" className='text-capitalize'>total price: <span className='fw-bold'>&pound; 100</span></label>
+                                                                        <label htmlFor="TotalPrice" className='text-capitalize'>total price: 
+                                                                            <span className='fw-bold selected-treatment-duration-total-price'>&pound; {totalPrice}</span>
+                                                                        </label>
                                                                     </li>
                                                                     <li>
-                                                                        <label htmlFor="TotalDuration" className='text-capitalize'>Total Duration: <span className='fw-bold'>0h 0min minutes</span></label>
+                                                                        <label htmlFor="TotalDuration" className='text-capitalize'>Total Duration: 
+                                                                            <span className='fw-bold selected-treatment-duration-total-duration'>
+                                                                                {calculateTotalDuration().hours}h {calculateTotalDuration().minutes}min
+                                                                            </span>
+                                                                        </label>
                                                                     </li>
                                                                 </ul>
                                                             </Modal.Footer>
@@ -243,7 +311,7 @@ const TreatmentPackage = () => {
                                                     </Col>
 
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <h5 className="text-capitalize h6 fw-bold default-font pt-3 text-end">Total Time: {treatmentPackageMinutes} min {treatmentPackageSeconds} second | Total Price: Free</h5>
+                                                        <h5 className="text-capitalize h6 fw-bold default-font pt-3 text-end">Total Time: {calculateTotalDuration().hours}h {calculateTotalDuration().minutes}min | Total Price: &pound; {totalPrice}</h5>
                                                     </Col>
 
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
@@ -302,6 +370,23 @@ const TreatmentPackage = () => {
 
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                         <h4 className="text-capitalize fw-bold default-font pt-3 h5">Availability</h4>
+                                                    </Col>
+
+
+                                                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                        <div className="form-group my-2">
+                                                            <label htmlFor="status" className="form-label text-capitalize fw-bold small">Available for  </label>
+                                                            <select name="status" id="status" className="form-control text-capitalize" required>
+                                                                <option value="">all genders</option>
+                                                                <option value="">females only</option>
+                                                                <option value="">males only</option>
+                                                                <option value="">unisex</option>
+                                                            </select>
+                                                        </div>
+                                                    </Col>
+                                                    
+                                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                        <input type="submit" className="bg-jetGreen text-white border-0 py-2 px-3" value="Create" />
                                                     </Col>
                                                 </Row>
                                             </form>

@@ -34,8 +34,8 @@ border-radius: 100px;border: 2px solid rgba(255,255,255,0.25);font-size: 14px;fo
 .single-blog-post-prev-link,
 .single-blog-post-next-link {background-color: var(--jetGreen);display: inline-block;padding-block: 8px;padding-inline: 20px;border-radius: 100px;color: var(--white);}
 
-.sidebar-blog-post-related-posts h3 {background-color: var(--jetGreen);border-radius: 4px;margin-bottom: 15px;font-size: 18px;
-color: var(--white);font-family: var(--defaultFont);padding-inline: 15px; border-bottom: 5px solid rgba(0,0,0,0.08); padding-block: 12px;}
+.sidebar-blog-post-related-posts h3 {background-color: transparent;border-radius: 4px;margin-bottom: 15px;font-size: 24px;color: var(--jetGreen);
+font-family: var(--defaultFont);padding-inline: 0px;border-bottom: 5px solid rgba(0,0,0,0.08);padding-block: 12px;font-weight: 700;}
 
 .sidebar-blog-post-related-posts-search-input input[type="text"] {height: 60px;background-color: #f6f6f6;border-right: none;border-top-right-radius: 0;
 border-bottom-right-radius: 0;}
@@ -53,9 +53,11 @@ text-transform: uppercase;line-height: 24px;}
 
 .popular-posts-list .list-unstyled li {margin-block-end: 15px;}
 .popular-posts-list .list-unstyled a {display: flex;width: 100%;height: auto;align-items: center;}
-.popular-posts-list .list-unstyled a>figure {width: 175px;height: 80px;overflow: hidden;border-radius: 4px;margin-bottom: 0px;}
+.popular-posts-list .list-unstyled a>figure {width: 175px;height: 80px;overflow: hidden;border-radius: 4px;margin-bottom: 0px; min-width: 125px; max-width: 125px;}
 .popular-posts-list .list-unstyled a>figure img {width: 175px;height: 80px;object-fit: cover;border-radius: 4px;border: 1px solid rgba(0,0,0,0.25);padding: 0px;}
 .popular-posts-list .list-unstyled li a>figure img {width: 175px;height: 80px;object-fit: cover;border-radius: 4px;border: 1px solid rgba(0,0,0,0.25);
 padding: 0px;}
 .popular-posts-list .list-unstyled a>h4 {font-size: 14px;padding-inline-start: 15px;font-family: var(--defaultFont);color: var(--black);
 text-transform: uppercase;line-height: 24px;}
+
+.blog-card .blog-card-description {min-height: 110px;}

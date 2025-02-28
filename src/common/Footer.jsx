@@ -18,7 +18,9 @@ function Footer(){
                                     <Col xxl={7} xl={7} lg={7} md={12} sm={12} xs={12}>
                                         <Row>
                                             <Col xxl={4} xl={4} lg={4} md={12} sm={12} xs={12}>
-                                                <figure className="d-flex h-100 align-items-center mb-0"><img src={catLogo} alt="" title="" className="w-100 bg-white p-2" /></figure>
+                                                <figure className="d-flex h-100 align-items-center mb-0">
+                                                    <Link to="/" onClick={() => window.scrollTo(0, 0)}><img src={catLogo} alt="" title="" className="w-100 bg-white p-2" /></Link>
+                                                </figure>
                                             </Col>
 
                                             <Col xxl={4} xl={4} lg={4} md={6} sm={12} xs={12}>

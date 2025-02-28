@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import catLogo from "../images/catLogo.svg";
-import userLogin from "../images/userLogin.svg";
+//import userLogin from "../images/userLogin.svg";
 import angleDown from "../images/angleDown.svg";
 
 
@@ -33,8 +33,13 @@ function Header(){
                                     <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={4} className="d-flex align-items-center justify-content-end mb-0 ps-0">
                                         <div className="header-menu">
                                             <ul className="d-flex align-items-center justify-content-end mb-0 ps-0">
-                                                <li><Link to="/login"><img src={userLogin} alt="home" /></Link></li>
-                                                <li><Link to="/for-business" className="text-capitalize">for business</Link></li>
+                                                <li><Link to="/login">
+                                                    {/* <img src={userLogin} alt="home" />  */}
+                                                client login</Link></li>
+                                                
+                                                <li><Link to="/sign-up" className="text-capitalize">
+                                                {/* <img src={userLogin} alt="home" />  */}
+                                                business login</Link></li>
                                                 <li className="menus-dropdown">
                                                     <Link 
                                                         to="/" 
@@ -52,8 +57,12 @@ function Header(){
                                                     </Link>
                                                     <div className={`dropdown-content ${isMenuOpen ? 'show' : ''}`}>
                                                         <Link to="/sign-up" className="text-capitalize sign-up-link">sign up</Link>
+                                                        <Link to="/sign-up" className="text-capitalize">business sign up</Link>
                                                         <Link to="/for-business" className="text-capitalize">for business</Link>
-                                                        <Link to="/" className="text-capitalize">customer support</Link>
+                                                        <Link to="/pricing-packages" className="text-capitalize">membership options</Link>
+                                                        <Link to="/beyond-the-treatments" className="text-capitalize">beyond the treatment</Link>
+                                                        <Link to="/blogs" className="text-capitalize">blogs</Link>
+                                                        <Link to="/about-us" className="text-capitalize">about us</Link>
                                                         <Link to="/contact-us" className="text-capitalize">contact us</Link>
                                                     </div>
                                                 </li>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //import {useNavigate} from 'react-router-dom';
 import { Col } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
@@ -15,6 +15,21 @@ const SingleSidebar = () => {
     //        navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     //     }
     // };
+
+    const [blogListing, setBlogListing] = useState([]);
+
+    useEffect(() => {
+        const blogs = async () => {
+            const response = await fetch('http://3.8.140.227:8000/api/blog/');
+            const data = await response.json();
+            setBlogListing(data);
+        }
+        blogs();
+    }, []);
+
+    const filterPopularBlogs = (blogs) => {
+        return blogs.filter(blog => blog.is_popular === 1);
+    };
 
     return (
         <>
@@ -55,17 +70,18 @@ const SingleSidebar = () => {
                         <h3>Popular Posts:</h3>
                         <div className='popular-posts-list'>
                             <ul className='list-unstyled'>
-                                {BlogListing
-                                    .sort((a, b) => a.id - b.id)
+                                {blogListing && filterPopularBlogs(blogListing) 
                                     .slice(0, 3)
+                                    .sort((a, b) => a.id - b.id)
                                     .map((blog) => (
                                         <li key={blog.id}>
-                                            <Link to={`/blog/${blog.title}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-                                                <figure><img src={blog.image} alt={blog.title} title={blog.title} className='img-fluid' /></figure>
+                                            <Link to={`/blog/${blog.slug}`} onClick={() => { window.scrollTo({top: 0, behavior: 'smooth'}); window.location.href = `/blog/${blog.slug}`; }}>
+                                                <figure><img src={`http://3.8.140.227:8000${blog.image}`} alt={blog.title} title={blog.title} className='img-fluid' loading='lazy' /></figure>
                                                 <h4>{blog.title}</h4>
                                             </Link>
                                         </li>
-                                    ))}
+                                    ))
+                                }
                             </ul>
                         </div>
                     </div>

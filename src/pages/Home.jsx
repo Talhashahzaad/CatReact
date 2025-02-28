@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import arrowTopRight from "../images/arrowTopRight.svg";
 import linkIcon from "../images/linkIcon.svg";
-import blog1 from"../images/blog-1.jpg";
-import blog2 from"../images/blog-2.jpg";
-import blog3 from"../images/blog-3.jpg";
-import blog4 from"../images/blog-4.jpg";
+// import blog1 from"../images/blog-1.jpg";
+// import blog2 from"../images/blog-2.jpg";
+// import blog3 from"../images/blog-3.jpg";
+// import blog4 from"../images/blog-4.jpg";
 import eyeIcon from"../images/eyeIcon.svg";
 //import FeatureCarousel from "../component/FeatureCarousel";
 import TrendingCarousel from "../component/TrendingCarousel";
@@ -16,9 +16,23 @@ import categoriesIcon from "../images/categoriesIcon.svg";
 import mapMarkerIcon from "../images/mapMarkerIcon.svg";
 import WantToSeeMoreCarousel from "../component/WanToSeeMoreCarousel";
 import ProductComingSoon from "../images/check-a-treatment-coming-soon-banner.jpg";
+import beyondTreatmentsVideo1 from '../images/clip1.mp4';
+import beyondTreatmentsVideo2 from '../images/clip2.mp4';
 
 
 function Home(){
+
+    const [blogListing, setBlogListing] = useState([]);
+
+    useEffect(() => {
+        const blogs = async () => {
+            const response = await fetch('http://3.8.140.227:8000/api/blog/');
+            const data = await response.json();
+            setBlogListing(data);
+        }
+        blogs();
+    }, []);
+
     return(
         <>
         <div className="siteBanner w-100 position-relative d-flex align-items-center justify-content-center flex-column">
@@ -33,12 +47,12 @@ function Home(){
                                 <div className="searchBox w-100 bg-white py-2 position-relative d-flex align-items-center justify-content-between">
                                     
                                         <span className="searchForTreatment">
-                                            <img src={searchIcon} alt="search" />
+                                            <img loding="lazy" src={searchIcon} alt="search" />
                                             <input type="text" placeholder="Search for treatment" id="" name="" />
                                         </span>
 
                                         <span className="selectYourCategories">
-                                            <img src={categoriesIcon} alt="search" />
+                                            <img loding="lazy" src={categoriesIcon} alt="search" />
                                             <select id="" name="">
                                                 <option value="hair">
                                                     Hair Services
@@ -62,12 +76,12 @@ function Home(){
                                         </span>
 
                                         <span className="searchByLocation">
-                                            <img src={mapMarkerIcon} alt="Location" />
+                                            <img loding="lazy" src={mapMarkerIcon} alt="Location" />
                                             <input type="text" placeholder="Location" id="" name="" />
                                         </span>
 
                                         <span className="submitYourData">
-                                            <button type="submit"><img src={searchIcon} alt="search" /> <span className="searchButtonText text-white ps-2">Search</span></button>
+                                            <button type="submit"><img loding="lazy" src={searchIcon} alt="search" /> <span className="searchButtonText text-white ps-2">Search</span></button>
                                         </span>
                                 </div>
                             </Row>
@@ -80,84 +94,84 @@ function Home(){
             <h2 className="display-1 marquee-text">
                 <ul className="d-flex ps-0 mb-0">
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Hair</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Barbers</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Nails</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>L&#39;s & B&#39;s</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Injectables</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>SPMU</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Skincare</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Hair removal</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Teeth</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Training</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Spa &amp; Sauna</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Retreats</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Healthcare</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Children</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Animals</span>
                     </li>
 
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>MUA (Makeup Artist)</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Surgery</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Keep fit</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Therapy</span>
                     </li>
                     <li>
-                        <img src={catDoubleCircles} alt="bannerCaptionVector" />
+                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
                         <span>Nutrition</span>
                     </li>
                 </ul>
@@ -179,7 +193,7 @@ function Home(){
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <aside className="text-center"><Link to="/" className="buttonStyle">Explore Treatments <img src={arrowTopRight} /></Link></aside>
+                        <aside className="text-center"><Link to="/" className="buttonStyle">Explore Treatments <img loding="lazy" src={arrowTopRight} /></Link></aside>
                     </Col>
                 </Row>
             </Container>
@@ -194,11 +208,11 @@ function Home(){
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <img src={ProductComingSoon} alt="product-coming-soon" className="img-fluid my-4 w-100" />
+                        <img loding="lazy" src={ProductComingSoon} alt="product-coming-soon" className="img-fluid my-4 w-100" />
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <aside className="text-center"><Link to="/contact-us" className="buttonStyle text-capitalize">coming soon <img src={arrowTopRight} /></Link></aside>
+                        <aside className="text-center"><Link to="/contact-us" className="buttonStyle text-capitalize">coming soon <img loding="lazy" src={arrowTopRight} /></Link></aside>
                     </Col>
                 </Row>
             
@@ -208,7 +222,7 @@ function Home(){
             <Container>
                 <Row>
                     <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12}>
-                        <img src={whyJoinAsBusiness} className="w-100" />
+                        <img loding="lazy" src={whyJoinAsBusiness} className="w-100" />
                     </Col>
                     <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12}>
                         <h3>Why Join as a Business?</h3>
@@ -222,7 +236,7 @@ function Home(){
                             <li>Comprehensive profiles, showcasing your reviews and a portfolio of your work, ensuring people searching for your services can fully appreciate your expertise.</li>
                         </ul>
                         <hr/>
-                        <aside><Link to="/" className="buttonStyle">Register your business <img src={arrowTopRight} /></Link></aside>
+                        <aside><Link to="/" className="buttonStyle">Register your business <img loding="lazy" src={arrowTopRight} /></Link></aside>
                     </Col>
                 </Row>
             </Container>
@@ -234,7 +248,7 @@ function Home(){
                 <Row>
                     <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12}>
                         <h3>Why Join as a Customer?</h3>
-                        <strong>Joining our beauty directory unlocks a world of benefits for you, making it easier to find the perfect beauty services. Here’s why you should sign up:</strong>
+                        <strong>Joining our beauty directory unlocks a world of benefits for you, making it easier to find the perfect beauty services. Here's why you should sign up:</strong>
 
                         <ul className="mb-0">
                             <li>Wide Selection: Access a diverse array of beauty services and providers in one place.</li>
@@ -250,6 +264,34 @@ function Home(){
             </Container>
         </div> */}
 
+        <div className="beyond-the-treatment-section w-100 h-auto position-relative d-block bg-white">
+            <Container>
+                <Row>
+                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <h3 className="text-center fw-normal lh-base">Beyond the Treatment</h3>
+                    </Col>
+
+                    <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                        <h5 className='text-black text-capitalize mb-3 mt-3'>clip 01</h5>
+                        <video className='w-100' src={beyondTreatmentsVideo1} playsInline loop muted controls={true}>
+                            <source src={beyondTreatmentsVideo1} type='video/mp4' />
+                        </video>
+                    </Col>
+
+                    <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                        <h5 className='text-black text-capitalize mb-3 mt-3'>clip 02</h5>
+                        <video className='w-100' src={beyondTreatmentsVideo2} playsInline loop muted controls={true}>
+                            <source src={beyondTreatmentsVideo2} type='video/mp4' />
+                        </video>
+                    </Col>
+
+                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <aside className="text-center"><Link to="/beyond-the-treatments" className="buttonStyle text-capitalize">View More <img loding="lazy" src={arrowTopRight} onClick={() => window.scrollTo(0, 0)} /></Link></aside>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
+
         <div className="blog-and-news w-100 h-auto position-relative d-block">
             <Container>
                 <Row>
@@ -262,44 +304,68 @@ function Home(){
                             <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
                                 <div className="blogCard">
                                     <figure className="mb-0">
-                                        <img src={blog1} alt="" title="" />
+                                        {blogListing[0] && (
+                                            <img loding="lazy" loading="lazy" src={`http://3.8.140.227:8000${blogListing[0].image}`} alt="" title="" />
+                                        )}
                                     </figure>
-                                    <h5 className="mb-0">Most popular design systems to learn from in 2022</h5>
-                                    <h6 className="mb-0">By - Admin</h6>
-                                    <aside><Link to="/"><img src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                    {blogListing[0] && (
+                                        <>
+                                            <h5 className="mb-0">{blogListing[0].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
+                                            <h6 className="mb-0">By - {blogListing[0].author_id}</h6>
+                                            <aside><Link to={`/blog/${blogListing[0].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                        </>
+                                    )}
                                 </div>
                             </Col>
 
                             <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
                                 <div className="blogCard">
                                     <figure className="mb-0">
-                                        <img src={blog2} alt="" title="" />
+                                        {blogListing[1] && (
+                                            <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[1].image}`} alt="" title="" />
+                                        )}
                                     </figure>
-                                    <h5 className="mb-0">Understanding accessibility makes you a better</h5>
-                                    <h6 className="mb-0">By - Admin</h6>
-                                    <aside><Link to="/"><img src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                    {blogListing[1] && (
+                                        <>
+                                            <h5 className="mb-0">{blogListing[1].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
+                                            <h6 className="mb-0">By - {blogListing[1].author_id}</h6>
+                                            <aside><Link to={`/blog/${blogListing[1].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                        </>
+                                    )}
                                 </div>
                             </Col>
 
                             <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
                                 <div className="blogCard">
                                     <figure className="mb-0">
-                                        <img src={blog3} alt="" title="" />
+                                        {blogListing[2] && (
+                                            <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[2].image}`} alt="" title="" />
+                                        )}
                                     </figure>
-                                    <h5 className="mb-0">15 best tools that will help you build your website</h5>
-                                    <h6 className="mb-0">By - Admin</h6>
-                                    <aside><Link to="/"><img src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                    {blogListing[2] && (
+                                        <>
+                                            <h5 className="mb-0">{blogListing[2].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
+                                            <h6 className="mb-0">By - {blogListing[2].author_id}</h6>
+                                            <aside><Link to={`/blog/${blogListing[2].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                        </>
+                                    )}
                                 </div>
                             </Col>
 
                             <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
                                 <div className="blogCard">
                                     <figure className="mb-0">
-                                        <img src={blog4} alt="" title="" />
+                                        {blogListing[3] && (
+                                            <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[3].image}`} alt="" title="" />
+                                        )}
                                     </figure>
-                                    <h5 className="mb-0">Understanding accessibility makes you a better</h5>
-                                    <h6 className="mb-0">By - Admin</h6>
-                                    <aside><Link to="/"><img src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                    {blogListing[3] && (
+                                        <>
+                                            <h5 className="mb-0">{blogListing[3].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
+                                            <h6 className="mb-0">By - {blogListing[3].author_id}</h6>
+                                            <aside><Link to={`/blog/${blogListing[3].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                        </>
+                                    )}
                                 </div>
                             </Col>
                         </Row>
@@ -307,7 +373,7 @@ function Home(){
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <aside className="w-100 h-auto text-center mt-4">
-                            <Link to="/" className="buttonStyle">Show more <img src={eyeIcon} alt="" title="" /></Link>
+                            <Link to="/blogs" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="buttonStyle">Show more <img loding="lazy" src={eyeIcon} alt="" title="" /></Link>
                         </aside>
                     </Col>
                 </Row>
@@ -328,7 +394,7 @@ function Home(){
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <aside className="text-center">
-                            <Link to="/" className="buttonStyle text-capitalize">view all categories <img src={arrowTopRight} /></Link>
+                            <Link to="/" className="buttonStyle text-capitalize">view all categories <img loding="lazy" src={arrowTopRight} /></Link>
                             </aside>
                     </Col>
                 </Row>

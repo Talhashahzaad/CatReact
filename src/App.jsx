@@ -27,6 +27,8 @@ import FrequentlyAskedQuestion from './pages/FrequentlyAskedQuestion/FrequentlyA
 import PricingPackage from './pages/PricingPackage/PricingPackage';
 import BeyondTheTreatments from './pages/BeyondTreatments/BeyondTheTreatments';
 import TreatmentPackage from './pages/DashboardPage/TreatmentPackage/TreatmentPackage';
+import ThankYou from './pages/ThankYou/ThankYou';
+
 
 function App () {
 
@@ -62,6 +64,7 @@ function App () {
           <Route path="/listing-details" element={<ListingDetails/>} />
           <Route path="/beyond-the-treatments" element={<BeyondTheTreatments/>} />
           <Route path="/dashboard/treatment-package" element={<TreatmentPackage/>} />
+          <Route path="/thank-you" element={<ThankYou/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

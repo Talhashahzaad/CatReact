@@ -74,7 +74,7 @@ const ForBusiness = () => {
                             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                                 <h2 className="mb-3 fw-normal lh-base">Subscription Plans<br/> We offer flexible plans to suit all</h2>
 
-                                <table className="table table-bordered table-striped table-hover table-responsive">
+                                {/* <table className="table table-bordered table-striped table-hover table-responsive">
                                     <thead>
                                         <tr className="text-center">
                                             <th className="text-start">Feature</th>
@@ -147,7 +147,41 @@ const ForBusiness = () => {
                                             <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table> */}
+                            </Col>
+
+                            <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                                <div className="subscription-plan-section w-100 h-auto d-flex align-items-center justify-content-evenly">
+                                    <div className="left-side-subscription-plan-section text-center">
+                                        <strong>Freemium</strong>
+                                        <h3 className="text-uppercase display-2 fw-bold">free</h3>
+                                        <p>Advanced Business Profile Listing</p>
+                                        <p>Check a Treatment Online Store front <samp>(10% commission)</samp></p>
+                                    </div>
+
+                                    <div className="middle-side-subscription-plan-section text-center">
+                                        <strong>CaT Elite</strong>
+                                        <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>35<small>/m</small></h3>
+                                        <p>Advanced Business Profile Listing</p>
+                                        <p>Check a Treatment Online Store front <samp>(0% commission)</samp></p>
+                                        <p>CaT Pro Social Media</p>
+                                        <p>Social media</p>
+                                        <p>Priority listing in search results</p>
+                                        <p>Maximized Business Profile</p>
+                                        <p>Unlimited Personal Business Live Chat for Client Enquiries</p>
+                                        <p>Multiple Locations</p>
+                                        <p>Opportunity to Feature on Beyond the Treatment</p>
+                                    </div>
+
+                                    <div className="right-side-subscription-plan-section text-center">
+                                        <strong>CaT Premium</strong>
+                                        <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>15<small>/m</small></h3>
+                                        <p>Advanced Business Profile Listing</p>
+                                        <p>Check a Treatment Online Store front <samp>(4% commission)</samp></p>
+                                        <p>CaT Pro Social Media</p>
+                                        <p>Social media</p>
+                                    </div>
+                                </div>
                             </Col>
                         </Row>
                     </Container>
