@@ -1,0 +1,52 @@
+/* login page start */
+.loginPage {max-width: 520px;width: 100%;margin: 50px auto 50px;height: auto;background-color: var(--green08);padding: 50px;
+border-radius: 8px;box-shadow: 0px 25px 55px rgba(0,0,0,0.05);border-top: 1px solid var(--green25);border-left: 1px solid var(--green25);
+border-right: 1px solid var(--green25);border-bottom: 5px solid var(--green25);background-image: url('src/images/bannerCaptionVector.svg');
+background-blend-mode: normal;background-repeat: no-repeat;background-size: 75%;background-position: top -75px right -150px;}
+
+    .loginPage h1 {font-size: 40px;font-weight: 400;text-transform: capitalize;line-height: 40px;}
+    .loginPage small {text-transform: uppercase;display: block;line-height: 24px;}
+    .loginPage input[type="text"],.loginPage input[type="email"], .loginPage input[type="password"] {border-color: var(--green25);border-radius: 0;
+    height: 50px;border-bottom-width: 5px;outline: none;margin-bottom: 16px;}
+    .loginPage input[type="text"]:focus,
+    .loginPage input[type="email"]:focus,
+    .loginPage input[type="password"]:focus {outline: none; box-shadow: none;}
+
+    .loginPage input[type="submit"] {background-color: var(--jetGreen);border-color: var(--roseDark);border-radius: 0;height: 50px;
+    text-transform: uppercase;letter-spacing: 2px;font-weight: 600;color: var(--white);}
+    .loginPage input[type="submit"]:hover, .loginPage input[type="submit"]:focus {background-color: var(--black); color: var(--white)}
+    
+    .forgotPass a {color: var(--jetGreen);font-weight: 500;text-transform: capitalize;font-style: italic;}
+    .forgotPass a:hover,.forgotPass a:focus {color: var(--black); text-decoration: underline;}
+    
+    .checkBoxWrapper label.text-rememberField {text-transform: capitalize; padding-inline-start: 24px; position: relative;}
+    
+    .checkBoxWrapper input[type="checkbox"] {width: 20px;height: 20px;opacity: 0; cursor: pointer;}
+    .checkBoxWrapper .text-rememberField {position: relative;}
+    
+    #rememberMe+.text-rememberField::before {position: absolute;content: '';width: 20px;height: 20px;background-color: var(--white);
+    left: 0;top: 2px;border-radius: 4px;border: 1px solid var(--roseDark); cursor: pointer;}
+    
+    #rememberMe:checked+.text-rememberField::before {position: absolute;content: '\2713';width: 18px;height: 18px;background-color: var(--jetGreen);left: 2px;top: 2px;border-radius: 4px;border: none; color: var(--white); line-height: 20px; text-align: center;}
+    
+    .loginPage p.py-3.mb-0.w-100.text-center a {color: var(--jetGreen);font-weight: 500;text-decoration: underline;}
+    .loginPage p.py-3.mb-0.w-100.text-center a:hover,.loginPage p.py-3.mb-0.w-100.text-center a:focus {color: var(--jetGreen);text-decoration: none;}
+    /* login page end */
+
+    .loginPage ul.signInIcons li {
+        list-style-type: none;
+    }
+    .loginPage ul.signInIcons {
+        flex-flow: column;
+    }
+
+@media (max-width: 767px){
+    .loginPage {max-width: 90%;width: 90%;padding: 30px 15px; margin: 50px auto 50px;}
+    .loginPage h1 {font-size: 26px;}
+    /* login page */
+
+    .loginPage ul.signInIcons li img {
+        max-width: 100%;
+    }
+}
+/* 767 */

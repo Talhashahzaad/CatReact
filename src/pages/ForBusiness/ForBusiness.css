@@ -1,0 +1,83 @@
+.inner-page h2 { font-size: 40px; padding-bottom: 12px;}
+
+.inner-feature-banner.for-business {background-color: var(--green25);padding-block-start: 0px; padding-block-end: 0px; background-image: unset;}
+.for-business.inner-feature-banner h1 {margin-bottom: 20px;text-transform: capitalize;font-size: 55px;color: var(--black);line-height: 72px;
+font-family: var(--defaultHeading);font-weight: 400;font-style: normal;text-align: left;}
+.for-business.inner-feature-banner p {padding-inline: 0em;text-align: left;}
+.for-business.inner-feature-banner aside {text-align: left;}
+.for-business.inner-feature-banner aside>a.green-btn {margin-block-end: 0px;}
+
+.increase-your-visibility {padding-block: 50px;}
+.increase-your-visibility .container {background-color: var(--offWhite);padding: 50px;border-radius: 15px;}
+
+.increase-your-visibility ul.d-flex {flex-wrap: wrap;gap: 30px;}
+.increase-your-visibility ul.d-flex li {list-style-type: none;display: flex;flex-direction: column;justify-content: flex-start;align-items: center;
+text-align: center;width: 260px;background-color: var(--white);box-shadow: 0px 4px 8px 0px #EFE1E4;border-radius: 15px;padding-block: 30px;}
+.increase-your-visibility ul.d-flex li strong {font-size: 18px;line-height: 1.5em;font-weight: 600;padding-inline: 40px;margin-block-start: 12px;}
+.increase-your-visibility ul.d-flex li img {width: 40px;max-width: 100%;min-height: 60px;object-fit: scale-down;}
+
+.business-and-platinum-section {width: 100%;height: auto;display: inline-block;position: relative;background-color: var(--white);padding-block: 50px;}
+.business-and-platinum-section h2 {margin-block-end: 0px;text-align: center;padding-inline: 5em;}
+
+/* .business-and-platinum-section ul.d-flex {justify-content: center;margin-block-start: 30px;}
+.business-and-platinum-section ul.d-flex li {border-radius: 16px;background-color: var(--white);box-shadow: 0px 4px 8px 0px #EFE1E4;padding-inline: 30px;
+display: inline-block;width: 430px;padding-block: 50px; margin-inline: 15px; border: 2px solid var(--white);}
+.business-and-platinum-section ul.d-flex li:hover, .business-and-platinum-section ul.d-flex li:focus {border: 2px solid var(--roseDark);cursor: pointer;}
+
+
+.business-and-platinum-section table.table thead tr th {vertical-align: middle;background-color: var(--jetGreen);color: #ffffff;font-weight: 400;
+font-size: 20px;line-height: 36px;width: 25%;}
+.business-and-platinum-section table.table tbody tr td {width: 25%;padding-block: 24px;vertical-align: middle;} */
+
+.green-btn {background-color: var(--jetGreen);color: var(--white);box-shadow: 0px 2px 4px 0px #2D3A25;padding-block: 8px;display: inline-block;
+padding-inline: 20px;border-radius: 100px;margin-block-start: 20px;margin-block-end: 20px;}
+.green-btn:hover, .green-btn:focus {background-color: var(--green25);color: var(--black);}
+/*for business*/
+
+.left-side-subscription-plan-section,
+.right-side-subscription-plan-section {background-color: #eff3ee;padding-block: 70px;border-radius: 50px;padding-inline: 60px;width: 31.33%; min-height: 720px; background-blend-mode: normal; background-image: url(../../images/leaf-texture.png); background-repeat: no-repeat; background-position: bottom right;}
+.subscription-plan-section strong,
+.right-side-subscription-plan-section strong {font-family: 'Playfair Display';text-transform: uppercase;font-weight: 600;font-size: 24px;}
+
+.middle-side-subscription-plan-section p {padding-block: 18px;border-bottom: 2px dashed rgba(255,255,255,0.35);margin-bottom: 0px;}
+.left-side-subscription-plan-section p,
+.right-side-subscription-plan-section p {padding-block: 18px;border-bottom: 2px dashed rgba(0,0,0,0.35);margin-bottom: 0px;}
+
+.middle-side-subscription-plan-section p>samp {font-size: 18px;font-weight: bold;display: block;color: var(--white);font-family: var(--defaultFont);}
+.left-side-subscription-plan-section p>samp,
+.right-side-subscription-plan-section p>samp {font-size: 18px;font-weight: bold;display: block;color: var(--jetGreen);font-family: var(--defaultFont);}
+
+.subscription-plan-section h3>small {font-size: 20px;}
+.subscription-plan-section h3>dd {display: inline;position: relative;top: 12px;}
+
+.middle-side-subscription-plan-section {background-color: #91AC8F;padding-block: 70px;border-radius: 50px;padding-inline: 60px;width: 31.33%;
+color: var(--white); background-blend-mode: normal; background-image: url(../../images/leaf-texture.png); background-repeat: no-repeat; background-position: bottom right;}
+
+@media (max-width: 1023px) {
+.inner-feature-banner.for-business {padding-block-end: 50px;padding-block-start: 50px;}
+.for-business.inner-feature-banner h1 {margin-bottom: 15px;font-size: 30px; line-height: 36px;}
+.inner-page h2 {font-size: 24px;padding-bottom: 0px;}
+}
+
+@media (min-width: 1024px) and (max-width: 1279px){
+.inner-feature-banner.for-business {padding-block-end: 50px;padding-block-start: 50px;}
+.for-business.inner-feature-banner h1 {margin-bottom: 15px;font-size: 30px; line-height: 36px;}
+.inner-page h2 {font-size: 24px;padding-bottom: 0px;}
+.increase-your-visibility ul.d-flex li {width: 165px;padding-block: 15px;}
+.increase-your-visibility ul.d-flex li strong {font-size: 14px;padding-inline: 12px;}
+}
+
+@media (max-width: 767px){
+.inner-feature-banner.for-business { padding-block-end: 0px;}
+.inner-page h2 {padding-block-start: 15px;}
+.business-and-platinum-section h2 {padding-inline: 0px;}
+.business-and-platinum-section table.table thead tr th {vertical-align: top;font-weight: 600;font-size: 16px;line-height: 20px;}
+.business-and-platinum-section table.table tbody tr td {padding-block: 10px;}
+.business-and-platinum-section table.table.table-bordered.table-striped.table-hover.table-responsive {display: block;overflow-x: scroll;}
+.increase-your-visibility {margin-inline: 15px;}
+.increase-your-visibility .container {padding: 50px 15px;}
+.increase-your-visibility aside {text-align: center;display: block;width: 100%;}
+.increase-your-visibility ul.d-flex li {width: 100%;padding-block: 15px;}
+.increase-your-visibility ul.d-flex {padding-inline-start: 0px;}
+.increase-your-visibility ul.d-flex li strong {padding-inline: 8px;}
+}

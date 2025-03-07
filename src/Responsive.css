@@ -1,0 +1,104 @@
+@media (min-width: 1300px) and (max-width: 1440px) {
+.want-to-see-more-card {width: 175px;height: 175px;}
+}
+
+@media (max-width: 1023px) {
+.siteBanner {height: 800px;background-size: 50%;}    
+.searchBox {border-radius: 15px;flex-flow: wrap;row-gap: 10px;column-gap: 10px;}
+span.searchForTreatment, span.searchByLocation {width: 49%;border: 1px solid rgba(0,0,0,0.15);padding-inline-start: 15px;border-radius: 8px;}
+span.submitYourData button[type="submit"] {width: 100%;height: 50px; border-radius: 8px;}
+span.selectYourCategories {width: 49%;border: 1px solid rgba(0,0,0,0.15);padding-inline-start: 15px;border-radius: 8px;}
+span.submitYourData {width: 49%;text-align: center;}
+span.searchButtonText {display: block;}
+span.submitYourData button[type="submit"] {display: flex;justify-content: center;align-items: center;}
+
+.slick-prev {left: -22px;}
+.slick-next {right: -22px;}
+.whyJoinBusiness h3 {margin-top: 50px;}
+.whyJoinAsCustomer {padding-block: 5rem 40rem;}
+.blogCard {margin-bottom: 20px;}
+
+.main-footer figure img {max-width: 300px;margin-block-end: 24px;}
+.main-footer h3 {font-size: 24px;}
+.main-footer ul.ps-0.mb-0 {margin-block-end: 24px !important;}
+.filtersByCategories h5 {margin-top: 24px;}
+
+.filtersByCategories h3 {font-size: 32px;}
+.wantOseeMore h3 {font-size: 32px;}
+.blog-and-news h3 {font-size: 32px;}
+.whyJoinAsCustomer h3 {font-size: 32px;}
+.whyJoinBusiness h3 {margin-top: 32px;}
+.featureProducts h2 {font-size: 32px;}
+.trendingTreatments h2 {font-size: 32px;}
+
+.want-to-see-more-card {width: 105px;height: 130px;}
+.want-to-see-more-card figure img {height: 50px;}
+.want-to-see-more-card h4 {font-size: 16px;font-weight: 400;}
+.dropdown-content {right: 0;}
+}
+/* 1023 */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Add styles for tablet devices */
+    .searchBox {
+        border-radius: 15px;
+        flex-flow: wrap;
+        row-gap: 10px;
+        column-gap: 10px;
+    }
+    /* Add other necessary styles */
+}
+
+@media (min-width: 1024px) and (max-width: 1279px){
+.slick-next {right: -20px;}
+.slick-prev {left: -20px;}
+.filtersByCategories h3 {font-size: 36px;}
+.wantOseeMore h3 {font-size: 36px;}
+.blog-and-news h3 {font-size: 36px;}
+.whyJoinAsCustomer {background-position: bottom right 0px;}
+.whyJoinAsCustomer h3 {font-size: 36px;}
+.whyJoinBusiness h3 {font-size: 36px;}
+.featureProducts h2 {font-size: 36px;}
+.trendingTreatments h2 {font-size: 36px;}
+
+.want-to-see-more-card {width: 145px;height: 145px;}
+.dropdown-content {right: 0;}
+}
+/* 1280 */
+
+@media (min-width: 320px) and (max-width: 767px){
+.header-menu ul.d-flex li:nth-child(2) {display: none;}    
+.header-menu ul.d-flex li:last-child a {padding-block: 8px;padding-inline: 12px;border-width: 1px;font-size: 14px;}
+.header-menu ul.d-flex li {margin-inline-end: 8px;}
+.header-menu ul.d-flex li a>img {width: 20px;}
+.header-menu ul.d-flex li:last-child a.text-capitalize img {max-width: 8px;}
+
+.searchBox {border-radius: 15px;flex-flow: wrap;row-gap: 10px;column-gap: 10px;width: 85% !important;margin: 0px auto;}
+span.searchForTreatment, span.searchByLocation {width: 100%;border: 1px solid rgba(0,0,0,0.15);padding-inline-start: 15px;border-radius: 8px;}
+span.submitYourData button[type="submit"] {width: 100%;height: 50px; border-radius: 8px;}
+span.selectYourCategories {width: 100%;border: 1px solid rgba(0,0,0,0.15);padding-inline-start: 15px;border-radius: 8px;}
+span.submitYourData {width: 100%;text-align: center;}
+.slick-next, .slick-prev {display: none !important;}
+.whyJoinBusiness h3 {font-size: 32px;}
+.whyJoinBusiness img.w-100 {height: 275px;}
+.whyJoinAsCustomer {padding-block: 5rem 26rem; background-size: 650px; background-position: bottom right 15px;}
+
+.beyond-the-treatment-section h3 {font-size: 32px;}
+
+.filtersByCategories {padding-block: 50px;}
+.filtersByCategories h3 {margin-bottom: 0px;}
+
+.want-to-see-more-card {width: 100%;height: 120px;}
+.dropdown-content {right: 0;}
+
+
+/* inner pages start */
+.feature-banner h1 {font-size: 2.05rem;}  
+.inner-page-content h2 {font-size: 24px;padding-bottom: 20px;margin-bottom: 20px;}
+.inner-page-content ol li {font-size: 24px;}
+.inner-page-content ol li h3 {font-size: 20px;}
+.inner-page-content ol ol {padding-inline-start: 10px;}
+.feature-banner {background-size: 250px;background-position: center top -75px;}
+.featureProducts {background-image: unset;}
+/* inner pages end */
+}

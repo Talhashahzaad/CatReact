@@ -1,0 +1,145 @@
+.listing-details-feature-banner figure img {height: 350px;object-fit: cover;image-rendering: -webkit-optimize-contrast;filter: brightness(0.5);}
+.listing-details-feature-banner-content .breadcrumb-container span {color: var(--white);text-transform: capitalize; position: relative; z-index: 1; padding-inline-start: 30px;}
+.listing-details-feature-banner-content .breadcrumb-container > div > span > span:first-child::before {position: absolute;content: '\2713';
+left: 0;top: -3px;background-color: var(--jetGreen);width: 24px;height: 24px;text-align: center;border-radius: 30px;}
+.breadcrumb-container {display: flex;justify-content: center;}
+
+.listing-details-content-right-contact-details ul.list-unstyled li .fw-bold svg {background-color: var(--green25);width: 40px;height: 40px;
+padding: 10px;border-radius: 50px; margin-inline-end: 8px;}
+.listing-details-content-right-contact-details ul.list-unstyled li .fw-bold svg > path {transform: scale(0.95);fill: var(--jetGreen);}
+.listing-details-content-right-contact-details ul.list-unstyled li span:last-child {line-height: 20px;margin-block-end: 2px;}
+
+.listing-details-content-right-contact-details ul.list-unstyled li:hover span:last-child {transition: all linear .4s;color: var(--jetGreen); cursor: pointer;}
+
+.listing-details-content-right-contact-details {background-color: #f8f8f8;padding-block: 35px;padding-inline: 15px;border-radius: 4px;
+border-bottom: 5px solid var(--jetGreen);box-shadow: 0px 16px 24px rgba(0,0,0,0.04);outline: 1px solid rgba(0,0,0,0.08);}
+
+.listing-details-content-right-social-media-links ul.list-unstyled li img {max-width: 24px; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}
+.listing-details-content-right-social-media-links ul.list-unstyled li img:hover {transform: rotate(360deg) scale(1.25); cursor: pointer; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}
+
+.business-details-listing-content-left figure.mb-4 img {width: 150px;height: 150px;outline: 8px solid var(--white);
+box-shadow: 0px 8px 25px rgba(0,0,0,0.12);}
+
+.star-rating {display: flex;column-gap: 10px;align-items: center;}
+.star-rating .d-flex.gap-1.align-items-center svg {color: #fba420;}
+.verified-badge .d-flex.gap-2.align-items-center img {max-width: 24px;}
+
+nav.py-3[aria-label="breadcrumb"] ol.breadcrumb li.breadcrumb-item a {color: var(--jetGreen);text-decoration: none;}
+
+
+.gallery-preview {padding: 0rem;}
+.main-image, .preview-image {position: relative;width: 100%;height: 400px;overflow: hidden;cursor: pointer;}
+.preview-image {height: 190px;}
+.main-image img, .preview-image img {width: 100%;height: 100%;object-fit: cover;transition: transform 0.3s ease;}
+.main-image:hover img, .preview-image:hover img {transform: scale(1.05);}
+.see-all-btn {position: absolute;bottom: 1rem;right: 1rem;z-index: 10;}
+.gallery-image {position: relative;width: 100%;height: 300px;overflow: hidden;cursor: pointer;}
+.gallery-image img {width: 100%;height: 100%;object-fit: cover;transition: transform 0.3s ease;}
+.gallery-image:hover img {transform: scale(1.05);}
+.slider-modal .modal-content {background-color: #000;}
+.slider-container {position: relative;width: 100%;height: 70vh;display: flex;align-items: center;justify-content: center;}
+.slider-image {width: 100%;height: 100%;display: flex;align-items: center;justify-content: center;}
+.slider-image img {max-width: 100%;max-height: 100%;object-fit: contain;}
+.nav-btn {position: absolute;top: 50%;transform: translateY(-50%);background: rgba(255, 255, 255, 0.3);border: none;border-radius: 50%;
+width: 40px;height: 40px;display: flex;align-items: center;justify-content: center;color: white;cursor: pointer;
+transition: background-color 0.3s ease;}
+.nav-btn:hover {background: rgba(255, 255, 255, 0.5);}
+.nav-btn.prev {left: 1rem;}
+.nav-btn.next {right: 1rem;}
+.close-btn {background: none;border: none;color: white;cursor: pointer;}
+.image-counter {position: absolute;bottom: 1rem;right: 1rem;color: white;background: rgba(0, 0, 0, 0.5);padding: 0.25rem 0.5rem;
+border-radius: 4px;}
+.spa-header {background-color: white;border-bottom: 1px solid #eee;}
+.rating {color: #ffc107;}
+.see-all-btn.btn-light {max-width: 175px;background: linear-gradient(180deg, var(--white), #a2a2a2);color: var(--black);border-color: rgba(255,255,255,0.25);border-radius: 100px;text-transform: capitalize;font-weight: 500;font-size: 14px;border-width: 2px;border-style: inherit;}
+
+.gallery-preview .main-image {  border-radius: 20px; height: 450px;}
+.gallery-preview .main-image img {height: 450px;object-fit: cover;}
+.gallery-preview .preview-image {border-radius: 20px;height: 220px;}
+
+.business-further-details ul.ps-0.d-flex.gap-3 li svg path {fill: var(--jetGreen);}
+.business-further-details ul.ps-0.d-flex.gap-3 li svg {font-size: 16px;}
+.business-further-details ul.ps-0.d-flex.gap-3 li {align-items: baseline;}
+.business-further-details ul.ps-0.d-flex.gap-3 li a.get-directions-btn {color: var(--jetGreen);font-weight: 500;}
+
+.listing-details-content-left-contact-details-services ul.ps-0 {margin-block: 15px;}
+.listing-details-content-left-contact-details-services li.d-flex.justify-content-between.align-items-center {border: 1px solid rgba(0,0,0,0.12);
+padding: 15px;border-radius: 8px;background-color: var(--white);box-shadow: 0px 10px 15px rgba(0,0,0,0.04); margin-block-end: 20px;}
+
+.listing-details-content-left-contact-details-services .icon.me-2:first-child {width: 80%;}
+.listing-details-content-left-contact-details-services .icon.me-2 strong {font-size: 16px;display: block;font-weight: 600;}
+.listing-details-content-left-contact-details-services .icon.me-2 h5 {font-size: 14px;text-transform: capitalize;padding-block-start: 4px;
+color: rgba(0,0,0,0.50);}
+.listing-details-content-left-contact-details-services .icon.me-2 small {text-transform: capitalize;font-size: 14px;color: var(--jetGreen);
+font-weight: 500;}
+
+.listing-details-content-left-contact-details-services li.d-flex.justify-content-between.align-items-center:hover {cursor: pointer;
+background-color: rgba(250,250,250,1);}
+
+.listing-details-content-left-contact-details-staff ul.ps-0.d-flex li {list-style-type: none; max-width: 150px;}
+.listing-details-content-left-contact-details-staff ul.ps-0.d-flex li figure img {width: 150px;height: 150px;border-radius: 100px;border: 8px solid rgba(255,255,255,1);box-shadow: 0px 15px 35px rgba(0,0,0,0.08);outline: none;}
+.listing-details-content-left-contact-details-staff ul.ps-0.d-flex li figcaption {margin-top: 15px;text-align: center;text-transform: capitalize;}
+.listing-details-content-left-contact-details-staff ul.ps-0.d-flex li figcaption h5 {font-size: 18px;font-weight: 600;margin-block-end: 2px;
+color: var(--jetGreen);}
+.staff-color-name-circle {width: 150px;height: 150px;display: flex;align-items: center;justify-content: center;background-color: var(--roseLight);
+border-radius: 100px;border: 8px solid rgba(255,255,255,1);box-shadow: 0px 15px 35px rgba(0,0,0,0.08);outline: none;text-transform: uppercase;
+font-size: 2rem;font-weight: 700;color: rgba(0,0,0,0.20);}
+.listing-details-content-left-contact-details-staff ul.ps-0.d-flex {column-gap: 50px; margin-block-end: 50px;}
+
+.listing-details-content-left-reviews-details-reviews-box ul.ps-0.d-flex {column-gap: 20px; justify-content: 
+    space-between; row-gap: 30px;}
+.listing-details-content-left-reviews-details-reviews-box ul.ps-0.d-flex li {list-style-type: none;background-color: rgba(0,0,0,0.04);height: auto;
+width: 48%;padding: 40px;border-radius: 12px;}
+
+.listing-details-content-left-reviews-details-heading ol.ps-0.mb-0.d-flex li {list-style-type: none;}
+.listing-details-content-left-reviews-details-heading ol.ps-0.mb-0.d-flex li svg { font-size: 2rem;}
+.listing-details-content-left-reviews-details-heading ol.ps-0.mb-0.d-flex li svg path {fill: #fba420;}
+
+.listing-details-content-left-reviews-details-review-box .review-user-name-icon {width: 50px;height: 50px;display: flex;justify-content: center;
+align-items: center;background-color: var(--jetGreen);color: var(--white);text-transform: uppercase;border-radius: 100px;}
+.listing-details-content-left-reviews-details-review-box figure {display: flex; align-items: center;}
+
+.listing-details-content-left-reviews-details-review-box figure > figcaption {margin-inline-start: 8px;}
+.listing-details-content-left-reviews-details-review-box figure > figcaption h5 {font-size: 16px;font-weight: 600;text-transform: capitalize;
+margin-bottom: 0px;line-height: 24px;}
+
+.listing-details-content-left-reviews-details-review-box a.read-more-btn {text-transform: capitalize;color: var(--jetGreen);font-weight: 500;
+font-style: italic;display: block;border-top: 2px solid rgba(0,0,0,0.08);padding-top: 8px;}
+
+.listing-details-content-left-map-details-map iframe {width: 100%;height: 450px;border: none;outline: none;}
+
+.listing-details-content-left-additional-details-box strong {font-size: 20px;font-family: var(--defaultFont);text-transform: capitalize;font-weight: 600;
+color: var(--jetGreen);padding-block-end: 8px;display: block;}
+.listing-details-content-left-additional-details-box ul.mb-0 li {text-transform: capitalize;color: var(--black);line-height: 28px;}
+
+.opening-time-details {width: 48%;height: auto;display: block;}
+.opening-time-details ul.mb-0.ps-1.justify-content-between li {display: flex;justify-content: space-between; list-style-type: none; margin-block: 8px;}
+
+.additional-information-details {width: 48%;height: auto;display: block;}
+.additional-information-details ul.mb-0.ps-1.justify-content-between li {display: flex;justify-content: space-between; list-style-type: none; margin-block: 8px;}
+
+.additional-information-details ul.mb-0.ps-1.justify-content-between li img {width: 24px; margin-inline-end: 12px;}
+.additional-information-details ul.mb-0.ps-1.justify-content-between li {justify-content: flex-start;}
+
+.listing-details-content-left-other-location-map ul.flex-wrap li .same-shop-other-salon-box {width: 270px;border: 8px solid var(--white);
+box-shadow: 0px 15px 35px rgba(0,0,0,0.04);border-radius: 15px;height: auto;padding-block-end: 8px;}
+.listing-details-content-left-other-location-map ul.flex-wrap li .same-shop-other-salon-box img {border-radius: 8px;min-height: 175px;
+    max-height: 175px;object-fit: cover;margin-block-end: 12px;}
+
+.listing-details-content-left-other-location-map ul.flex-wrap li {list-style-type: none;}
+.listing-details-content-left-other-location-map ul.flex-wrap li .same-shop-other-salon-box h3 {font-size: 20px;}
+.mx-1.rating-star-icons {margin-top: -2px;}
+.mx-1.rating-star-icons svg {color: #fba420;}
+.right-contact-details-box-review-rating-count {margin-left: 8px;}
+
+a.anchorGreen.book-now-btn-right-sticky-contact-details-box {background-color: var(--jetGreen);width: 100%;display: block;line-height: 50px;
+text-align: center;margin-block: 15px;border-radius: 100px;color: var(--white);font-weight: 500;}
+
+.right-contact-details-box-shop-full-address ol.ps-0.mb-0 li {list-style-type: none;line-height: 36px;}
+.right-contact-details-box-shop-full-address ol.ps-0.mb-0 li svg {margin-inline-end: 8px;color: var(--jetGreen);}
+
+.right-contact-details-box-shop-closing-time ol.ps-0.mb-0 li {list-style-type: none; text-transform: capitalize;}
+
+.right-contact-details-box-shop-closing-time ol.ps-0.mb-0 li > ul.ps-0.my-4 li {padding-block: 4px;display: inline-block;font-weight: 500;}
+.listing-details-content-right-sticky-contact-details-box {background-color: var(--white);padding-block: 40px;padding-inline: 20px;border: 1px solid rgba(0,0,0,0.12);border-radius: 8px;box-shadow: 0px 20px 35px rgba(0,0,0,0.04);}
+.listing-details-content-right-sticky-contact-details {position: sticky;position: -webkit-sticky;top: 20px;}

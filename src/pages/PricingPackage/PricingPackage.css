@@ -1,0 +1,54 @@
+.inner-feature-banner.pricing-package-banner {background-color: var(--green25); background-image: url('../src/images/doubleCircleGreenPortrait.svg'); background-repeat: no-repeat; background-size: 250px; background-position: center right -50px;}
+
+ul.pricing-card li {border-radius: 20px;padding-inline: 20px;padding-block: 40px;border: 10px solid var(--white); box-shadow: 0px 20px 20px rgba(0,0,0,0.04);max-width: 375px; scroll-margin-block-end: 4px; overflow: hidden; background-color: var(--white); cursor: pointer; outline: 1px solid rgba(0,0,0,0.08);}
+
+ul.pricing-card li::before {position: absolute;content: '';width: 50px;height: 50px;right: -25px;top: -25px;background-color: var(--jetGreen);
+border-radius: 100%;z-index: 0; transition: all linear .4s; -webkit-transition: all linear .4s; -moz-transition: all linear .4s;}
+
+ul.pricing-card li:hover::before {transform: scale(2.75);}
+
+ul.pricing-card li small {background-color: var(--jetGreen);color: var(--white);font-size: 12px;text-transform: uppercase;padding: 8px 20px 8px 30px;
+border-radius: 20px;position: relative; z-index: 997;}
+
+ul.pricing-card li small::before {position: absolute;content: '';width: 6px;height: 6px;display: block;background-color: lawngreen;border-radius: 10px;
+left: 14px;top: 16px; z-index: 999;}
+
+ul.pricing-card li small::after {position: absolute;content: '';animation: waves 1s infinite;left: 10px;top: 12px;border-radius: 10px;
+z-index: 998;width: 14px;height: 14px;background-color: rgba(255,255,255,0.25);}
+
+ul.pricing-card li h3.mt-2.mb-0.default-font {font-size: 32px;font-weight: 700;padding-block-start: 16px;text-align: center;color: var(--jetGreen);}
+
+ul.pricing-card li h6.my-2 {font-size: 20px;line-height: 20px;background-color: var(--green25);padding: 16px;border-radius: 100px;text-align: center;
+font-weight: 700;border-bottom: 4px double rgba(0,0,0,0.12); overflow: hidden; position: relative;}
+
+ul.pricing-card li h6.my-2::before {position: absolute;content: '';width: 100%;height: 1px;background-color: rgba(0,0,0,0.12);left: 0;bottom: 2px;}
+
+ul.pricing-card li .packageListing dd {padding-left: 24px;}
+ul.pricing-card li .packageListing dd::before {width: 30px;height: 30px;background-image: url('../src/images/check-circle.svg');position: absolute;
+content: '';left: 0;background-size: 70%;background-repeat: no-repeat;background-position-y: 2px;}
+
+.blackHoverEffect:hover, .blackHoverEffect:focus {background-color: var(--black);}
+
+ul.pricing-card li:first-child small::before, ul.pricing-card li:first-child small::after,
+ul.pricing-card li:last-child small::before, ul.pricing-card li:last-child small::after {display: none;}
+ul.pricing-card li:first-child small, ul.pricing-card li:last-child small {padding-inline-start: 20px;}
+
+ul.pricing-card li .packageListing dd s {opacity: .20;}
+ul.pricing-card li::after {position: absolute;content: '';width: 350px;height: 350px;background-color: rgba(108, 139, 87, 0.08);
+left: -125px;bottom: 190px;border-radius: 100%;z-index: 0;}
+
+.d-flex a.mt-2.w-25.blackHoverEffect {max-width: 150px;min-width: 150px;}
+
+ul.pricing-card li .packageListing dd h6 {line-height: 30px;font-size: 12px;font-weight: 700;}
+
+@media (max-width: 1200px) {
+.d-flex a.mt-2.w-25.blackHoverEffect {max-width: 125px;min-width: 125px;}
+ul.pricing-card li {margin-block-end: 40px;}
+}
+
+@media (max-width: 767px) {
+ul.pricing-card {flex-flow: wrap;}
+ul.pricing-card li {margin-block-end: 50px;}
+ul.pricing-card li:last-child {margin-block-end: 0px;}
+}
+/* 767 */

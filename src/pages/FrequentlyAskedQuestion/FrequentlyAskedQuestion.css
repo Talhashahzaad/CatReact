@@ -1,0 +1,19 @@
+.inner-page .accordion-item h2.accordion-header button[type="button"] {background-color: var(--roseLight);border-radius: 8px;
+border: none;box-shadow: none;border-bottom: 3px solid var(--roseDark);}
+
+.inner-page .accordion-item h2.accordion-header button[type="button"],
+.inner-page .accordion-item h2.accordion-header button[type="button"].collapsed {background-color: var(--roseLight);border-radius: 8px;border: none;box-shadow: none;border-bottom: 3px solid var(--roseDark);}
+.inner-page .accordion-item .accordion-body {background-color: var(--offWhite);border-radius: 8px;margin-bottom: 32px;border: 1px solid rgba(0,0,0,0.10);}
+.inner-page .accordion-item {border: none;}
+.inner-page .accordion-item .accordion-body p>a {color: var(--jetGreen);font-weight: 500;text-decoration: underline;}
+.inner-page .accordion-item .accordion-body p>a:hover,
+.inner-page .accordion-item .accordion-body p>a:focus {text-decoration: none;}
+
+@media (min-width: 768px) and (max-width: 1180px){
+.inner-page .accordion-item h2.accordion-header button[type="button"] {margin-block: 8px;}
+}
+
+@media (max-width: 767px){
+.inner-page .accordion-item .accordion-body {margin-block-start: 20px;}
+.inner-page .accordion-item h2.accordion-header h4 {font-size: 18px;line-height: 26px;}
+}
