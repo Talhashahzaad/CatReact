@@ -1,12 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom"; // Added useNavigate for redirection
 import { Container, Row, Col } from "react-bootstrap";
-import "./Login.css";
-import eyeOpen from "../LoginPage/eyeOpen.svg";
-import eyeClose from "../LoginPage/eyeClose.svg";
+import "./BusinessLogin.css";
+import eyeOpen from "./eyeOpen.svg";
+import eyeClose from "./eyeClose.svg";
 import googleShortIcon from "../../images/google-short-icon.svg";
 import facebookShortIcon from "../../images/facebook-short-icon.svg";
-import userLoginPicture from "../../images/user-login-banner.png";
+import businessLoginBanner from "../../images/businessLoginBanner.png";
 import axios from "axios";
 
 function Login() {
@@ -40,18 +40,18 @@ function Login() {
     return (
         <>
         <Container>
-        <div className="loginPage">
+        <div className="businessLoginPage">
             
                 <Row>
                     <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                        <div className="login-picture">
-                            <img src={userLoginPicture} alt="User Login" className="img-fluid" />
+                        <div className="businessLoginBanner">
+                            <img src={businessLoginBanner} alt="Business Login" className="img-fluid" />
                         </div>
                     </Col>
                     
                     <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                         
-                            <h1 className="pb-2 text-uppercase text-center fw-bold">login</h1>
+                            <h1 class="text-center text-capitalize fw-bold">Business <mark>Registration</mark></h1>
                             <small className="d-block text-lowercase text-center fw-normal">sign in to continue</small>
                             <hr />
                             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>} {/* Display error message */}
@@ -109,7 +109,7 @@ function Login() {
                                 </div>
 
                                 <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <p className="py-3 mb-0 w-100 text-center">New User?  <Link to="/sign-up">Sign Up</Link></p>
+                                    <p className="py-3 mb-0 w-100 text-center">New User?  <Link to="/business-registration">Business Sign Up</Link></p>
                                 </div>
 
                                 <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

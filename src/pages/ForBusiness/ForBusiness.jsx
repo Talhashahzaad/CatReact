@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {Container, Row, Col} from "react-bootstrap";
 import forBusiness from "../../images/for-business.png";
@@ -9,8 +9,20 @@ import HighlightYour from "../../images/Highlight-Your.png";
 import GetMore from "../../images/Get-More.png";
 import DriveTrafficToYourBusiness from "../../images/Drive-Traffic-to-Your-Business.png";
 import "./ForBusiness.css";
+import axios from "axios";
 
 const ForBusiness = () => {
+
+    const [subscriptionPlans, setSubscriptionPlans] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://3.8.140.227:8000/api/listing-packages")
+            .then(response => setSubscriptionPlans(response.data))
+            .catch(error => console.error("Error fetching subscription plans:", error));
+    }, []);
+
+    console.log(subscriptionPlans);
+
     return (
         <>
             <div className="inner-feature-banner for-business">
@@ -153,8 +165,8 @@ const ForBusiness = () => {
                             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                                 <div className="subscription-plan-section w-100 h-auto d-flex align-items-center justify-content-evenly">
                                     <div className="left-side-subscription-plan-section text-center">
-                                        <strong>Freemium</strong>
-                                        <h3 className="text-uppercase display-2 fw-bold">free</h3>
+                                        <strong>{subscriptionPlans[0].name}</strong>
+                                        <h3 className="text-uppercase display-2 fw-bold">{subscriptionPlans[0].type}</h3>
                                         <p>Advanced Business Profile Listing</p>
                                         <p>Check a Treatment Online Store front <samp>(10% commission)</samp></p>
                                     </div>

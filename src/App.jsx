@@ -31,7 +31,7 @@ import ThankYou from './pages/ThankYou/ThankYou';
 import UserLogin from './pages/UserLogin/UserLogin';
 import UserRegistration from './pages/UserRegistration/UserRegistration';
 import BusinessRegistration from './pages/BusinessRegistration/BusinessRegistration';
-
+import BusinessLogin from './pages/BusinessLogin/BusinessLogin';
 
 
 
@@ -73,6 +73,7 @@ function App () {
           <Route path="/user-login" element={<UserLogin/>} />
           <Route path="/user-registration" element={<UserRegistration/>} />
           <Route path="/business-registration" element={<BusinessRegistration/>} />
+          <Route path="/business-login" element={<BusinessLogin/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

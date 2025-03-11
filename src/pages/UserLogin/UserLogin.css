@@ -1,5 +1,5 @@
 .user-login-container {width: 100%;height: auto;padding-block: 50px;display: flex;align-items: flex-start;border: 1px solid #EAEAEA;border-radius: 29px;
-padding-inline: 50px;margin-block: 100px;/*box-shadow: 4px 4px 25px rgba(0,0,0,0.05);*/background-blend-mode: normal;background-image: url('../src/images/bannerCaptionVector.svg');background-repeat: no-repeat;background-position: bottom -85px right -160px;background-size: 35%;z-index: 0; position: relative;}
+padding-inline: 50px;margin-block: 50px;background-blend-mode: normal;background-image: url('../src/images/bannerCaptionVector.svg');background-repeat: no-repeat;background-position: bottom -85px right -160px;background-size: 35%;z-index: 0; position: relative;}
 
 .user-login-container::before {position: absolute;content: '';width: 100%;height: 100px;background-image: url('../src/images/circle-shadow.png');
 left: 0;bottom: -100px;background-position: bottom center;background-repeat: no-repeat;}
@@ -11,15 +11,17 @@ left: 0;bottom: -100px;background-position: bottom center;background-repeat: no-
 .user-login-form .form-group input[type="email"],
 .user-login-form .form-group input[type="password"] {height: 50px;border-radius: 0;margin-block-end: 22px;color: var(--black);}
 .user-login-form .form-group input[type="checkbox"] {border-radius: 0;width: 20px;height: 20px;}
-.user-login-form .form-group button[type="submit"] {margin-block: 37px 25px;height: 55px;background-color: var(--jetGreen);border-color: var(--jetGreen);
+.user-login-form .form-group button[type="submit"] {margin-block: 8px 6px;height: 55px;background-color: var(--jetGreen);border-color: var(--jetGreen);
 border-radius: 100px;text-transform: uppercase;font-weight: 700;}
 .newUserText {font-weight: 600;}
 
 .user-login-form ul.signInIcons li {list-style-type: none;}
-.user-login-form ul.signInIcons {flex-flow: column; row-gap: 10px;}
+.user-login-form ul.signInIcons {justify-content: space-between; row-gap: 10px;}
 .user-login-form ul.signInIcons li {width: 100%;display: flex;}
-.user-login-form ul.signInIcons li a {width: 100%;border: 1px solid rgba(0,0,0,0.25);display: flex;height: 55px;align-items: center;justify-content: center;border-radius: 100px;font-weight: 700;color: var(--black);text-transform: uppercase;}
+.user-login-form ul.signInIcons li a {width: 95%;border: 1px solid rgba(0,0,0,0.25);display: flex;height: 55px;align-items: center;justify-content: center;border-radius: 100px;font-weight: 700;color: var(--black);text-transform: uppercase;}
 .user-login-form ul.signInIcons li a>img {max-width: 24px;margin-inline-end: 9px;}
+
+.user-login-form ul.signInIcons li:last-child {justify-content: end;}
 
 .anotherOptionsOR::before {position: absolute;content: '';width: 101px;height: 1px;background-color: #DBECD0;left: 50%;top: 14px;margin-left: -119px;}
 .anotherOptionsOR::after {position: absolute;content: '';width: 101px;height: 1px;background-color: #DBECD0;right: 50%;top: 14px;margin-right: -119px;}
