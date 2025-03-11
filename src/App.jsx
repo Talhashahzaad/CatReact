@@ -32,7 +32,7 @@ import UserLogin from './pages/UserLogin/UserLogin';
 import UserRegistration from './pages/UserRegistration/UserRegistration';
 import BusinessRegistration from './pages/BusinessRegistration/BusinessRegistration';
 import BusinessLogin from './pages/BusinessLogin/BusinessLogin';
-
+import ChangePassword from './pages/ChangePassword/ChangePassword';
 
 
 function App () {
@@ -74,6 +74,7 @@ function App () {
           <Route path="/user-registration" element={<UserRegistration/>} />
           <Route path="/business-registration" element={<BusinessRegistration/>} />
           <Route path="/business-login" element={<BusinessLogin/>} />
+          <Route path="/change-password" element={<ChangePassword/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

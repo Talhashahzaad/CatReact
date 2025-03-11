@@ -25,6 +25,7 @@ function Home(){
 
     const [blogListing, setBlogListing] = useState([]);
     const [authors, setAuthors] = useState({});
+    const [error, setError] = useState(null);
     
     useEffect(() => {
         const blogs = async () => {
@@ -38,17 +39,16 @@ function Home(){
     useEffect(() => {
         const fetchAuthors = async () => {
             try {
-                const response = await fetch('http://3.8.140.227:8000/api/blog/user/');
+                const response = await fetch(`http://3.8.140.227:8000/api/blog/`);
                 const data = await response.json();
 
                 const authorMap = {};
                 data.forEach(author => {
                     authorMap[author.id] = author.name;
-                });
-
+             });
                 setAuthors(authorMap);
             } catch (error) {
-                console.error('Error fetching authors:', error);
+                setError('Unable to fetch author data. Please try again later.');
             }
         };
 
@@ -533,6 +533,7 @@ function Home(){
             </Container>
         </div>
 
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
         </>
     )

@@ -164,26 +164,26 @@ const BusinessRegistration = () => {
                                 <div id="stepOne" className={`${stepOne ? 'd-block' : ''} handle-step-one`}>
                                     <div className="form-group">
                                         <label htmlFor="nameBusiness-registration">Name</label>
-                                        <input type="text" className="form-control" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+                                        <input type="text" className="form-control" value={formData.name} placeholder='Name' onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
                                         <small className="text-danger">{formData.name && !validateName(formData.name) && 'Name must be 3-30 characters long. Only letters and spaces are allowed.'}</small>
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="emailBusiness-registration">Email</label>
-                                        <input type="email" className="form-control" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                                        <input type="email" className="form-control" value={formData.email} placeholder='Email' onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                                         <small className="text-danger">{formData.email && !validateEmail(formData.email) && 'Invalid email syntax. Please enter a valid email address.'}</small>
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="phoneBusiness-registration">Phone</label>
-                                        <input type="tel" minLength={10} maxLength={10} className="form-control" value={formData.tel} onChange={(e) => setFormData({ ...formData, tel: e.target.value })} />
+                                        <input type="tel" minLength={10} maxLength={10} className="form-control" value={formData.tel} placeholder='Phone' onChange={(e) => setFormData({ ...formData, tel: e.target.value })} />
                                         <small className="text-danger">{formData.tel && !validatePhone(formData.tel) && 'Phone number must be 10 digits. Only numbers are allowed.'}</small>
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="passwordBusiness-registration">Password</label>
                                         <div className="position-relative">
-                                            <input type={showPassword ? "text" : "password"} className="form-control" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                                            <input type={showPassword ? "text" : "password"} className="form-control" value={formData.password} placeholder='Password' onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
                                             <span className="position-absolute top-50 end-0 translate-middle-y pe-3" style={{ cursor: 'pointer' }}>
                                                 <img src={showPassword ? eyeOpen : eyeClose} alt='Disappear' onClick={() => setShowPassword(!showPassword) } />
                                             </span>

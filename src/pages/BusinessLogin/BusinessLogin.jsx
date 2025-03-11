@@ -51,7 +51,7 @@ function Login() {
                     
                     <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                         
-                            <h1 class="text-center text-capitalize fw-bold">Business <mark>Registration</mark></h1>
+                            <h1 className="text-center text-capitalize fw-bold">Business <mark>login</mark></h1>
                             <small className="d-block text-lowercase text-center fw-normal">sign in to continue</small>
                             <hr />
                             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>} {/* Display error message */}

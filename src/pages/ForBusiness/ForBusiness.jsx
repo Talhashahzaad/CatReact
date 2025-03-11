@@ -22,7 +22,7 @@ const ForBusiness = () => {
     }, []);
 
     console.log(subscriptionPlans);
-
+    
     return (
         <>
             <div className="inner-feature-banner for-business">
@@ -30,7 +30,7 @@ const ForBusiness = () => {
                     <Row>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className="d-flex flex-column justify-content-center">
                             <h1 className="animate__fadeInUp animate__animated">Drive Your Business Forward with Check a Treatment</h1>
-                            <p>Welcome to <strong>Check a Treatment</strong>, the ultimate platform for professionals to showcase their services, grow their businesses, and connect with like-minded professionals and clients. Whether you’re a seasoned expert or just starting your journey, Check a Treatment offers tailored tools and features to help you thrive.</p>
+                            <p>Welcome to <strong>Check a Treatment</strong>, the ultimate platform for professionals to showcase their services, grow their businesses, and connect with like-minded professionals and clients. Whether you're a seasoned expert or just starting your journey, Check a Treatment offers tailored tools and features to help you thrive.</p>
                         </Col>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
                             <img src={forBusiness} alt="" title="" width="" height="" className="img-fluid" />
@@ -163,10 +163,11 @@ const ForBusiness = () => {
                             </Col>
 
                             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                                <div className="subscription-plan-section w-100 h-auto d-flex align-items-center justify-content-evenly">
+                            {subscriptionPlans.map((plan, index) => (
+                                <div key={plan.id || index} className="subscription-plan-section w-100 h-auto d-flex align-items-center justify-content-evenly">
                                     <div className="left-side-subscription-plan-section text-center">
-                                        <strong>{subscriptionPlans[0].name}</strong>
-                                        <h3 className="text-uppercase display-2 fw-bold">{subscriptionPlans[0].type}</h3>
+                                        <strong>{plan.name}</strong>
+                                        <h3 className="text-uppercase display-2 fw-bold">{plan.type}</h3>
                                         <p>Advanced Business Profile Listing</p>
                                         <p>Check a Treatment Online Store front <samp>(10% commission)</samp></p>
                                     </div>
@@ -193,7 +194,8 @@ const ForBusiness = () => {
                                         <p>CaT Pro Social Media</p>
                                         <p>Social media</p>
                                     </div>
-                                </div>
+                                    </div>
+                                ))}
                             </Col>
                         </Row>
                     </Container>
@@ -251,7 +253,7 @@ const ForBusiness = () => {
                                         <p>Our plans are designed with flexibility in mind. Upgrade or change your subscription at any time to align with your business goals.</p>
                                         
                                         <h3 className="mb-3 fw-normal">Join Us Today!</h3>
-                                        <p>Start showcasing your services and connecting with a supportive community. Choose the plan that’s right for you and take your business to the next level.</p>
+                                        <p>Start showcasing your services and connecting with a supportive community. Choose the plan that's right for you and take your business to the next level.</p>
                                         <aside><Link to="/" className="green-btn text-capitalize">add listing</Link></aside>
                                     </div>
                                 </Col>

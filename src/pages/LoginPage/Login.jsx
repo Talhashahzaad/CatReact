@@ -109,7 +109,7 @@ function Login() {
                                 </div>
 
                                 <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <p className="py-3 mb-0 w-100 text-center">New User?  <Link to="/sign-up">Sign Up</Link></p>
+                                    <p className="py-3 mb-0 w-100 text-center">New User?  <Link to="/user-registration">Sign Up</Link></p>
                                 </div>
 
                                 <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

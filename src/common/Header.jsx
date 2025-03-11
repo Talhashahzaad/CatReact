@@ -37,7 +37,7 @@ function Header(){
                                                     {/* <img src={userLogin} alt="home" />  */}
                                                 client login</Link></li>
                                                 
-                                                <li><Link to="/sign-up" className="text-capitalize">
+                                                <li><Link to="/business-login" className="text-capitalize">
                                                 {/* <img src={userLogin} alt="home" />  */}
                                                 business login</Link></li>
                                                 <li className="menus-dropdown">
@@ -56,7 +56,7 @@ function Header(){
                                                         />
                                                     </Link>
                                                     <div className={`dropdown-content ${isMenuOpen ? 'show' : ''}`}>
-                                                        <Link to="/sign-up" className="text-capitalize sign-up-link">sign up</Link>
+                                                        <Link to="/user-registration" className="text-capitalize sign-up-link">sign up</Link>
                                                         <Link to="/business-registration" className="text-capitalize">business sign up</Link>
                                                         <Link to="/for-business" className="text-capitalize">for business</Link>
                                                         <Link to="/pricing-packages" className="text-capitalize">membership options</Link>
