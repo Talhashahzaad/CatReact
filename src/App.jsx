@@ -33,6 +33,8 @@ import UserRegistration from './pages/UserRegistration/UserRegistration';
 import BusinessRegistration from './pages/BusinessRegistration/BusinessRegistration';
 import BusinessLogin from './pages/BusinessLogin/BusinessLogin';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
+import ProductListing from './pages/ProductListing/ProductListing';
+import ProtectedRoute from './component/ProtectedRoute';
 
 
 function App () {
@@ -50,7 +52,6 @@ function App () {
           <Route path="/sign-up" element={<Register/>} />
           <Route path="/forget-password" element={<ForgetPassword/>} />
           <Route path="/blogs" element={<Blogs/>} />
-          <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/blog/:title" element={<SinglePost/>} />
           <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
           <Route path="/terms-and-conditions" element={<TermsConditions/>} />
@@ -59,22 +60,59 @@ function App () {
           <Route path="/about-us" element={<AboutUs/>} />
           <Route path="/frequently-asked-question" element={<FrequentlyAskedQuestion/>} />
           <Route path="/pricing-packages" element={<PricingPackage/>} />
-          <Route path="/dashboard/all-listing" element={<AllListing/>} />
-          <Route path="/dashboard/treatment" element={<Treatment/>} />
-          <Route path="/dashboard/certificate" element={<ProfessionalAffiliationsCertificates/>} />
-          <Route path="/dashboard/practitioner" element={<Practitioner/>} />
-          <Route path="/dashboard/order" element={<Order/>} />
-          <Route path="/dashboard/my-profile" element={<MyProfile/>} />
+          <Route path="/beyond-the-treatments" element={<BeyondTheTreatments/>} />
+          <Route path="/*" element={<Error404Page/>} />
+          
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard/>
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard/my-profile" element={
+            <ProtectedRoute>
+              <MyProfile/>
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard/all-listing" element={
+            <ProtectedRoute>
+              <AllListing/>
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard/treatment" element={
+            <ProtectedRoute>
+              <Treatment/>
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard/treatment-package" element={
+            <ProtectedRoute>
+              <TreatmentPackage/>
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard/practitioner" element={
+            <ProtectedRoute>
+              <Practitioner/>
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard/certificate" element={
+            <ProtectedRoute>
+              <ProfessionalAffiliationsCertificates/>
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard/order" element={
+            <ProtectedRoute>
+              <Order/>
+            </ProtectedRoute>
+          } />
+          
           <Route path="/not-found" element={<Error404Page/>} />
           <Route path="/listing-details" element={<ListingDetails/>} />
-          <Route path="/beyond-the-treatments" element={<BeyondTheTreatments/>} />
-          <Route path="/dashboard/treatment-package" element={<TreatmentPackage/>} />
           <Route path="/thank-you" element={<ThankYou/>} />
           <Route path="/user-login" element={<UserLogin/>} />
           <Route path="/user-registration" element={<UserRegistration/>} />
           <Route path="/business-registration" element={<BusinessRegistration/>} />
           <Route path="/business-login" element={<BusinessLogin/>} />
           <Route path="/change-password" element={<ChangePassword/>} />
+          <Route path="/product-listing" element={<ProductListing/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

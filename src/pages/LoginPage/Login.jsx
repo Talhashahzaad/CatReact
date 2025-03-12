@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Added useNavigate for redirection
 import { Container, Row, Col } from "react-bootstrap";
 import "./Login.css";
@@ -14,42 +14,69 @@ function Login() {
     const [email, setEmail] = React.useState(""); // State for email
     const [password, setPassword] = React.useState(""); // State for password
     const [errorMessage, setErrorMessage] = React.useState(""); // State for error message
+    const [data, setData] = useState({ message: '' });
     const navigate = useNavigate(); // Initialize useNavigate
+    const [showMessage, setShowMessage] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
+
+    useEffect(() => {
+        const savedCredentials = localStorage.getItem('rememberedUser');
+        if (savedCredentials) {
+            const { rememberedEmail, rememberedPassword } = JSON.parse(savedCredentials);
+            setEmail(rememberedEmail);
+            setPassword(rememberedPassword);
+            setRememberMe(true);
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
-        setErrorMessage(""); // Clear previous error messages
+        e.preventDefault();
+        setErrorMessage("");
         try {
             const response = await axios.post("http://3.8.140.227:8000/api/login", {
                 email,
                 password
             });
+            setData(response.data);
 
             if (response.status === 200) {
-                navigate("/dashboard");
                 localStorage.setItem("token", JSON.stringify(response.data.token));
+                if (rememberMe) {
+                    localStorage.setItem('rememberedUser', JSON.stringify({
+                        rememberedEmail: email,
+                        rememberedPassword: password
+                    }));
+                } else {
+                    localStorage.removeItem('rememberedUser');
+                }
+                setTimeout(() => {
+                    navigate("/dashboard");
+                }, 3000);
             } else {
                 setErrorMessage(response.data.message || "Login failed. Please try again.");
             }
+            setShowMessage(!!response.data.message);
         } catch (error) {
-            console.error("Error during login:", error);
             setErrorMessage("Incorrect email or password. Please try again.");
         }
     };
 
     return (
         <>
-        <Container>
-        <div className="loginPage">
-            
-                <Row>
-                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                        <div className="login-picture">
-                            <img src={userLoginPicture} alt="User Login" className="img-fluid" />
-                        </div>
-                    </Col>
+            <div className={`loggedMessage ${data.message ? 'd-flex' : 'd-none'}`}>
+                <h1>{data.message}</h1>
+            </div>
+
+            <Container>
+                <div className="loginPage">
+                    <Row>
+                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                            <div className="login-picture">
+                                <img src={userLoginPicture} alt="User Login" className="img-fluid" />
+                            </div>
+                        </Col>
                     
-                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                         
                             <h1 className="pb-2 text-uppercase text-center fw-bold">login</h1>
                             <small className="d-block text-lowercase text-center fw-normal">sign in to continue</small>
@@ -94,7 +121,14 @@ function Login() {
                                 <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div className="w-100 h-auto d-flex justify-content-between align-items-center mb-3">
                                         <div className="checkBoxWrapper d-inline-flex position-relative">
-                                            <input type="checkbox" name="rememberMe" id="rememberMe" className="position-absolute" />
+                                            <input 
+                                                type="checkbox" 
+                                                name="rememberMe" 
+                                                id="rememberMe" 
+                                                className="position-absolute"
+                                                checked={rememberMe}
+                                                onChange={(e) => setRememberMe(e.target.checked)}
+                                            />
                                             <label htmlFor="rememberMe" className="text-rememberField">remember me</label>
                                         </div>
 
@@ -124,10 +158,9 @@ function Login() {
                                 </div>
                             </form>
                         
-                    </Col>
-                </Row>
-            
-            </div>
+                        </Col>
+                    </Row>
+                </div>
             </Container>
         </>
     )

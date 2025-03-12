@@ -35,9 +35,7 @@ left: 0;top: 2px;border-radius: 4px;border: 1px solid var(--roseDark); cursor: p
 .loginPage p.py-3.mb-0.w-100.text-center a:hover,.loginPage p.py-3.mb-0.w-100.text-center a:focus {color: var(--jetGreen);text-decoration: none;}
 /* login page end */
 
-.loginPage ul.signInIcons li {
-    list-style-type: none;
-}
+.loginPage ul.signInIcons li {list-style-type: none;}
 
 
 .loginPage ul.signInIcons li {list-style-type: none;}
@@ -57,15 +55,12 @@ left: 0;top: 2px;border-radius: 4px;border: 1px solid var(--roseDark); cursor: p
 .anotherOptionsOR::before {position: absolute;content: '';width: 101px;height: 1px;background-color: #DBECD0;left: 50%;top: 14px;margin-left: -119px;}
 .anotherOptionsOR::after {position: absolute;content: '';width: 101px;height: 1px;background-color: #DBECD0;right: 50%;top: 14px;margin-right: -119px;}
 
-.loginPage hr {
-    height: 3px;
-    background-color: var(--jetGreen);
-    border: none;
-    opacity: 1;
-    border-radius: 10px;
-    width: 94px;
-    margin: 31px auto 0px;
-}
+.loginPage hr {height: 3px;background-color: var(--jetGreen);border: none;opacity: 1;border-radius: 10px;width: 94px;margin: 31px auto 0px;}
+.loggedMessage {position: fixed;width: 100%;z-index: 9999;height: 100%;display: flex;align-items: anchor-center;justify-content: center;
+top: 0;left: 0;border-radius: 15px;overflow: hidden;}
+.loggedMessage h1 {background-color: var(--jetGreen);color: var(--white);padding-block: 20px;font-size: 24px;border-radius: 12px;font-family: var(--defaultFont);
+margin-block-end: 0;padding-inline: 20px; outline: 10px solid var(--green25);}
+
 
 @media (max-width: 767px){
     .loginPage {max-width: 90%;width: 90%;padding: 30px 15px; margin: 50px auto 50px;}

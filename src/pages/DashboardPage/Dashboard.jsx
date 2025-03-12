@@ -20,8 +20,8 @@ const Dashboard = () =>{
     const checkToken = async () => {
         const token = localStorage.getItem("token");
         if(!token){
-            navigate("/login");
             localStorage.removeItem("token");
+            navigate("/login");
         } else{
             const response = await axios.get("http://3.8.140.227:8000/api/login", {
                 headers: {
@@ -39,6 +39,8 @@ const Dashboard = () =>{
     
     return(
         <>
+            
+            
         <Container fluid className="dashboard-page-main">
             <Row>
                 <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start" 
