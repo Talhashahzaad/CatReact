@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 //import profilePicture from "../../../images/profile-picture.jpeg";
 import logo from "../../../images/check-a-treatment.svg";
@@ -13,10 +13,12 @@ import affilicationDashIcon from "../../../images/affilication-dashIcon.svg";
 import qualificationDashIcon from "../../../images/qualification-dashIcon.svg";
 import logoutIcon from "../../../images/logout-dashIcon.svg";
 
-const Sidebar = () => {
+import axios from "axios";
 
+const Sidebar = () => {
+    const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(true);
-    
+
     const handleClickOutside = (event) => {
         if (event.target.closest('.dropdown-menu') === null && !event.target.closest('.btn')) {
             setIsDropdownOpen(false);
@@ -33,6 +35,65 @@ const Sidebar = () => {
     const handleDropdownToggle = (event) => {
         event.preventDefault();
         setIsDropdownOpen((prev) => !prev);
+    };
+
+    const handleLogout = async () => {
+        try {
+            const token = JSON.parse(localStorage.getItem("token"));
+            const response = await axios.post("http://3.8.140.227:8000/api/logout", {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log("response", response);
+            console.log("response.status", response.status);
+            console.log("response.data", response.data);
+            console.log("response.data.message", response.data.message);
+            console.log("response.data.success", response.data.success);
+
+
+
+            if (response.status === 200) {
+                localStorage.removeItem("token");
+                setLogoutAlertMessage({
+                    message: "You logged out successfully",
+                    show: true,
+                    timeout: 10000
+                });
+                setIsLogoutAlertOpen(true);
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
+    };
+
+    const [isLogoutAlertOpen, setIsLogoutAlertOpen] = useState(false);
+    const [logoutAlertMessage, setLogoutAlertMessage] = useState({
+        message: "",
+        show: false,
+        timeout: 10000
+    });
+
+    useEffect(() => {
+        if (logoutAlertMessage.show) {
+            const timeout = setTimeout(() => {
+                setLogoutAlertMessage({ ...logoutAlertMessage, show: false });
+            }, logoutAlertMessage.timeout);
+
+            return () => {
+                clearTimeout(timeout);
+                setLogoutAlertMessage({ ...logoutAlertMessage, show: false });
+            };
+            
+        }
+    }, [logoutAlertMessage.show]);
+
+    const handleLogoutAlertClose = () => {
+        setLogoutAlertMessage({ ...logoutAlertMessage, show: false });
     };
 
     return (
@@ -139,7 +200,7 @@ const Sidebar = () => {
                     <hr/>
 
                     <li>
-                        <Link to="#" onClick={(e) => (e).stopPropagation() && window.scrollTo(0, 0)}>
+                        <Link to="#" onClick={handleLogout}>
                             <span className="item-icon">
                                 <img src={logoutIcon} alt="Logout" />
                             </span>
@@ -158,6 +219,16 @@ const Sidebar = () => {
             </div>
         </div>
         <Outlet />
+
+        <div className="logout-alert-message">
+            <div className="logout-alert-message-content">
+                {isLogoutAlertOpen && logoutAlertMessage.show && (
+                    <div className="logout-alert-message-content-text">
+                        <h6 className="bg-white text-dark headingFont h4 fw-bold">{ logoutAlertMessage.data.message} successfully</h6>
+                    </div>
+                )}
+            </div>
+        </div>
         </>
     );
 }

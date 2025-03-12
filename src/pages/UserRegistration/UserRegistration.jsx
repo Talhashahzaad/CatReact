@@ -16,6 +16,7 @@ const UserRegistration = () => {
     const [stepOne, setStepOne] = useState(true);
     const [stepTwo, setStepTwo] = useState(false);
 
+
     const handleStepOne = () => {
         setStepOne(true);
         setStepTwo(false);
@@ -48,7 +49,7 @@ const UserRegistration = () => {
     };
 
     const validatePhone = (phone) => {
-        const phoneRegex = /^\d+$/;
+        const phoneRegex = /^\d{7,15}$/;
         return phoneRegex.test(phone);
     };
 
@@ -125,8 +126,8 @@ const UserRegistration = () => {
 
                                     <div className="form-group">
                                         <label htmlFor="phoneUser-registration">Phone</label>
-                                        <input type="tel" minLength={10} maxLength={10} className="form-control" id="phoneUser-registration" placeholder="Phone" required onChange={(e) => setFormData({ ...formData, tel: e.target.value })} />
-                                        <small className="text-danger">{formData.tel && !validatePhone(formData.tel) && 'Phone number must be 10 digits. Only numbers are allowed.'}</small>
+                                        <input type="tel" minLength={7} maxLength={15} className="form-control" id="phoneUser-registration" placeholder="Phone" required onChange={(e) => setFormData({ ...formData, tel: e.target.value })} />
+                                        <small className="text-danger">{formData.tel && !validatePhone(formData.tel) && 'Phone number must be 7-15 digits. Only numbers are allowed.'}</small>
                                     </div>
 
                                     <div className="form-group">

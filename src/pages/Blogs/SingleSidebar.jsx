@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Col } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/fa';
+//import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const SingleSidebar = () => {
     const [BlogListingData, setBlogListingData] = useState([]);
+    const [searchListingFields, setSearchListingFields] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleSearchListingFields = () => {
+        setSearchListingFields(!searchListingFields);
+    }
 
     useEffect(() => {
         const BlogListingData = async () => {
@@ -34,19 +41,58 @@ const SingleSidebar = () => {
         return blogsCategory.filter(blogCategory => blogCategory.id === BlogListingCategory.id);
     };
 
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const filteredBlogs = BlogListingData.filter(blog => 
+        blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        blog.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <>
             <Col xxl={4} xl={4} lg={4} md={4} sm={12} xs={12}>
                 <div className='sidebar-blog-post-related-posts'>
                     <div className='sidebar-blog-post-related-posts-search'>
                         <div className='sidebar-blog-post-related-posts-search-input w-100 h-auto position-relative mb-5'>
-                            <form className='d-flex justify-content-between align-items-center'>
-                                <input type='text' placeholder='Search your blog' className='form-control' />
+                            <div className='d-flex justify-content-between align-items-center w-100 h-auto position-relative'>
+                                <input 
+                                    type='text' 
+                                    placeholder='Search your blog' 
+                                    className='form-control' 
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                    onClick={handleSearchListingFields}
+                                    onFocus={() => setIsFocused(true)}
+                                    onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+                                />
 
-                                <div className='sidebar-blog-post-related-posts-search-input-button'>
-                                <button className='btn btn-default text-capitalize' type='submit'><FaSearch /></button>
+                                <div className={`position-absolute top-auto start-0 searchListingAPI ${!isFocused || !searchTerm ? 'd-none' : 'd-block'}`}>
+                                    <ul className='mb-0 ps-0'>
+                                        {searchTerm && filteredBlogs
+                                            .sort((a, b) => b.id - a.id)
+                                            .slice(0, 30)
+                                            .map((blog) => (
+                                                <li key={blog.id}>
+                                                    <Link to={`/blog/${blog.slug}`} onClick={() => { window.scrollTo({top: 0, behavior: 'smooth'}); window.location.href = `/blog/${blog.slug}`; }} className='d-flex align-items-center'>
+                                                        <figure className='mb-0'>
+                                                            <img src={`http://3.8.140.227:8000${blog.image}`} alt={blog.title} title={blog.title} className='img-fluid' loading='lazy' />
+                                                        </figure>
+                                                        <h4 className='mb-0'>
+                                                            <small className='text-capitalize d-block h6'>
+                                                                {blog.title.length > 35 ? blog.title.substring(0, 35) + '...' : blog.title}
+                                                            </small>
+                                                            </h4>
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                    </ul>
                                 </div>
-                            </form>
+                                {/* <div className='sidebar-blog-post-related-posts-search-input-button'>
+                                <button className='btn btn-default text-capitalize' type='submit'><FaSearch /></button>
+                                </div> */}
+                            </div>
                         </div>
                     </div>
 

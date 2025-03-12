@@ -206,7 +206,7 @@ function Home(){
             <Container fluid>
                 <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <h2 className="text-center fw-normal lh-base">Feature Product</h2>
+                        <h2 className="text-center fw-normal lh-base text-capitalize">elite members</h2>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>

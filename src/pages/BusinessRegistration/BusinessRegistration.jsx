@@ -37,7 +37,7 @@ const BusinessRegistration = () => {
   };
 
   const validatePhone = (phone) => {
-    const phoneRegex = /^\d{10}$/;
+    const phoneRegex = /^\d{7,15}$/;
     return phoneRegex.test(phone);
   };
 
@@ -176,8 +176,8 @@ const BusinessRegistration = () => {
 
                                     <div className="form-group">
                                         <label htmlFor="phoneBusiness-registration">Phone</label>
-                                        <input type="tel" minLength={10} maxLength={10} className="form-control" value={formData.tel} placeholder='Phone' onChange={(e) => setFormData({ ...formData, tel: e.target.value })} />
-                                        <small className="text-danger">{formData.tel && !validatePhone(formData.tel) && 'Phone number must be 10 digits. Only numbers are allowed.'}</small>
+                                        <input type="tel" minLength={7} maxLength={15} className="form-control" value={formData.tel} placeholder='Phone' onChange={(e) => setFormData({ ...formData, tel: e.target.value })} />
+                                        <small className="text-danger">{formData.tel && !validatePhone(formData.tel) && 'Phone number must be 7-15 digits. Only numbers are allowed.'}</small>
                                     </div>
 
                                     <div className="form-group">

@@ -107,6 +107,9 @@ align-items: center;justify-content: center;border-radius: 10px; font-size: 16px
 
 .sidebar-listing-form {display: none;}
 
+.logout-alert-message {position: fixed;top: 15px;left: 15px;background-color: var(--white);width: 320px;height: auto;z-index: 1111;
+padding-block: 24px;border-radius: 8px;border: 1px solid rgba(0,0,0,0.12);}
+
 .dashboard-content-table button.btn-next, .dashboard-content-table button.btn-previous {background-color: var(--jetGreen);border: 1px solid rgba(255,255,255,0.50);color: var(--white);font-size: 12px;}
 .dashboard-content-table button.btn-next:hover, .dashboard-content-table button.btn-previous:hover {background-color: var(--black);}
 
