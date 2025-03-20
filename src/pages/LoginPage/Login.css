@@ -8,14 +8,15 @@ border-right: 1px solid var(--green25);border-bottom: 5px solid var(--green25);b
 
 .loginPage h1 {font-size: 40px;font-weight: 400;text-transform: capitalize;line-height: 40px;}
 .loginPage small {text-transform: uppercase;display: block;line-height: 24px;}
-.loginPage input[type="text"],.loginPage input[type="email"], .loginPage input[type="password"] {border-color: var(--green25);border-radius: 0;
-height: 50px;border-bottom-width: 5px;outline: none;margin-bottom: 16px;}
+.loginPage input[type="text"],.loginPage input[type="email"], .loginPage input[type="password"] {border-radius: 8;
+height: 50px;border-bottom-width: 1px;outline: none;margin-bottom: 16px;}
 .loginPage input[type="text"]:focus,
 .loginPage input[type="email"]:focus,
 .loginPage input[type="password"]:focus {outline: none; box-shadow: none;}
 
-.loginPage input[type="submit"] {background-color: var(--jetGreen);border-color: var(--roseDark);border-radius: 0;height: 50px;
-text-transform: uppercase;letter-spacing: 2px;font-weight: 600;color: var(--white);}
+.loginPage input[type="submit"] {background-color: var(--jetGreen);border-radius: 8px;height: 50px;text-transform: uppercase;
+letter-spacing: 2px;font-weight: 600;color: var(--white);border-color: var(--jetGreen);}
+
 .loginPage input[type="submit"]:hover, .loginPage input[type="submit"]:focus {background-color: var(--black); color: var(--white)}
 
 .forgotPass a {color: var(--jetGreen);font-weight: 500;text-transform: capitalize;font-style: italic;}

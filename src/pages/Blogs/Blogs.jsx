@@ -61,6 +61,12 @@ const Blogs = () => {
         fetchAuthors();
     }, []);
 
+    const stripHTML = (html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    };
+
+
     return(
         <>
             <div className='blog-page-feature-image w-100 h-auto d-flex justify-content-center align-items-center position-relative flex-column'>
@@ -80,7 +86,7 @@ const Blogs = () => {
                                 <BlogCard
                                     image={`http://3.8.140.227:8000${blog.image}`}
                                     title={blog.title.split(' ').slice(0, 5).join(' ') + '...'}
-                                    description={blog.description.split(' ').slice(0, 24).join(' ') + '...'}
+                                    description={stripHTML(blog.description).split(' ').slice(0, 30).join(' ') + '...'}
                                     slug={blog.slug}
                                     date={new Date(blog.updated_at).toLocaleDateString('en-US')}
                                     author={blog.user.name}

@@ -9,8 +9,6 @@ const BlogCard = ({image, title, description, date, author, slug, category}) => 
         navigate(`/blog/${slug}`);
     };
 
-    //const {image, title, description, date, author, slug} = props;
-
     return(
         <>
             <div className='blog-card' onClick={handleClick} style={{ cursor: 'pointer' }}>

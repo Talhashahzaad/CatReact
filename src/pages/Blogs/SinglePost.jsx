@@ -58,7 +58,6 @@ const {title} = useParams();
             try {
                 const response = await fetch('http://3.8.140.227:8000/api/blog/');
                 const data = await response.json();
-                console.log(data);
 
                 const authorMap = {};
                 data.forEach(author => {

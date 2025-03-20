@@ -6,7 +6,7 @@ import eyeOpen from "../LoginPage/eyeOpen.svg";
 import eyeClose from "../LoginPage/eyeClose.svg";
 import googleShortIcon from "../../images/google-short-icon.svg";
 import facebookShortIcon from "../../images/facebook-short-icon.svg";
-import userLoginPicture from "../../images/user-login-banner.png";
+import userLoginPicture from "../../images/userLoginPicture.webp";
 import axios from "axios";
 
 function Login() {

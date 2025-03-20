@@ -62,7 +62,8 @@ color: var(--white);padding-inline: 8px;border-radius: 50px;font-size: 12px;max-
 /* profile picture end */
 
 .dashboard-content-table select {width: 50px;height: 30px;margin-inline-start: 8px;border-radius: 4px;font-size: 12px;outline: none;border: 1px solid rgba(0,0,0,0.25);}
-.dashboard-content-table input[type="text"] {height: 30px;margin-inline-start: 8px;border-radius: 4px;font-size: 12px;outline: none;border: 1px solid rgba(0,0,0,0.25);width: 200px;}
+.dashboard-content-table input[type="text"] {height: 30px;margin-inline-start: 0px;border-radius: 4px;font-size: 14px;outline: none;
+border: none;width: 100%;text-align: center;font-weight: 500;}
 .dashboard-content-table label {vertical-align: middle;text-transform: capitalize;font-weight: 500;font-size: 14px;}
 .dashboard-content-table table thead th {background-color: var(--jetGreen);color: var(--white);text-transform: capitalize;font-weight: 600;font-size: 14px;text-align: center;}
 .dashboard-content-table table tbody td {vertical-align: middle;text-transform: capitalize;font-weight: 500;font-size: 14px;text-align: center;}
@@ -120,6 +121,9 @@ outline: 10px solid var(--green25);}
 .blackHoverEffect:hover, .blackHoverEffect:focus {background-color: var(--black);}
 .dashboard-all-listing-create-form-body form input[type="submit"]:hover,
 .dashboard-all-listing-create-form-body form input[type="submit"]:focus {background-color: var(--black);}
-.dashboard-all-listing-create-form-body form input[type="checkbox"] {width: 20px;height: 25px;margin-inline-end: 15px;}
-.dashboard-all-listing-create-form-body form input[type="checkbox"] {width: 24px;height: 24px;margin-inline-end: 15px;appearance: auto;border-radius: 4px;
+.dashboard-all-listing-create-form-body form input[type="checkbox"],
+.dashboard-all-listing-editable-form-body form input[type="checkbox"] {width: 20px;height: 25px;margin-inline-end: 15px;}
+.dashboard-all-listing-create-form-body form input[type="checkbox"],
+.dashboard-all-listing-editable-form-body form input[type="checkbox"] {width: 24px;height: 24px;margin-inline-end: 15px;appearance: auto;border-radius: 4px;
 overflow: hidden;box-shadow: none;outline: none;cursor: pointer;}
+

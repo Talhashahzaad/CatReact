@@ -28,7 +28,6 @@ import PricingPackage from './pages/PricingPackage/PricingPackage';
 import BeyondTheTreatments from './pages/BeyondTreatments/BeyondTheTreatments';
 import TreatmentPackage from './pages/DashboardPage/TreatmentPackage/TreatmentPackage';
 import ThankYou from './pages/ThankYou/ThankYou';
-import UserLogin from './pages/UserLogin/UserLogin';
 import UserRegistration from './pages/UserRegistration/UserRegistration';
 import BusinessRegistration from './pages/BusinessRegistration/BusinessRegistration';
 import BusinessLogin from './pages/BusinessLogin/BusinessLogin';
@@ -107,7 +106,6 @@ function App () {
           <Route path="/not-found" element={<Error404Page/>} />
           <Route path="/listing-details" element={<ListingDetails/>} />
           <Route path="/thank-you" element={<ThankYou/>} />
-          <Route path="/user-login" element={<UserLogin/>} />
           <Route path="/user-registration" element={<UserRegistration/>} />
           <Route path="/business-registration" element={<BusinessRegistration/>} />
           <Route path="/business-login" element={<BusinessLogin/>} />

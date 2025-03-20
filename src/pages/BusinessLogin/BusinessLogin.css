@@ -10,8 +10,8 @@
     
     .businessLoginPage h1 {font-size: 40px;font-weight: 400;text-transform: capitalize;line-height: 40px;}
     .businessLoginPage small {text-transform: uppercase;display: block;line-height: 24px;}
-    .businessLoginPage input[type="text"],.businessLoginPage input[type="email"], .businessLoginPage input[type="password"] {border-color: var(--green25);border-radius: 0;
-    height: 50px;border-bottom-width: 5px;outline: none;margin-bottom: 16px;}
+    .businessLoginPage input[type="text"],.businessLoginPage input[type="email"], .businessLoginPage input[type="password"] {border-radius: 8;
+    height: 50px;border-bottom-width: 1px;outline: none;margin-bottom: 16px;}
     .businessLoginPage input[type="text"]:focus,
     .businessLoginPage input[type="email"]:focus,
     .businessLoginPage input[type="password"]:focus {outline: none; box-shadow: none;}

@@ -1,17 +1,25 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Container, Row, Col } from 'react-bootstrap';
 import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
-
+import { FaEdit, FaTrash } from 'react-icons/fa';
+//import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const ProfessionalAffiliationsCertificates = () => {
 
     const [entriesPerPage, setEntriesPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [entries, setEntries] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalEntries, setTotalEntries] = useState(0);
+    const navigate = useNavigate();
 
-    const handleEntriesPerPageChange = (event) => {
-        setEntriesPerPage(Number(event.target.value));
+    const handleEntriesPerPageChange = (e) => {
+        setEntriesPerPage(Number(e.target.value));
+        setCurrentPage(1);
     };
 
     const handleSearchChange = (event) => {
@@ -22,12 +30,64 @@ const ProfessionalAffiliationsCertificates = () => {
         entry.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    // Calculate page numbers
     const indexOfLastEntry = currentPage * entriesPerPage;
     const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
-    const currentEntries = filteredEntries.slice(indexOfFirstEntry, indexOfLastEntry);
-    const totalPages = Math.ceil(filteredEntries.length / entriesPerPage);
+    const currentEntries = filteredEntries.sort((a, b) => b.id - a.id).slice(indexOfFirstEntry, indexOfLastEntry);
 
+    // We are fetching the data from API and displaying it in the table
+    // const certificates = async () => {
+    //     setLoading(true);
+    //     setError(null);
 
+    //     const token = (localStorage.getItem("token"));
+    //     if (!token) {
+    //         navigate('/login');
+    //         return;
+    //     }
+
+    //     const parsedToken = JSON.parse(token);
+    //     try {
+    //         const response = await axios.get(`http://localhost:8000/api/professional-certificate?page=${currentPage}&per_page=${entriesPerPage}`,
+    //         {
+    //             headers: {
+    //                 'Authorization': `Bearer ${parsedToken}`,
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json',
+    //                 'Access-Control-Allow-Origin': '*',
+    //                 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+    //             }
+    //         });
+
+    //         if (response.data) {
+    //             setEntries(response.data);
+    //             setTotalPages(response.data.last_page || 1);
+    //             setTotalEntries(response.data.total || 0);
+    //         } else {
+    //             setError('Invalid data format received from server');
+    //         }
+    //         console.log(response.data);
+    //     } catch (error) {
+    //         console.error('Error fetching certificates:', error);
+    //         if (error.response?.status === 401) {
+    //             localStorage.removeItem("token");
+    //             navigate('/login');
+    //         }
+    //         setError(error.message || 'Failed to fetch certificates');
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     certificates();
+    // }, [currentPage, entriesPerPage]);
+
+    
+
+    
+    
+    // 82|R5FiDxBV4aGLTJuqQw9bR3bGZojUE8Ia8jPBonsTc7fc2d8f
     return (
         <>
           <Container fluid className="dashboard-page-main">
@@ -62,13 +122,18 @@ const ProfessionalAffiliationsCertificates = () => {
                             <Row className="d-flex justify-content-between align-items-center mb-3">
                                 <Col>
                                     <label htmlFor="entriesPerPage">Show entries:</label>
-                                    <select id="entriesPerPage" onChange={handleEntriesPerPageChange} value={entriesPerPage}>
-                                        <option value={5}>5</option>
-                                        <option value={10}>10</option>
-                                        <option value={20}>20</option>
+                                    <select 
+                                        id="entriesPerPage"
+                                        onChange={handleEntriesPerPageChange}
+                                        className={`setEntriesPerPage ${entriesPerPage}`}
+                                        defaultValue={entriesPerPage}
+                                    >
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
                                     </select>
                                 </Col>
-                                <Col className="text-end">
+                                <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end">
                                     <input 
                                         type="text" 
                                         placeholder="Search..." 
@@ -85,20 +150,82 @@ const ProfessionalAffiliationsCertificates = () => {
                                     <tr>
                                         <th>id</th>
                                         <th>name</th>
+                                        <th>description</th>
                                         <th>action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentEntries.map((entry, index) => (
+                                    {/* {currentEntries.map((entry, index) => (
                                         <tr key={index}>
                                             <td>{entry.id}</td>
                                             <td>{entry.name}</td>
+                                            <td>{entry.description}</td>
                                             <td>
                                                 <button className="btn btn-success"><FaEdit /></button>
                                                 <button className="btn btn-danger"><FaTrash /></button>
                                             </td>
                                         </tr>
-                                    ))}
+                                    ))} */}
+
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Rahul</td>
+                                        <td>Software Engineer</td>
+                                        <td>
+                                            <button className="btn btn-success"><FaEdit /></button>
+                                            <button className="btn btn-danger"><FaTrash /></button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Talha</td>
+                                        <td>AWS Certified</td>
+                                        <td>
+                                            <button className="btn btn-success"><FaEdit /></button>
+                                            <button className="btn btn-danger"><FaTrash /></button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Aman</td>
+                                        <td>Project Manager</td>
+                                        <td>
+                                            <button className="btn btn-success"><FaEdit /></button>
+                                            <button className="btn btn-danger"><FaTrash /></button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Sunil</td>
+                                        <td>Graphic Designer</td>
+                                        <td>
+                                            <button className="btn btn-success"><FaEdit /></button>
+                                            <button className="btn btn-danger"><FaTrash /></button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Raj Kumar</td>
+                                        <td>Software Developer</td>
+                                        <td>
+                                            <button className="btn btn-success"><FaEdit /></button>
+                                            <button className="btn btn-danger"><FaTrash /></button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Raj Singh</td>
+                                        <td>Software Developer</td>
+                                        <td>
+                                            <button className="btn btn-success"><FaEdit /></button>
+                                            <button className="btn btn-danger"><FaTrash /></button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             
