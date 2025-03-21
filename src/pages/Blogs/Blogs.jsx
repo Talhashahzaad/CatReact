@@ -66,6 +66,15 @@ const Blogs = () => {
         return doc.body.textContent || "";
     };
 
+    function blogPagination() {
+        if (BlogListingData.length > 6) {
+            const blogPagination = BlogListingData.length / 6;
+            return blogPagination; 
+        } else {
+            return 1;
+        }
+    }
+
 
     return(
         <>
@@ -97,6 +106,7 @@ const Blogs = () => {
                     ))}
                 </Row>
 
+                {blogPagination() > 1 && (
                 <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <Pagination>
@@ -120,6 +130,7 @@ const Blogs = () => {
                         </Pagination>
                     </Col>
                 </Row>
+                )}
             </Container>
         </>
     );

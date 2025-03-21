@@ -1,29 +1,23 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import './BusinessRegistration.css';
 import businessRegistrationPicture from '../../images/business-registration.png';
 import arrowNext from '../../images/arrowNext.svg';
 import arrowBack from '../../images/arrowBack.svg';
 import eyeOpen from "../LoginPage/eyeOpen.svg";
 import eyeClose from "../LoginPage/eyeClose.svg";
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const BusinessRegistration = () => {
+    const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
     const [showPassword, setShowPassword] = useState(false);
+    
   
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    tel: '',
-    password: '',
-    hearAbout: '',
-    treatmentCategoryProvider: '',
-    businessLocation: '',
-    sizeOfBusiness: '',
-    premisesNumber: ''
-  });
+  
 
   // Validation functions
   const validateName = (name) => {
@@ -46,45 +40,55 @@ const BusinessRegistration = () => {
     return passwordRegex.test(password);
   };
 
-  const validateHearAbout = (hearAbout) => {
-    return hearAbout !== 'Select how you heard about us';
+  const validateHearAbout = (heard_about_options) => {
+    return heard_about_options !== 'Select how you heard about us';
   };
 
-  const validateTreatmentCategoryProvider = (treatmentCategoryProvider) => {
-    return treatmentCategoryProvider !== '';
+  const validateTreatmentCategoryProvider = (categories) => {
+    return categories !== '';
   };
 
-  const validateBusinessLocation = (businessLocation) => {
-    return businessLocation !== '';
+  const validateBusinessLocation = (business_location) => {
+    return business_location !== '';
   };
 
-  const validateSizeOfBusiness = (sizeOfBusiness) => {
-    return sizeOfBusiness !== '';
+  const validateSizeOfBusiness = (business_size) => {
+    return business_size !== '';
   };
 
-  const validatePremisesNumber = (premisesNumber) => {
-    return premisesNumber !== '';
+  const validatePremisesNumber = (premises_count) => {
+    return premises_count !== '';
   };
   
   
 
-  // Step validation
+  // Step 01 validation
   const isStepOneValid = () => {
     return (
       formData.name && validateName(formData.name) &&
       formData.email && validateEmail(formData.email) &&
-      formData.tel && validatePhone(formData.tel) &&
+      formData.phone && validatePhone(formData.phone) &&
       formData.password && validatePassword(formData.password)
     );
   };
 
+  // Step 02 validation
   const isStepTwoValid = () => {
-    return formData.hearAbout !== '' && formData.treatmentCategoryProvider !== '';
+    return (
+        formData.heard_about_options && validateHearAbout(formData.heard_about_options) &&
+        formData.categories && validateTreatmentCategoryProvider(formData.categories)
+    )
   };
 
+  // Step 03 validation
   const isStepThreeValid = () => {
-    return formData.businessLocation !== '' && formData.sizeOfBusiness !== '' && formData.premisesNumber !== '';
+    return (
+        formData.business_location && validateBusinessLocation(formData.business_location) &&
+        formData.business_size && validateSizeOfBusiness(formData.business_size) &&
+        formData.premises_count && validatePremisesNumber(formData.premises_count)
+    )
   };
+  
 
   // Navigation handlers
   const nextStep = () => {
@@ -98,14 +102,6 @@ const BusinessRegistration = () => {
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isStepThreeValid()) {
-      // Handle form submission
-      console.log('Form submitted:', formData);
     }
   };
 
@@ -125,7 +121,32 @@ const BusinessRegistration = () => {
     setCurrentStep(3);
   };
 
-  
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    heard_about_options: '',
+    categories: '',
+    business_location: '',
+    business_size: '',
+    premises_count: ''
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://3.8.140.227:8000/api/signup', formData);
+      if (response.status === 200) {
+        toast.success('Registration successful');
+      } else {
+        toast.error('Registration failed');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error('Registration failed');
+    }
+  };
 
     return (
         <Container>
@@ -141,49 +162,67 @@ const BusinessRegistration = () => {
                             <h1 className="text-center text-capitalize fw-bold">Business <mark>Registration</mark></h1>
                             <hr/>
 
-                            {/* Progress bar */}
-                            {/* <div className="d-flex justify-content-between mb-4">
-                            {[1, 2, 3].map((step) => (
-                                <div
-                                key={step}
-                                className="progress flex-grow-1 mx-1"
-                                style={{ height: '4px' }}
-                                >
-                                <div
-                                    className={`progress-bar ${
-                                    currentStep >= step ? 'bg-primary' : 'bg-secondary'
-                                    }`}
-                                    style={{ width: '100%' }}
-                                />
-                                </div>
-                            ))}
-                            </div> */}
-
                             <form onSubmit={handleSubmit}>
                             {currentStep === 1 && (
                                 <div id="stepOne" className={`${stepOne ? 'd-block' : ''} handle-step-one`}>
                                     <div className="form-group">
-                                        <label htmlFor="nameBusiness-registration">Name</label>
-                                        <input type="text" className="form-control" value={formData.name} placeholder='Name' onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+                                        <label htmlFor="name">Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={formData.name}
+                                            placeholder='Name'
+                                            required id="name"
+                                            name="name"
+                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                            autoComplete='name'    
+                                        />
                                         <small className="text-danger">{formData.name && !validateName(formData.name) && 'Name must be 3-30 characters long. Only letters and spaces are allowed.'}</small>
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="emailBusiness-registration">Email</label>
-                                        <input type="email" className="form-control" value={formData.email} placeholder='Email' onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                                        <label htmlFor="email">Email</label>
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            value={formData.email}
+                                            placeholder='Email'
+                                            required id="email"
+                                            name="email"
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                            autoComplete='email'
+                                        />
                                         <small className="text-danger">{formData.email && !validateEmail(formData.email) && 'Invalid email syntax. Please enter a valid email address.'}</small>
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="phoneBusiness-registration">Phone</label>
-                                        <input type="tel" minLength={7} maxLength={15} className="form-control" value={formData.tel} placeholder='Phone' onChange={(e) => setFormData({ ...formData, tel: e.target.value })} />
-                                        <small className="text-danger">{formData.tel && !validatePhone(formData.tel) && 'Phone number must be 7-15 digits. Only numbers are allowed.'}</small>
+                                        <label htmlFor="phone">Phone</label>
+                                        <input
+                                            type="tel"
+                                            minLength={7} maxLength={15}
+                                            className="form-control"
+                                            value={formData.phone}
+                                            placeholder='Phone'
+                                            required id="phone"
+                                            name="phone"
+                                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                            autoComplete='phone'
+                                        />
+                                        <small className="text-danger">{formData.phone && !validatePhone(formData.phone) && 'Phone number must be 7-15 digits. Only numbers are allowed.'}</small>
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="passwordBusiness-registration">Password</label>
+                                        <label htmlFor="password">Password</label>
                                         <div className="position-relative">
-                                            <input type={showPassword ? "text" : "password"} className="form-control" value={formData.password} placeholder='Password' onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                                            <input
+                                                type={showPassword ? "text" : "password"}
+                                                className="form-control"
+                                                value={formData.password}
+                                                placeholder='Password'
+                                                required id="password"
+                                                name="password"
+                                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                            />
                                             <span className="position-absolute top-50 end-0 translate-middle-y pe-3" style={{ cursor: 'pointer' }}>
                                                 <img src={showPassword ? eyeOpen : eyeClose} alt='Disappear' onClick={() => setShowPassword(!showPassword) } />
                                             </span>
@@ -208,51 +247,74 @@ const BusinessRegistration = () => {
                                 {currentStep === 2 && (
                                 <div id="stepTwo" className={`${stepTwo ? 'd-block' : ''} handle-step-two`}>
                                     <div className="form-group">
-                                        <label htmlFor="hearAboutCAT-registration">Where did you hear about Check a Treatment?</label>
+                                        <legend htmlFor="heard_about_options">Where did you hear about Check a Treatment?</legend>
                                         <div className="check-hear-about-cat">
                                             <ul className="d-flex flex-wrap gap-3 ps-0 mb-5">
                                                 <li>
-                                                    <input type="radio" name="hearAbout1" id="mainPost-registration" checked={formData.hearAbout === 'mainPost'} value="mainPost" onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value  })} required />
+                                                    <input type="radio" name="heard_about_options" id="mainPost-registration" checked={formData.heard_about_options === 'mainPost'} value="mainPost" onChange={(e) => setFormData({ ...formData, heard_about_options: e.target.value  })} required />
                                                     <label className='position-relative' htmlFor="mainPost-registration">mail post</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" name="hearAbout1" id="instagram-registration" checked={formData.hearAbout === 'instagram'} value="instagram" onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value })} required />
+                                                    <input type="radio" name="heard_about_options" id="instagram-registration" checked={formData.heard_about_options === 'instagram'} value="instagram" onChange={(e) => setFormData({ ...formData, heard_about_options: e.target.value })} required />
                                                     <label className='position-relative' htmlFor="instagram-registration">instagram</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" name="hearAbout1" id="facebook-registration" checked={formData.hearAbout === 'facebook'} value="facebook" onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value })} required />
+                                                    <input type="radio" name="heard_about_options" id="facebook-registration" checked={formData.heard_about_options === 'facebook'} value="facebook" onChange={(e) => setFormData({ ...formData, heard_about_options: e.target.value })} required />
                                                     <label className='position-relative' htmlFor="facebook-registration">facebook</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" name="hearAbout1" id="youTube-registration" checked={formData.hearAbout === 'youTube'} value="youTube" onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value })} required />
+                                                    <input type="radio" name="heard_about_options" id="youTube-registration" checked={formData.heard_about_options === 'youTube'} value="youTube" onChange={(e) => setFormData({ ...formData, heard_about_options: e.target.value })} required />
                                                     <label className='position-relative' htmlFor="youTube-registration">youTube</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" name="hearAbout1" id="tikTok-registration" checked={formData.hearAbout === 'tikTok'} value="tikTok" onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value })} required />
+                                                    <input type="radio" name="heard_about_options" id="tikTok-registration" checked={formData.heard_about_options === 'tikTok'} value="tikTok" onChange={(e) => setFormData({ ...formData, heard_about_options: e.target.value })} required />
                                                     <label className='position-relative' htmlFor="tikTok-registration">tikTok</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" name="hearAbout1" id="linkedIn-registration" checked={formData.hearAbout === 'linkedIn'} value="linkedIn" onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value })} required />
+                                                    <input type="radio" name="heard_about_options" id="linkedIn-registration" checked={formData.heard_about_options === 'linkedIn'} value="linkedIn" onChange={(e) => setFormData({ ...formData, heard_about_options: e.target.value })} required />
                                                     <label className='position-relative' htmlFor="linkedIn-registration">linkedIn</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" name="hearAbout1" id="friend-registration" checked={formData.hearAbout === 'friend'} value="friend" onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value })} required />
+                                                    <input type="radio" name="heard_about_options" id="friend-registration" checked={formData.heard_about_options === 'friend'} value="friend" onChange={(e) => setFormData({ ...formData, heard_about_options: e.target.value })} required />
                                                     <label className='position-relative' htmlFor="friend-registration">friend</label>
                                                 </li>
                                             </ul>
-                                            <small className="text-danger">{formData.hearAbout && !validateHearAbout(formData.hearAbout) && 'Please select an option'}</small>
+                                            <small className="text-danger">{formData.heard_about_options && !validateHearAbout(formData.heard_about_options) && 'Please select an option'}</small>
                                         </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="treatmentCategories-registration">What treatment categories do you provide?</label>
-                                        <select className="form-control mb-4" id="treatmentCategories-registration" value={formData.treatmentCategoryProvider} onChange={(e) => setFormData({ ...formData, treatmentCategoryProvider: e.target.value })} required>
+                                        <label htmlFor="categories">What treatment categories do you provide?</label>
+                                        <select
+                                            className="form-control mb-4"
+                                            id="categories"
+                                            value={formData.categories}
+                                            onChange={(e) => setFormData({ ...formData, categories: e.target.value })}
+                                            required
+                                        >
                                             <option value="">Select Treatment Category</option>
-                                            <option value="1">hair</option>
-                                            <option value="2">nails</option>
-                                            <option value="3">beauty</option>
+                                            <option value="Hair">Hair</option>
+                                            <option value="Barbers">Barbers</option>
+                                            <option value="Nails">Nails</option>
+                                            <option value="Lashes & Brows">L's & B's</option>
+                                            <option value="Injectables">Injectables</option>
+                                            <option value="SPMU">SPMU</option>
+                                            <option value="Skincare">Skincare</option>
+                                            <option value="Hair removal">Hair removal</option>
+                                            <option value="Teeth">Teeth</option>
+                                            <option value="Training">Training</option>
+                                            <option value="Spa & Sauna">Spa & Sauna</option>
+                                            <option value="Retreats">Retreats</option>
+                                            <option value="Healthcare">Healthcare</option>
+                                            <option value="Children">Children</option>
+                                            <option value="Animals">Animals</option>
+                                            <option value="MUA (Makeup Artist)">MUA (Makeup Artist)</option>
+                                            <option value="Surgery">Surgery</option>
+                                            <option value="Keep fit">Keep fit</option>
+                                            <option value="Therapy">Therapy</option>
+                                            <option value="Nutrition">Nutrition</option>
                                         </select>
-                                        <small className="text-danger">{formData.treatmentCategoryProvider && !validateTreatmentCategoryProvider(formData.treatmentCategoryProvider) && 'Please select a treatment category'}</small>
+                                        <small className="text-danger">{formData.categories && !validateTreatmentCategoryProvider(formData.categories) && 'Please select a treatment category'}</small>
                                     </div>
 
                                     <div className="form-group d-flex justify-content-between">
@@ -336,7 +398,9 @@ const BusinessRegistration = () => {
                                         <button 
                                             type="submit" 
                                             className={`submit-registration-button ${stepTwo && stepThree ? 'd-block' : ''} ${!isStepThreeValid() ? 'disabled' : ''}` } 
-                                            disabled={!isStepThreeValid()}>
+                                            disabled={!isStepThreeValid()}
+                                            onClick={handleSubmit}
+                                            >
                                             submit
                                         </button>
                                     </div>

@@ -70,36 +70,39 @@ function Home(){
                                     
                                         <span className="searchForTreatment">
                                             <img loding="lazy" src={searchIcon} alt="search" />
-                                            <input type="text" placeholder="Search for treatment" id="" name="" />
+                                            <input type="text" placeholder="Search for treatment" id="Treatment" name="Treatment" autoComplete="off" />
                                         </span>
 
                                         <span className="selectYourCategories">
                                             <img loding="lazy" src={categoriesIcon} alt="search" />
-                                            <select id="" name="">
-                                                <option value="hair">
-                                                    Hair Services
-                                                </option>
-                                                <option value="nails">
-                                                    Nail Services
-                                                </option>
-                                                <option value="spa">
-                                                    Spa & Wellness
-                                                </option>
-                                                <option value="skincare">
-                                                    Skincare
-                                                </option>
-                                                <option value="barber">
-                                                    Barber Services
-                                                </option>
-                                                <option value="makeup">
-                                                    Makeup Services
-                                                </option>
+                                            <select id="categories" name="categories">
+                                                <option value="">Select Treatment Category</option>
+                                                <option value="Hair">Hair</option>
+                                                <option value="Barbers">Barbers</option>
+                                                <option value="Nails">Nails</option>
+                                                <option value="Lashes & Brows">L's & B's</option>
+                                                <option value="Injectables">Injectables</option>
+                                                <option value="SPMU">SPMU</option>
+                                                <option value="Skincare">Skincare</option>
+                                                <option value="Hair removal">Hair removal</option>
+                                                <option value="Teeth">Teeth</option>
+                                                <option value="Training">Training</option>
+                                                <option value="Spa & Sauna">Spa & Sauna</option>
+                                                <option value="Retreats">Retreats</option>
+                                                <option value="Healthcare">Healthcare</option>
+                                                <option value="Children">Children</option>
+                                                <option value="Animals">Animals</option>
+                                                <option value="MUA (Makeup Artist)">MUA (Makeup Artist)</option>
+                                                <option value="Surgery">Surgery</option>
+                                                <option value="Keep fit">Keep fit</option>
+                                                <option value="Therapy">Therapy</option>
+                                                <option value="Nutrition">Nutrition</option>
                                             </select>
                                         </span>
 
                                         <span className="searchByLocation">
                                             <img loding="lazy" src={mapMarkerIcon} alt="Location" />
-                                            <input type="text" placeholder="Location" id="" name="" />
+                                            <input type="text" placeholder="Location" id="location" name="location" autoComplete="off" />
                                         </span>
 
                                         <span className="submitYourData">

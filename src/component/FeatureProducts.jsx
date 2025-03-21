@@ -19,21 +19,21 @@ export default function FeatureCarousel() {
     className: "feature-products-slider",
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1400,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
         }
       },
       {
-        breakpoint: 768,
+        breakpoint: 991,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1
         }
       },
       {
-        breakpoint: 480,
+        breakpoint: 540,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1

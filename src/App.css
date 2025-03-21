@@ -298,3 +298,10 @@ height: 12px;background-repeat: no-repeat;background-size: cover;left: 0;top: 6p
 
 /* blog page end */
 
+/* Responsive Css */
+@media (min-width: 320px) and (max-width: 1024px){
+.siteBanner {height:auto; padding: 100px 0 200px;}
+h2.display-1.marquee-text ul li span {font-size: 50px;}
+h2.display-1.marquee-text ul li img {padding-inline-end: 40px;min-width: 75px;}
+}
+/* 320 * 1024 */

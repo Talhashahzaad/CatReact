@@ -23,3 +23,19 @@ margin-block: 10px;}
     position: -webkit-sticky;
     top: 0;
 }
+
+/* Responsive Css */
+@media (min-width: 320px) and (max-width: 991px){
+span.submitYourData button[type="submit"] {width: 100%;}
+}
+/* 991 */
+    
+    
+@media (min-width: 320px) and (max-width: 767px){
+.display-1 {font-size: calc(1.625rem + 1.5vw);}
+}
+/* 767 */
+    
+@media (min-width: 320px) and (max-width: 414px){
+.display-1 {font-size: calc(1.625rem + .5vw);}
+}

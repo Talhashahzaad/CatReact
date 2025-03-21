@@ -6,7 +6,7 @@ left: 0;bottom: -100px;background-position: bottom center;background-repeat: no-
 
 .user-registration-form hr {height: 3px;background-color: var(--jetGreen);border: none;opacity: 1;border-radius: 10px;width: 94px;margin: 31px auto 34px;}
 .user-registration-picture {margin-inline-end: 60px;}
-.user-registration-form .form-group label {font-size: 15px;font-weight: 600;margin-block-end: 10px;text-transform: capitalize;}
+.user-registration-form .form-group label, .user-registration-form .form-group legend {font-size: 15px;font-weight: 600;margin-block-end: 10px;text-transform: capitalize;}
 
 .user-registration-form .form-group input[type="text"],
 .user-registration-form .form-group input[type="email"],

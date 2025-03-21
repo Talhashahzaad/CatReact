@@ -7,6 +7,8 @@ import eyeClose from "../LoginPage/eyeClose.svg";
 import googleShortIcon from "../../images/google-short-icon.svg";
 import facebookShortIcon from "../../images/facebook-short-icon.svg";
 import userLoginPicture from "../../images/userLoginPicture.webp";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 function Login() {
@@ -18,6 +20,8 @@ function Login() {
     const navigate = useNavigate(); // Initialize useNavigate
     const [showMessage, setShowMessage] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
+    const successNotify = () => toast.success('Login successful');
+    const errorNotify = () => toast.error('Login failed');
 
     useEffect(() => {
         const savedCredentials = localStorage.getItem('rememberedUser');
@@ -38,6 +42,7 @@ function Login() {
                 password
             });
             setData(response.data);
+            //console.log(response.data);
 
             if (response.status === 200) {
                 localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -49,6 +54,7 @@ function Login() {
                 } else {
                     localStorage.removeItem('rememberedUser');
                 }
+                successNotify();
                 setTimeout(() => {
                     navigate("/dashboard");
                 }, 3000);
@@ -58,15 +64,17 @@ function Login() {
             setShowMessage(!!response.data.message);
         } catch (error) {
             setErrorMessage("Incorrect email or password. Please try again.");
+            errorNotify();
+            if (error.response && error.response.data && error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage("Login failed. Please try again.");
+            }
         }
     };
 
     return (
         <>
-            <div className={`loggedMessage ${data.message ? 'd-flex' : 'd-none'}`}>
-                <h1>{data.message}</h1>
-            </div>
-
             <Container>
                 <div className="loginPage">
                     <Row>
@@ -81,7 +89,6 @@ function Login() {
                             <h1 className="pb-2 text-uppercase text-center fw-bold">login</h1>
                             <small className="d-block text-lowercase text-center fw-normal">sign in to continue</small>
                             <hr />
-                            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>} {/* Display error message */}
                             <form onSubmit={handleSubmit}> {/* Updated to handle form submission */}
                                 <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <label className="w-100 d-block h-auto lh-lg text-capitalize">email address</label>
@@ -162,6 +169,20 @@ function Login() {
                     </Row>
                 </div>
             </Container>
+            
+            <ToastContainer 
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                style={{ zIndex: 9999 }}
+            />
         </>
     )
 }

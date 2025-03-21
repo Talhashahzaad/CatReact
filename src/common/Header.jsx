@@ -22,7 +22,7 @@ function Header(){
                         <Row>
                             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                                 <Row>
-                                    <Col xxl={4} xl={4} lg={4} md={4} sm={4} xs={8}>
+                                    <Col xxl={4} xl={4} lg={4} md={4} sm={4} xs={12}>
                                         <div className="header-logo">
                                             <Link to="/">
                                                 <img src={catLogo} alt="logo" className="mb-0 w-100 h-auto" />
@@ -30,7 +30,7 @@ function Header(){
                                         </div>
                                     </Col>
 
-                                    <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={4} className="d-flex align-items-center justify-content-end mb-0 ps-0">
+                                    <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={12} className="d-flex align-items-center justify-content-end mb-0 ps-0">
                                         <div className="header-menu">
                                             <ul className="d-flex align-items-center justify-content-end mb-0 ps-0">
                                                 <li><Link to="/login">

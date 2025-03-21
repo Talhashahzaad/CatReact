@@ -12,6 +12,8 @@ import packageDashIcon from "../../../images/package-dashIcon.svg";
 import affilicationDashIcon from "../../../images/affilication-dashIcon.svg";
 import qualificationDashIcon from "../../../images/qualification-dashIcon.svg";
 import logoutIcon from "../../../images/logout-dashIcon.svg";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../Dashboard.css";
 
 import axios from "axios";
@@ -19,6 +21,8 @@ import axios from "axios";
 const Sidebar = () => {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+    const successNotify = () => toast.success('Logout successful');
+    const errorNotify = () => toast.error('Logout failed');
     
     const handleClickOutside = (event) => {
         if (event.target.closest('.dropdown-menu') === null && !event.target.closest('.btn')) {
@@ -60,12 +64,14 @@ const Sidebar = () => {
                     show: true,
                     message: response.data.message
                 });
+                successNotify();
                 setTimeout(() => {
                     navigate("/login");
                 }, 3000);
             }
         } catch (error) {
             console.error("Logout error:", error);
+            errorNotify();
         }
     };
 
@@ -79,10 +85,7 @@ const Sidebar = () => {
 
     return (
             <>
-                <div className={`loggedOutMessage ${loggedOutMessage.show ? 'd-flex' : 'd-none'}`}>
-                    <h1>{loggedOutMessage.message}</h1>
-                </div>
-
+                <ToastContainer position="top-right" autoClose={3000} />
                 <div className="dashboard-sidebar" onClick={(e) => e.stopPropagation()}>
                     <div className="dashboard-sidebar-header">
                         <div className="dashboard-sidebar-header-logo">
