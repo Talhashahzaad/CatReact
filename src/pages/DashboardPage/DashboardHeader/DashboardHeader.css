@@ -1,0 +1,7 @@
+.dashboard-header-logout {height: auto;padding-block: 0px;order: 1;margin-inline-start: 30px;}
+.dashboard-header-logout .item-icon img {max-width: 20px;}
+.dashboard-header-logout .item-icon {background-color: var(--white);width: 40px;height: 40px;display: inline-flex;align-items: anchor-center;justify-content: center;line-height: 40px;border-radius: 100px;border: 1px solid var(--jetGreen);margin-inline-end: 8px;}
+.dashboard-header-logout a.text-decoration-none {line-height: 40px;display: inline-flex;align-items: center;font-weight: 600;}
+.dashboard-sidebar-header-top {position: absolute;top: 0;right: 0;width: 80%;background-color: var(--green25);padding-block: 8px;z-index: 0;
+padding-inline: 30px;display: flex;justify-content: flex-end;align-items: center;order: -1;}
+.dash-profile-picture .d-flex a.text-dark { text-transform: capitalize; font-weight: 600; cursor: pointer;}

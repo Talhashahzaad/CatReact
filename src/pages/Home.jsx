@@ -47,13 +47,112 @@ function Home(){
                     authorMap[author.id] = author.name;
              });
                 setAuthors(authorMap);
-            } catch (error) {
-                setError('Unable to fetch author data. Please try again later.');
+            } 
+            catch (error) {
+                setError('No blog posts available at the moment.');
             }
         };
 
         fetchAuthors();
     }, []);
+
+    const renderBlogContent = () => {
+        // If there's no blog data
+        if (error || !blogListing || blogListing.length === 0) {
+            return (
+                <div className="blog-doesnot-exist">
+                    <Row>
+                        <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                            <h5 className="text-center">{error}</h5>
+                        </Col>
+                    </Row>
+                </div>
+            );
+        }
+        
+        // Otherwise, if blogs exist
+        return (
+            <div className="blog-exist">
+                <Row>
+                    <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
+                        <div className="blogCard">
+                            <figure className="mb-0">
+                                {blogListing[0] && (
+                                    <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[0].image}`} alt="" title="" />
+                                )}
+                            </figure>
+                            {blogListing[0] && (
+                                <>
+                                    <h5 className="mb-0">{blogListing[0].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
+                                    <h6 className="mb-0">By - {blogListing[0].user.name}</h6>
+                                    <aside>
+                                        <Link to={`/blog/${blogListing[0].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link>
+                                    </aside>
+                                </>
+                            )}
+                        </div>
+                    </Col>
+
+                    <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
+                        <div className="blogCard">
+                            <figure className="mb-0">
+                                {blogListing[1] && (
+                                    <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[1].image}`} alt="" title="" />
+                                )}
+                            </figure>
+                            {blogListing[1] && (
+                                <>
+                                    <h5 className="mb-0">{blogListing[1].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
+                                    <h6 className="mb-0">By - {blogListing[1].user.name}</h6>
+                                    <aside><Link to={`/blog/${blogListing[1].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                </>
+                            )}
+                        </div>
+                    </Col>
+
+                    <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
+                        <div className="blogCard">
+                            <figure className="mb-0">
+                                {blogListing[2] && (
+                                    <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[2].image}`} alt="" title="" />
+                                )}
+                            </figure>
+                            {blogListing[2] && (
+                                <>
+                                    <h5 className="mb-0">{blogListing[2].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
+                                    <h6 className="mb-0">By - {blogListing[2].user.name}</h6>
+                                    <aside><Link to={`/blog/${blogListing[2].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                </>
+                            )}
+                        </div>
+                    </Col>
+
+                    <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
+                        <div className="blogCard">
+                            <figure className="mb-0">
+                                {blogListing[3] && (
+                                    <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[3].image}`} alt="" title="" />
+                                )}
+                            </figure>
+                            {blogListing[3] && (
+                                <>
+                                    <h5 className="mb-0">{blogListing[3].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
+                                    <h6 className="mb-0">By - {blogListing[3].user.name}</h6>
+                                    <aside><Link to={`/blog/${blogListing[3].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
+                                </>
+                            )}
+                        </div>
+                    </Col>
+
+                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <aside className="w-100 h-auto text-center mt-4">
+                            <Link to="/blogs" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="buttonStyle">Show more <img loding="lazy" src={eyeIcon} alt="" title="" /></Link>
+                        </aside>
+                    </Col>
+                </Row>
+            </div>
+        );
+    };
 
     return(
         <>
@@ -340,83 +439,7 @@ function Home(){
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <Row>
-                            <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
-                                <div className="blogCard">
-                                    <figure className="mb-0">
-                                        {blogListing[0] && (
-                                            <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[0].image}`} alt="" title="" />
-                                        )}
-                                    </figure>
-                                    {blogListing[0] && (
-                                        <>
-                                            <h5 className="mb-0">{blogListing[0].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
-                                            <h6 className="mb-0">By - {blogListing[0].user.name}</h6>
-                                            <aside>
-                                                <Link to={`/blog/${blogListing[0].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link>
-                                            </aside>
-                                        </>
-                                    )}
-                                </div>
-                            </Col>
-
-                            <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
-                                <div className="blogCard">
-                                    <figure className="mb-0">
-                                        {blogListing[1] && (
-                                            <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[1].image}`} alt="" title="" />
-                                        )}
-                                    </figure>
-                                    {blogListing[1] && (
-                                        <>
-                                            <h5 className="mb-0">{blogListing[1].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
-                                            <h6 className="mb-0">By - {blogListing[1].user.name}</h6>
-                                            <aside><Link to={`/blog/${blogListing[1].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
-                                        </>
-                                    )}
-                                </div>
-                            </Col>
-
-                            <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
-                                <div className="blogCard">
-                                    <figure className="mb-0">
-                                        {blogListing[2] && (
-                                            <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[2].image}`} alt="" title="" />
-                                        )}
-                                    </figure>
-                                    {blogListing[2] && (
-                                        <>
-                                            <h5 className="mb-0">{blogListing[2].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
-                                            <h6 className="mb-0">By - {blogListing[2].user.name}</h6>
-                                            <aside><Link to={`/blog/${blogListing[2].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
-                                        </>
-                                    )}
-                                </div>
-                            </Col>
-
-                            <Col xxl={3} xl={3} lg={3} md={6} sm={12} xs={12}>
-                                <div className="blogCard">
-                                    <figure className="mb-0">
-                                        {blogListing[3] && (
-                                            <img loding="lazy" src={`http://3.8.140.227:8000${blogListing[3].image}`} alt="" title="" />
-                                        )}
-                                    </figure>
-                                    {blogListing[3] && (
-                                        <>
-                                            <h5 className="mb-0">{blogListing[3].title.split(' ').slice(0, 4).join(' ') + '...'}</h5>
-                                            <h6 className="mb-0">By - {blogListing[3].user.name}</h6>
-                                            <aside><Link to={`/blog/${blogListing[3].slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}><img loding="lazy" src={linkIcon} alt="" title="" /> read more</Link></aside>
-                                        </>
-                                    )}
-                                </div>
-                            </Col>
-                        </Row>
-                    </Col>
-
-                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <aside className="w-100 h-auto text-center mt-4">
-                            <Link to="/blogs" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="buttonStyle">Show more <img loding="lazy" src={eyeIcon} alt="" title="" /></Link>
-                        </aside>
+                        {renderBlogContent()}
                     </Col>
                 </Row>
             </Container>
@@ -436,7 +459,7 @@ function Home(){
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <aside className="text-center">
-                            <Link to="/" className="buttonStyle text-capitalize">view all categories <img loding="lazy" src={arrowTopRight} /></Link>
+                            <Link to="/service-categories" className="buttonStyle text-capitalize">view all categories <img loding="lazy" src={arrowTopRight} /></Link>
                             </aside>
                     </Col>
                 </Row>

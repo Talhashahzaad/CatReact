@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect  } from 'react';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import './TreatmentPackage.css';
-
+import DashboardHeader from "../DashboardHeader/DashboardHeader";
 
 const TreatmentPackage = () => {
     const [entries, setEntries] = useState([5]);
@@ -108,12 +108,14 @@ const TreatmentPackage = () => {
     <>
         <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
+                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                         <div className="dashboard-content">
                             <div className="dashboard-content-body">
-                                <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-jetGreen mb-3 rounded">
+                                <DashboardHeader />
+
+                                <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-green25 mb-3 rounded">
                                     <Breadcrumb />
                                 </div>
                                 {/* breadcrumb end */}
@@ -123,7 +125,7 @@ const TreatmentPackage = () => {
                                         <div className="d-flex justify-content-between align-items-center listing-header">
                                             <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">treatment packages</h1>
                                             <button 
-                                                className="btn bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center" 
+                                                className="bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center border-0 text-white py-2 px-3 h6" 
                                                 onClick={() => {
                                                     document.querySelector('.dashboard-content-table').style.display = 'none';
                                                     document.querySelector('.sidebar-listing-form').style.display = 'block';
@@ -144,7 +146,7 @@ const TreatmentPackage = () => {
                                                 <option value={20}>20</option>
                                             </select>
                                         </Col>
-                                        <Col className="text-end">
+                                        <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end border rounded-2">
                                             <input 
                                                 type="text" 
                                                 placeholder="Search..." 

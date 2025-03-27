@@ -5,7 +5,6 @@ import "./index.min.js";
 import searchIcon from "../../images/searchIcon.svg";
 import categoriesIcon from "../../images/categoriesIcon.svg";
 import mapMarkerIcon from "../../images/mapMarkerIcon.svg";
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 const ProductListing = () => {
     async function initMap() {

@@ -34,6 +34,8 @@ import BusinessLogin from './pages/BusinessLogin/BusinessLogin';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
 import ProductListing from './pages/ProductListing/ProductListing';
 import ProtectedRoute from './component/ProtectedRoute';
+import ServiceCategories from './pages/ServiceCategories/ServiceCategories';
+
 
 
 function App () {
@@ -111,6 +113,7 @@ function App () {
           <Route path="/business-login" element={<BusinessLogin/>} />
           <Route path="/change-password" element={<ChangePassword/>} />
           <Route path="/product-listing" element={<ProductListing/>} />
+          <Route path="/service-categories" element={<ServiceCategories/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

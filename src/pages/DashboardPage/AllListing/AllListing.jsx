@@ -5,8 +5,11 @@ import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import defaultImage from "../../../images/defaultPicture.jpg";
 import defaultThumbnailImage from "../../../images/defaultPicture.jpg";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import DashboardHeader from "../DashboardHeader/DashboardHeader";
+import 'froala-editor/css/froala_style.min.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import FroalaEditorComponent from 'react-froala-wysiwyg';
+
 
 const AllListing = () => {
     const [bodyPicture, setBodyPicture] = useState(defaultImage);
@@ -16,12 +19,15 @@ const AllListing = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [entriesPerPage, setEntriesPerPage] = useState(5);
     const [search, setSearch] = useState('');
-    const quillRef = useRef(null);
+    //const wysiwygRef = useRef(null);
 
     const indexOfLastEntry = currentPage * entriesPerPage;
     const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
     const currentEntries = entries.slice(indexOfFirstEntry, indexOfLastEntry);
     const totalPages = Math.ceil(entries.length / entriesPerPage);
+
+    const [value, setValue] = useState('');
+    
 
     const handleEntriesPerPageChange = useCallback((event) => {
         setEntriesPerPage(parseInt(event.target.value));
@@ -59,16 +65,33 @@ const AllListing = () => {
         setDescription(value);
     }, []);
 
+    // useEffect(() => {
+    //     // Suppress the specific DOMNodeInserted warning
+    //     const originalError = console.error;
+    //     console.error = (...args) => {
+    //         if (args[0]?.includes('DOMNodeInserted')) {
+    //             return;
+    //         }
+    //         originalError.apply(console, args);
+    //     };
+
+    //     return () => {
+    //         console.error = originalError;
+    //     };
+    // }, []);
+
     return (
         <>
             <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
+                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                         <div className="dashboard-content">
                             <div className="dashboard-content-body">
-                                <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-jetGreen mb-3 rounded">
+                                <DashboardHeader />
+
+                                <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-green25 mb-3 rounded">
                                     <Breadcrumb />
                                 </div>
 
@@ -77,7 +100,7 @@ const AllListing = () => {
                                         <div className="d-flex justify-content-between align-items-center listing-header">
                                             <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">All Listing</h1>
                                             <button 
-                                                className="btn bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center" 
+                                                className="bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center border-0 text-white py-2 px-3 h6" 
                                                 onClick={() => {
                                                     document.querySelector('.dashboard-content-table').style.display = 'none';
                                                     document.querySelector('.sidebar-listing-form').style.display = 'block';
@@ -98,7 +121,7 @@ const AllListing = () => {
                                                 <option value={20}>20</option>
                                             </select>
                                         </Col>
-                                        <Col className="text-end">
+                                        <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end border rounded-2">
                                             <input 
                                                 type="text" 
                                                 placeholder="Search..." 
@@ -325,23 +348,12 @@ const AllListing = () => {
 
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                         <div className="form-group my-2 react-quill-editor" id="react-quill-editor-element">
-                                                            <label htmlFor="quillDescription" className="form-label text-capitalize fw-bold small">description<sup className="text-danger">*</sup></label>
-                                                            <ReactQuill 
-                                                                ref={quillRef}
-                                                                value={description} 
-                                                                onChange={handleDescriptionChange} 
-                                                                theme="snow" 
-                                                                id="quillDescription"
-                                                                placeholder="Write your description here..."
-                                                                modules={{
-                                                                    toolbar: [
-                                                                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                                                                        ['bold', 'italic', 'underline', 'strike'],
-                                                                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                                                                        ['link', 'image'],
-                                                                        ['clean']
-                                                                    ]
-                                                                }}
+                                                            <label htmlFor="froalaRefDescription" className="form-label text-capitalize fw-bold small">
+                                                                description<sup className="text-danger">*</sup>
+                                                            </label>
+                                                            <FroalaEditorComponent 
+                                                                tag='textarea'
+                                                                model={value}
                                                             />
                                                         </div>
                                                     </Col>

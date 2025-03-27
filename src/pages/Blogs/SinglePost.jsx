@@ -1,24 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
-//import BlogListing from './BlogListing';
 import { FaUserCircle } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
 import { FaTag } from "react-icons/fa";
-//import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
 import SingleSidebar from './SingleSidebar';
 import Error404Page from '../Error404/Error404';
+import blogFeatureImage from '../../images/blogFeature.webp';
 
 
 const SinglePost = (  ) => {
-const {title} = useParams();
-
-// useEffect(() => {
-//     const blog = BlogListing.find(b => b.title === title);
-//     setBlog(blog);
-//     setCategories(blog ? [blog.category] : []);
-// }, [title]);
-
+    const {title} = useParams();
     const [BlogListingData, setBlogListingData] = useState([]);
 
     useEffect(() =>{
@@ -29,10 +21,6 @@ const {title} = useParams();
         }
         BlogListingData();
     }, []);
-
-    //const currentIndex = BlogListing.findIndex(b => b.title === title);
-    //const previousBlog = currentIndex > 0 ? BlogListing[currentIndex - 1] : null;
-    //const nextBlog = currentIndex < BlogListing.length - 1 ? BlogListing[currentIndex + 1] : null;
 
     if (!BlogListingData) {
         return <Error404Page />;
@@ -73,12 +61,13 @@ const {title} = useParams();
     
     return(
         <>
-            <div className='single-blog-post-feature-image'>
-                <figure>
-                    <img src={`http://3.8.140.227:8000${BlogListingData.image}`} alt={BlogListingData.title} title={BlogListingData.title} className='img-fluid' loading='lazy' />
-                </figure>
+            <div className='blog-page-feature-image w-100 h-auto d-flex justify-content-center align-items-center position-relative flex-column'>
+                <img src={blogFeatureImage} alt='blog-page-feature-image' className='img-fluid' />
+                <div className='blog-page-feature-image-text'>
+                    <h1>Blogs</h1>
+                </div>
             </div>
-            
+            {/* The quick brown fox jumped over the lazy dog. */}
             <Container className='py-5'>
                 <Row>
                     <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={12}>
@@ -100,6 +89,9 @@ const {title} = useParams();
                                     )}
                                 </ul>
                             </div>
+                            <figure>
+                                <img src={`http://3.8.140.227:8000${BlogListingData.image}`} alt={BlogListingData.title} title={BlogListingData.title} className='img-fluid' loading='lazy' />
+                            </figure>
                             <div className='single-blog-post-description' dangerouslySetInnerHTML={{ __html: BlogListingData.description }} />
                         </div>
                     </Col>

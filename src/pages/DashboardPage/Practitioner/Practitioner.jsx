@@ -5,6 +5,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import './Practitioner.css';
+import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import axios from 'axios';
 
 const Practitioner = () => {
@@ -59,7 +60,6 @@ const Practitioner = () => {
             }
 
             } catch (error) {
-                console.error('Error fetching data:', error);
                 if (error.response?.status === 401) {
                     localStorage.removeItem("token");
                     navigate('/login');
@@ -251,7 +251,6 @@ const Practitioner = () => {
             fetchPractitionerData();
             
         } catch (error) {
-            console.error('Error updating practitioner:', error);
             setError('Failed to update practitioner');
         }
     };
@@ -260,12 +259,13 @@ const Practitioner = () => {
         <>
             <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
+                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
-
+                        
                     <div className="dashboard-content">
                         <div className="dashboard-content-body">
-                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-jetGreen mb-3 rounded">
+                            <DashboardHeader />
+                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-green25 mb-3 rounded">
                                 <Breadcrumb />
                             </div>
                         </div>  
@@ -275,7 +275,7 @@ const Practitioner = () => {
                                     <div className="d-flex justify-content-between align-items-center listing-header">
                                     <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">Practitioner</h1>
                                     <button 
-                                        className="btn bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center" 
+                                        className="bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center border-0 text-white py-2 px-3 h6" 
                                         onClick={() => {
                                             document.querySelector('.dashboard-content-table').style.display = 'none';
                                             document.querySelector('.sidebar-listing-form').style.display = 'block';
@@ -304,7 +304,7 @@ const Practitioner = () => {
                                         </select>
                                         
                                     </Col>
-                                    <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end">
+                                    <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end border rounded-2">
                                         <input 
                                             type="text" 
                                             placeholder="Search..." 
@@ -312,6 +312,7 @@ const Practitioner = () => {
                                             onChange={handleSearchChange} 
                                             id="practitionerSearch"
                                             name="practitionerSearch"
+                                            autoComplete="off"
                                         />
                                     </Col>
                                 </Row>
@@ -446,6 +447,7 @@ const Practitioner = () => {
                                                         required 
                                                         value={practitionerData.name}
                                                         onChange={handlePractitionerDataChange}
+                                                        autoComplete="off"
                                                     />
                                                 </div>
                                             </Col>
@@ -559,6 +561,7 @@ const Practitioner = () => {
                                                         required 
                                                         value={practitionerData.name}
                                                         onChange={handlePractitionerDataChange}
+                                                        autoComplete="off"
                                                     />
                                                 </div>
                                             </Col>

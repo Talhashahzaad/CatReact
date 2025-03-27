@@ -1,9 +1,10 @@
-import {React, useState } from "react";
+import {React, useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import "../Dashboard.css";
+import axios from "axios";
 
 
 const Order = () =>{
@@ -32,16 +33,46 @@ const Order = () =>{
         setCurrentPage(currentPage + 1);
     };
 
+    const [profileInfo, setProfileInfo] = useState(null);
+
+    useEffect(() => {
+        const fetchProfileInfo = async () => {
+            const token = JSON.parse(localStorage.getItem("token"));
+            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            setProfileInfo(response.data);
+        };
+        fetchProfileInfo();
+    }, []);
+
     return(
         <>
             <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
+                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                     <div className="dashboard-content">
                         <div className="dashboard-content-body">
-                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-jetGreen mb-3 rounded">
+                            <div className="dashboard-sidebar-header-top">
+                                    <div className="dash-profile-picture d-flex justify-content-flex-end align-items-center text-end float-end">
+                                    <figure className="mb-0">
+                                        <img src={`http://3.8.140.227:8000/${profileInfo?.user?.avatar}`} alt="Profile" />
+                                    </figure>
+                                    <div className="d-flex flex-column ms-2 text-white">
+                                        {profileInfo && (
+                                            <p className="text-capitalize text-dark mb-0">hi, {profileInfo.user.name}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-green25 mb-3 rounded">
                                 <Breadcrumb />
                             </div>
 
@@ -58,7 +89,7 @@ const Order = () =>{
                                             <option value={20}>20</option>
                                         </select>
                                     </Col>
-                                    <Col className="text-end">
+                                    <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end border rounded-2">
                                         <input 
                                             type="text" 
                                             placeholder="Search..." 

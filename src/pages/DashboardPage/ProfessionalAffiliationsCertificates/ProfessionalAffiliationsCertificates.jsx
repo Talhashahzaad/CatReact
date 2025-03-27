@@ -1,10 +1,12 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import { Container, Row, Col } from 'react-bootstrap';
 import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 //import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DashboardHeader from "../DashboardHeader/DashboardHeader";
+
 const ProfessionalAffiliationsCertificates = () => {
 
     const [entriesPerPage, setEntriesPerPage] = useState(5);
@@ -83,21 +85,19 @@ const ProfessionalAffiliationsCertificates = () => {
     //     certificates();
     // }, [currentPage, entriesPerPage]);
 
-    
 
-    
-    
-    // 82|R5FiDxBV4aGLTJuqQw9bR3bGZojUE8Ia8jPBonsTc7fc2d8f
     return (
         <>
           <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
+                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                     <div className="dashboard-content">
                         <div className="dashboard-content-body">
-                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-jetGreen mb-3 rounded">
+                            <DashboardHeader />
+
+                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-green25 mb-3 rounded">
                                 <Breadcrumb />
                             </div>
                         </div>  
@@ -107,7 +107,7 @@ const ProfessionalAffiliationsCertificates = () => {
                                 <div className="d-flex justify-content-between align-items-center listing-header">
                                     <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">Professional Affiliations Certificates</h1>
                                     <button 
-                                        className="btn bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center" 
+                                        className="bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center border-0 text-white py-2 px-3 h6" 
                                         onClick={() => {
                                             document.querySelector('.dashboard-content-table').style.display = 'none';
                                             document.querySelector('.sidebar-listing-form').style.display = 'block';

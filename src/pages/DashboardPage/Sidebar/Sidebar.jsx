@@ -1,8 +1,8 @@
 import {React, useState, useEffect} from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
-import profilePicture from "../../../images/profile-picture.jpeg";
-import logo from "../../../images/check-a-treatment.svg";
+//import profilePicture from "../../../images/profile-picture.jpeg";
+//import logo from "../../../images/check-a-treatment.svg";
 import dashIcon from "../../../images/dashboard-dashIcon.svg";
 import userProfileIcon from "../../../images/user-icons-dashIcon.svg";
 import listIcon from "../../../images/listing-dashIcon.svg";
@@ -11,7 +11,7 @@ import treatmentDashIcon from "../../../images/treatment-dashIcon.svg";
 import packageDashIcon from "../../../images/package-dashIcon.svg";
 import affilicationDashIcon from "../../../images/affilication-dashIcon.svg";
 import qualificationDashIcon from "../../../images/qualification-dashIcon.svg";
-import logoutIcon from "../../../images/logout-dashIcon.svg";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Dashboard.css";
@@ -21,8 +21,7 @@ import axios from "axios";
 const Sidebar = () => {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(true);
-    const successNotify = () => toast.success('Logout successful');
-    const errorNotify = () => toast.error('Logout failed');
+    
     
     const handleClickOutside = (event) => {
         if (event.target.closest('.dropdown-menu') === null && !event.target.closest('.btn')) {
@@ -47,65 +46,38 @@ const Sidebar = () => {
         message: ''
     });
 
-    const handleLogout = async () => {
-        try {
+    
+
+    const [profileInfo, setProfileInfo] = useState(null);
+
+    useEffect(() => {
+        const fetchProfileInfo = async () => {
             const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.post("http://3.8.140.227:8000/api/logout", {}, {
+            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
             });
-
-            if (response.status === 200) {
-                localStorage.removeItem("token");
-                setLoggedOutMessage({
-                    show: true,
-                    message: response.data.message
-                });
-                successNotify();
-                setTimeout(() => {
-                    navigate("/login");
-                }, 3000);
-            }
-        } catch (error) {
-            console.error("Logout error:", error);
-            errorNotify();
-        }
-    };
-
-    useEffect(() => {
-        if (loggedOutMessage.show) {
-            setTimeout(() => {
-                setLoggedOutMessage(false);
-            }, 1000000);
-        }
-    }, [loggedOutMessage.show]);
-
+            setProfileInfo(response.data);
+        };
+        fetchProfileInfo();
+    }, []);
     return (
             <>
                 <ToastContainer position="top-right" autoClose={3000} />
                 <div className="dashboard-sidebar" onClick={(e) => e.stopPropagation()}>
                     <div className="dashboard-sidebar-header">
                         <div className="dashboard-sidebar-header-logo">
-                            <Link to="/">
-                                <img src={logo} alt="Logo" className="img-fluid w-100 mb-3" />
+                            <Link to="/" className="text-decoration-none text-dark text-uppercase w-100 text-center d-block fw-bold">
+                                check a treatment
+                                {/* <img src={logo} alt="Logo" className="img-fluid w-100 mb-3" /> */}
                             </Link>
                         </div>
                     </div>
 
-                    <div className="dash-profile-picture d-flex justify-content-flex-start align-items-center">
-                        <figure className="mb-2">
-                            <img src={profilePicture} alt="Profile" />
-                        </figure>
-                        <div className="d-flex flex-column ms-2">
-                            <strong className="text-capitalize">welcome! corlivia</strong>
-                        </div>
-                    </div>
-                    <hr/>
-            
-                    <div className="dashboard-sidebar-menu">
+                    <div className="dashboard-sidebar-menu mt-4">
                         <ul className="list-unstyled mb-0">
                             <li>
                                 <Link to="/dashboard" onClick={window.scrollTo(0, 0)}> 
@@ -182,25 +154,14 @@ const Sidebar = () => {
                                     <span className="item-text">order</span>
                                 </Link>
                             </li>
-
-                            <hr/>
-
-                            <li>
-                                <Link to="#" onClick={handleLogout}>
-                                    <span className="item-icon">
-                                        <img src={logoutIcon} alt="Logout" />
-                                    </span>
-                                    <span className="item-text">logout</span>
-                                </Link>
-                            </li>
                         </ul>
                     </div>
 
                     <div className="dashboard-sidebar-footer">
                         <div className="dashboard-sidebar-footer-text d-flex flex-column justify-content-center align-items-start w-100 h-100">
-                            <h6 className="text-white headingFont h4 fw-bold">Need help?</h6>
-                            <p className="text-white headingFont fw-bold">Please check our docs</p>
-                            <Link to="/" className="btn btn-md text-dark bg-white text-capitalize fw-bold w-100 py-2">get connect</Link>
+                            <h6 className="text-white headingFont h4 fw-bold mb-4">Don't miss out on elite features.</h6>
+                            {/* <p className="text-white headingFont fw-bold">Please check our docs</p> */}
+                            <Link to="/pricing-packages" className="btn btn-md text-dark bg-white text-capitalize fw-bold w-100 py-2">Upgrade Now</Link>
                         </div>
                     </div>
                 </div>

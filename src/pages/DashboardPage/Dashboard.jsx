@@ -3,9 +3,9 @@ import {Container, Row} from 'react-bootstrap';
 import { Outlet } from "react-router-dom";
 import Breadcrumb from "./Breadcrumb/Breadcrumb";
 import axios from "axios";
-
 import "./Dashboard.css";
 import "../../App.css";
+import DashboardHeader from "./DashboardHeader/DashboardHeader";
 import Sidebar from "./Sidebar/Sidebar";
 
 
@@ -47,17 +47,19 @@ const Dashboard = () =>{
                     onClick={(e) => e.stopPropagation()}>
                     <Sidebar />
 
-                    <div className="dashboard-content my-5">
+                    <div className="dashboard-content mb-5">
                         <Outlet />
                         <div className="dashboard-content-body">
-                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-jetGreen mb-3 rounded">
+                            <DashboardHeader />
+
+                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-green25 mb-3 rounded">
                                 <Breadcrumb />
                             </div>
                             <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">Dashboard</h1>
-                            <hr />
+                            
 
 
-                            <div className="dashboard-message-notification">
+                            {/* <div className="dashboard-message-notification">
                                 <ul className="ps-0 mb-0 d-flex justify-content-between align-items-center">
                                     <li>
                                         <h3>{dashboardData.totalReviews}</h3>
@@ -79,7 +81,7 @@ const Dashboard = () =>{
                                         <strong>online users</strong>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> */}
 
                             <div className="dashboard-active-packages">
                                 <h5 className="default-font fw-bold mt-5">Active Packages</h5>

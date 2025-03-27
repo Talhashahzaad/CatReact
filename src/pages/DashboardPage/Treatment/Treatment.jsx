@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import DashboardHeader from "../DashboardHeader/DashboardHeader";
 
 
 const Treatment = () => {
@@ -103,12 +104,13 @@ const Treatment = () => {
         <>
             <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start py-5" onClick={(e) => e.stopPropagation()}>
+                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                     <div className="dashboard-content">
                         <div className="dashboard-content-body">
-                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-jetGreen mb-3 rounded">
+                            <DashboardHeader />
+                            <div className="dashboard-content-breadcrumbs w-100 h-auto d-block py-3 px-2 position-relative bg-green25 mb-3 rounded">
                                 <Breadcrumb />
                             </div>
                         </div>
@@ -118,7 +120,7 @@ const Treatment = () => {
                                 <div className="d-flex justify-content-between align-items-center listing-header">
                                     <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">Treatment</h1>
                                     <button 
-                                        className="btn bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center" 
+                                        className="bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center border-0 text-white py-2 px-3 h6" 
                                         onClick={() => {
                                             document.querySelector('.dashboard-content-table').style.display = 'none';
                                             document.querySelector('.sidebar-listing-form').style.display = 'block';
@@ -139,7 +141,7 @@ const Treatment = () => {
                                         <option value={20}>20</option>
                                     </select>
                                 </Col>
-                                <Col className="text-end">
+                                <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end border rounded-2">
                                     <input 
                                         type="text" 
                                         placeholder="Search..." 
@@ -261,10 +263,10 @@ const Treatment = () => {
                                                             <div className="pricing-and-duration-form">
                                                             {pricingAndDurationVariants.map((variant, index) => (
                                                                 <div className="pricing-and-duration-form-row mt-2">
-                                                                    <ol className="d-flex align-items-center gap-3 ps-0 mb-0">
-                                                                        <li className="pricing-and-duration-hours">
+                                                                    <ol className="d-flex align-items-center gap-3 ps-0 mb-0" >
+                                                                        <li className="pricing-and-duration-hours" >
                                                                             <label htmlFor="duration" className="form-label text-capitalize fw-bold small">Duration <sup className="text-danger">*</sup></label>
-                                                                            <select name={`duration-${index}`} id={`duration-${index}`} className="form-control text-capitalize" required>
+                                                                            <select name={`duration-${index}`} id={`duration-${index}` } className="form-control text-capitalize" required>
                                                                                     {durationOptions.map((duration, index) => (
                                                                                         <option key={index} value={duration.id} className="text-capitalize">{duration.name}</option>
                                                                                     ))}
