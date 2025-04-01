@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -11,7 +11,7 @@ const Treatment = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [entries, setEntries] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-
+    
     const handleEntriesPerPageChange = (event) => {
         setEntriesPerPage(Number(event.target.value));
     };
@@ -314,8 +314,8 @@ const Treatment = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
                 </Row>
             </Container>
         </>

@@ -124,5 +124,6 @@ outline: 10px solid var(--green25);}
 .dashboard-all-listing-create-form-body form input[type="checkbox"],
 .dashboard-all-listing-editable-form-body form input[type="checkbox"] {width: 20px;height: 25px;margin-inline-end: 15px;}
 .dashboard-all-listing-create-form-body form input[type="checkbox"],
-.dashboard-all-listing-editable-form-body form input[type="checkbox"] {width: 24px;height: 24px;margin-inline-end: 15px;appearance: auto;border-radius: 4px;
-overflow: hidden;box-shadow: none;outline: none;cursor: pointer;}
+.dashboard-all-listing-editable-form-body form input[type="checkbox"] {width: 24px;height: 24px;margin-inline-end: 15px;appearance: auto;border-radius: 4px;overflow: hidden;box-shadow: none;outline: none;cursor: pointer;}
+
+.pricing-and-duration-form-button .blackHoverEffect:hover {color: var(--white);}

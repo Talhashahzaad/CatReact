@@ -272,7 +272,7 @@ export default function ListingDetails() {
                                                 <small>price: &pound; {category.price}</small>
                                             </span>
                                             <span className="icon me-2">
-                                                <button className="rounded-pill h6 py-3 px-4 border-0 bg-jetGreen text-white text-capitalize">Book Now</button>
+                                                <button className="rounded-pill h6 py-3 px-4 border-0 bg-jetGreen text-white text-capitalize">inquire now</button>
                                             </span>
                                         </li>
                                     ))}
@@ -436,7 +436,7 @@ export default function ListingDetails() {
                             </div>
                             {/* additional details closed here */}
 
-                            <div className="listing-details-content-left-other-location">
+                            {/* <div className="listing-details-content-left-other-location">
                                 <h3 className="listing-details-content-left-reviews-details-title py-3 my-0 text-capitalize">other locations</h3>
                                 <hr/>
                                 <div className="listing-details-content-left-other-location-map">
@@ -469,7 +469,7 @@ export default function ListingDetails() {
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> */}
                             {/* other location closed here */}
                         </Col>
                         <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
@@ -495,7 +495,7 @@ export default function ListingDetails() {
                                         </span>
 
                                         <span className="right-contact-details-box-contact-number">
-                                            <Link to="#" className="anchorGreen text-capitalize h6 book-now-btn-right-sticky-contact-details-box">book now</Link>
+                                            <Link to="#" className="anchorGreen text-capitalize h6 book-now-btn-right-sticky-contact-details-box">inquire now</Link>
                                         </span>
 
                                         <span className="right-contact-details-box-shop-closing-time">

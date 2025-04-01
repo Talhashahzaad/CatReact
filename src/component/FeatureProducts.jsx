@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
-import featureProduct01 from"../images/featureProduct01.png";
 import arrowTopRight from"../images/arrowTopRight.svg";
-import asthetics from"../images/asthetics.png";
-import hair from"../images/hair.png";
-import lashes from"../images/lashes.png";
-import eyebrows from"../images/eyebrows.png";
-import nails from"../images/nails.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function FeatureCarousel() {
+
+  const [featureListing, setFeatureListing] = useState([]);
+
+  const siteURL = "http://3.8.140.227:8000";
+
+  const fetchFeatureListing = async () => {
+    const response = await axios.get("http://3.8.140.227:8000/api/category");
+    setFeatureListing(response.data);
+  }
+
+  useEffect(() => {
+    fetchFeatureListing();
+  }, []);
+
   var settings = {
     dots: false,
     infinite: true,
@@ -42,15 +51,18 @@ export default function FeatureCarousel() {
     ]
   };
   return (
+    <>
     <Slider {...settings}>
-      <div className="feature-products-carousel-item">
+      {featureListing.map((item, index) => (
+      <div className="feature-products-carousel-item" key={index}>
         <div className="feature-products-carousel-card position-relative">
-          <figure className="mb-0 position-absolute"><img src={asthetics} alt="spa" /></figure>
-          <h3>Asthetics</h3>
-          <article>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                
+            <figure className="mb-0 position-absolute"><img src={`${siteURL}${item.background_image}`} alt={item.name} /></figure>
+            <h3>{item.name}</h3>
+            <article>
+            <p>{item.description}</p>
             <aside className="priceCart">
-              <Link to="#" className="cartbuttonStyle d-flex align-items-center">
+              <Link to="/service-categories" className="cartbuttonStyle d-flex align-items-center">
                 <span className="button_text text-capitalize">learn more</span>
                 <span className="button_icon"><img src={arrowTopRight} alt="Learn More" className="mb-0 me-1" /></span>
               </Link>
@@ -58,70 +70,8 @@ export default function FeatureCarousel() {
           </article>
         </div>
       </div>
-
-      <div className="feature-products-carousel-item">
-        <div className="feature-products-carousel-card position-relative">
-          <figure className="mb-0 position-absolute"><img src={hair} alt="spa" /></figure>
-          <h3>Hair</h3>
-          <article>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            <aside className="priceCart">
-              <Link to="#" className="cartbuttonStyle d-flex align-items-center">
-                <span className="button_text text-capitalize">learn more</span>
-                <span className="button_icon"><img src={arrowTopRight} alt="Learn More" className="mb-0 me-1" /></span>
-              </Link>
-            </aside>
-          </article>
-        </div>
-      </div>
-
-      <div className="feature-products-carousel-item">
-        <div className="feature-products-carousel-card position-relative">
-          <figure className="mb-0 position-absolute"><img src={lashes} alt="spa" /></figure>
-          <h3>Lashes</h3>
-          <article>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            <aside className="priceCart">
-              <Link to="#" className="cartbuttonStyle d-flex align-items-center">
-                <span className="button_text text-capitalize">learn more</span>
-                <span className="button_icon"><img src={arrowTopRight} alt="Learn More" className="mb-0 me-1" /></span>
-              </Link>
-            </aside>
-          </article>
-        </div>
-      </div>
-
-      <div className="feature-products-carousel-item">
-        <div className="feature-products-carousel-card position-relative">
-          <figure className="mb-0 position-absolute"><img src={eyebrows} alt="spa" /></figure>
-          <h3>Eyebrows</h3>
-          <article>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            <aside className="priceCart">
-              <Link to="#" className="cartbuttonStyle d-flex align-items-center">
-                <span className="button_text text-capitalize">learn more</span>
-                <span className="button_icon"><img src={arrowTopRight} alt="Learn More" className="mb-0 me-1" /></span>
-              </Link>
-            </aside>
-          </article>
-        </div>
-      </div>
-
-      <div className="feature-products-carousel-item">
-        <div className="feature-products-carousel-card position-relative">
-          <figure className="mb-0 position-absolute"><img src={nails} alt="spa" /></figure>
-          <h3>Nails</h3>
-          <article>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. </p>
-            <aside className="priceCart">
-              <Link to="#" className="cartbuttonStyle d-flex align-items-center">
-                <span className="button_text text-capitalize">learn more</span>
-                <span className="button_icon"><img src={arrowTopRight} alt="Learn More" className="mb-0 me-1" /></span>
-              </Link>
-            </aside>
-          </article>
-        </div>
-      </div>
+      ))}
     </Slider>
+    </>
   );
 }

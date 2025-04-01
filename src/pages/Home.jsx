@@ -3,14 +3,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import arrowTopRight from "../images/arrowTopRight.svg";
 import linkIcon from "../images/linkIcon.svg";
-// import blog1 from"../images/blog-1.jpg";
-// import blog2 from"../images/blog-2.jpg";
-// import blog3 from"../images/blog-3.jpg";
-// import blog4 from"../images/blog-4.jpg";
 import eyeIcon from"../images/eyeIcon.svg";
-//import FeatureCarousel from "../component/FeatureCarousel";
 import FeatureProducts from "../component/FeatureProducts";
-//import TrendingCarousel from "../component/TrendingCarousel";
 import catDoubleCircles from "../images/catDoubleCircles.svg";
 import searchIcon from "../images/searchIcon.svg";
 import categoriesIcon from "../images/categoriesIcon.svg";
@@ -19,14 +13,25 @@ import WantToSeeMoreCarousel from "../component/WanToSeeMoreCarousel";
 import ProductComingSoon from "../images/check-a-treatment-coming-soon-banner.jpg";
 import beyondTreatmentsVideo1 from '../images/clip1.mp4';
 import beyondTreatmentsVideo2 from '../images/clip2.mp4';
-
+import axios from "axios";
 
 function Home(){
-
     const [blogListing, setBlogListing] = useState([]);
     const [authors, setAuthors] = useState({});
     const [error, setError] = useState(null);
-    
+    const [featureListing, setFeatureListing] = useState([]);
+
+    const siteURL = "http://3.8.140.227:8000";
+
+    const fetchFeatureListing = async () => {
+        const response = await axios.get("http://3.8.140.227:8000/api/category");
+        setFeatureListing(response.data);
+    }
+
+    useEffect(() => {
+        fetchFeatureListing();
+    }, []);
+
     useEffect(() => {
         const blogs = async () => {
             const response = await fetch('http://3.8.140.227:8000/api/blog/');
@@ -174,34 +179,91 @@ function Home(){
 
                                         <span className="selectYourCategories">
                                             <img loding="lazy" src={categoriesIcon} alt="search" />
-                                            <select id="categories" name="categories">
-                                                <option value="">Select Treatment Category</option>
-                                                <option value="Hair">Hair</option>
-                                                <option value="Barbers">Barbers</option>
-                                                <option value="Nails">Nails</option>
-                                                <option value="Lashes & Brows">L's & B's</option>
-                                                <option value="Injectables">Injectables</option>
-                                                <option value="SPMU">SPMU</option>
-                                                <option value="Skincare">Skincare</option>
-                                                <option value="Hair removal">Hair removal</option>
-                                                <option value="Teeth">Teeth</option>
-                                                <option value="Training">Training</option>
-                                                <option value="Spa & Sauna">Spa & Sauna</option>
-                                                <option value="Retreats">Retreats</option>
-                                                <option value="Healthcare">Healthcare</option>
-                                                <option value="Children">Children</option>
-                                                <option value="Animals">Animals</option>
-                                                <option value="MUA (Makeup Artist)">MUA (Makeup Artist)</option>
-                                                <option value="Surgery">Surgery</option>
-                                                <option value="Keep fit">Keep fit</option>
-                                                <option value="Therapy">Therapy</option>
-                                                <option value="Nutrition">Nutrition</option>
-                                            </select>
+                                            
+                                                <select id="categories" name="categories">
+                                                    <option value="Select Treatment Category" key={0}> Select Treatment Category</option>
+                                                    {featureListing.map((item) => (
+                                                        <option value={item?.name} key={item?.id}>{item?.name}</option>
+                                                    ))}
+                                                </select>
+                                            
                                         </span>
 
                                         <span className="searchByLocation">
                                             <img loding="lazy" src={mapMarkerIcon} alt="Location" />
-                                            <input type="text" placeholder="Location" id="location" name="location" autoComplete="off" />
+                                            <select id="location" name="location" autoComplete="off" className="form-control">
+                                                <option value="">Select Location</option>
+                                                <option value="Aberdeen">Aberdeen</option>
+                                                <option value="Bath">Bath</option>
+                                                <option value="Belfast and Derry">Belfast and Derry</option>
+                                                <option value="Birmingham">Birmingham</option>
+                                                <option value="Blackburn">Blackburn</option>
+                                                <option value="Blackpool">Blackpool</option>
+                                                <option value="Bolton">Bolton</option>
+                                                <option value="Bournemouth">Bournemouth</option>
+                                                <option value="Bradford">Bradford</option>
+                                                <option value="Brighton & Hove">Brighton & Hove</option>
+                                                <option value="Bristol">Bristol</option>
+                                                <option value="Cambridge">Cambridge</option>
+                                                <option value="Cardiff">Cardiff</option>
+                                                <option value="Canterbury">Canterbury</option>
+                                                <option value="Carlisle">Carlisle</option>
+                                                <option value="Chelmsford">Chelmsford</option>
+                                                <option value="Chester">Chester</option>
+                                                <option value="Coventry">Coventry</option>
+                                                <option value="Chichester">Chichester</option>
+                                                <option value="Colchester">Colchester</option>
+                                                <option value="Coventry">Coventry</option>
+                                                <option value="Derby">Derby</option>
+                                                <option value="Doncaster">Doncaster</option>
+                                                <option value="Durham">Durham</option>
+                                                <option value="Dundee">Dundee</option>
+                                                <option value="Ely">Ely</option>
+                                                <option value="Edinburgh">Edinburgh</option>
+                                                <option value="Exeter">Exeter</option>
+                                                <option value="Glasgow">Glasgow</option>
+                                                <option value="Gloucester">Gloucester</option>
+                                                <option value="Hereford">Hereford</option>
+                                                <option value="Kingston-upon-Hull">Kingston-upon-Hull</option>
+                                                <option value="Lancaster">Lancaster</option>
+                                                <option value="Londonderry">Londonderry</option>
+                                                <option value="Leeds">Leeds</option>
+                                                <option value="Leicester">Leicester</option>
+                                                <option value="Lichfield">Lichfield</option>
+                                                <option value="Lincoln">Lincoln</option>
+                                                <option value="Liverpool">Liverpool</option>
+                                                <option value="London">London</option>
+                                                <option value="Manchester">Manchester</option>
+                                                <option value="Milton Keynes">Milton Keynes</option>
+                                                <option value="Newcastle-upon-Tyne">Newcastle-upon-Tyne</option>
+                                                <option value="Newport">Newport</option>
+                                                <option value="Norwich">Norwich</option>
+                                                <option value="Nottingham">Nottingham</option>
+                                                <option value="Oxford">Oxford</option>
+                                                <option value="Peterborough">Peterborough</option>
+                                                <option value="Plymouth">Plymouth</option>
+                                                <option value="Portsmouth">Portsmouth</option>
+                                                <option value="Preston">Preston</option>
+                                                <option value="Ripon">Ripon</option>
+                                                <option value="Salford">Salford</option>
+                                                <option value="Swansea">Swansea</option>
+                                                <option value="Salisbury">Salisbury</option>
+                                                <option value="Sheffield">Sheffield</option>
+                                                <option value="Southampton">Southampton</option>
+                                                <option value="Southend-on-Sea">Southend-on-Sea</option>
+                                                <option value="St Albans">St Albans</option>
+                                                <option value="Swindon">Swindon</option>
+                                                <option value="Stoke on Trent">Stoke on Trent</option>
+                                                <option value="Sunderland">Sunderland</option>
+                                                <option value="Truro">Truro</option>
+                                                <option value="Wakefield">Wakefield</option>
+                                                <option value="Wells">Wells</option>
+                                                <option value="Westminster">Westminster</option>
+                                                <option value="Winchester">Winchester</option>
+                                                <option value="Wolverhampton">Wolverhampton</option>
+                                                <option value="Worcester">Worcester</option>
+                                                <option value="York">York</option>
+                                            </select>
                                         </span>
 
                                         <span className="submitYourData">
@@ -216,88 +278,14 @@ function Home(){
 
             <div className="bannerCaptionAnimate position-absolute w-100 h-auto d-flex align-items-center justify-content-center bottom-0 pt-2">
             <h2 className="display-1 marquee-text">
+                
                 <ul className="d-flex ps-0 mb-0">
-                    <li>
+                {featureListing.map((item) => (
+                    <li key={item.id}>
                         <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Hair</span>
+                        <span>{item.name}</span>
                     </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Barbers</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Nails</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>L&#39;s & B&#39;s</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Injectables</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>SPMU</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Skincare</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Hair removal</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Teeth</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Training</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Spa &amp; Sauna</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Retreats</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Healthcare</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Children</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Animals</span>
-                    </li>
-
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>MUA (Makeup Artist)</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Surgery</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Keep fit</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Therapy</span>
-                    </li>
-                    <li>
-                        <img loding="lazy" src={catDoubleCircles} alt="bannerCaptionVector" />
-                        <span>Nutrition</span>
-                    </li>
+                ))}
                 </ul>
             </h2>
             </div>
@@ -467,7 +455,7 @@ function Home(){
         </div>
 
 
-        <div className="filtersByCategories w-100 h-auto d-block position-relative">
+        {/* <div className="filtersByCategories w-100 h-auto d-block position-relative">
             <Container>
                 <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -557,7 +545,7 @@ function Home(){
                     </Col>
                 </Row>
             </Container>
-        </div>
+        </div> */}
 
         {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
