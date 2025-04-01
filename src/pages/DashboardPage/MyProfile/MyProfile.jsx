@@ -1,34 +1,102 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from 'react-bootstrap';
 import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import defaultImage from "../../../images/default-profile-picture.webp";
 import defaultThumbnailImage from "../../../images/defaulThumbnailBackground.png";
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./MyProfile.css";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const MyProfile = () => {
     const [profilePicture, setProfilePicture] = useState(defaultImage);
     const [thumbnailImage, setThumbnailImage] = useState(defaultThumbnailImage);
     const [listingForm, setListingForm] = useState(false);
-    const [successAlert, setSuccessAlert] = useState(false);
-    const [errorAlert, setErrorAlert] = useState(false);
-    const handleImageChange = (event) => {
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    const handleImageChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
+            // Show preview
             const imageUrl = URL.createObjectURL(file);
             setProfilePicture(imageUrl);
+
+            // Create FormData to send file
+            const formData = new FormData();
+            formData.append('avatar', file);
+
+            try {
+                const token = JSON.parse(localStorage.getItem("token"));
+                const response = await axios.post('http://3.8.140.227:8000/api/user-avatar-update', 
+                    formData,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/json',
+                            'Content-Type': 'multipart/form-data' // Important for file uploads
+                        }
+                    }
+                );
+                
+                if (response.data.success) {
+                    toast.success('Profile picture updated successfully');
+                    // Update the profile info state with new avatar
+                    setProfileInfo(prev => ({
+                        ...prev,
+                        user: {
+                            ...prev.user,
+                            avatar: response.data.avatar
+                        }
+                    }));
+                }
+            } catch (error) {
+                toast.error('Failed to update profile picture');
+                console.error('Error uploading profile picture:', error);
+            }
         }
     };
 
-    const handleThumbnailImageChange = (event) => {
+    const handleThumbnailImageChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
+            // Show preview
             const imageUrl = URL.createObjectURL(file);
             setThumbnailImage(imageUrl);
+
+            // Create FormData to send file
+            const formData = new FormData();
+            formData.append('banner', file);
+
+            try {
+                const token = JSON.parse(localStorage.getItem("token"));
+                const response = await axios.post('http://3.8.140.227:8000/api/user-banner-update', 
+                    formData,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Accept': 'application/json',
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                );
+                
+                if (response.data.success) {
+                    toast.success('Banner image updated successfully');
+                    // Update the profile info state with new banner
+                    setProfileInfo(prev => ({
+                        ...prev,
+                        user: {
+                            ...prev.user,
+                            banner: response.data.banner
+                        }
+                    }));
+                }
+            } catch (error) {
+                toast.error('Failed to update banner image');
+                console.error('Error uploading banner image:', error);
+            }
         }
     };
 
@@ -45,7 +113,22 @@ const MyProfile = () => {
         event.target.value = cleaned;
     };
 
-    const [profileInfo, setProfileInfo] = useState();
+    const [profileInfo, setProfileInfo] = useState({
+        user: {
+            name: '',
+            phone: '',
+            email: '',
+            address: '',
+            about: '',
+            website: '',
+            fb_link: '',
+            ig_link: '',
+            yt_link: '',
+            tt_link: '',
+            avatar: '',
+            banner: ''
+        }
+    });
 
     useEffect(() => { 
         const fetchProfileInfo = async () => { 
@@ -57,15 +140,25 @@ const MyProfile = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            setProfileInfo(response.data);
+            if (response.data && response.data.user) {
+                setProfileInfo(response.data);
+            } else {
+                console.error("Invalid response data:", response.data);
+            }
         };
         fetchProfileInfo();
     }, []);
     
+    useEffect(() => {
+        window.scrollTo(0, scrollPosition);
+    }, [profileInfo, scrollPosition]);
+
     const defaultProfilePicture = defaultImage;
     const defaultThumbnailBackground = defaultThumbnailImage;
 
     const handleProfileInfoChange = (e) => {
+        e.preventDefault();
+        setScrollPosition(window.scrollY);
         const { name, value } = e.target;
         setProfileInfo(prevInfo => ({
             ...prevInfo,
@@ -77,11 +170,21 @@ const MyProfile = () => {
     };
 
     // We are handling the update functionality here
-    const handleUpdateProfile = async (e) => {
-        e.preventDefault();
-        try {
-            const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.post('http://3.8.140.227:8000/api/user-profile-update', 
+    const isSubmitting = useRef(false);
+
+    const notifyProfileUpdateError = () => toast.error('Failed to update profile');
+    const notifyProfileUpdateSuccess = () => toast.success('Profile updated successfully');
+
+const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isSubmitting.current) return;
+    isSubmitting.current = true;
+
+    try {
+        const token = JSON.parse(localStorage.getItem("token"));
+        await axios.post('http://3.8.140.227:8000/api/user-profile-update',
             {
                 name: profileInfo.user.name,
                 phone: profileInfo.user.phone,
@@ -102,17 +205,107 @@ const MyProfile = () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
-            });
-            console.log(response);
-            setSuccessAlert(true);
-            document.querySelector('.sidebar-editable-form').style.display = 'none';
-            document.querySelector('.dashboard-content-table').style.display = 'block';
-            setProfileInfo();
+            }
+        );
+        notifyProfileUpdateSuccess();
+
+        // Hide form and show dashboard content table
+        const sidebarForm = document.querySelector('.sidebar-listing-form');
+        const dashboardTable = document.querySelector('.dashboard-content-table');
+        
+        if (sidebarForm && dashboardTable) {
+            sidebarForm.style.display = 'none';
+            dashboardTable.style.display = 'block';
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+        }
+
+        // Refresh profile data
+        const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+            // if (response.data && response.data.user) {
+            //     setProfileInfo(response.data);
+            // }
+
         } catch (error) {
-            setErrorAlert(true);
+            notifyProfileUpdateError();
+        } finally {
+            isSubmitting.current = false;
         }
     };
+
+    // we are update the password functionality here
+    const [password, setPassword] = useState({
+        password: '',
+        password_confirmation: ''
+    });
+
+    useEffect(() => {
+        window.scrollTo(0, scrollPosition);
+    }, [password, scrollPosition]);
+
+    const handleNewPasswordChange = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (isSubmitting.current) return;
+        setScrollPosition(window.scrollY);
+        
+        const { name, value } = e.target;
+        setPassword(prev => ({ ...prev, [name]: value }));
+    };
+
+    const validationPassword = () => {
+        if (password.password !== password.password_confirmation) {
+            return 'Password should be in 8 characters with one uppercase, one lowercase and one number';
+        }
+        return null;
+    };
+
+    const validatePasswordConfirmation = () => {
+        if (password.password_confirmation !== password.password_confirmation) {
+            return 'Password and Confirm Password do not match';
+        }
+        return null;
+    };
     
+    const notifySuccess = () => toast.success('Password updated successfully');
+    const notifyError = () => toast.error('Failed to update password');
+
+    const handlePasswordUpdate = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        try {
+            const token = JSON.parse(localStorage.getItem("token"));
+            const response = await axios.post('http://3.8.140.227:8000/api/user-password-update', {
+                password: password.password,
+                password_confirmation: password.password_confirmation
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            notifySuccess();
+
+        if (isSubmitting.current) return;
+        isSubmitting.current = true;
+    } catch (error) {
+        notifyError();
+    } finally {
+        isSubmitting.current = false;
+    }
+};
 
     return(
         <>
@@ -267,14 +460,22 @@ const MyProfile = () => {
                                 </Row>
                                 <hr />
 
-                                <form onSubmit={handleUpdateProfile}>
+                                <form onSubmit={(e) => e.preventDefault() && handleUpdateProfile}>
                                     <Row>
                                         <Col xxl={8} xl={8} lg={8} md={8} sm={12}>
                                             <Row>
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="name" className="form-label text-capitalize fw-bold small">name <sup className="text-danger">*</sup></label>
-                                                        <input type="text" className="form-control" id="name" name="name" autoComplete="off" value={profileInfo?.user?.name} onChange={handleProfileInfoChange} />
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="name" 
+                                                            name="name" 
+                                                            autoComplete="off" 
+                                                            value={profileInfo?.user?.name || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
 
@@ -289,7 +490,7 @@ const MyProfile = () => {
                                                             pattern={phonePattern}
                                                             onInput={handlePhoneInput}
                                                             autoComplete="off"
-                                                            value={profileInfo?.user?.phone} 
+                                                            value={profileInfo?.user?.phone || ''} 
                                                             onChange={handleProfileInfoChange}
                                                         />
                                                     </div>
@@ -298,56 +499,113 @@ const MyProfile = () => {
                                                 <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="email" className="form-label text-capitalize fw-bold small">email <sup className="text-danger">*</sup></label>
-                                                        <input type="email" className="form-control" id="email" name="email" autoComplete="off" value={profileInfo?.user?.email} onChange={handleProfileInfoChange} />
+                                                        <input 
+                                                            type="email" 
+                                                            className="form-control" 
+                                                            id="email" 
+                                                            name="email" 
+                                                            autoComplete="off" 
+                                                            value={profileInfo?.user?.email || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="address" className="form-label text-capitalize fw-bold small">full address <sup className="text-danger">*</sup></label>
-                                                        <input type="text" className="form-control" id="address" name="address" autoComplete="off" value={profileInfo?.user?.address} onChange={handleProfileInfoChange} />
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="address" 
+                                                            name="address" 
+                                                            autoComplete="off" 
+                                                            value={profileInfo?.user?.address || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="describeAboutMe" className="form-label text-capitalize fw-bold small">describe about me <sup className="text-danger">*</sup></label>
-                                                        <textarea className="form-control" id="describeAboutMe" name="describeAboutMe" value={profileInfo?.user?.about} onChange={handleProfileInfoChange} />
+                                                        <textarea 
+                                                            className="form-control" 
+                                                            id="describeAboutMe" 
+                                                            name="about" 
+                                                            value={profileInfo?.user?.about || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="websiteURL" className="form-label text-capitalize fw-bold small">website URL</label>
-                                                        <input type="url" className="form-control" id="websiteURL" name="websiteURL" value={profileInfo?.user?.website} onChange={handleProfileInfoChange} />
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="websiteURL" 
+                                                            name="website" 
+                                                            value={profileInfo?.user?.website || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="facebookURL" className="form-label text-capitalize fw-bold small">facebook URL</label>
-                                                        <input type="url" className="form-control" id="facebookURL" name="facebookURL" value={profileInfo?.user?.fb_link} onChange={handleProfileInfoChange} />
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="facebookURL" 
+                                                            name="fb_link" 
+                                                            value={profileInfo?.user?.fb_link || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="instagramURL" className="form-label text-capitalize fw-bold small">instagram URL</label>
-                                                        <input type="url" className="form-control" id="instagramURL" name="instagramURL" value={profileInfo?.user?.ig_link} onChange={handleProfileInfoChange} />
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="instagramURL" 
+                                                            name="ig_link" 
+                                                            value={profileInfo?.user?.ig_link || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="youtubeURL" className="form-label text-capitalize fw-bold small">youtube URL</label>
-                                                        <input type="url" className="form-control" id="youtubeURL" name="youtubeURL" value={profileInfo?.user?.yt_link} onChange={handleProfileInfoChange} />
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="youtubeURL" 
+                                                            name="yt_link" 
+                                                            value={profileInfo?.user?.yt_link || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="tiktokURL" className="form-label text-capitalize fw-bold small">tiktok URL</label>
-                                                        <input type="url" className="form-control" id="tiktokURL" name="tiktokURL" value={profileInfo?.user?.tt_link} onChange={handleProfileInfoChange} />
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="tiktokURL" 
+                                                            name="tt_link" 
+                                                            value={profileInfo?.user?.tt_link || ''} 
+                                                            onChange={handleProfileInfoChange} 
+                                                        />
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -365,7 +623,6 @@ const MyProfile = () => {
                                                         id="profilePicture"
                                                         name="profilePicture"
                                                         onChange={handleImageChange}
-                                                        value={profileInfo?.user?.avatar}
                                                         accept="image/*"
                                                     />
                                                 </div>
@@ -382,7 +639,6 @@ const MyProfile = () => {
                                                         id="thumbnailImage"
                                                         name="thumbnailImage"
                                                         onChange={handleThumbnailImageChange}
-                                                        value={profileInfo?.user?.banner}
                                                         accept="image/*"
                                                     />
                                                 </div>
@@ -394,33 +650,63 @@ const MyProfile = () => {
                                                 <input type="submit" className="bg-jetGreen text-white border-0 py-2 px-3 rounded-0 bg-jetGreen text-capitalize" value="Update profile" onClick={handleUpdateProfile} />
                                             </div>
                                         </Col>
-
-                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                            <fieldset className="mt-5">
-                                                <legend className="text-capitalize fw-bold small">change your password</legend>
-                                                    <Row>
-                                                        <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
-                                                            <div className="form-group my-2">
-                                                                <input type="password" placeholder="new password" className="form-control rounded-0 text-capitalize" id="newPassword" name="newPassword" autoComplete="off" />
-                                                            </div>
-                                                        </Col>
-
-                                                        <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
-                                                            <div className="form-group my-2">
-                                                                <input type="password" placeholder="confirm new password" className="form-control rounded-0 text-capitalize" id="confirmNewPassword" name="confirmNewPassword" autoComplete="off" />
-                                                            </div>
-                                                        </Col>
-
-                                                        <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
-                                                            <div className="form-group my-2">
-                                                                <input type="submit" className="bg-jetGreen text-white border-0 py-2 px-3 rounded-0 bg-jetGreen w-100 text-capitalize" value="Update password" />
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                            </fieldset>
-                                        </Col>
                                     </Row>
                                 </form>
+
+                                {/* Separate password update form */}
+                                <Row>
+                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                        <form onSubmit={handlePasswordUpdate}>
+                                            <fieldset className="mt-5">
+                                                <legend className="text-capitalize fw-bold small">change your password</legend>
+                                                <Row>
+                                                    <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
+                                                        <div className="form-group my-2">
+                                                            <input 
+                                                                type="password" 
+                                                                placeholder="new password" 
+                                                                className="form-control rounded-0 text-capitalize" 
+                                                                id="newPassword" 
+                                                                name="password" 
+                                                                autoComplete="off" 
+                                                                value={password.password} 
+                                                                onChange={handleNewPasswordChange} 
+                                                            />
+                                                            <small className="text-danger mt-2 d-block">{validationPassword()}</small>
+                                                        </div>
+                                                    </Col>
+
+                                                    <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
+                                                        <div className="form-group my-2">
+                                                            <input 
+                                                                type="password" 
+                                                                placeholder="confirm new password" 
+                                                                className="form-control rounded-0 text-capitalize" 
+                                                                id="confirmNewPassword" 
+                                                                name="password_confirmation" 
+                                                                autoComplete="off" 
+                                                                value={password.password_confirmation} 
+                                                                onChange={handleNewPasswordChange} 
+                                                            />
+                                                            <small className="text-danger mt-2 d-block">{validatePasswordConfirmation()}</small>
+                                                        </div>
+                                                    </Col>
+
+                                                    <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
+                                                        <div className="form-group my-2">
+                                                            <input 
+                                                                type="submit" 
+                                                                className="bg-jetGreen text-white border-0 py-2 px-3 rounded-0 bg-jetGreen w-100 text-capitalize" 
+                                                                value="Update password" 
+                                                                onClick={handlePasswordUpdate}
+                                                            />
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                            </fieldset>
+                                        </form>
+                                    </Col>
+                                </Row>
                             </div>
 
                             
