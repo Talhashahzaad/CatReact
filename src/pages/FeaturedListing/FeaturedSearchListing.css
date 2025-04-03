@@ -1,0 +1,40 @@
+.productListingSearch-box form {border: 10px solid var(--green25);border-radius: 100px;padding-inline: 14px;margin-block-end: 50px;
+    box-shadow: 0px 12px 50px rgba(0,0,0,0.04);}
+span.submitYourData button[type="submit"] {background-color: var(--jetGreen);border: none;outline: none;width: 60px;height: 60px;border-radius: 100px;
+margin-block: 10px;}
+
+.listing-and-map-box {width: 100%;height: calc(100vh - 100px);display: flex;justify-content: space-between;position: relative;overflow: hidden;}
+.listing-box {width: 35%;overflow-y: auto;overflow-x: hidden;height: 100%;}
+.listing-box::-webkit-scrollbar {width: 8px;}
+.listing-box::-webkit-scrollbar-thumb {background-color: var(--jetGreen);border-radius: 10px;}
+.listing-box::-webkit-scrollbar-track {background-color: var(--green25);}
+
+.map-box {width: 65%;position: sticky;position: -webkit-sticky;top: 0;height: 100%;}
+#map {width: 100%;height: 100%;position: sticky;position: -webkit-sticky;top: 0;}
+
+.search-listing-box-body-item {width: 100%;height: auto;border: 1px solid rgba(0,0,0,0.12);border-radius: 12px;margin-block-end: 40px;
+background-color: var(--white);box-shadow: 0px 9px 18px rgba(0,0,0,0.08);}
+.search-listing-box-body-item-image img {width: 100%;height: 175px;object-fit: cover;border-radius: 12px;margin-bottom: 20px;box-shadow: 0px 25px 25px rgba(0,0,0,0.08);}
+.listing-box ul.d-flex li {list-style-type: none; padding-inline: 15px; width: 50%;}
+.search-listing-box-body-item-content {padding-inline: 12px;}
+.search-listing-box-body-item-content h4 {font-size: 18px;text-transform: lowercase;}
+.search-listing-box-body-item-content h4:first-letter {text-transform: uppercase;}
+.search-listing-box-body-item-content p {text-transform: lowercase;font-size: 12px;}
+.search-listing-box-body-item-content p:first-letter {text-transform: uppercase;}
+.search-listing-box-body-item-content a {font-size: 12px;color: var(--jetGreen);font-weight: bold;font-style: italic;}
+
+/* Responsive Css */
+@media (min-width: 320px) and (max-width: 991px){
+span.submitYourData button[type="submit"] {width: 100%;}
+}
+/* 991 */
+    
+    
+@media (min-width: 320px) and (max-width: 767px){
+.display-1 {font-size: calc(1.625rem + 1.5vw);}
+}
+/* 767 */
+    
+@media (min-width: 320px) and (max-width: 414px){
+.display-1 {font-size: calc(1.625rem + .5vw);}
+}

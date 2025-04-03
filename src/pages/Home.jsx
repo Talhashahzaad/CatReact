@@ -11,8 +11,6 @@ import categoriesIcon from "../images/categoriesIcon.svg";
 import mapMarkerIcon from "../images/mapMarkerIcon.svg";
 import WantToSeeMoreCarousel from "../component/WanToSeeMoreCarousel";
 import ProductComingSoon from "../images/check-a-treatment-coming-soon-banner.jpg";
-import beyondTreatmentsVideo1 from '../images/clip1.mp4';
-import beyondTreatmentsVideo2 from '../images/clip2.mp4';
 import axios from "axios";
 
 function Home(){
@@ -158,6 +156,30 @@ function Home(){
             </div>
         );
     };
+
+    const [clipList, setClipList] = useState([]);
+
+    const getYouTubeEmbedUrl = (url) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) 
+            ? `https://www.youtube.com/embed/${match[2]}`
+            : url;
+    };
+
+    const fetchClipList = async () => {
+        try {
+            const response = await axios.get(`http://3.8.140.227:8000/api/cat-video-upload`);
+            setClipList(response.data);
+        } catch (error) {
+            error(error || 'No, clip has been uploaded yet.');
+        }
+    }
+
+    useEffect(() => {
+        fetchClipList();
+    }, []);
+    
 
     return(
         <>
@@ -398,19 +420,31 @@ function Home(){
                         <h3 className="text-center fw-normal lh-base">Beyond the Treatment</h3>
                     </Col>
 
-                    <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
-                        <h5 className='text-black text-capitalize mb-3 mt-3'>clip 01</h5>
-                        <video className='w-100' src={beyondTreatmentsVideo1} playsInline loop muted controls={true}>
-                            <source src={beyondTreatmentsVideo1} type='video/mp4' />
-                        </video>
-                    </Col>
+                    {clipList.length > 0 && (
+                        <>
+                            <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className='position-relative overflow-hidden height-0'>
+                                <h5 className='text-black text-lowercase mb-3 mt-3'>{clipList[0].video_title}</h5>
+                                <iframe 
+                                    width="100%"
+                                    src={getYouTubeEmbedUrl(clipList[0].video_url)} 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    title={clipList[0].video_title}
+                                ></iframe>
+                            </Col>
 
-                    <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
-                        <h5 className='text-black text-capitalize mb-3 mt-3'>clip 02</h5>
-                        <video className='w-100' src={beyondTreatmentsVideo2} playsInline loop muted controls={true}>
-                            <source src={beyondTreatmentsVideo2} type='video/mp4' />
-                        </video>
-                    </Col>
+                            <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className='position-relative overflow-hidden height-0'>
+                                <h5 className='text-black text-lowercase mb-3 mt-3'>{clipList[1].video_title}</h5>
+                                <iframe 
+                                    width="100%"
+                                    src={getYouTubeEmbedUrl(clipList[1].video_url)} 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    title={clipList[1].video_title}
+                                ></iframe>
+                            </Col>
+                        </>
+                    )}
 
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <aside className="text-center"><Link to="/beyond-the-treatments" className="buttonStyle text-capitalize">View More <img loding="lazy" src={arrowTopRight} onClick={() => window.scrollTo(0, 0)} /></Link></aside>
@@ -448,7 +482,7 @@ function Home(){
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <aside className="text-center">
                             <Link to="/service-categories" className="buttonStyle text-capitalize">view all categories <img loding="lazy" src={arrowTopRight} /></Link>
-                            </aside>
+                        </aside>
                     </Col>
                 </Row>
             </Container>

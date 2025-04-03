@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import catLogo from "../images/catLogo.svg";
+import catLogo from "../images/catLogo.jpg";
 //import userLogin from "../images/userLogin.svg";
 import angleDown from "../images/angleDown.svg";
 
@@ -16,7 +16,7 @@ function Header(){
     return(
         <>
         <header>
-            <div className="siteHeader position-relative py-4 h-auto w-100">
+            <div className="siteHeader position-relative py-1 h-auto w-100">
                 <nav>
                     <Container>
                         <Row>

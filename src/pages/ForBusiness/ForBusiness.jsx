@@ -11,17 +11,29 @@ import DriveTrafficToYourBusiness from "../../images/Drive-Traffic-to-Your-Busin
 import "./ForBusiness.css";
 import axios from "axios";
 
-const ForBusiness = () => {
 
+const ForBusiness = () => {
     const [subscriptionPlans, setSubscriptionPlans] = useState([]);
 
+    const fetchSubscriptionPlans = async () => {
+        const response = await axios.get("http://3.8.140.227:8000/api/listing-packages");
+        setSubscriptionPlans(response.data);
+    }
+
     useEffect(() => {
-        axios.get("http://3.8.140.227:8000/api/listing-packages")
-            .then(response => setSubscriptionPlans(response.data))
-            .catch(error => console.error("Error fetching subscription plans:", error));
+        fetchSubscriptionPlans();
     }, []);
 
-    console.log(subscriptionPlans);
+    const [planID, setPlanID] = useState(null);
+
+    const fetchSelectedPlan = async () => {
+        const response = await axios.get(`http://3.8.140.227:8000/api/checkout/${planID}`);
+        setPlanID(response.data);
+    }
+
+    useEffect(() => {
+        fetchSelectedPlan();
+    }, [planID]);
     
     return (
         <>
@@ -85,117 +97,43 @@ const ForBusiness = () => {
                         <Row>
                             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                                 <h2 className="mb-3 fw-normal lh-base">Subscription Plans<br/> We offer flexible plans to suit all</h2>
-
-                                {/* <table className="table table-bordered table-striped table-hover table-responsive">
-                                    <thead>
-                                        <tr className="text-center">
-                                            <th className="text-start">Feature</th>
-                                            <th>Freemium <br/> (Free)</th>
-                                            <th>CaT Premium <br/>(&pound; 15/month)</th>
-                                            <th>CaT Elite <br/>(&pound; 35/month)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Advanced Business Profile Listing</td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Check a Treatment Online Store front</td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003; <small className="d-block fs-6 text-dark">(10% commission)</small></span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003; <small className="d-block fs-6 text-dark">(4% commission)</small></span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003; <small className="d-block fs-6 text-dark">(0% commission)</small></span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>CaT Pro Social Media</td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Social media</td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Priority listing in search results </td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Maximized Business Profile</td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Unlimited Personal Business Live Chat for Client Enquiries </td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Multiple Locations </td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Opportunity to Feature on Beyond the Treatment</td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-1 text-danger">&times;</span></td>
-                                            <td><span className="text-center d-block fs-4 text-success">&#10003;</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table> */}
                             </Col>
 
                             <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                            {subscriptionPlans.map((plan, index) => (
-                                <div key={plan.id || index} className="subscription-plan-section w-100 h-auto d-flex align-items-center justify-content-evenly">
-                                    <div className="left-side-subscription-plan-section text-center">
-                                        <strong>{plan.name}</strong>
-                                        <h3 className="text-uppercase display-2 fw-bold">{plan.type}</h3>
-                                        <p>Advanced Business Profile Listing</p>
-                                        <p>Check a Treatment Online Store front <samp>(10% commission)</samp></p>
-                                    </div>
+                                {subscriptionPlans.length > 0 && (
+                                    <div className="subscription-plan-section w-100 h-auto d-flex align-items-center justify-content-evenly">
+                                        <div className="left-side-subscription-plan-section text-center">
+                                            <strong>{subscriptionPlans[0].name}</strong>
+                                            <h3 className="text-uppercase display-2 fw-bold">{subscriptionPlans[0].type}</h3>
+                                            <p>{subscriptionPlans[0].name}</p>
+                                            <p>Check a Treatment Online Store front </p>
+                                            <Link to="/checkout" state={{ planId: subscriptionPlans[0].id }} className="btn form-control">checkout</Link>
+                                        </div>
 
-                                    <div className="middle-side-subscription-plan-section text-center">
-                                        <strong>CaT Elite</strong>
-                                        <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>35<small>/m</small></h3>
-                                        <p>Advanced Business Profile Listing</p>
-                                        <p>Check a Treatment Online Store front <samp>(0% commission)</samp></p>
-                                        <p>CaT Pro Social Media</p>
-                                        <p>Social media</p>
-                                        <p>Priority listing in search results</p>
-                                        <p>Maximized Business Profile</p>
-                                        <p>Unlimited Personal Business Live Chat for Client Enquiries</p>
-                                        <p>Multiple Locations</p>
-                                        <p>Opportunity to Feature on Beyond the Treatment</p>
-                                    </div>
+                                        <div className="middle-side-subscription-plan-section text-center">
+                                            <strong>{subscriptionPlans[2].name}</strong>
+                                            <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>{subscriptionPlans[2].price}<small>/m</small></h3>
+                                            <p>{subscriptionPlans[2].name}</p>
+                                            <p>Check a Treatment Online Store front </p>
+                                            <p>CaT Pro Social Media <br/><b>(Comming Soon)</b></p>
+                                            <p>Priority listing in search results</p>
+                                            <p>Maximized Business Profile</p>
+                                            <p>Unlimited Personal Business Live Chat for Client Enquiries</p>
+                                            <p>Multiple Locations</p>
+                                            <p>Opportunity to Feature on Beyond the Treatment</p>
+                                            <Link to="/checkout" state={{ planId: subscriptionPlans[2].id }} className="btn form-control">checkout</Link>
+                                        </div>
 
-                                    <div className="right-side-subscription-plan-section text-center">
-                                        <strong>CaT Premium</strong>
-                                        <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>15<small>/m</small></h3>
-                                        <p>Advanced Business Profile Listing</p>
-                                        <p>Check a Treatment Online Store front <samp>(4% commission)</samp></p>
-                                        <p>CaT Pro Social Media</p>
-                                        <p>Social media</p>
+                                        <div className="right-side-subscription-plan-section text-center">
+                                            <strong>{subscriptionPlans[1].name}</strong>
+                                            <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>{subscriptionPlans[1].price}<small>/m</small></h3>
+                                            <p>{subscriptionPlans[1].description}</p>
+                                            <p>Check a Treatment Online Store front </p>
+                                            <p>CaT Pro Social Media <br/><b>(Comming Soon)</b></p>
+                                            <Link to="/checkout" state={{ planId: subscriptionPlans[1].id }} className="btn form-control">checkout</Link>
+                                        </div>
                                     </div>
-                                    </div>
-                                ))}
+                                )}
                             </Col>
                         </Row>
                     </Container>

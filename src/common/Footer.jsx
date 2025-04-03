@@ -2,7 +2,7 @@ import React from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom";
 import linkIcon from "../images/linkIcon.svg"
-import catLogo from "../images/catLogo.svg"
+import catLogo from "../images/catLogo.jpg"
 
 function Footer(){
 

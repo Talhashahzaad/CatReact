@@ -32,10 +32,10 @@ import UserRegistration from './pages/UserRegistration/UserRegistration';
 import BusinessRegistration from './pages/BusinessRegistration/BusinessRegistration';
 import BusinessLogin from './pages/BusinessLogin/BusinessLogin';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
-import ProductListing from './pages/ProductListing/ProductListing';
+import FeaturedListing from './pages/FeaturedListing/FeaturedSearchListing';
 import ProtectedRoute from './component/ProtectedRoute';
 import ServiceCategories from './pages/ServiceCategories/ServiceCategories';
-
+import Checkout from './pages/Checkout/Checkout';
 
 
 function App () {
@@ -112,8 +112,9 @@ function App () {
           <Route path="/business-registration" element={<BusinessRegistration/>} />
           <Route path="/business-login" element={<BusinessLogin/>} />
           <Route path="/change-password" element={<ChangePassword/>} />
-          <Route path="/product-listing" element={<ProductListing/>} />
+          <Route path="/featured-search-listing" element={<FeaturedListing />} />
           <Route path="/service-categories" element={<ServiceCategories/>} />
+          <Route path="/checkout" element={<Checkout/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}
