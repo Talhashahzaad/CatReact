@@ -190,12 +190,12 @@ const BusinessRegistration = () => {
         <Container>
             <Row>
                 <div className="business-registration-container bg-white">
-                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                    <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
                         <div className="business-registration-picture">
                             <img loading="lazy" src={businessRegistrationPicture} alt="Business Registration" className="img-fluid" />
                         </div>
                     </Col>
-                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                    <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
                         <div className="business-registration-form">
                             <h1 className="text-center text-capitalize fw-bold">Business <mark>Registration</mark></h1>
                             <hr/>

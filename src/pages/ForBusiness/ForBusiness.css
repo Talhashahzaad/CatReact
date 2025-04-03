@@ -53,6 +53,7 @@ padding-inline: 20px;border-radius: 100px;margin-block-start: 20px;margin-block-
 .middle-side-subscription-plan-section {background-color: #91AC8F;padding-block: 70px;border-radius: 50px;padding-inline: 60px;width: 31.33%;
 color: var(--white); background-blend-mode: normal; background-image: url(../../images/leaf-texture.png); background-repeat: no-repeat; background-position: bottom right;}
 
+<<<<<<< HEAD
 .subscription-plan-section a.btn.form-control {
     background-color: var(--white);
     border-radius: 100px;
@@ -69,12 +70,19 @@ color: var(--white); background-blend-mode: normal; background-image: url(../../
     background-color: var(--jetGreen);
     color: var(--white);
 }
+=======
+
+@media (max-width: 1200px) {
+.why-join-us-img {text-align: center; margin-bottom: 30px;}
+ .inner-page h2 {padding-bottom: 10px; text-align: center; width: 100%;}
+}/* 1200 */
+>>>>>>> adc9a3fc9be1cb8a1d336f09d1bd1f2302e0cd6b
 
 @media (max-width: 1023px) {
 .inner-feature-banner.for-business {padding-block-end: 50px;padding-block-start: 50px;}
 .for-business.inner-feature-banner h1 {margin-bottom: 15px;font-size: 30px; line-height: 36px;}
 .inner-page h2 {font-size: 24px;padding-bottom: 0px;}
-}
+}/* 1023 */
 
 @media (min-width: 1024px) and (max-width: 1279px){
 .inner-feature-banner.for-business {padding-block-end: 50px;padding-block-start: 50px;}
@@ -82,7 +90,17 @@ color: var(--white); background-blend-mode: normal; background-image: url(../../
 .inner-page h2 {font-size: 24px;padding-bottom: 0px;}
 .increase-your-visibility ul.d-flex li {width: 165px;padding-block: 15px;}
 .increase-your-visibility ul.d-flex li strong {font-size: 14px;padding-inline: 12px;}
-}
+}/* 1024 - 1279 */
+
+@media (max-width: 991px){
+.increase-your-visibility aside {width: 100%; text-align: center; margin-bottom: 30px;}
+aside {width: 100%; text-align: center;}
+.flexibile-sec h3 {text-align: center; width: 100%;}
+}/* 991 */
+    
+@media(max-widht:860px){
+.for-business.inner-feature-banner h1 , .flexibile-sec{text-align: center;}
+}/* 860 */
 
 @media (max-width: 767px){
 .inner-feature-banner.for-business { padding-block-end: 0px;}
@@ -97,4 +115,9 @@ color: var(--white); background-blend-mode: normal; background-image: url(../../
 .increase-your-visibility ul.d-flex li {width: 100%;padding-block: 15px;}
 .increase-your-visibility ul.d-flex {padding-inline-start: 0px;}
 .increase-your-visibility ul.d-flex li strong {padding-inline: 8px;}
-}
+}/* 767 */
+
+@media(max-width:667px){
+.increase-your-visibility ul.d-flex li {width: 100%;}
+.for-business.inner-feature-banner p {text-align: center;}
+}/* 667 */

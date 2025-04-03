@@ -127,3 +127,32 @@ outline: 10px solid var(--green25);}
 .dashboard-all-listing-editable-form-body form input[type="checkbox"] {width: 24px;height: 24px;margin-inline-end: 15px;appearance: auto;border-radius: 4px;overflow: hidden;box-shadow: none;outline: none;cursor: pointer;}
 
 .pricing-and-duration-form-button .blackHoverEffect:hover {color: var(--white);}
+
+/* toggle css */
+.dashboard-content {transition: margin 0.3s ease-in-out;}
+.dashboard-content.sidebar-open {margin-left: 250px;}
+  
+/*Responsive Styles*/
+@media(max-width:991px){
+    .dashboard-sidebar {width: 10%;}
+    .dashboard-content {width: 90%; margin-left: 10%; float: right;}
+    .dashboard-sidebar-menu span.item-text {display: none;}
+    .dash-profile-picture {flex-wrap: wrap;}
+    .dash-profile-picture strong.text-capitalize {font-size: 12px; text-align: center; line-height: normal;}
+    .dashboard-sidebar-footer{display: none;}
+    .dash-profile-picture figure.mb-2 img{width:100%;}
+    .dash-profile-picture div {margin-left: 0 !important;}
+}
+/* 991 */
+@media(max-width:767px){
+.dashboard-message-notification ul.ps-0.mb-0 li {width: 150px; height: 135px;}
+.dash-profile-picture strong.text-capitalize {font-size: 10px;}
+.dashboard-sidebar-menu ul.list-unstyled.mb-0 li .dropdown-menu a {padding-inline-start: 8px;}
+.dashboard-sidebar-menu ul.list-unstyled.mb-0 li a {padding-inline: 0px;}
+.dashboard-message-notification ul.ps-0.mb-0 li strong {font-size: 14px;}
+.dashboard-message-notification ul.ps-0.mb-0 li h3 {font-size: 50px;}
+}
+/* 767 */
+@media(max-width:667px){
+    .dashboard-message-notification ul.ps-0.mb-0 li {width: 110px; height: 110px;}
+}

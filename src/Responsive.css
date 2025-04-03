@@ -129,7 +129,7 @@
     /* 767 */
 
     @media (min-width: 320px) and (max-width: 414px){
-    .header-menu ul.d-flex li:first-child a, .header-menu ul.d-flex li:nth-child(2) a {padding-block: 8px; padding-inline: 8px; font-size: 14px;}
+    .header-menu ul.d-flex li:first-child a, .header-menu ul.d-flex li:nth-child(2) a {padding-block: 8px; padding-inline: 8px; font-size: 12px;}
     }
     
     @media (min-width: 320px) and (max-width: 666px){

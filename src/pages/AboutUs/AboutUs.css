@@ -32,11 +32,30 @@ font-style: normal;padding-inline: 5em;margin-block-end: 20px;}
 .beauty-and-wellness p {padding-inline: 14em;}
 .beauty-and-wellness ul.d-flex li {list-style-type: none;margin-inline: 12px;}
 .beauty-and-wellness ul.d-flex li a {text-transform: capitalize;}
-    
+
+@media(max-width:1400px){
+.inner-feature-banner p {padding-inline: 5em;}
+}/* 1400 */
+
+@media(max-width:1200px){
+.inner-feature-banner p {padding-inline: 5em;}
+.beauty-and-wellness p {padding-inline: 5em;}
+.main-footer ul.ps-0.mb-0 li a {display: inline;}
+.main-footer h3 {font-size: 22px;}
+}/* 1200 */
+
 @media (max-width: 1023px) {
 .inner-feature-banner p {padding-inline: 0em;}
 .about-section-mission h2 {margin-bottom: 15px;}
-}
+}/* 1023 */
+
+@media (max-width:991px){
+.about-section-mission {text-align: center;}
+.about-section-mission h2 {margin-bottom: 15px; text-align: center;}
+.about-section-b h2 , .about-section-a h2{width: 100%; text-align: center; margin-top: 20px;}
+.beauty-and-wellness p {padding-inline: 2em;}
+.main-footer a{width: 100%; text-align: center;}
+}/* 991 */
 
 @media (max-width: 767px) {
 .inner-feature-banner {background-size: 25%;}
