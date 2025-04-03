@@ -78,13 +78,13 @@ function Login() {
             <Container>
                 <div className="loginPage">
                     <Row>
-                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                        <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
                             <div className="login-picture">
                                 <img src={userLoginPicture} alt="User Login" className="img-fluid" />
                             </div>
                         </Col>
                     
-                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                        <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
                         
                             <h1 className="pb-2 text-uppercase text-center fw-bold">login</h1>
                             <small className="d-block text-lowercase text-center fw-normal">sign in to continue</small>

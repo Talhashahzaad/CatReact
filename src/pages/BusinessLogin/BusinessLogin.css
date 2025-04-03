@@ -70,5 +70,16 @@
         .businessLoginPage ul.signInIcons li img {
             max-width: 100%;
         }
+        .businessLoginPage ul.signInIcons li:last-child {
+            justify-content: unset;
+        }
+        .businessLoginPage ul.signInIcons {
+            flex-wrap: wrap;
+        }
+        .businessLoginBanner {
+            overflow: hidden;
+            height: 200px;
+            margin-bottom: 30px;
+        }
     }
     /* 767 */
