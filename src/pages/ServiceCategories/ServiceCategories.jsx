@@ -13,7 +13,6 @@ const ServiceCategories = () => {
             try {
                 const response = await axios.get('http://3.8.140.227:8000/api/category');
                 setCategories(response.data);
-                console.log(response.data);
             } catch (error) {
                 setError(error || 'Category not found');
             } finally {
@@ -35,7 +34,7 @@ const ServiceCategories = () => {
                         return (
                             <Col key={category.id} xxl={3} xl={3} lg={3} md={3} sm={12} xs={12}>
                                 <div className='service-category-card'>
-                                    <img src={`http://3.8.140.227:8000${category.image_icon}`} alt={category.name} className='img-fluid' />
+                                    <img src={`http://3.8.140.227:8000${category.background_image}`} alt={category.name} className='img-fluid' />
                                     <h3>{category.name}</h3>
                                     {/* <p>{category.description.split(' ').slice(0, 12).join(' ') + '...'}</p> */}
                                 </div>

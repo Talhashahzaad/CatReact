@@ -84,6 +84,9 @@
     .header-menu ul.d-flex li {margin-inline-end: 8px;}
     .header-menu ul.d-flex li a>img {width: 20px;}
     .header-menu ul.d-flex li:last-child a.text-capitalize img {max-width: 8px;}
+.main-footer figure img {max-width: 175px;}
+.header-logo img {max-width: 200px;}
+.siteHeader.position-relative.py-1.h-auto.w-100 {padding-block: 20px !important;}
     
     
     .header-menu { width: 100%; display: flex; align-items: center; justify-content: center;}
@@ -123,7 +126,8 @@
     .featureProducts {background-image: unset;}
     /* inner pages end */
     }
-    
+    /* 767 */
+
     @media (min-width: 320px) and (max-width: 414px){
     .header-menu ul.d-flex li:first-child a, .header-menu ul.d-flex li:nth-child(2) a {padding-block: 8px; padding-inline: 8px; font-size: 14px;}
     }

@@ -4,3 +4,19 @@
     object-fit: cover;
     filter: contrast(1) brightness(0.40);
 }
+
+.beyond-treatments-clips-item .video-container {
+    min-height: 350px;
+    max-height: 350px;
+}
+
+.beyond-treatments-clips-item h3:first-letter {
+    text-transform: capitalize;
+}
+
+.beyond-treatments-clips-item p {
+    min-height: 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 80px;
+}
