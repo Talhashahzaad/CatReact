@@ -11,8 +11,8 @@ import treatmentDashIcon from "../../../images/treatment-dashIcon.svg";
 import packageDashIcon from "../../../images/package-dashIcon.svg";
 import affilicationDashIcon from "../../../images/affilication-dashIcon.svg";
 import qualificationDashIcon from "../../../images/qualification-dashIcon.svg";
-import ToggleButton from "../../../component/ToggleButton";
-import Dashboard from "../../DashboardPage/Dashboard";
+
+
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,12 +31,6 @@ const Sidebar = () => {
             setIsDropdownOpen(false);
         }
     };
-
-{/* toggle script */}
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const handleToggle = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
 
     useEffect(() => {
         document.addEventListener('click', handleClickOutside);
@@ -77,7 +71,6 @@ const Sidebar = () => {
             <>
                 <ToastContainer position="top-right" autoClose={3000} />
                 <div className="dashboard-sidebar" onClick={(e) => e.stopPropagation()}>
-                <ToggleButton onToggle={handleToggle} />
                     <div className="dashboard-sidebar-header">
                         <div className="dashboard-sidebar-header-logo">
                             <Link to="/" className="text-decoration-none text-dark text-uppercase w-100 text-center d-block fw-bold">
@@ -176,8 +169,6 @@ const Sidebar = () => {
                     </div>
                 </div>
             <Outlet />
-            {/* Pass toggle state to Dashboard */}
-      <Dashboard isSidebarOpen={isSidebarOpen} />
         </>
     );
 }
