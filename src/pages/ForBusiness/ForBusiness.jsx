@@ -14,10 +14,22 @@ import axios from "axios";
 
 const ForBusiness = () => {
     const [subscriptionPlans, setSubscriptionPlans] = useState([]);
+    const [error, setError] = useState(null);
 
+    const token = localStorage.getItem("token");
     const fetchSubscriptionPlans = async () => {
-        const response = await axios.get("http://3.8.140.227:8000/api/listing-packages");
-        setSubscriptionPlans(response.data);
+        try {
+            const response = await axios.get("http://3.8.140.227:8000/api/listing-packages", {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+            setSubscriptionPlans(response.data);
+        } catch (error) {
+            console.error("Error fetching subscription plans:", error);
+            setError("Error fetching subscription plans");
+        }
     }
 
     useEffect(() => {

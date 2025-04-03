@@ -48,7 +48,7 @@ const PricingPackage = () => {
                                             </div>
 
                                             <div className='d-flex justify-content-between align-items-center'>
-                                                <Link to="/sign-up" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
+                                                <Link to="/business-registration" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
                                                 
                                                 <Link to="/about-us" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>learn more</Link>
                                             </div>
@@ -74,7 +74,7 @@ const PricingPackage = () => {
                                             </div>
                                             
                                             <div className='d-flex justify-content-between align-items-center'>
-                                                <Link to="/sign-up" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
+                                                <Link to="/business-registration" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
                                                 
                                                 <Link to="/about-us" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>learn more</Link>
                                             </div>
@@ -100,7 +100,7 @@ const PricingPackage = () => {
                                             </div>
                                             
                                             <div className='d-flex justify-content-between align-items-center'>
-                                                <Link to="/sign-up" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
+                                                <Link to="/business-registration" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>sign up</Link>
                                                 
                                                 <Link to="/about-us" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} className='mt-2 w-25 h-auto d-block position-relative border-0 text-capitalize fw-normal bg-jetGreen text-white py-2 px-3 rounded-pill blackHoverEffect text-center'>learn more</Link>
                                             </div>

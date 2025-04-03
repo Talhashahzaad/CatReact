@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './UserRegistration.css';
-import userLoginPictureSecond from '../../images/user-login-banner-second.png';
+import userLoginPictureSecond from '../../images/user-login-banner-second.jpg';
 import arrowNext from '../../images/arrowNext.svg';
 import arrowBack from '../../images/arrowBack.svg';
 import eyeOpen from "../LoginPage/eyeOpen.svg";

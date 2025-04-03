@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const BeyondTheTreatments = () => {
     const [clipList, setClipList] = useState([]);
+    const [error, setError] = useState(null);
 
     const getYouTubeEmbedUrl = (url) => {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -19,8 +20,13 @@ const BeyondTheTreatments = () => {
         try {
             const response = await axios.get(`http://3.8.140.227:8000/api/cat-video-upload`);
             setClipList(response.data);
+            if (response.data.length === 0) {
+                setError("No, clip has been uploaded yet.");
+            }else{
+                setError(null);
+            }
         } catch (error) {
-            error(error || 'No, clip has been uploaded yet.');
+            setError(error || 'No, clip has been uploaded yet.');
         }
     }
 
@@ -28,6 +34,7 @@ const BeyondTheTreatments = () => {
         fetchClipList();
     }, []);
     
+
     return (
         <>
             <div className='beyond-treatments-banner position-relative'>

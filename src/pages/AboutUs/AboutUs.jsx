@@ -95,7 +95,7 @@ function AboutUs(){
 
                             <ul className="d-flex justify-content-center mb-0 ps-0">
                                 <li>
-                                    <Link to="/" className="green-btn">list my business</Link>
+                                    <Link to="/business-registration" className="green-btn" onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}}>list my business</Link>
                                 </li>
                             </ul>
                         </Col>

@@ -52,7 +52,7 @@ const Practitioner = () => {
             );
 
             if (response.data) {
-                setPractitionerListingData(response.data);
+                setPractitionerListingData(response.data.data || [ ]);
                 setTotalPages(response.data.last_page || 1);
                 setTotalEntries(response.data.total || 0);
             } else {
@@ -83,7 +83,7 @@ const Practitioner = () => {
         setSearchTerm(event.target.value);
     };
 
-    const filteredEntries = practitionerListingData.filter(practitioner => 
+    const filteredEntries = practitionerListingData.filter(practitioner =>
         practitioner.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         practitioner.qualification?.toLowerCase().includes(searchTerm.toLowerCase())
     );

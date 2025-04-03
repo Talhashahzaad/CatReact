@@ -12,6 +12,7 @@ const DashboardHeader = () => {
     const defaultAvatar = defaultAvatarPicture;
     const successNotify = () => toast.success('Logout successful');
     const errorNotify = () => toast.error('Logout failed');
+    const [error, setError] = useState(null);
     const [loggedOutMessage, setLoggedOutMessage] = useState({
         show: false,
         message: ''
@@ -59,9 +60,8 @@ const DashboardHeader = () => {
     }, [loggedOutMessage.show, navigate]);
 
     // We are showing the profile picture here
-
-    useEffect(() => {
-        const fetchProfileInfo = async () => {
+    const fetchProfileInfo = async () => {
+        try {
             const token = JSON.parse(localStorage.getItem("token"));
             const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
                 headers: {
@@ -71,7 +71,12 @@ const DashboardHeader = () => {
                 }
             });
             setProfileInfo(response.data);
-        };
+        } catch (error) {
+            setError(error);
+        }
+    };
+
+    useEffect(() => {
         fetchProfileInfo();
     }, []);
 

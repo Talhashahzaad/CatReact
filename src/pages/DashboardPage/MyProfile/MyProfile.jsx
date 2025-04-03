@@ -9,12 +9,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./MyProfile.css";
+import { data } from "react-router-dom";
 
 const MyProfile = () => {
     const [profilePicture, setProfilePicture] = useState(defaultImage);
     const [thumbnailImage, setThumbnailImage] = useState(defaultThumbnailImage);
     const [listingForm, setListingForm] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
+    const [error, setError] = useState(null);
 
     const handleImageChange = async (event) => {
         const file = event.target.files[0];
@@ -39,7 +41,6 @@ const MyProfile = () => {
                         }
                     }
                 );
-                
                 if (response.data.success) {
                     toast.success('Profile picture updated successfully');
                     // Update the profile info state with new avatar
@@ -130,22 +131,23 @@ const MyProfile = () => {
         }
     });
 
-    useEffect(() => { 
-        const fetchProfileInfo = async () => { 
-            const token = JSON.parse(localStorage.getItem("token")); 
-            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', { 
+    const fetchProfileInfo = async () => {
+        try {
+            const token = JSON.parse(localStorage.getItem("token"));
+            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
             });
-            if (response.data && response.data.user) {
-                setProfileInfo(response.data);
-            } else {
-                console.error("Invalid response data:", response.data);
-            }
-        };
+            setProfileInfo(response.data);
+        } catch (error) {
+            setError(error);
+        }
+    };
+
+    useEffect(() => {
         fetchProfileInfo();
     }, []);
     

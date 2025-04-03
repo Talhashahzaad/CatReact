@@ -6,7 +6,7 @@ import eyeOpen from "./eyeOpen.svg";
 import eyeClose from "./eyeClose.svg";
 import googleShortIcon from "../../images/google-short-icon.svg";
 import facebookShortIcon from "../../images/facebook-short-icon.svg";
-import businessLoginBanner from "../../images/businessLoginBanner.png";
+import businessLoginBanner from "../../images/businessLoginBanner.jpg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";

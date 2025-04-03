@@ -3,7 +3,6 @@ import './App.css'
 import Home from './pages/Home'
 import Footer from './common/Footer'
 import Login from './pages/LoginPage/Login';
-import Register from './pages/RegisterPage/Register';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import Header from './common/Header';
 import Blogs from './pages/Blogs/Blogs';
@@ -50,7 +49,6 @@ function App () {
         <Routes>
           <Route exact path="/" element={<Home/>} />
           <Route path="/login" element={<Login/>} />
-          <Route path="/sign-up" element={<Register/>} />
           <Route path="/forget-password" element={<ForgetPassword/>} />
           <Route path="/blogs" element={<Blogs/>} />
           <Route path="/blog/:title" element={<SinglePost/>} />

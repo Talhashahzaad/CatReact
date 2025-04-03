@@ -4,12 +4,20 @@ import axios from "axios";
 
 export default function WantToSeeMoreCarousel() {
     const [featureListing, setFeatureListing] = useState([]);
+    const [error, setError] = useState(null);
 
     const siteURL = "http://3.8.140.227:8000";
 
     const fetchFeatureListing = async () => {
+      try {
         const response = await axios.get("http://3.8.140.227:8000/api/category");
-        setFeatureListing(response.data);
+        const data = Array.isArray(response.data) ? response.data : [];
+        setFeatureListing(data);
+      } catch (error) {
+        console.error("Error fetching feature listing:", error);
+        setError("Failed to load categories");
+        setFeatureListing([]);
+      }
     }
 
     useEffect(() => {

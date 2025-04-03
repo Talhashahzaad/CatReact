@@ -39,6 +39,8 @@ a,a:hover,a:focus{text-decoration: none !important; outline: none; transition: a
 .bg-green25 { background-color: rgba(108,139,87,.25);}
 .bg-jetGreen { background-color: #6C8B57;}
 
+.error-message {text-align: center;}
+
 /* header start */
 .siteHeader {box-shadow: 0px 35px 90px rgba(0,0,0,0.05);z-index: 1;}
 .header-logo >a {display: inline-block;}
