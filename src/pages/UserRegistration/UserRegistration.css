@@ -68,11 +68,32 @@ border-radius: 100px;text-transform: uppercase;font-weight: 700;} */
     background-size: 3%;
 }
 
+@media (max-width: 991px) {
+.user-registration-container::before{display: none;}
+.user-registration-picture {
+    margin-inline-end: 60px;
+    margin-bottom: 30px;
+}
+}
     
     @media (max-width: 767px) {
         .user-login-picture {
             margin-inline-end: 0;
             margin-block-end: 20px;
         }
+
+        .user-registration-picture {
+            margin-inline-end: 0;
+        }
+        .user-registration-picture img {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .user-registration-container {
+            padding-block: 30px;
+        }
+
+        
     }
     

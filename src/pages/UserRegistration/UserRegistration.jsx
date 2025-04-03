@@ -127,14 +127,15 @@ const UserRegistration = () => {
         <>
         <ToastContainer position="top-right" autoClose={3000} />
         <Container>
-            <Row>
+            
                 <div className="user-registration-container bg-white">
-                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                <Row>
+                    <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
                         <div className="user-registration-picture">
                             <img loading="lazy" src={userLoginPictureSecond} alt="User Login" className="img-fluid" />
                         </div>
                     </Col>
-                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                    <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
                         <div className="user-registration-form">
                             <h1 className="text-center text-capitalize fw-bold">User <mark>Registration</mark></h1>
                             <hr/>
@@ -337,8 +338,9 @@ const UserRegistration = () => {
                             </form>
                         </div>
                     </Col>
+                    </Row>
                 </div>
-            </Row>
+            
         </Container>
         </>
     );

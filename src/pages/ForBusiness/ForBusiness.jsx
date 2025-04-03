@@ -40,11 +40,11 @@ const ForBusiness = () => {
             <div className="inner-feature-banner for-business">
                 <Container>
                     <Row>
-                        <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className="d-flex flex-column justify-content-center">
+                        <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12} className="d-flex flex-column justify-content-center">
                             <h1 className="animate__fadeInUp animate__animated">Drive Your Business Forward with Check a Treatment</h1>
                             <p>Welcome to <strong>Check a Treatment</strong>, the ultimate platform for professionals to showcase their services, grow their businesses, and connect with like-minded professionals and clients. Whether you're a seasoned expert or just starting your journey, Check a Treatment offers tailored tools and features to help you thrive.</p>
                         </Col>
-                        <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                        <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12}>
                             <img src={forBusiness} alt="" title="" width="" height="" className="img-fluid" />
                         </Col>
                     </Row>
@@ -57,11 +57,11 @@ const ForBusiness = () => {
                     <div className="py-5">
                         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                             <Row>
-                                <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                                <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={12} className="why-join-us-img">
                                     <img src={ReachYourTargetAudience} alt="" title="" width="" height="" className="img-fluid" />
                                 </Col>
 
-                                <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                                <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={12}>
                                     <div className="d-flex align-items-start justify-content-center flex-column h-100">
                                         <h2 className="mb-3 fw-normal">Why Join Check a Treatment?</h2>
                                         <ol type="1">
@@ -143,7 +143,7 @@ const ForBusiness = () => {
                 <div className="increase-your-visibility">
                     <Container>
                         <Row>
-                            <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                            <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={12}>
                                 <div className="d-flex justify-content-center align-items-start flex-column h-100">
                                     <h2 className="mb-3 fw-normal">Benefits for Businesses</h2>
                                     <p>&#x2022; <strong>Increased Visibility:</strong> Appear in client searches with detailed profiles and prioritized listings.</p>
@@ -154,7 +154,7 @@ const ForBusiness = () => {
                                 </div>
                             </Col>
 
-                            <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                            <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={12}>
                                 <ul className="d-flex">
                                     <li>
                                         <img src={DisplayCustomer} alt="" title="" width="" height="" className="" />

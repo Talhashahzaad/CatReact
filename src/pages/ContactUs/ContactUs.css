@@ -37,3 +37,14 @@ display: flex;align-items: center;justify-content: center;border-radius: 100px;b
     font-size: 1.15rem;
     font-weight: 500;
 }
+
+@media(max-width:1024px){
+    .contact-us-form {
+        margin-top: 30px;
+    }
+
+    .feature-banner.contact-us-page {
+        background-size: 5%;
+        background-position: right 20px bottom 20px;
+    }
+}

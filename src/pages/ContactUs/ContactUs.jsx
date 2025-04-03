@@ -105,7 +105,7 @@ const ContactUs = () => {
             <div className="inner-page-content w-100 h-auto d-block position-relative py-5">
                 <Container>
                     <Row>
-                        <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                        <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12}>
                             <h3 className="text-normal">Get in Touch</h3>
                             <hr/>
                             <strong className="d-block my-1">Follow us on social platforms:</strong>
@@ -144,7 +144,7 @@ const ContactUs = () => {
                             </div>
                         </Col>
 
-                        <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                        <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12} className='contact-us-form'>
                             <h3 className="text-normal">Send a Message</h3>
                             <hr/>
                             <form className="contactForm mb-5" onSubmit={handleSubmit}>
