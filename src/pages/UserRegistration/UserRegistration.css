@@ -70,15 +70,18 @@ border-radius: 100px;text-transform: uppercase;font-weight: 700;} */
     background-size: 3%;
 }
 
-    
-@media (max-width: 767px) {
-    .user-login-picture {
-        margin-inline-end: 0;
-        margin-block-end: 20px;
-    }
-    .user-registration-container {flex-flow: column;}
-    .user-registration-picture img {display: none;}
-    .user-registration-container {flex-flow: column;width: -webkit-fill-available;width: -moz-available;width: auto; margin-inline: 15px;}
+@media (max-width: 991px) {
+.user-registration-container::before{display: none;}
+.user-registration-picture {
+    margin-inline-end: 60px;
+    margin-bottom: 30px;
 }
-/* 767 */
+}
+    
+    @media (max-width: 767px) {
+        .user-login-picture {
+            margin-inline-end: 0;
+            margin-block-end: 20px;
+        }
+    }
     

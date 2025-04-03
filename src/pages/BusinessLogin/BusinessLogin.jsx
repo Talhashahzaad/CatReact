@@ -100,7 +100,7 @@ function Login() {
                             </div>
 
                             <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div className="w-100 h-auto d-flex justify-content-between align-items-center mb-3">
+                                <div className="w-100 h-auto d-flex justify-content-between align-items-center mb-3 password-row">
                                     <div className="checkBoxWrapper d-inline-flex position-relative">
                                         <input type="checkbox" name="rememberMe" id="rememberMe" className="position-absolute" />
                                         <label htmlFor="rememberMe" className="text-rememberField">remember me</label>

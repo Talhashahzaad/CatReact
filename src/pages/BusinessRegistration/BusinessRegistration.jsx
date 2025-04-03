@@ -188,8 +188,9 @@ const BusinessRegistration = () => {
 
     return (
         <Container>
-            <Row>
+            
                 <div className="business-registration-container bg-white">
+                <Row>
                     <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
                         <div className="business-registration-picture">
                             <img loading="lazy" src={businessRegistrationPicture} alt="Business Registration" className="img-fluid" />
@@ -501,8 +502,9 @@ const BusinessRegistration = () => {
                             </form>
                         </div>
                     </Col>
+                    </Row>
                 </div>
-            </Row>
+            
             <ToastContainer position="top-right" autoClose={3000} />
         </Container>
     );

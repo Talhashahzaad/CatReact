@@ -74,12 +74,8 @@ color: var(--white); background-blend-mode: normal; background-image: url(../../
 .why-join-us-img {text-align: center; margin-bottom: 30px;}
  .inner-page h2 {padding-bottom: 10px; text-align: center; width: 100%;}
 }/* 1200 */
+>>>>>>> adc9a3fc9be1cb8a1d336f09d1bd1f2302e0cd6b
 
-@media (max-width: 1023px) {
-.inner-feature-banner.for-business {padding-block-end: 50px;padding-block-start: 50px;}
-.for-business.inner-feature-banner h1 {margin-bottom: 15px;font-size: 30px; line-height: 36px;}
-.inner-page h2 {font-size: 24px;padding-bottom: 0px;}
-}/* 1023 */
 
 @media (min-width: 1024px) and (max-width: 1279px){
 .inner-feature-banner.for-business {padding-block-end: 50px;padding-block-start: 50px;}
@@ -89,10 +85,50 @@ color: var(--white); background-blend-mode: normal; background-image: url(../../
 .increase-your-visibility ul.d-flex li strong {font-size: 14px;padding-inline: 12px;}
 }/* 1024 - 1279 */
 
+@media (max-width: 1200px) {
+    .why-join-us-img {text-align: center; margin-bottom: 30px;}
+     .inner-page h2 {padding-bottom: 10px; text-align: center; width: 100%;}
+     .business-and-platinum-section h2 {
+        padding-inline: 2em;
+    }
+    aside {
+        width: 100%;
+        text-align: center;
+    }
+
+    .increase-your-visibility ul.d-flex {
+        flex-wrap: wrap;
+        gap: 30px;
+        width: 100%;
+    }
+
+    .increase-your-visibility ul.d-flex li {
+        width: 48%;
+    }
+
+    }/* 1200 */
+    /* adc9a3fc9be1cb8a1d336f09d1bd1f2302e0cd6b*/
+    
+    @media (max-width: 1023px) {
+    .inner-feature-banner.for-business {padding-block-end: 50px;padding-block-start: 50px;}
+    .for-business.inner-feature-banner h1 {margin-bottom: 15px;font-size: 30px; line-height: 36px; text-align: center;}
+    .inner-page h2 {font-size: 24px;padding-bottom: 0px;}
+    }/* 1023 */
+
 @media (max-width: 991px){
 .increase-your-visibility aside {width: 100%; text-align: center; margin-bottom: 30px;}
 aside {width: 100%; text-align: center;}
 .flexibile-sec h3 {text-align: center; width: 100%;}
+.business-and-platinum-section h2 {
+    padding-inline: 0em;
+}
+.increase-your-visibility ul.d-flex li {
+    width: 45%;
+}
+.inner-feature-banner.for-business {
+    padding-block-end: 0;
+    padding-block-start: 50px;
+}
 }/* 991 */
     
 @media(max-widht:860px){

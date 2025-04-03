@@ -16,7 +16,7 @@
     .businessLoginPage input[type="email"]:focus,
     .businessLoginPage input[type="password"]:focus {outline: none; box-shadow: none;}
     
-    .businessLoginPage input[type="submit"] {background-color: var(--jetGreen);border-color: var(--roseDark);border-radius: 0;height: 50px;
+    .businessLoginPage input[type="submit"] {background-color: var(--jetGreen);border-color: var(--roseDark);border-radius: 5px;height: 50px;
     text-transform: uppercase;letter-spacing: 2px;font-weight: 600;color: var(--white);}
     .businessLoginPage input[type="submit"]:hover, .businessLoginPage input[type="submit"]:focus {background-color: var(--black); color: var(--white)}
     
@@ -62,8 +62,37 @@
 .businessLoginPage hr {height: 3px;background-color: var(--jetGreen);border: none;opacity: 1;border-radius: 10px;width: 94px;margin: 31px auto 0px;}
 .businessLoginPage h1>mark {background-color: transparent;color: var(--jetGreen);padding: 0;}
 
+@media (min-width: 991px) and (max-width:1280px){
+.businessLoginPage ul.signInIcons li a {
+    font-size: 10px;
+}
+}
+
+
+@media (max-width: 991px){
+.businessLoginBanner {
+    height: 200px;
+    margin-bottom: 30px;
+}
+
+.businessLoginBanner .img-fluid {
+    max-width: 100%;
+    height: auto;
+    margin: -1000% 0;
+}
+
+main {
+    padding-bottom: 100px;
+}
+
+.businessLoginPage::before {
+    display: none;
+}
+
+}
+
     @media (max-width: 767px){
-        .businessLoginPage {max-width: 90%;width: 90%;padding: 30px 15px; margin: 50px auto 50px;}
+        .businessLoginPage {max-width: 90%;width: 90%;padding: 20px 15px; margin: 50px auto 50px;}
         .businessLoginPage h1 {font-size: 26px;}
         /* login page */
     
@@ -81,5 +110,21 @@
             height: 200px;
             margin-bottom: 30px;
         }
+        .businessLoginPage hr {
+            margin: 15px auto 15px;
+        }
     }
     /* 767 */
+
+    @media (max-width: 667px){
+    .businessLoginPage ul.signInIcons li a {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 560px){
+.password-row {
+    flex-wrap: wrap;
+    gap: 10px;
+}
+}

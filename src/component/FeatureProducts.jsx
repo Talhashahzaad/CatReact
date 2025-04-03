@@ -11,20 +11,8 @@ export default function FeatureCarousel() {
   const siteURL = "http://3.8.140.227:8000";
 
   const fetchFeatureListing = async () => {
-    try {
-      const response = await axios.get("http://3.8.140.227:8000/api/category");
-      const data = Array.isArray(response.data) ? response.data : [];
-      setFeatureListing(data);
-      if (data.length === 0) {
-        setError("No feature listing found");
-      }else{
-        setError(null);
-      }
-    } catch (err) {
-      console.error("Error fetching feature listing:", err);
-      setError("Failed to load categories");
-      setFeatureListing([]);
-    }
+    const response = await axios.get("http://3.8.140.227:8000/api/category");
+    setFeatureListing(response.data);
   }
 
   useEffect(() => {

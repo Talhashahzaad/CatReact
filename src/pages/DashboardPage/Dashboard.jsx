@@ -9,7 +9,7 @@ import DashboardHeader from "./DashboardHeader/DashboardHeader";
 import Sidebar from "./Sidebar/Sidebar";
 
 
-const Dashboard = () =>{
+const Dashboard = ({ isSidebarOpen }) =>{
     // const [dashboardData, setDashboardData] = useState({
     //     totalReviews: 100,
     //     activeListing: 10,
@@ -46,7 +46,7 @@ const Dashboard = () =>{
                     onClick={(e) => e.stopPropagation()}>
                     <Sidebar />
 
-                    <div className={`dashboard-content mb-5 ${isOpen ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+                    <div className={`dashboard-content mb-5 ${isSidebarOpen ? "sidebar-open" : ""}`}>
                         <Outlet />
                         <div className="dashboard-content-body">
                             <DashboardHeader />
