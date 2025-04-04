@@ -1,27 +1,84 @@
-import { React, useState } from "react";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap";
+import { React, useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
-
+import axios from "axios";
+import "./Treatment.css";
 
 const Treatment = () => {
     const [entriesPerPage, setEntriesPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [entries, setEntries] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [treatmentListing, setTreatmentListing] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [totalEntries, setTotalEntries] = useState(0);
+    const [variantForm, setVariantForm] = useState(false);
+
+    // we are getting the treatment list from the backend
+    const fetchingTreatmentList = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                setError("No authentication token found");
+                setLoading(false);
+                return;
+            }
+
+            const parsedToken = JSON.parse(token);
+            const response = await axios.get(`http://3.8.140.227:8000/api/treatment`,
+                {
+                    params: {
+                        page: currentPage,
+                        per_page: entriesPerPage
+                    },
+                    headers: {
+                        'Authorization': `Bearer ${parsedToken}`,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            
+            if (response.data && response.status === 200) {
+                const treatmentsArray = Array.isArray(response.data.data) ? response.data.data : [];
+                setTreatmentListing(treatmentsArray);
+                setEntries(treatmentsArray);
+                setTotalEntries(response.data.total || treatmentsArray.length);
+            } else {
+                setError(response.data.message || "Failed to fetch treatments");
+            }
+        } catch (error) {
+            console.error("Error fetching treatments:", error);
+            setError(error.response?.data?.message || "Failed to fetch treatments");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchingTreatmentList();
+    }, [currentPage, entriesPerPage]);
+    // close getting the treatment list from the backend
     
-    const handleEntriesPerPageChange = (event) => {
-        setEntriesPerPage(Number(event.target.value));
+    const handleEntriesPerPageChange = (e) => {
+        setEntriesPerPage(Number(e.target.value));
+        setCurrentPage(1);
     };
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
+        setCurrentPage(1);
     };
 
-    const filteredEntries = entries.filter(entry => 
-        entry.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredEntries = treatmentListing.filter(entry => 
+        entry.treatment?.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const indexOfLastEntry = currentPage * entriesPerPage;
@@ -100,6 +157,8 @@ const Treatment = () => {
         { id: 45, name: "12 hours" },
     ]);
 
+    
+
     return (
         <>
             <Container fluid className="dashboard-page-main">
@@ -135,18 +194,27 @@ const Treatment = () => {
                             <Row className="d-flex justify-content-between align-items-center mb-3">
                                 <Col>
                                     <label htmlFor="entriesPerPage">Show entries:</label>
-                                    <select id="entriesPerPage" onChange={handleEntriesPerPageChange} value={entriesPerPage}>
+                                    <select
+                                        id="entriesPerPage"
+                                        onChange={handleEntriesPerPageChange}
+                                        className={`setEntriesPerPage ${entriesPerPage}`}
+                                        defaultValue={entriesPerPage}
+                                    >
                                         <option value={5}>5</option>
                                         <option value={10}>10</option>
+                                        <option value={15}>10</option>
                                         <option value={20}>20</option>
                                     </select>
                                 </Col>
                                 <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end border rounded-2">
+                                    <label htmlFor="search-input" className="visually-hidden">Search treatments</label>
                                     <input 
                                         type="text" 
                                         placeholder="Search..." 
                                         value={searchTerm} 
                                         onChange={handleSearchChange} 
+                                        id="search-input"
+                                        name="search-input"
                                     />
                                 </Col>
                             </Row>
@@ -155,28 +223,50 @@ const Treatment = () => {
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
-                                        <th>name</th>
-                                        <th>service type</th>
-                                        <th>category</th>
-                                        <th>status</th>
-                                        <th>action</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Service Type</th>
+                                        <th>Category</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentEntries.map((entry, index) => (
-                                        <tr key={index}>
-                                            <td>{entry.id}</td>
-                                            <td>{entry.name}</td>
-                                            <td>{entry.serviceType}</td>
-                                            <td>{entry.category}</td>
-                                            <td>{entry.status}</td>
-                                            <td>
-                                                <button className="btn btn-success"><FaEdit /></button>
-                                                <button className="btn btn-danger"><FaTrash /></button>
+                                    {loading ? (
+                                        <tr>
+                                            <td colSpan="6" className="text-center">
+                                                <div className="spinner-border text-primary" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
                                             </td>
                                         </tr>
-                                    ))}
+                                    ) : error ? (
+                                        <tr>
+                                            <td colSpan="6" className="text-center text-danger">
+                                                {error}
+                                            </td>
+                                        </tr>
+                                    ) : currentEntries.length > 0 ? (
+                                        currentEntries.map((entry) => (
+                                            <tr key={entry.treatment.id}>
+                                                <td>{entry.treatment.id}</td>
+                                                <td>{entry.treatment.name}</td>
+                                                <td>{entry.treatment.service_type}</td>
+                                                <td>{entry.treatment.category}</td>
+                                                <td>{entry.treatment.status}</td>
+                                                <td>
+                                                    <button className="btn btn-success me-2"><FaEdit /></button>
+                                                    <button className="btn btn-danger"><FaTrash /></button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="6" className="text-center">
+                                                No treatments found
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
 
@@ -215,15 +305,15 @@ const Treatment = () => {
                                             <Row>
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
-                                                        <label htmlFor="name" className="form-label text-capitalize fw-bold small">name <sup className="text-danger">*</sup></label>
-                                                        <input type="text" className="form-control" id="name" name="name" required />
+                                                        <label htmlFor="treatment-name" className="form-label text-capitalize fw-bold small">name <sup className="text-danger">*</sup></label>
+                                                        <input type="text" className="form-control" id="treatment-name" name="name" required autoComplete="off" />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
-                                                        <label htmlFor="status" className="form-label text-capitalize fw-bold small">status <sup className="text-danger">*</sup></label>
-                                                        <select name="status" id="status" className="form-control text-capitalize" required>
+                                                        <label htmlFor="treatment-status" className="form-label text-capitalize fw-bold small">status <sup className="text-danger">*</sup></label>
+                                                        <select name="status" id="treatment-status" className="form-control text-capitalize" required>
                                                             <option value="">active</option>
                                                             <option value="1">inactive</option>
                                                         </select>
@@ -232,15 +322,15 @@ const Treatment = () => {
 
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
-                                                        <label htmlFor="serviceType" className="form-label text-capitalize fw-bold small">service type</label>
-                                                        <input type="text" className="form-control" id="serviceType" name="serviceType" required />
+                                                        <label htmlFor="treatment-service-type" className="form-label text-capitalize fw-bold small">service type</label>
+                                                        <input type="text" className="form-control" id="treatment-service-type" name="serviceType" required />
                                                     </div>
                                                 </Col>
 
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
-                                                        <label htmlFor="treatmentCategory" className="form-label text-capitalize fw-bold small">treatment category <sup className="text-danger">*</sup></label>
-                                                        <select name="treatmentCategory" id="treatmentCategory" className="form-control text-capitalize" required>
+                                                        <label htmlFor="treatment-category" className="form-label text-capitalize fw-bold small">treatment category <sup className="text-danger">*</sup></label>
+                                                        <select name="treatmentCategory" id="treatment-category" className="form-control text-capitalize" required>
                                                             <option value="">active</option>
                                                             <option value="1">inactive</option>
                                                         </select>
@@ -249,8 +339,8 @@ const Treatment = () => {
 
                                                 <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                     <div className="form-group my-2">
-                                                        <label htmlFor="description" className="form-label text-capitalize fw-bold small">Description</label>
-                                                        <textarea className="form-control" id="description" name="description" required></textarea>
+                                                        <label htmlFor="treatment-description" className="form-label text-capitalize fw-bold small">Description</label>
+                                                        <textarea className="form-control" id="treatment-description" name="description" required></textarea>
                                                     </div>
                                                 </Col>
 
@@ -261,44 +351,113 @@ const Treatment = () => {
                                                             <hr />
                                                             
                                                             <div className="pricing-and-duration-form">
-                                                            {pricingAndDurationVariants.map((variant, index) => (
-                                                                <div className="pricing-and-duration-form-row mt-2">
-                                                                    <ol className="d-flex align-items-center gap-3 ps-0 mb-0" >
-                                                                        <li className="pricing-and-duration-hours" >
-                                                                            <label htmlFor="duration" className="form-label text-capitalize fw-bold small">Duration <sup className="text-danger">*</sup></label>
-                                                                            <select name={`duration-${index}`} id={`duration-${index}` } className="form-control text-capitalize" required>
-                                                                                    {durationOptions.map((duration, index) => (
-                                                                                        <option key={index} value={duration.id} className="text-capitalize">{duration.name}</option>
+                                                                {pricingAndDurationVariants.map((variant, index) => (
+                                                                    <div key={`variant-${index}`} className="pricing-and-duration-form-row mt-2">
+                                                                        <ol className="d-flex align-items-center gap-3 ps-0 mb-0" >
+                                                                            <li className="pricing-and-duration-hours" >
+                                                                                <label htmlFor={`duration-${index}`} className="form-label text-capitalize fw-bold small">Duration <sup className="text-danger">*</sup></label>
+                                                                                <select name={`duration-${index}`} id={`duration-${index}`} className="form-control text-capitalize" required>
+                                                                                    {durationOptions.map((duration) => (
+                                                                                        <option key={duration.id} value={duration.id} className="text-capitalize">{duration.name}</option>
                                                                                     ))}
                                                                                 </select>
-                                                                        </li>
-                                                                        <li className="pricing-and-duration-type">
-                                                                            <label htmlFor={`priceType-${index}`} className="form-label text-capitalize fw-bold small">price type <sup className="text-danger">*</sup></label>   
-                                                                            <select 
-                                                                                name={`priceType-${index}`} 
-                                                                                id={`priceType-${index}`} 
-                                                                                className="form-control text-capitalize" 
-                                                                                required
-                                                                                value={variantPriceTypes[index]}
-                                                                                onChange={(e) => handlePricingAndDurationAmount(e, index)}
-                                                                                >
-                                                                                <option value="free" className="text-capitalize">free</option>
-                                                                                <option value="from" className="text-capitalize">from</option>
-                                                                                <option value="fixed" className="text-capitalize">fixed</option>
-                                                                            </select>
-                                                                        </li>
-                                                                        {variantPriceTypes[index] !== 'free' && (
-                                                                            <li className="pricing-and-duration-amount">
-                                                                                <label htmlFor={`pricingAmount-${index}`} className="form-label text-capitalize fw-bold small">price <sup className="text-danger">*</sup></label>    
-                                                                                <input type="number" className="form-control" id={`pricingAmount-${index}`} name={`pricingAmount-${index}`} required />
                                                                             </li>
-                                                                        )}
-                                                                    </ol>
-                                                                </div>
+                                                                            <li className="pricing-and-duration-type">
+                                                                                <label htmlFor={`priceType-${index}`} className="form-label text-capitalize fw-bold small">price type <sup className="text-danger">*</sup></label>   
+                                                                                <select 
+                                                                                    name={`priceType-${index}`} 
+                                                                                    id={`priceType-${index}`} 
+                                                                                    className="form-control text-capitalize" 
+                                                                                    required
+                                                                                    value={variantPriceTypes[index]}
+                                                                                    onChange={(e) => handlePricingAndDurationAmount(e, index)}
+                                                                                >
+                                                                                    <option value="free" className="text-capitalize">free</option>
+                                                                                    <option value="from" className="text-capitalize">from</option>
+                                                                                    <option value="fixed" className="text-capitalize">fixed</option>
+                                                                                </select>
+                                                                            </li>
+                                                                            {variantPriceTypes[index] !== 'free' && (
+                                                                                <li className="pricing-and-duration-amount">
+                                                                                    <label htmlFor={`pricingAmount-${index}`} className="form-label text-capitalize fw-bold small">price <sup className="text-danger">*</sup></label>    
+                                                                                    <input type="number" className="form-control" id={`pricingAmount-${index}`} name={`pricingAmount-${index}`} required />
+                                                                                </li>
+                                                                            )}
+                                                                        </ol>
+                                                                    </div>
                                                                 ))}
-                                                                <div className="pricing-and-duration-form-button">
-                                                                    <button className="btn bg-jetGreen mt-2 text-capitalize rounded-0 blackHoverEffect" onClick={addVariant}> &#43; Add variant</button>
+
+                                                                <div className="variantModal-form-button-container">
+                                                                    <button className="btn mt-3 text-capitalize rounded-0" onClick={(e) => {setVariantForm(true); e.preventDefault();}}> &#43; Add variant</button>
+
+                                                                    <div className={`variantModal-form ${variantForm ? 'd-block' : 'd-none'}`}>
+                                                                        <span className="variantModal-form-header d-flex align-items-center justify-content-between">
+                                                                            <strong className="variantModal-form-header-title">Add variant</strong>
+                                                                            <button className="variantModal-form-header-close" onClick={() => setVariantForm(false)}>
+                                                                                <FaTimes />
+                                                                            </button>
+                                                                        </span>
+                                                                        <hr />
+                                                                        <form>
+                                                                            <Row>
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-name" className="form-label text-capitalize fw-bold small">name</label>
+                                                                                        <input type="text" className="form-control" id="variant-name" name="name" required autoComplete="off" />
+                                                                                    </div>
+                                                                                </Col>
+
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-description" className="form-label text-capitalize fw-bold small">description</label>
+                                                                                        <textarea className="form-control" id="variant-description" name="description" required></textarea>
+                                                                                    </div>
+                                                                                </Col>
+
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-price" className="form-label text-capitalize fw-bold small">price</label>
+                                                                                        <input type="number" className="form-control" id="variant-price" name="price" required autoComplete="off" />
+                                                                                    </div>
+                                                                                </Col>
+
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-price-type" className="form-label text-capitalize fw-bold small">price type</label>
+                                                                                        <select name="priceType" id="variant-price-type" className="form-control text-capitalize" required>
+                                                                                            <option value="free" className="text-capitalize">free</option>
+                                                                                            <option value="from" className="text-capitalize">from</option>
+                                                                                            <option value="fixed" className="text-capitalize">fixed</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </Col>
+
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-duration" className="form-label text-capitalize fw-bold small">duration</label>
+                                                                                        <select name="duration" id="variant-duration" className="form-control text-capitalize" required>
+                                                                                            {durationOptions.map((duration) => (
+                                                                                                <option key={duration.id} value={duration.id} className="text-capitalize">{duration.name}</option>
+                                                                                            ))}
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </Col>
+                                                                                
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2 d-flex align-items-center justify-content-between">
+                                                                                        <button className="btn btn-danger text-capitalize rounded" onClick={(e) => {setVariantForm(false); e.preventDefault();}}>close</button>
+
+                                                                                        <div className="pricing-and-duration-form-button rounded">
+                                                                                            <button className="btn text-capitalize rounded" onClick={addVariant}> &#43; Add variant</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
+
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>

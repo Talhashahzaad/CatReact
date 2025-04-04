@@ -14,7 +14,7 @@ height: 50px;border-bottom-width: 1px;outline: none;margin-bottom: 16px;}
 .loginPage input[type="email"]:focus,
 .loginPage input[type="password"]:focus {outline: none; box-shadow: none;}
 
-.loginPage input[type="submit"] {background-color: var(--jetGreen);border-radius: 8px;height: 50px;text-transform: uppercase;
+.loginPage input[type="submit"] {background-color: var(--jetGreen);border-radius: 100px;height: 50px;text-transform: uppercase;
 letter-spacing: 2px;font-weight: 600;color: var(--white);border-color: var(--jetGreen);}
 
 .loginPage input[type="submit"]:hover, .loginPage input[type="submit"]:focus {background-color: var(--black); color: var(--white)}

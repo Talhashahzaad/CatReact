@@ -1,0 +1,14 @@
+.payment-failed-container svg {
+    width: 200px;
+    max-width: 200px;
+    height: 200px;
+}
+.payment-failed-container h1 {
+    color: #f44336;
+}
+
+@media (max-width: 767px) {
+    .payment-failed-container svg {
+        max-width: 175px;
+    }
+}

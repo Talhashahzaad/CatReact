@@ -289,10 +289,6 @@ const ProfessionalAffiliationsCertificates = () => {
                 }
             });
 
-            // Store raw response for debugging
-            //setRawApiResponse(response.data);
-            //console.log("Raw API Response:", JSON.stringify(response.data));
-            
             // Handle different possible API response formats
             if (response.data) {
                 if (Array.isArray(response.data)) {
@@ -300,22 +296,25 @@ const ProfessionalAffiliationsCertificates = () => {
                     setCertificates(response.data.slice(0, entriesPerPage));
                     setTotalPages(Math.ceil(response.data.length / entriesPerPage));
                     setTotalEntries(response.data.length);
-                    //console.log("Certificates data (array format):", response.data);
-                } else if (response.data.data && Array.isArray(response.data.data)) {
+                } 
+                
+                else if (response.data.data && Array.isArray(response.data.data)) {
                     // If response.data.data is an array (standard format)
                     setCertificates(response.data.data);
                     setTotalPages(response.data.meta?.total_pages || response.data.last_page || Math.ceil(response.data.total / entriesPerPage) || 1);
                     setTotalEntries(response.data.meta?.total_entries || response.data.total || response.data.data.length);
-                    //console.log("Certificates data (standard format):", response.data.data);
-                } else if (typeof response.data === 'object') {
+                } 
+                
+                else if (typeof response.data === 'object') {
                     // If it's some other object format, try to extract data
                     const possibleDataArray = Object.values(response.data).find(val => Array.isArray(val));
                     if (possibleDataArray) {
                         setCertificates(possibleDataArray.slice(0, entriesPerPage));
                         setTotalPages(Math.ceil(possibleDataArray.length / entriesPerPage));
                         setTotalEntries(possibleDataArray.length);
-                        //console.log("Certificates data (extracted from object):", possibleDataArray);
-                    } else {
+                    } 
+                    
+                    else {
                         // If we can't find an array, try to convert the object to an array
                         const dataArray = Object.entries(response.data).map(([key, value]) => {
                             if (typeof value === 'object') {
@@ -328,8 +327,9 @@ const ProfessionalAffiliationsCertificates = () => {
                             setCertificates(dataArray.slice(0, entriesPerPage));
                             setTotalPages(Math.ceil(dataArray.length / entriesPerPage));
                             setTotalEntries(dataArray.length);
-                            //console.log("Certificates data (constructed from object):", dataArray);
-                        } else {
+                        } 
+                        
+                        else {
                             throw new Error("Could not extract certificate data from response");
                         }
                     }
@@ -342,10 +342,6 @@ const ProfessionalAffiliationsCertificates = () => {
         } catch (error) {
             //console.error("Fetch error:", error);
             if (error.response) {
-                //console.error("Error response data:", error.response.data);
-                //console.error("Error response status:", error.response.status);
-                //console.error("Error response headers:", error.response.headers);
-                
                 // Store raw error response for debugging
                 setRawApiResponse(error.response.data);
                 

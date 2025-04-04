@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./MyProfile.css";
-import { data } from "react-router-dom";
+//import { data } from "react-router-dom";
 
 const MyProfile = () => {
     const [profilePicture, setProfilePicture] = useState(defaultImage);

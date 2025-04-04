@@ -35,7 +35,8 @@ import FeaturedListing from './pages/FeaturedListing/FeaturedSearchListing';
 import ProtectedRoute from './component/ProtectedRoute';
 import ServiceCategories from './pages/ServiceCategories/ServiceCategories';
 import Checkout from './pages/Checkout/Checkout';
-
+import PaymentSuccess from './pages/PaymentSuccess/PaymentSuccess';
+import PaymentFailed from './pages/PaymentFailed/PaymentFailed';
 
 function App () {
 
@@ -113,6 +114,8 @@ function App () {
           <Route path="/featured-search-listing" element={<FeaturedListing />} />
           <Route path="/service-categories" element={<ServiceCategories/>} />
           <Route path="/checkout" element={<Checkout/>} />
+          <Route path="/payment-success" element={<PaymentSuccess/>} />
+          <Route path="/payment-failed" element={<PaymentFailed/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

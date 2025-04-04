@@ -117,15 +117,16 @@ const ForBusiness = () => {
                                         <div className="left-side-subscription-plan-section text-center">
                                             <strong>{subscriptionPlans[0].name}</strong>
                                             <h3 className="text-uppercase display-2 fw-bold">{subscriptionPlans[0].type}</h3>
-                                            <p>{subscriptionPlans[0].name}</p>
                                             <p>Check a Treatment Online Store front </p>
-                                            <Link to="/checkout" state={{ planId: subscriptionPlans[0].id }} className="btn form-control">checkout</Link>
+                                            <Link to="/checkout" state={{ planId: subscriptionPlans[0].id }} className="btn form-control"
+                                            onClick={() => {
+                                                window.scrollTo(0, 0);
+                                            }}>checkout</Link>
                                         </div>
 
                                         <div className="middle-side-subscription-plan-section text-center">
                                             <strong>{subscriptionPlans[2].name}</strong>
                                             <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>{subscriptionPlans[2].price}<small>/m</small></h3>
-                                            <p>{subscriptionPlans[2].name}</p>
                                             <p>Check a Treatment Online Store front </p>
                                             <p>CaT Pro Social Media <br/><b>(Comming Soon)</b></p>
                                             <p>Priority listing in search results</p>
@@ -133,16 +134,21 @@ const ForBusiness = () => {
                                             <p>Unlimited Personal Business Live Chat for Client Enquiries</p>
                                             <p>Multiple Locations</p>
                                             <p>Opportunity to Feature on Beyond the Treatment</p>
-                                            <Link to="/checkout" state={{ planId: subscriptionPlans[2].id }} className="btn form-control">checkout</Link>
+                                            <Link to="/checkout" state={{ planId: subscriptionPlans[2].id }} className="btn form-control"
+                                            onClick={() => {
+                                                window.scrollTo(0, 0);
+                                            }}>checkout</Link>
                                         </div>
 
                                         <div className="right-side-subscription-plan-section text-center">
                                             <strong>{subscriptionPlans[1].name}</strong>
                                             <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>{subscriptionPlans[1].price}<small>/m</small></h3>
-                                            <p>{subscriptionPlans[1].description}</p>
                                             <p>Check a Treatment Online Store front </p>
                                             <p>CaT Pro Social Media <br/><b>(Comming Soon)</b></p>
-                                            <Link to="/checkout" state={{ planId: subscriptionPlans[1].id }} className="btn form-control">checkout</Link>
+                                            <Link to="/checkout" state={{ planId: subscriptionPlans[1].id }} className="btn form-control"
+                                            onClick={() => {
+                                                window.scrollTo(0, 0);
+                                            }}>checkout</Link>
                                         </div>
                                     </div>
                                 )}

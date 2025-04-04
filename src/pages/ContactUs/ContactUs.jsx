@@ -126,7 +126,7 @@ const ContactUs = () => {
                                             <img src={envelopeIconTiny} alt="" title="" />
                                         </span>
                                         <span className="tinyIconContent">
-                                            <label>E-mail</label>
+                                            <label htmlFor="email" name="email">Email</label>
                                             <a href="mailto:support@checkatreatment.com">support@checkatreatment.com</a>
                                         </span>
                                     </li>
@@ -136,7 +136,7 @@ const ContactUs = () => {
                                             <img src={phoneIconTiny} alt="" title="" />
                                         </span>
                                         <span className="tinyIconContent">
-                                            <label>Phone Number</label>
+                                            <label htmlFor="phone" name="phone">Phone Number</label>
                                             <a href="tel:1800000000000">1800-000-000-000</a>
                                         </span>
                                     </li>
@@ -161,6 +161,7 @@ const ContactUs = () => {
                                                 required="required" 
                                                 value={formData.name}
                                                 onChange={handleChange}
+                                                autoComplete="off"
                                             />
                                         </div>
                                     </Col>
@@ -177,6 +178,7 @@ const ContactUs = () => {
                                                 required="required" 
                                                 value={formData.email}
                                                 onChange={handleChange}
+                                                autoComplete="off"
                                             />
                                         </div>
                                     </Col>
@@ -195,6 +197,7 @@ const ContactUs = () => {
                                                 required="required" 
                                                 value={formData.phone}
                                                 onChange={handleChange}
+                                                autoComplete="off"
                                             />
                                         </div>
                                     </Col>
@@ -210,6 +213,7 @@ const ContactUs = () => {
                                                 value={formData.message}
                                                 onChange={handleChange}
                                                 required="required"
+                                                autoComplete="off"
                                             ></textarea>
                                         </div>
                                     </Col>
