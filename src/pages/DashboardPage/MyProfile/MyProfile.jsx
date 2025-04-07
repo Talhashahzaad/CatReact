@@ -41,6 +41,7 @@ const MyProfile = () => {
                         }
                     }
                 );
+                
                 if (response.data.success) {
                     toast.success('Profile picture updated successfully');
                     // Update the profile info state with new avatar
@@ -231,13 +232,14 @@ const handleUpdateProfile = async (e) => {
                 'Content-Type': 'application/json'
             }
         });
-
-            // if (response.data && response.data.user) {
-            //     setProfileInfo(response.data);
-            // }
+        
+        // if (response.data && response.data.user) {
+        //     setProfileInfo(response.data);
+        // }
 
         } catch (error) {
             notifyProfileUpdateError();
+            
         } finally {
             isSubmitting.current = false;
         }
@@ -358,7 +360,7 @@ const handleUpdateProfile = async (e) => {
                                                                 <h5 className="dashboard-my-profile-body-myProfile-picture-row-text-title-name mb-0 text-capitalize default-font fw-bold">
                                                                     {profileInfo?.user?.name}
                                                                 </h5>
-                                                                <p className="dashboard-my-profile-body-myProfile-picture-row-text-title-description mb-0 text-lowercase">
+                                                                <p className="dashboard-my-profile-body-myProfile-picture-row-text-title-description mb-0 text-capitalize">
                                                                     {profileInfo?.user?.role}
                                                                 </p>
                                                             </>

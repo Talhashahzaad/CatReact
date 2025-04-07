@@ -11,9 +11,6 @@ import treatmentDashIcon from "../../../images/treatment-dashIcon.svg";
 import packageDashIcon from "../../../images/package-dashIcon.svg";
 import affilicationDashIcon from "../../../images/affilication-dashIcon.svg";
 import qualificationDashIcon from "../../../images/qualification-dashIcon.svg";
-
-
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Dashboard.css";
@@ -24,6 +21,7 @@ import axios from "axios";
 const Sidebar = () => {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+    const [roleProfile, setRoleProfile] = useState({ role: null });
     
     
     const handleClickOutside = (event) => {
@@ -64,9 +62,12 @@ const Sidebar = () => {
                 }
             });
             setProfileInfo(response.data);
+            setRoleProfile(response.data.role);
+            console.log(response.data);
         };
         fetchProfileInfo();
     }, []);
+
     return (
             <>
                 <ToastContainer position="top-right" autoClose={3000} />
@@ -100,6 +101,7 @@ const Sidebar = () => {
                                 </Link>
                             </li>
 
+                            {roleProfile?.role === 'admin' && (
                             <li>
                                 <Link to="#" className="d-flex justify-content-flex-start align-items-center position-relative" onClick={handleDropdownToggle}>
                                     <span className="item-icon">
@@ -148,7 +150,9 @@ const Sidebar = () => {
                                     </Link>
                                 </div>
                             </li>
+                            )}
 
+                            {roleProfile?.role === 'user' && (
                             <li>
                                 <Link to="/dashboard/order" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>
                                     <span className="item-icon">
@@ -157,6 +161,7 @@ const Sidebar = () => {
                                     <span className="item-text">order</span>
                                 </Link>
                             </li>
+                            )}
                         </ul>
                     </div>
 

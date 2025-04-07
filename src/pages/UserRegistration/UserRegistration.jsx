@@ -10,7 +10,7 @@ import eyeClose from "../LoginPage/eyeClose.svg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-
+import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
 
 const UserRegistration = () => {
     const navigate = useNavigate();
@@ -346,4 +346,4 @@ const UserRegistration = () => {
     );
 };
 
-export default UserRegistration;
+export default ProtectedAuthRoute(UserRegistration);

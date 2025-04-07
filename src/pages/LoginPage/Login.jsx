@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Added useNavigate for redirection
+import { Link, useNavigate } from "react-router-dom"; 
 import { Container, Row, Col } from "react-bootstrap";
 import "./Login.css";
 import eyeOpen from "../LoginPage/eyeOpen.svg";
@@ -10,8 +10,9 @@ import userLoginPicture from "../../images/userLoginPicture.webp";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
 
-function Login() {
+const Login = ({ children }) => {
     const [showPassword, setShowPassword] = React.useState(false);
     const [email, setEmail] = React.useState(""); // State for email
     const [password, setPassword] = React.useState(""); // State for password
@@ -42,7 +43,6 @@ function Login() {
                 password
             });
             setData(response.data);
-            //console.log(response.data);
 
             if (response.status === 200) {
                 localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -71,6 +71,7 @@ function Login() {
                 setErrorMessage("Login failed. Please try again.");
             }
         }
+        return children;
     };
 
     return (
@@ -187,4 +188,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default ProtectedAuthRoute(Login);

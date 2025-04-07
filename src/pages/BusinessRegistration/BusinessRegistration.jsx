@@ -10,6 +10,7 @@ import eyeClose from "../LoginPage/eyeClose.svg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
 
 const BusinessRegistration = () => {
     const navigate = useNavigate();
@@ -510,4 +511,4 @@ const BusinessRegistration = () => {
     );
 };
 
-export default BusinessRegistration;
+export default ProtectedAuthRoute(BusinessRegistration);

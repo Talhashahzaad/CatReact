@@ -183,7 +183,7 @@ const Treatment = () => {
                             </div>
                         </div>
 
-                        <div className="dashboard-content-table">
+                        <div className="dashboard-content-table" style={{display: editableForm ? 'none' : 'block'}}>
                             <Row>
                                 <div className="d-flex justify-content-between align-items-center listing-header">
                                     <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">Treatment</h1>
@@ -249,7 +249,10 @@ const Treatment = () => {
                                         <td>Category 1</td>
                                         <td>Status 1</td>
                                         <td>
-                                            <button className="btn btn-success me-2" onClick={() => setEditableForm(true)}>
+                                            <button className="btn btn-success me-2" onClick={() => {
+                                                document.querySelector('.dashboard-content-table').style.display = 'none';
+                                                document.querySelector('.sidebar-editable-form').style.display = 'block';
+                                            }}>
                                                 <FaEdit />
                                             </button>
                                             <button className="btn btn-danger"><FaTrash /></button>
@@ -424,13 +427,13 @@ const Treatment = () => {
                                                                                     <input type="number" className="form-control" id={`pricingAmount-${index}`} name={`pricingAmount-${index}`} required />
                                                                                 </li>
                                                                             )}
-
                                                                             {index > 0 && (
                                                                                 <li className="remove-pricing-and-duration">
                                                                                     <label className="visually-hidden form-label text-capitalize fw-bold small">remove</label>
                                                                                     <button className="btn btn-danger text-capitalize rounded" onClick={(e) => {setPricingAndDurationVariants(pricingAndDurationVariants.filter((_, i) => i !== index)); e.preventDefault();}}>remove</button>
                                                                                 </li>
                                                                             )}
+                                                                            
                                                                         </ol>
                                                                     </div>
                                                                 ))}
@@ -525,7 +528,7 @@ const Treatment = () => {
 
 
                             {/* sidebar editable form */}
-                            <div className={`sidebar-editable-form ${editableForm ? 'd-block' : 'd-none'}`}>
+                            <div className="sidebar-editable-form" style={{display: editableForm ? 'block' : 'none'}}>
                                 <div className="dashboard-all-listing-create-form">
                                     <Row>
                                         <div className="d-flex justify-content-flex-start align-items-center listing-header">
@@ -642,12 +645,10 @@ const Treatment = () => {
                                                                                 </li>
                                                                             )}
 
-                                                                            {index > 0 && (
-                                                                                <li className="remove-pricing-and-duration">
-                                                                                    <label className="visually-hidden form-label text-capitalize fw-bold small">remove</label>
-                                                                                    <button className="btn btn-danger text-capitalize rounded" onClick={(e) => {setPricingAndDurationVariants(pricingAndDurationVariants.filter((_, i) => i !== index)); e.preventDefault();}}>remove</button>
-                                                                                </li>
-                                                                            )}
+                                                                            <li className="remove-pricing-and-duration">
+                                                                                <label className="visually-hidden form-label text-capitalize fw-bold small">remove</label>
+                                                                                <button className="btn btn-danger text-capitalize rounded" onClick={(e) => {setPricingAndDurationVariants(pricingAndDurationVariants.filter((_, i) => i !== index)); e.preventDefault();}}>remove</button>
+                                                                            </li>
                                                                         </ol>
                                                                     </div>
                                                                 ))}
@@ -728,7 +729,7 @@ const Treatment = () => {
 
                                                 <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
                                                     <div className="form-group my-2">
-                                                        <input type="submit" className="text-white rounded-0 bg-jetGreen border-0 py-2 px-3" value="Create" onClick={updateTreatment} />
+                                                        <input type="submit" className="text-white rounded-0 bg-jetGreen border-0 py-2 px-3 text-capitalize" value="update" onClick={updateTreatment} />
                                                     </div>
                                                 </Col>
                                             </Row>

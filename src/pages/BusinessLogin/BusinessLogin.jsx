@@ -10,6 +10,7 @@ import businessLoginBanner from "../../images/businessLoginBanner.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
 
 
 function Login() {
@@ -139,4 +140,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default ProtectedAuthRoute(Login);
