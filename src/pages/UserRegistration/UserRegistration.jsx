@@ -98,11 +98,13 @@ const UserRegistration = () => {
 
         try {
             const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
             const response = await axios.post('http://3.8.140.227:8000/api/user-signup', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'role': role
                 }
             });
             console.log(response);

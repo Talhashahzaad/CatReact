@@ -28,9 +28,16 @@ function Login() {
         e.preventDefault(); // Prevent default form submission
         setErrorMessage(""); // Clear previous error messages
         try {
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
             const response = await axios.post("http://3.8.140.227:8000/api/login", {
                 email,
                 password
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'role': role
+                }
             });
             setSuccessMessage(response.data.message);
             successNotify();

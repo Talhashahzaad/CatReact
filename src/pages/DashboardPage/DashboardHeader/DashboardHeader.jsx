@@ -23,11 +23,13 @@ const DashboardHeader = () => {
     const handleLogout = async () => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
+            const role = localStorage.getItem('role');
             const response = await axios.post("http://3.8.140.227:8000/api/logout", {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'role': role
                 }
             });
 
@@ -40,7 +42,7 @@ const DashboardHeader = () => {
                 successNotify();
                 setTimeout(() => {
                     navigate("/login");
-                }, 3000);
+                }, 500);
             }
         } catch (error) {
             console.error("Logout error:", error);
@@ -63,9 +65,11 @@ const DashboardHeader = () => {
     const fetchProfileInfo = async () => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
+            const role = localStorage.getItem('role');
             const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
+                    'role': role,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }

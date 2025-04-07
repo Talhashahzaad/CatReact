@@ -573,15 +573,15 @@ const ProfessionalAffiliationsCertificates = () => {
                                 <div>
                                     <button 
                                         onClick={() => setCurrentPage(currentPage - 1)} 
-                                        disabled={currentPage === 1 || searchTerm !== ""} 
+                                        disabled={currentPage === 1} 
                                         className="btn btn-previous"
                                     >
                                         Previous
                                     </button>
-                                    <span> Page {currentPage} of {searchTerm ? 1 : (totalPages || 1)} </span>
+                                    <span> Page {currentPage} of {totalPages || 1} </span>
                                     <button 
                                         onClick={() => setCurrentPage(currentPage + 1)} 
-                                        disabled={currentPage === totalPages || totalPages === 0 || searchTerm !== ""} 
+                                        disabled={currentPage >= totalPages} 
                                         className="btn btn-next"
                                     >
                                         Next

@@ -44,8 +44,9 @@ const Login = ({ children }) => {
             });
             setData(response.data);
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 localStorage.setItem("token", JSON.stringify(response.data.token));
+                localStorage.setItem("role", JSON.stringify(response.data.role));
                 if (rememberMe) {
                     localStorage.setItem('rememberedUser', JSON.stringify({
                         rememberedEmail: email,
@@ -57,7 +58,7 @@ const Login = ({ children }) => {
                 successNotify();
                 setTimeout(() => {
                     navigate("/dashboard");
-                }, 3000);
+                }, 500);
             } else {
                 setErrorMessage(response.data.message || "Login failed. Please try again.");
             }
@@ -173,7 +174,7 @@ const Login = ({ children }) => {
             
             <ToastContainer 
                 position="top-right"
-                autoClose={3000}
+                autoClose={500}
                 hideProgressBar={false}
                 newestOnTop={true}
                 closeOnClick
