@@ -8,3 +8,10 @@
 .variantModal-form-header-close {background-color: #cb4040;border-color: #cb4040;padding: 0;width: 30px;height: 30px;position: absolute;
 top: 12px;right: 8px;border-radius: 12px;cursor: pointer;transition: all linear .4s;}
 .variantModal-form-header-close:hover {transition: all linear .4s;transform: scale(1.1, 1.1);}
+
+.variantModal-form-button-container button.btn {background-color: var(--black);color: var(--white);}
+.variantModal-form-button-container button.btn:hover,
+.variantModal-form-button-container button.btn:focus {background-color: var(--jetGreen);color: var(--white);}
+.remove-pricing-and-duration button.btn.btn-danger {margin-top: 32px;border-radius: 0 !important;height: 44px;}
+
+.pricing-and-duration-service-name strong.d-block {line-height: 78px;padding-top: 30px;}

@@ -17,54 +17,56 @@ const Treatment = () => {
     const [error, setError] = useState(null);
     const [totalEntries, setTotalEntries] = useState(0);
     const [variantForm, setVariantForm] = useState(false);
+    const [treatmentName, setTreatmentName] = useState("");
+    const [editableForm, setEditableForm] = useState(false);
 
     // we are getting the treatment list from the backend
-    const fetchingTreatmentList = async () => {
-        setLoading(true);
-        setError(null);
+    // const fetchingTreatmentList = async () => {
+    //     setLoading(true);
+    //     setError(null);
 
-        try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                setError("No authentication token found");
-                setLoading(false);
-                return;
-            }
+    //     try {
+    //         const token = localStorage.getItem("token");
+    //         if (!token) {
+    //             setError("No authentication token found");
+    //             setLoading(false);
+    //             return;
+    //         }
 
-            const parsedToken = JSON.parse(token);
-            const response = await axios.get(`http://3.8.140.227:8000/api/treatment`,
-                {
-                    params: {
-                        page: currentPage,
-                        per_page: entriesPerPage
-                    },
-                    headers: {
-                        'Authorization': `Bearer ${parsedToken}`,
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
+    //         const parsedToken = JSON.parse(token);
+    //         const response = await axios.get(`http://3.8.140.227:8000/api/treatment`,
+    //             {
+    //                 params: {
+    //                     page: currentPage,
+    //                     per_page: entriesPerPage
+    //                 },
+    //                 headers: {
+    //                     'Authorization': `Bearer ${parsedToken}`,
+    //                     'Accept': 'application/json',
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             }
+    //         );
             
-            if (response.data && response.status === 200) {
-                const treatmentsArray = Array.isArray(response.data.data) ? response.data.data : [];
-                setTreatmentListing(treatmentsArray);
-                setEntries(treatmentsArray);
-                setTotalEntries(response.data.total || treatmentsArray.length);
-            } else {
-                setError(response.data.message || "Failed to fetch treatments");
-            }
-        } catch (error) {
-            console.error("Error fetching treatments:", error);
-            setError(error.response?.data?.message || "Failed to fetch treatments");
-        } finally {
-            setLoading(false);
-        }
-    }
+    //         if (response.data && response.status === 200) {
+    //             const treatmentsArray = Array.isArray(response.data.data) ? response.data.data : [];
+    //             setTreatmentListing(treatmentsArray);
+    //             setEntries(treatmentsArray);
+    //             setTotalEntries(response.data.total || treatmentsArray.length);
+    //         } else {
+    //             setError(response.data.message || "Failed to fetch treatments");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error fetching treatments:", error);
+    //         setError(error.response?.data?.message || "Failed to fetch treatments");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // }
 
-    useEffect(() => {
-        fetchingTreatmentList();
-    }, [currentPage, entriesPerPage]);
+    // useEffect(() => {
+    //     fetchingTreatmentList();
+    // }, [currentPage, entriesPerPage]);
     // close getting the treatment list from the backend
     
     const handleEntriesPerPageChange = (e) => {
@@ -108,7 +110,11 @@ const Treatment = () => {
         console.log('Form submitted:', { pricingAndDurationVariants, variantPriceTypes });
       };
 
-      const [durationOptions, setDurationOptions] = useState([
+      const handleTreatmentNameChange = (e) => {
+        setTreatmentName(e.target.value);
+    };
+
+    const [durationOptions, setDurationOptions] = useState([
         { id: 0, name: "5 minutes" },
         { id: 1, name: "10 minutes" },
         { id: 2, name: "15 minutes" },
@@ -157,7 +163,10 @@ const Treatment = () => {
         { id: 45, name: "12 hours" },
     ]);
 
-    
+    const updateTreatment = (e) => {
+        e.preventDefault();
+        console.log('Form submitted:', { pricingAndDurationVariants, variantPriceTypes });
+    };
 
     return (
         <>
@@ -232,6 +241,23 @@ const Treatment = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Treatment 1</td>
+                                        <td>Service Type 1</td>
+                                        <td>Category 1</td>
+                                        <td>Status 1</td>
+                                        <td>
+                                            <button className="btn btn-success me-2" onClick={() => setEditableForm(true)}>
+                                                <FaEdit />
+                                            </button>
+                                            <button className="btn btn-danger"><FaTrash /></button>
+                                        </td>
+                                    </tr>
+                                        
+                                </tbody>
+                                {/* <tbody>
                                     {loading ? (
                                         <tr>
                                             <td colSpan="6" className="text-center">
@@ -267,7 +293,7 @@ const Treatment = () => {
                                             </td>
                                         </tr>
                                     )}
-                                </tbody>
+                                </tbody> */}
                             </table>
 
                             <div className="d-flex justify-content-between align-items-center">
@@ -306,7 +332,16 @@ const Treatment = () => {
                                                 <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                     <div className="form-group my-2">
                                                         <label htmlFor="treatment-name" className="form-label text-capitalize fw-bold small">name <sup className="text-danger">*</sup></label>
-                                                        <input type="text" className="form-control" id="treatment-name" name="name" required autoComplete="off" />
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="treatment-name" 
+                                                            name="name" 
+                                                            required 
+                                                            autoComplete="off"
+                                                            value={treatmentName}
+                                                            onChange={handleTreatmentNameChange}
+                                                        />
                                                     </div>
                                                 </Col>
 
@@ -354,6 +389,12 @@ const Treatment = () => {
                                                                 {pricingAndDurationVariants.map((variant, index) => (
                                                                     <div key={`variant-${index}`} className="pricing-and-duration-form-row mt-2">
                                                                         <ol className="d-flex align-items-center gap-3 ps-0 mb-0" >
+                                                                            <li className="pricing-and-duration-service-name">
+                                                                                <label className="visually-hidden form-label text-capitalize fw-bold small">service name</label>
+                                                                                <strong className="d-block text-capitalize">
+                                                                                    {treatmentName || 'service'}
+                                                                                </strong>
+                                                                            </li>
                                                                             <li className="pricing-and-duration-hours" >
                                                                                 <label htmlFor={`duration-${index}`} className="form-label text-capitalize fw-bold small">Duration <sup className="text-danger">*</sup></label>
                                                                                 <select name={`duration-${index}`} id={`duration-${index}`} className="form-control text-capitalize" required>
@@ -381,6 +422,13 @@ const Treatment = () => {
                                                                                 <li className="pricing-and-duration-amount">
                                                                                     <label htmlFor={`pricingAmount-${index}`} className="form-label text-capitalize fw-bold small">price <sup className="text-danger">*</sup></label>    
                                                                                     <input type="number" className="form-control" id={`pricingAmount-${index}`} name={`pricingAmount-${index}`} required />
+                                                                                </li>
+                                                                            )}
+
+                                                                            {index > 0 && (
+                                                                                <li className="remove-pricing-and-duration">
+                                                                                    <label className="visually-hidden form-label text-capitalize fw-bold small">remove</label>
+                                                                                    <button className="btn btn-danger text-capitalize rounded" onClick={(e) => {setPricingAndDurationVariants(pricingAndDurationVariants.filter((_, i) => i !== index)); e.preventDefault();}}>remove</button>
                                                                                 </li>
                                                                             )}
                                                                         </ol>
@@ -448,7 +496,7 @@ const Treatment = () => {
                                                                                         <button className="btn btn-danger text-capitalize rounded" onClick={(e) => {setVariantForm(false); e.preventDefault();}}>close</button>
 
                                                                                         <div className="pricing-and-duration-form-button rounded">
-                                                                                            <button className="btn text-capitalize rounded" onClick={addVariant}> &#43; Add variant</button>
+                                                                                            <button className="btn text-capitalize rounded" onClick={addVariant}> Save variant</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </Col>
@@ -456,8 +504,6 @@ const Treatment = () => {
                                                                         </form>
                                                                     </div>
                                                                 </div>
-
-                                                                
                                                             </div>
                                                         </div>
                                                     </div>
@@ -473,6 +519,225 @@ const Treatment = () => {
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
+                            {/* sidebar editable form */}
+                            <div className={`sidebar-editable-form ${editableForm ? 'd-block' : 'd-none'}`}>
+                                <div className="dashboard-all-listing-create-form">
+                                    <Row>
+                                        <div className="d-flex justify-content-flex-start align-items-center listing-header">
+                                            <button 
+                                                className="btn bg-jetGreen all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
+                                                onClick={() => {
+                                                    document.querySelector('.sidebar-editable-form').style.display = 'none';
+                                                    document.querySelector('.dashboard-content-table').style.display = 'block';
+                                                }}
+                                            >
+                                                <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back 
+                                            </button>
+                                            <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">update treatment</h2>
+                                        </div>
+                                    </Row>
+                                    <hr />
+
+                                    <div className="dashboard-all-listing-create-form-body">
+                                        <form onSubmit={updateTreatment}>
+                                            <Row>
+                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                    <div className="form-group my-2">
+                                                        <label htmlFor="treatment-name" className="form-label text-capitalize fw-bold small">name <sup className="text-danger">*</sup></label>
+                                                        <input 
+                                                            type="text" 
+                                                            className="form-control" 
+                                                            id="treatment-name" 
+                                                            name="name" 
+                                                            required 
+                                                            autoComplete="off"
+                                                            value={treatmentName}
+                                                            onChange={handleTreatmentNameChange}
+                                                        />
+                                                    </div>
+                                                </Col>
+
+                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                    <div className="form-group my-2">
+                                                        <label htmlFor="treatment-status" className="form-label text-capitalize fw-bold small">status <sup className="text-danger">*</sup></label>
+                                                        <select name="status" id="treatment-status" className="form-control text-capitalize" required>
+                                                            <option value="">active</option>
+                                                            <option value="1">inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </Col>
+
+                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                    <div className="form-group my-2">
+                                                        <label htmlFor="treatment-service-type" className="form-label text-capitalize fw-bold small">service type</label>
+                                                        <input type="text" className="form-control" id="treatment-service-type" name="serviceType" required />
+                                                    </div>
+                                                </Col>
+
+                                                <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                    <div className="form-group my-2">
+                                                        <label htmlFor="treatment-category" className="form-label text-capitalize fw-bold small">treatment category <sup className="text-danger">*</sup></label>
+                                                        <select name="treatmentCategory" id="treatment-category" className="form-control text-capitalize" required>
+                                                            <option value="">active</option>
+                                                            <option value="1">inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </Col>
+
+                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                    <div className="form-group my-2">
+                                                        <label htmlFor="treatment-description" className="form-label text-capitalize fw-bold small">Description</label>
+                                                        <textarea className="form-control" id="treatment-description" name="description" required></textarea>
+                                                    </div>
+                                                </Col>
+
+                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                    <div className="form-group my-2">
+                                                        <div className="pricing-and-duration">
+                                                            <strong className="d-block">Pricing and duration</strong>
+                                                            <hr />
+                                                            
+                                                            <div className="pricing-and-duration-form">
+                                                                {pricingAndDurationVariants.map((variant, index) => (
+                                                                    <div key={`variant-${index}`} className="pricing-and-duration-form-row mt-2">
+                                                                        <ol className="d-flex align-items-center gap-3 ps-0 mb-0" >
+                                                                            <li className="pricing-and-duration-service-name">
+                                                                                <label className="visually-hidden form-label text-capitalize fw-bold small">service name</label>
+                                                                                <strong className="d-block text-capitalize">
+                                                                                    {treatmentName || 'service'}
+                                                                                </strong>
+                                                                            </li>
+                                                                            <li className="pricing-and-duration-hours" >
+                                                                                <label htmlFor={`duration-${index}`} className="form-label text-capitalize fw-bold small">Duration <sup className="text-danger">*</sup></label>
+                                                                                <select name={`duration-${index}`} id={`duration-${index}`} className="form-control text-capitalize" required>
+                                                                                    {durationOptions.map((duration) => (
+                                                                                        <option key={duration.id} value={duration.id} className="text-capitalize">{duration.name}</option>
+                                                                                    ))}
+                                                                                </select>
+                                                                            </li>
+                                                                            <li className="pricing-and-duration-type">
+                                                                                <label htmlFor={`priceType-${index}`} className="form-label text-capitalize fw-bold small">price type <sup className="text-danger">*</sup></label>   
+                                                                                <select 
+                                                                                    name={`priceType-${index}`} 
+                                                                                    id={`priceType-${index}`} 
+                                                                                    className="form-control text-capitalize" 
+                                                                                    required
+                                                                                    value={variantPriceTypes[index]}
+                                                                                    onChange={(e) => handlePricingAndDurationAmount(e, index)}
+                                                                                >
+                                                                                    <option value="free" className="text-capitalize">free</option>
+                                                                                    <option value="from" className="text-capitalize">from</option>
+                                                                                    <option value="fixed" className="text-capitalize">fixed</option>
+                                                                                </select>
+                                                                            </li>
+                                                                            {variantPriceTypes[index] !== 'free' && (
+                                                                                <li className="pricing-and-duration-amount">
+                                                                                    <label htmlFor={`pricingAmount-${index}`} className="form-label text-capitalize fw-bold small">price <sup className="text-danger">*</sup></label>    
+                                                                                    <input type="number" className="form-control" id={`pricingAmount-${index}`} name={`pricingAmount-${index}`} required />
+                                                                                </li>
+                                                                            )}
+
+                                                                            {index > 0 && (
+                                                                                <li className="remove-pricing-and-duration">
+                                                                                    <label className="visually-hidden form-label text-capitalize fw-bold small">remove</label>
+                                                                                    <button className="btn btn-danger text-capitalize rounded" onClick={(e) => {setPricingAndDurationVariants(pricingAndDurationVariants.filter((_, i) => i !== index)); e.preventDefault();}}>remove</button>
+                                                                                </li>
+                                                                            )}
+                                                                        </ol>
+                                                                    </div>
+                                                                ))}
+
+                                                                <div className="variantModal-form-button-container">
+                                                                    <button className="btn mt-3 text-capitalize rounded-0" onClick={(e) => {setVariantForm(true); e.preventDefault();}}> &#43; Add variant</button>
+
+                                                                    <div className={`variantModal-form ${variantForm ? 'd-block' : 'd-none'}`}>
+                                                                        <span className="variantModal-form-header d-flex align-items-center justify-content-between">
+                                                                            <strong className="variantModal-form-header-title">Add variant</strong>
+                                                                            <button className="variantModal-form-header-close" onClick={() => setVariantForm(false)}>
+                                                                                <FaTimes />
+                                                                            </button>
+                                                                        </span>
+                                                                        <hr />
+                                                                        <form>
+                                                                            <Row>
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-name" className="form-label text-capitalize fw-bold small">name</label>
+                                                                                        <input type="text" className="form-control" id="variant-name" name="name" required autoComplete="off" />
+                                                                                    </div>
+                                                                                </Col>
+
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-description" className="form-label text-capitalize fw-bold small">description</label>
+                                                                                        <textarea className="form-control" id="variant-description" name="description" required></textarea>
+                                                                                    </div>
+                                                                                </Col>
+
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-price" className="form-label text-capitalize fw-bold small">price</label>
+                                                                                        <input type="number" className="form-control" id="variant-price" name="price" required autoComplete="off" />
+                                                                                    </div>
+                                                                                </Col>
+
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-price-type" className="form-label text-capitalize fw-bold small">price type</label>
+                                                                                        <select name="priceType" id="variant-price-type" className="form-control text-capitalize" required>
+                                                                                            <option value="free" className="text-capitalize">free</option>
+                                                                                            <option value="from" className="text-capitalize">from</option>
+                                                                                            <option value="fixed" className="text-capitalize">fixed</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </Col>
+
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2">
+                                                                                        <label htmlFor="variant-duration" className="form-label text-capitalize fw-bold small">duration</label>
+                                                                                        <select name="duration" id="variant-duration" className="form-control text-capitalize" required>
+                                                                                            {durationOptions.map((duration) => (
+                                                                                                <option key={duration.id} value={duration.id} className="text-capitalize">{duration.name}</option>
+                                                                                            ))}
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </Col>
+                                                                                
+                                                                                <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                                                    <div className="form-group my-2 d-flex align-items-center justify-content-between">
+                                                                                        <button className="btn btn-danger text-capitalize rounded" onClick={(e) => {setVariantForm(false); e.preventDefault();}}>close</button>
+
+                                                                                        <div className="pricing-and-duration-form-button rounded">
+                                                                                            <button className="btn text-capitalize rounded" onClick={addVariant}> Save variant</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </Col>
+
+                                                <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
+                                                    <div className="form-group my-2">
+                                                        <input type="submit" className="text-white rounded-0 bg-jetGreen border-0 py-2 px-3" value="Create" onClick={updateTreatment} />
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* sidebar editable form ends here */}
+
                         </div>
                     </div>
                 </Row>
