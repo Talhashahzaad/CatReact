@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './UserRegistration.css';
-import userLoginPictureSecond from '../../images/user-login-banner-second.png';
+import userLoginPictureSecond from '../../images/user-login-banner-second.jpg';
 import arrowNext from '../../images/arrowNext.svg';
 import arrowBack from '../../images/arrowBack.svg';
 import eyeOpen from "../LoginPage/eyeOpen.svg";
@@ -10,7 +10,7 @@ import eyeClose from "../LoginPage/eyeClose.svg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-
+import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
 
 const UserRegistration = () => {
     const navigate = useNavigate();
@@ -98,11 +98,13 @@ const UserRegistration = () => {
 
         try {
             const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
             const response = await axios.post('http://3.8.140.227:8000/api/user-signup', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'role': role
                 }
             });
             console.log(response);
@@ -346,4 +348,4 @@ const UserRegistration = () => {
     );
 };
 
-export default UserRegistration;
+export default ProtectedAuthRoute(UserRegistration);

@@ -1,8 +1,6 @@
 import {React, useState, useEffect} from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
-//import profilePicture from "../../../images/profile-picture.jpeg";
-//import logo from "../../../images/check-a-treatment.svg";
 import dashIcon from "../../../images/dashboard-dashIcon.svg";
 import userProfileIcon from "../../../images/user-icons-dashIcon.svg";
 import listIcon from "../../../images/listing-dashIcon.svg";
@@ -11,9 +9,6 @@ import treatmentDashIcon from "../../../images/treatment-dashIcon.svg";
 import packageDashIcon from "../../../images/package-dashIcon.svg";
 import affilicationDashIcon from "../../../images/affilication-dashIcon.svg";
 import qualificationDashIcon from "../../../images/qualification-dashIcon.svg";
-
-
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Dashboard.css";
@@ -44,29 +39,24 @@ const Sidebar = () => {
         setIsDropdownOpen((prev) => !prev);
     };
 
-    const [loggedOutMessage, setLoggedOutMessage] = useState({
-        show: false,
-        message: ''
-    });
-
-    
-
     const [profileInfo, setProfileInfo] = useState(null);
-
+    
     useEffect(() => {
         const fetchProfileInfo = async () => {
             const token = JSON.parse(localStorage.getItem("token"));
+            const role = localStorage.getItem('role');
             const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'role': role
                 }
             });
             setProfileInfo(response.data);
         };
         fetchProfileInfo();
     }, []);
+
+
     return (
             <>
                 <ToastContainer position="top-right" autoClose={3000} />
@@ -148,7 +138,9 @@ const Sidebar = () => {
                                     </Link>
                                 </div>
                             </li>
+                            
 
+                            
                             <li>
                                 <Link to="/dashboard/order" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>
                                     <span className="item-icon">
@@ -163,7 +155,6 @@ const Sidebar = () => {
                     <div className="dashboard-sidebar-footer">
                         <div className="dashboard-sidebar-footer-text d-flex flex-column justify-content-center align-items-start w-100 h-100">
                             <h6 className="text-white headingFont h4 fw-bold mb-4">Don't miss out on elite features.</h6>
-                            {/* <p className="text-white headingFont fw-bold">Please check our docs</p> */}
                             <Link to="/pricing-packages" className="btn btn-md text-dark bg-white text-capitalize fw-bold w-100 py-2">Upgrade Now</Link>
                         </div>
                     </div>

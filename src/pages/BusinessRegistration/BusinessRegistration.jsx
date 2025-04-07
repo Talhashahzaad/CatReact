@@ -10,6 +10,7 @@ import eyeClose from "../LoginPage/eyeClose.svg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
 
 const BusinessRegistration = () => {
     const navigate = useNavigate();
@@ -147,6 +148,8 @@ const BusinessRegistration = () => {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'role': role
         }
       });
       
@@ -175,7 +178,14 @@ const BusinessRegistration = () => {
   const [category, setCategory] = useState([]);
     const fetchCategory = async () => {
         try {
-            const response = await axios.get('http://3.8.140.227:8000/api/category');
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
+            const response = await axios.get('http://3.8.140.227:8000/api/category', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'role': role
+                }
+            });
             setCategory(response.data);
         } catch (error) {
             console.error(error || 'Error fetching category');
@@ -510,4 +520,4 @@ const BusinessRegistration = () => {
     );
 };
 
-export default BusinessRegistration;
+export default ProtectedAuthRoute(BusinessRegistration);

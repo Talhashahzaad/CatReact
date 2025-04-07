@@ -161,7 +161,7 @@ const Practitioner = () => {
                 }
             );
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 setCreateAlert(true);
                 document.querySelector('.sidebar-listing-form').style.display = 'none';
                 document.querySelector('.dashboard-content-table').style.display = 'block';

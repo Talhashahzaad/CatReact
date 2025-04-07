@@ -3,7 +3,7 @@
 background-position: center right 50px;}
 
 .contactForm .form-group input[type="text"],.contactForm .form-group input[type="email"],.contactForm .form-group input[type="tel"] {height: 60px;
-border-radius: 0;border-bottom: 4px solid var(--green25);border-top: 1px solid var(--green25);border-left: 1px solid var(--green25);
+border-radius: 0;border-top: 1px solid var(--green25);border-left: 1px solid var(--green25);
 border-right: 1px solid var(--green25);}
 
 .contactForm .form-group input[type="text"]:hover, .contactForm .form-group input[type="text"]:focus,
@@ -14,7 +14,7 @@ border-right: 1px solid var(--green25);}
 .contactForm .form-group textarea {height: 120px;resize: none;border-radius: 0;border-bottom: 4px solid var(--green25);
     border-left: 1px solid var(--green25);border-top: 1px solid var(--green25);border-right: 1px solid var(--green25);}
 
-.contactForm .form-group input[type="submit"]{background-color: var(--jetGreen);color: var(--white);border-radius: 0;border: none;height: 60px;}
+.contactForm .form-group input[type="submit"]{background-color: var(--jetGreen);color: var(--white);border-radius: 100px;border: none;height: 60px;}
 
 .feature-banner hr.w-10.h-auto.py-1.text-center.d-block.border-0.rounded.mx-auto {max-width: 100px;background-color: var(--jetGreen);opacity: 1;}
 .socialMedia-Contact ul.ps-0.mb-0.d-flex li {list-style-type: none;}

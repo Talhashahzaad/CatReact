@@ -5,23 +5,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function FeatureCarousel() {
-
   const [featureListing, setFeatureListing] = useState([]);
   const [error, setError] = useState(null);
 
   const siteURL = "http://3.8.140.227:8000";
 
   const fetchFeatureListing = async () => {
-    try{
-      const response = await axios.get("http://3.8.140.227:8000/api/category");
-      const data = Array.isArray(response.data) ? response.data : [];
-      setFeatureListing(data);
-      } catch(err){
-        console.error("Error fetching feature listing:", err);
-        setError("Failed to load categories");
-        setFeatureListing([]);
-      }
-    }
+    const response = await axios.get("http://3.8.140.227:8000/api/category");
+    setFeatureListing(response.data);
+  }
 
   useEffect(() => {
     fetchFeatureListing();
@@ -58,10 +50,15 @@ export default function FeatureCarousel() {
       }
     ]
   };
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
   return (
     <>
     <Slider {...settings}>
-      {featureListing.map((item, index) => (
+      {Array.isArray(featureListing) && featureListing.map ((item, index) => (
       <div className="feature-products-carousel-item" key={index}>
         <div className="feature-products-carousel-card position-relative">
                 

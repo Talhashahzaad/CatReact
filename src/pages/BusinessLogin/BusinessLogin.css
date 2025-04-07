@@ -16,7 +16,7 @@
     .businessLoginPage input[type="email"]:focus,
     .businessLoginPage input[type="password"]:focus {outline: none; box-shadow: none;}
     
-    .businessLoginPage input[type="submit"] {background-color: var(--jetGreen);border-color: var(--roseDark);border-radius: 5px;height: 50px;
+    .businessLoginPage input[type="submit"] {background-color: var(--jetGreen);border-color: var(--roseDark);border-radius: 100px;height: 50px;
     text-transform: uppercase;letter-spacing: 2px;font-weight: 600;color: var(--white);}
     .businessLoginPage input[type="submit"]:hover, .businessLoginPage input[type="submit"]:focus {background-color: var(--black); color: var(--white)}
     

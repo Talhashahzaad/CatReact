@@ -72,14 +72,14 @@ export default function ListingDetails() {
         setShowAllReviews(!showAllReviews);
     };
 
-    const reviewCategory = [
-        { id: 0, name: "alexander wagon", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "a" },
-        { id: 1, name: "cameron white", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "c" },
-        { id: 2, name: "alexander wagon", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "a" },
-        { id: 3, name: "cameron white", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "c" },
-        { id: 4, name: "alexander wagon", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "a" },
-        { id: 5, name: "cameron white", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "c" },
-    ];
+    // const reviewCategory = [
+    //     { id: 0, name: "alexander wagon", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "a" },
+    //     { id: 1, name: "cameron white", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "c" },
+    //     { id: 2, name: "alexander wagon", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "a" },
+    //     { id: 3, name: "cameron white", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "c" },
+    //     { id: 4, name: "alexander wagon", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "a" },
+    //     { id: 5, name: "cameron white", date: "18 Dec 2024", review: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.", initial: "c" },
+    // ];
 
     function renderStaffImage(imageSrc, altText, initial) {
         if (imageSrc) {
@@ -320,7 +320,7 @@ export default function ListingDetails() {
 
                             {/* staff section closed here */}
 
-                            <div className="listing-details-content-left-reviews-details-heading">
+                            {/* <div className="listing-details-content-left-reviews-details-heading">
                                 <h3 className="listing-details-content-left-reviews-details-title py-3 my-0 text-capitalize">reviews</h3>
                                 <ol className="ps-0 mb-0 d-flex">
                                     <li>
@@ -334,9 +334,9 @@ export default function ListingDetails() {
                                     </li>
                                 </ol>
                                 <hr/>
-                            </div>
+                            </div> */}
 
-                            <div className="listing-details-content-left-reviews-details-reviews-box">
+                            {/* <div className="listing-details-content-left-reviews-details-reviews-box">
                                 <ul className="ps-0 d-flex flex-wrap">
                                 {reviewCategory.slice(0, showAllReviews ? reviewCategory.length : 4).map((category, index) => (
                                         <li key={index}>
@@ -361,7 +361,7 @@ export default function ListingDetails() {
                                 >
                                     {showAllReviews ? 'Hide reviews' : 'See all reviews'}
                                 </button>
-                            </div>
+                            </div> */}
                             {/* reviews section closed here */}
 
 

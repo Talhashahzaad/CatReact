@@ -1,13 +1,13 @@
-.thanks-container svg {
+.payment-success-container svg {
     width: 300px;
     max-width: 300px;
 }
-.thanks-container h1 {
+.payment-success-container h1 {
     color: var(--jetGreen);
 }
 
 @media (max-width: 767px) {
-    .thanks-container svg {
+    .payment-success-container svg {
         max-width: 175px;
     }
 }

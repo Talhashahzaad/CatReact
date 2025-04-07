@@ -1,17 +1,18 @@
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import './ThankYou.css';
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import "./PaymentSuccess.css";
 
-const ThankYou = () => {
+const PaymentSuccess = () => {
     return (
         <>
+        <div className="payment-success-container">
             <Container>
                 <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <div className='thanks-container d-flex justify-content-center align-items-center flex-column py-5'>
-                            <h1 className="mb-0 display-3">Thank you</h1>
+                        <div className='payment-success-container d-flex justify-content-center align-items-center flex-column py-5'>
+                            <h1 className="mb-0 display-3">Payment Received</h1>
                             
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%', transform: 'translate3d(0px, 0px, 0px)', contentVisibility: 'visible' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%', transform: 'translate3d(0px, 0px, 0px)', contentVisibility: 'visible' }}>
                 <defs>
                     <clipPath id="lottieElement15809">
                         <rect width="600" height="600" x="0" y="0"></rect>
@@ -85,15 +86,16 @@ const ThankYou = () => {
                         </g>
                             </g>
                         </g>
-                    </svg>
+                            </svg>
 
-                    <h4 className="b-0 pt-3 text-normal text-dark text-center lh-lg">Your form has been submitted successfully. We will contact you soon.</h4>
-                </div>
-                </Col>
-            </Row>
-        </Container>
+                            <h4 className="b-0 pt-3 text-normal text-dark text-center lh-lg">Your payment has been received successfully. <br/>Welcome to the featured business listings.</h4>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
         </>
     );
 };
 
-export default ThankYou;
+export default PaymentSuccess;

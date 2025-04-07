@@ -9,13 +9,13 @@ import DashboardHeader from "./DashboardHeader/DashboardHeader";
 import Sidebar from "./Sidebar/Sidebar";
 
 
-const Dashboard = () =>{
-    const [dashboardData, setDashboardData] = useState({
-        totalReviews: 100,
-        activeListing: 10,
-        wishlist: 5,
-        message: 20
-    });
+const Dashboard = ({ isSidebarOpen }) =>{
+    // const [dashboardData, setDashboardData] = useState({
+    //     totalReviews: 100,
+    //     activeListing: 10,
+    //     wishlist: 5,
+    //     message: 20
+    // });
 
     const checkToken = async () => {
         const token = localStorage.getItem("token");
@@ -37,17 +37,16 @@ const Dashboard = () =>{
         }
     }
     
+    const [isOpen, setIsOpen] = useState(true)
     return(
         <>
-            
-            
         <Container fluid className="dashboard-page-main">
             <Row>
                 <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start" 
                     onClick={(e) => e.stopPropagation()}>
                     <Sidebar />
 
-                    <div className="dashboard-content mb-5">
+                    <div className={`dashboard-content mb-5 ${isSidebarOpen ? "sidebar-open" : ""}`}>
                         <Outlet />
                         <div className="dashboard-content-body">
                             <DashboardHeader />

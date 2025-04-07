@@ -3,7 +3,6 @@ import './App.css'
 import Home from './pages/Home'
 import Footer from './common/Footer'
 import Login from './pages/LoginPage/Login';
-import Register from './pages/RegisterPage/Register';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import Header from './common/Header';
 import Blogs from './pages/Blogs/Blogs';
@@ -36,7 +35,8 @@ import FeaturedListing from './pages/FeaturedListing/FeaturedSearchListing';
 import ProtectedRoute from './component/ProtectedRoute';
 import ServiceCategories from './pages/ServiceCategories/ServiceCategories';
 import Checkout from './pages/Checkout/Checkout';
-
+import PaymentSuccess from './pages/PaymentSuccess/PaymentSuccess';
+import PaymentFailed from './pages/PaymentFailed/PaymentFailed';
 
 function App () {
 
@@ -50,7 +50,6 @@ function App () {
         <Routes>
           <Route exact path="/" element={<Home/>} />
           <Route path="/login" element={<Login/>} />
-          <Route path="/sign-up" element={<Register/>} />
           <Route path="/forget-password" element={<ForgetPassword/>} />
           <Route path="/blogs" element={<Blogs/>} />
           <Route path="/blog/:title" element={<SinglePost/>} />
@@ -115,6 +114,8 @@ function App () {
           <Route path="/featured-search-listing" element={<FeaturedListing />} />
           <Route path="/service-categories" element={<ServiceCategories/>} />
           <Route path="/checkout" element={<Checkout/>} />
+          <Route path="/payment-success" element={<PaymentSuccess/>} />
+          <Route path="/payment-failed" element={<PaymentFailed/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

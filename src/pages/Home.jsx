@@ -22,15 +22,8 @@ function Home(){
     const siteURL = "http://3.8.140.227:8000";
 
     const fetchFeatureListing = async () => {
-        try{
         const response = await axios.get("http://3.8.140.227:8000/api/category");
-        const data = Array.isArray(response.data) ? response.data : [];
-        setFeatureListing(data);
-        }catch(err){
-            console.error("Error fetching feature listing:", err);
-            setError("Failed to load categories");
-            setFeatureListing([]);
-        }
+        setFeatureListing(response.data);
     }
 
     useEffect(() => {
@@ -73,7 +66,7 @@ function Home(){
                 <div className="blog-doesnot-exist">
                     <Row>
                         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                            <h5 className="text-center">{error}</h5>
+                            <p className="text-center">{error}</p>
                         </Col>
                     </Row>
                 </div>
@@ -178,6 +171,11 @@ function Home(){
         try {
             const response = await axios.get(`http://3.8.140.227:8000/api/cat-video-upload`);
             setClipList(response.data);
+            if (response.data.length === 0) {
+                setError("No, clip has been uploaded yet.");
+            }else{
+                setError(null);
+            }
         } catch (error) {
             error(error || 'No, clip has been uploaded yet.');
         }
@@ -186,6 +184,7 @@ function Home(){
     useEffect(() => {
         fetchClipList();
     }, []);
+    
     
 
     return(
@@ -587,8 +586,6 @@ function Home(){
                 </Row>
             </Container>
         </div> */}
-
-        {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
         </>
     )

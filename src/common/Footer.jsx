@@ -58,11 +58,26 @@ function Footer(){
                                             <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
                                                 <h3>Find us on socials</h3>
                                                 <ul className="ps-0 mb-0">
-                                                    <li><Link to="/"><img src={linkIcon} alt="" title="" /> facebook</Link></li>
-                                                    <li><Link to="/"><img src={linkIcon} alt="" title="" /> linkedin</Link></li>
-                                                    <li><Link to="/"><img src={linkIcon} alt="" title="" /> instagram</Link></li>
-                                                    <li><Link to="/"><img src={linkIcon} alt="" title="" /> youTube</Link></li>
-                                                    <li><Link to="/"><img src={linkIcon} alt="" title="" /> TikTok</Link></li>
+                                                    <li>
+                                                        <Link to="https://www.facebook.com/people/CheckaTreatment/61574567515878/?name=xhp_nt__fb__action__open_user" target="_blank">
+                                                            <img src={linkIcon} alt="" title="" /> facebook
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to="https://www.instagram.com/check.a.treatment/?igsh=MXZ3aG81NDNkYTBsMg%3D%3D#" target="_blank">
+                                                            <img src={linkIcon} alt="" title="" /> instagram
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to="https://www.youtube.com/@CheckATreatment?app=desktop" target="_blank">
+                                                            <img src={linkIcon} alt="" title="" /> youTube
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to="https://www.tiktok.com/@checkatreatment?_t=ZN-8vKKBt1sx7u&_r=1" target="_blank">
+                                                            <img src={linkIcon} alt="" title="" /> TikTok
+                                                        </Link>
+                                                    </li>
                                                 </ul>
                                             </Col>
                                         </Row>

@@ -42,6 +42,8 @@ animation-duration: 1s;}
 #stepTwo button[type="submit"] {background-color: #DBECD0;width: 170px;height: 50px;border-radius: 100px;text-transform: capitalize;font-weight: 600;
 border-color: transparent;outline: none;}
 
+.user-registration-picture img {border-radius: 20px;min-height: 600px;object-fit: cover;height: auto;}
+
 
 @keyframes rubberBand {
     0% { transform: scaleX(1); }
@@ -81,19 +83,5 @@ border-radius: 100px;text-transform: uppercase;font-weight: 700;} */
             margin-inline-end: 0;
             margin-block-end: 20px;
         }
-
-        .user-registration-picture {
-            margin-inline-end: 0;
-        }
-        .user-registration-picture img {
-            width: 100%;
-            margin-bottom: 30px;
-        }
-
-        .user-registration-container {
-            padding-block: 30px;
-        }
-
-        
     }
     

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Added useNavigate for redirection
+import { Link, useNavigate } from "react-router-dom"; 
 import { Container, Row, Col } from "react-bootstrap";
 import "./Login.css";
 import eyeOpen from "../LoginPage/eyeOpen.svg";
@@ -10,8 +10,9 @@ import userLoginPicture from "../../images/userLoginPicture.webp";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
 
-function Login() {
+const Login = ({ children }) => {
     const [showPassword, setShowPassword] = React.useState(false);
     const [email, setEmail] = React.useState(""); // State for email
     const [password, setPassword] = React.useState(""); // State for password
@@ -42,10 +43,10 @@ function Login() {
                 password
             });
             setData(response.data);
-            //console.log(response.data);
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 localStorage.setItem("token", JSON.stringify(response.data.token));
+                localStorage.setItem("role", JSON.stringify(response.data.role));
                 if (rememberMe) {
                     localStorage.setItem('rememberedUser', JSON.stringify({
                         rememberedEmail: email,
@@ -57,7 +58,7 @@ function Login() {
                 successNotify();
                 setTimeout(() => {
                     navigate("/dashboard");
-                }, 3000);
+                }, 500);
             } else {
                 setErrorMessage(response.data.message || "Login failed. Please try again.");
             }
@@ -71,6 +72,7 @@ function Login() {
                 setErrorMessage("Login failed. Please try again.");
             }
         }
+        return children;
     };
 
     return (
@@ -172,7 +174,7 @@ function Login() {
             
             <ToastContainer 
                 position="top-right"
-                autoClose={3000}
+                autoClose={500}
                 hideProgressBar={false}
                 newestOnTop={true}
                 closeOnClick
@@ -187,4 +189,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default ProtectedAuthRoute(Login);
