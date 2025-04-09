@@ -36,8 +36,7 @@ import ProtectedRoute from './component/ProtectedRoute';
 import ServiceCategories from './pages/ServiceCategories/ServiceCategories';
 import Checkout from './pages/Checkout/Checkout';
 import PaymentSuccess from './pages/PaymentSuccess/PaymentSuccess';
-import PaymentFailed from './pages/PaymentFailed/PaymentFailed';
-
+import PaymentCancel from './pages/PaymentCancel/PaymentCancel';
 function App () {
 
   const location = useLocation();
@@ -113,9 +112,15 @@ function App () {
           <Route path="/change-password" element={<ChangePassword/>} />
           <Route path="/featured-search-listing" element={<FeaturedListing />} />
           <Route path="/service-categories" element={<ServiceCategories/>} />
-          <Route path="/checkout" element={<Checkout/>} />
+          
+          <Route path="/checkout" element={
+            <ProtectedRoute>
+              <Checkout/>
+            </ProtectedRoute>
+          } />
+          
           <Route path="/payment-success" element={<PaymentSuccess/>} />
-          <Route path="/payment-failed" element={<PaymentFailed/>} />
+          <Route path="/payment-cancel" element={<PaymentCancel/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

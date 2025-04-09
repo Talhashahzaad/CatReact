@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import catLogo from "../images/catLogo.jpg";
-//import userLogin from "../images/userLogin.svg";
 import angleDown from "../images/angleDown.svg";
 import axios from "axios";
 
@@ -67,13 +66,8 @@ function Header(){
                                     <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={12} className="d-flex align-items-center justify-content-end mb-0 ps-0">
                                         <div className="header-menu">
                                             <ul className="d-flex align-items-center justify-content-end mb-0 ps-0">
-                                                <li><Link to="/login">
-                                                    {/* <img src={userLogin} alt="home" />  */}
-                                                client login</Link></li>
-                                                
-                                                <li><Link to="/business-login" className="text-capitalize">
-                                                {/* <img src={userLogin} alt="home" />  */}
-                                                business login</Link></li>
+                                                <li><Link to="/login">client login</Link></li>
+                                                <li><Link to="/business-login" className="text-capitalize">business login</Link></li>
                                                 <li className="menus-dropdown">
                                                     <Link
                                                         to="/"
@@ -91,14 +85,14 @@ function Header(){
                                                         />
                                                     </Link>
                                                     <div className={`dropdown-content ${isMenuOpen ? 'show' : ''}`}>
-                                                        <Link to="/user-registration" className="text-capitalize sign-up-link">sign up</Link>
-                                                        <Link to="/business-registration" className="text-capitalize">business sign up</Link>
-                                                        <Link to="/for-business" className="text-capitalize">for business</Link>
-                                                        <Link to="/pricing-packages" className="text-capitalize">membership options</Link>
-                                                        <Link to="/beyond-the-treatments" className="text-capitalize">beyond the treatment</Link>
-                                                        <Link to="/blogs" className="text-capitalize">blogs</Link>
-                                                        <Link to="/about-us" className="text-capitalize">about us</Link>
-                                                        <Link to="/contact-us" className="text-capitalize">contact us</Link>
+                                                        <Link to="/user-registration" className="text-capitalize sign-up-link" onClick={() => setIsMenuOpen(false)}>sign up</Link>
+                                                        <Link to="/business-registration" className="text-capitalize" onClick={() => setIsMenuOpen(false)}>business sign up</Link>
+                                                        <Link to="/for-business" className="text-capitalize" onClick={() => setIsMenuOpen(false)}>for business</Link>
+                                                        <Link to="/pricing-packages" className="text-capitalize" onClick={() => setIsMenuOpen(false)}>membership options</Link>
+                                                        <Link to="/beyond-the-treatments" className="text-capitalize" onClick={() => setIsMenuOpen(false)}>beyond the treatment</Link>
+                                                        <Link to="/blogs" className="text-capitalize" onClick={() => setIsMenuOpen(false)}>blogs</Link>
+                                                        <Link to="/about-us" className="text-capitalize" onClick={() => setIsMenuOpen(false)}>about us</Link>
+                                                        <Link to="/contact-us" className="text-capitalize" onClick={() => setIsMenuOpen(false)}>contact us</Link>
                                                     </div>
                                                 </li>
             

@@ -35,9 +35,7 @@ const Checkout = () => {
                     'X-CSRFToken': token
                 }
             });
-            console.log(response.data, 'response');
-            
-            // Check if there's an error message in the response
+            console.log(response.data);
             if (response.data?.error) {
                 setError(response.data.error);
                 return;
@@ -65,7 +63,7 @@ const Checkout = () => {
 
     const handleCheckout = async () => {
         const token = JSON.parse(localStorage.getItem('token'));
-        const planId = location.state?.planId;
+        const planId = location.state?.planId || localStorage.getItem('planID');
         
         if (!planId) {
             setError('No payment details available');
@@ -74,7 +72,7 @@ const Checkout = () => {
 
         try {
             setLoading(true);
-            const response = await axios.get(`http://3.8.140.227:8000/api/paypal/payment/?package_id=${planId}`, {
+            const response = await axios.get(`http://3.8.140.227:8000/api/paypal/payment/?selected_package_id=${planId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -88,7 +86,7 @@ const Checkout = () => {
                 setError('Failed to create payment');
             }
         } catch (error) {
-            console.error('Payment creation failed:', error);
+//            console.error('Payment creation failed:', error);
             setError(error.response?.data?.message || 'Failed to create payment. Please try again later.');
         } finally {
             setLoading(false);
@@ -103,7 +101,20 @@ const Checkout = () => {
                     <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={12}>
                         <img src={paypalIcon} alt="paypal" className='w-25 d-block' />
                         <h1 className="text-start text-capitalize text-left position-relative pb-3 mb-5">review your order</h1>
-                        <p className='text-left'>lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                        <blockquote className='text-left'>
+                            {planData && (
+                                <div>
+                                    <h5>{planData.message}</h5>
+                                    <strong className='lh-lg h-auto'>Your plan name is </strong>
+                                    <h3>{planData.listing.name}</h3>
+                                    <p className='text-capitalize mb-0'>Package Type: <strong>{planData.listing.type}</strong></p>
+                                    <p className='text-capitalize mb-0'>Package Duration: <strong>{planData.listing.number_of_days}</strong> Days.</p>
+                                    <div className='display-1 my-1'>
+                                        <p className='boldness'>£ {planData.listing.price}/m</p>
+                                    </div>
+                                </div>
+                            )}
+                        </blockquote>
                         
                     </Col>
                     <Col xxl={4} xl={4} lg={4} md={4} sm={12} xs={12}>
@@ -133,12 +144,12 @@ const Checkout = () => {
                                 </li>
                                 <li className='d-flex justify-content-between align-items-center'>
                                     <button 
-                                        className='btn form-control' 
+                                        className='btn form-control checkoutButton' 
                                         onClick={handleCheckout}
-                                        disabled={loading || !!payment_url}
+                                        
                                     >
                                         {loading ? 'Loading...' : payment_url ? 
-                                            <a href={payment_url} target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+                                            <a href={payment_url} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-white">
                                                 Proceed to Payment
                                             </a> : 'Checkout'}
                                     </button>

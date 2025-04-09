@@ -1,15 +1,28 @@
-.checkout-page .col-xxl-8 {padding-block: 100px;}
-.checkout-page .col-xxl-4 {padding-block: 100px;}
+.checkout-page .col-xxl-8 {padding-block: 50px;}
+.checkout-page .col-xxl-4 {padding-block: 50px;}
 .checkout-page h1::before {position: absolute;content: '';width: 100px;height: 5px;background-color: var(--jetGreen);border-radius: 10px;bottom: -15px;
 left: 0%;margin-left: 0px;}
 .checkout-page .col-xxl-4 ul.ps-0.mb-0 li {text-transform: capitalize;}
 .checkout-page .col-xxl-4 ul.ps-0.mb-0 li:nth-child(4) {border-top: 2px dashed rgba(0,0,0,0.08);padding-block: 20px;margin-top: 20px;font-weight: 600;}
 .checkout-page .col-xxl-4 ul.ps-0.mb-0 li a.btn.form-control {background-color: var(--jetGreen);color: var(--white);padding-block: 12px; border-radius: 100px;}
 .checkout-form-section {background-color: rgba(108, 139, 87, 0.08);padding: 18px;border-radius: 12px;}
+.checkout-form-section .checkoutButton {background-color: var(--jetGreen);border-radius: 100px;padding-block: 15px; color: var(--white); font-weight: 600;}
+.checkout-form-section .checkoutButton a {font-weight: 600; position: relative; z-index: 1111; cursor: pointer;}
+.checkout-form-section .checkoutButton:active {background-color: var(--jetGreen);}
+.checkout-page blockquote.text-left strong {background-color: #f3f6f2;padding-block: 8px;margin-block: 8px;padding-inline: 16px;border-radius: 8px;
+display: inline-block;}
+.checkout-page blockquote.text-left .boldness {font-family: var(--defaultHeading);color: var(--jetGreen);display: inline-table;margin-bottom: 0px;
+line-height: 90px; font-weight: 600;}
+
+@media (max-width: 991px){
+.checkout-page .col-xxl-8 {padding-bottom: 50px;}
+}
+/* 991 */
 
 @media (max-width: 767px) {
-.checkout-page .col-xxl-8 {padding-block: 50px;}
-.checkout-page .col-xxl-4 {padding-block: 0px 50px;}
+.checkout-page .col-xxl-8 {padding-block: 0px;}
+.checkout-page .col-xxl-4 {padding-block: 50px;}
 .checkout-form-section {padding: 12px;}
+.checkout-page > .container > .row {flex-flow: column-reverse;}
 }
 /* 767 */
