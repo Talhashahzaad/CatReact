@@ -35,7 +35,7 @@ const Checkout = () => {
                     'X-CSRFToken': token
                 }
             });
-            console.log(response.data);
+
             if (response.data?.error) {
                 setError(response.data.error);
                 return;
@@ -50,6 +50,7 @@ const Checkout = () => {
             setLoading(false);
         }
     }
+    
 
     useEffect(() => {
         const planId = location.state?.planId;
@@ -143,16 +144,18 @@ const Checkout = () => {
                                     <p className='mb-0'>£{planData.listing.price}/m</p>
                                 </li>
                                 <li className='d-flex justify-content-between align-items-center'>
-                                    <button 
-                                        className='btn form-control checkoutButton' 
-                                        onClick={handleCheckout}
-                                        
+                                    {planData.listing.type !== 'free' ? (
+                                        <button 
+                                            className='btn form-control checkoutButton' 
+                                            onClick={handleCheckout}
+                                            
                                     >
                                         {loading ? 'Loading...' : payment_url ? 
                                             <a href={payment_url} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-white">
                                                 Proceed to Payment
                                             </a> : 'Checkout'}
                                     </button>
+                                 ) : null}
                                 </li>
                                 </ul>
                             )}

@@ -1,8 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./PaymentSuccess.css";
+import axios from "axios";
 
 const PaymentSuccess = () => {
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const token = JSON.parse(localStorage.getItem('token'));
+    const order_id = JSON.parse(localStorage.getItem('order_id'));
+    const user_id = JSON.parse(localStorage.getItem('user_id'));
+    const package_id = JSON.parse(localStorage.getItem('package_id'));
+
+    const fetchPaymentStatus = async () => {
+        try {
+            const response = await axios.get(`http://3.8.140.227:8000/api/paypal/success?token=${order_id}&user_id=${user_id}&package_id=${package_id}`,{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'X-CSRFToken': token
+
+                }
+            })
+    .then(response => {
+        console.log(response.data, 'response');
+    })
+            .catch(error => {
+                console.error('Error fetching payment status:', error);
+            });
+        } catch (error) {
+            console.error('Error fetching payment status:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchPaymentStatus();
+    }, []);
+    
     return (
         <>
         <div className="payment-success-container">
