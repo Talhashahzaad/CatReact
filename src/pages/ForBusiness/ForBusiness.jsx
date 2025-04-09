@@ -39,8 +39,17 @@ const ForBusiness = () => {
     const [planID, setPlanID] = useState(null);
 
     const fetchSelectedPlan = async () => {
-        const response = await axios.get(`http://3.8.140.227:8000/api/checkout/${planID}`);
-        setPlanID(response.data);
+        const token = JSON.parse(localStorage.getItem("token"));
+        const response = await axios.get(`http://3.8.140.227:8000/api/checkout/${planID}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        });
+        if (Array.isArray(response.data)) {
+            setPlanID(response.data);
+        }
     }
 
     useEffect(() => {

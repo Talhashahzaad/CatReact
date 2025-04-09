@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import {Container, Row} from 'react-bootstrap';
 import { Outlet } from "react-router-dom";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Breadcrumb from "./Breadcrumb/Breadcrumb";
 import axios from "axios";
 import "./Dashboard.css";
@@ -9,14 +10,7 @@ import DashboardHeader from "./DashboardHeader/DashboardHeader";
 import Sidebar from "./Sidebar/Sidebar";
 
 
-const Dashboard = ({ isSidebarOpen }) =>{
-    // const [dashboardData, setDashboardData] = useState({
-    //     totalReviews: 100,
-    //     activeListing: 10,
-    //     wishlist: 5,
-    //     message: 20
-    // });
-
+const Dashboard = () =>{
     const checkToken = async () => {
         const token = localStorage.getItem("token");
         if(!token){
@@ -37,16 +31,14 @@ const Dashboard = ({ isSidebarOpen }) =>{
         }
     }
     
-    const [isOpen, setIsOpen] = useState(true)
     return(
         <>
         <Container fluid className="dashboard-page-main">
             <Row>
-                <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start" 
-                    onClick={(e) => e.stopPropagation()}>
+                <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start" onClick={(e) => e.stopPropagation()}>
                     <Sidebar />
 
-                    <div className={`dashboard-content mb-5 ${isSidebarOpen ? "sidebar-open" : ""}`}>
+                    <div className="dashboard-content mb-5">
                         <Outlet />
                         <div className="dashboard-content-body">
                             <DashboardHeader />
@@ -58,29 +50,7 @@ const Dashboard = ({ isSidebarOpen }) =>{
                             
 
 
-                            {/* <div className="dashboard-message-notification">
-                                <ul className="ps-0 mb-0 d-flex justify-content-between align-items-center">
-                                    <li>
-                                        <h3>{dashboardData.totalReviews}</h3>
-                                        <strong>total admin</strong>
-                                    </li>
-
-                                    <li>
-                                        <h3>{dashboardData.activeListing}</h3>
-                                        <strong>news</strong>
-                                    </li>
-
-                                    <li>
-                                        <h3>{dashboardData.wishlist}</h3>
-                                        <strong>reports</strong>
-                                    </li>
-
-                                    <li>
-                                        <h3>{dashboardData.message}</h3>
-                                        <strong>online users</strong>
-                                    </li>
-                                </ul>
-                            </div> */}
+                            
 
                             <div className="dashboard-active-packages">
                                 <h5 className="default-font fw-bold mt-5">Active Packages</h5>

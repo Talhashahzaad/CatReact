@@ -10,7 +10,7 @@ import searchIcon from "../images/searchIcon.svg";
 import categoriesIcon from "../images/categoriesIcon.svg";
 import mapMarkerIcon from "../images/mapMarkerIcon.svg";
 import WantToSeeMoreCarousel from "../component/WanToSeeMoreCarousel";
-import ProductComingSoon from "../images/check-a-treatment-coming-soon-banner.jpg";
+import ProductComingSoon from "../images/check-a-treatment-coming-soon-banner.png";
 import axios from "axios";
 
 function Home(){

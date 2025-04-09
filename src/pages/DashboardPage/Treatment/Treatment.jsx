@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
-import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
+import { FaEdit, FaTrash, FaTimes, FaPencilAlt} from "react-icons/fa";
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import axios from "axios";
 import "./Treatment.css";

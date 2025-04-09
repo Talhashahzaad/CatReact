@@ -8,7 +8,6 @@ const ProtectedAuthRoute = (WrappedComponent) => {
         useEffect(() => {
             const token = localStorage.getItem("token") || JSON.parse(localStorage.getItem("token"));
             const role = localStorage.getItem("role") || JSON.parse(localStorage.getItem("role"));
-            console.log(token);
             if (token) {
                 navigate("/dashboard");
             }

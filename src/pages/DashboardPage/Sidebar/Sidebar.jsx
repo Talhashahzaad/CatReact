@@ -155,7 +155,7 @@ const Sidebar = () => {
                     <div className="dashboard-sidebar-footer">
                         <div className="dashboard-sidebar-footer-text d-flex flex-column justify-content-center align-items-start w-100 h-100">
                             <h6 className="text-white headingFont h4 fw-bold mb-4">Don't miss out on elite features.</h6>
-                            <Link to="/pricing-packages" className="btn btn-md text-dark bg-white text-capitalize fw-bold w-100 py-2">Upgrade Now</Link>
+                            <Link to="/for-business" className="btn btn-md text-dark bg-white text-capitalize fw-bold w-100 py-2">Upgrade Now</Link>
                         </div>
                     </div>
                 </div>

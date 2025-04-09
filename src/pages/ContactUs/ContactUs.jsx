@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import facebookIcon from "../../images/facebook.svg";
 import instagramIcon from "../../images/instagram.svg";
 import youtubeIcon from "../../images/youtube.svg";
-import linkedinIcon from "../../images/linkedin.svg";
+//import linkedinIcon from "../../images/linkedin.svg";
 import phoneIconTiny from "../../images/phoneIcon-tiny.svg";
 import envelopeIconTiny from "../../images/envelopeIcon-tiny.svg";
 import tiktokIcon from "../../images/tiktok.svg";
@@ -111,11 +111,26 @@ const ContactUs = () => {
                             <strong className="d-block my-1">Follow us on social platforms:</strong>
                             <div className="socialMedia-Contact">
                                 <ul className="ps-0 mb-0 d-flex">
-                                    <li><Link to="/"><img src={facebookIcon} alt="" /></Link></li>
-                                    <li><Link to="/"><img src={instagramIcon} alt="" /></Link></li>
-                                    <li><Link to="/"><img src={linkedinIcon} alt="" /></Link></li>
-                                    <li><Link to="/"><img src={youtubeIcon} alt="" /></Link></li>
-                                    <li><Link to="/"><img src={tiktokIcon} alt="" /></Link></li>
+                                    <li>
+                                        <Link to="https://www.facebook.com/people/CheckaTreatment/61574567515878/?name=xhp_nt__fb__action__open_user" target="_blank">
+                                            <img src={facebookIcon} alt="" />
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="https://www.instagram.com/check.a.treatment/?igsh=MXZ3aG81NDNkYTBsMg%3D%3D#" target="_blank">
+                                            <img src={instagramIcon} alt="" />
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="https://www.youtube.com/@CheckATreatment?app=desktop" target="_blank">
+                                            <img src={youtubeIcon} alt="" />
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="https://www.tiktok.com/@checkatreatment?_t=ZN-8vKKBt1sx7u&_r=1" target="_blank">
+                                            <img src={tiktokIcon} alt="" />
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -131,7 +146,7 @@ const ContactUs = () => {
                                         </span>
                                     </li>
 
-                                    <li>
+                                    {/* <li>
                                         <span className="tinyIcon">
                                             <img src={phoneIconTiny} alt="" title="" />
                                         </span>
@@ -139,7 +154,7 @@ const ContactUs = () => {
                                             <label htmlFor="phone" name="phone">Phone Number</label>
                                             <a href="tel:1800000000000">1800-000-000-000</a>
                                         </span>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </Col>
