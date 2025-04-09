@@ -1,13 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import catLogo from "../images/catLogo.jpg";
 //import userLogin from "../images/userLogin.svg";
 import angleDown from "../images/angleDown.svg";
+import axios from "axios";
 
 
 function Header(){
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userData, setUserData] = useState({});
+
+    const fetchLoginStatus = async () => {
+        try {
+            const token = JSON.parse(localStorage.getItem('token'));
+            if (!token) {
+                setIsLoggedIn(false);
+                return;
+            }
+
+            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
+            if (response.data.is_authenticated) {
+                setIsLoggedIn(true);
+                setUserData(response.data.user);
+            } else {
+                setIsLoggedIn(false);
+            }
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+            setIsLoggedIn(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchLoginStatus();
+    }, []);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -41,15 +75,16 @@ function Header(){
                                                 {/* <img src={userLogin} alt="home" />  */}
                                                 business login</Link></li>
                                                 <li className="menus-dropdown">
-                                                    <Link 
-                                                        to="/" 
+                                                    <Link
+                                                        to="/"
                                                         className={`text-capitalize nav-menu-button ${isMenuOpen ? 'active' : ''}`}
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             toggleMenu();
                                                         }}
                                                     >
-                                                        menus <img 
+                                                        {isLoggedIn && userData?.name ? userData.name : 'Menus'}
+                                                        <img 
                                                             src={angleDown} 
                                                             alt="arrow" 
                                                             className={`menu-arrow ${isMenuOpen ? 'rotated' : ''}`}
@@ -66,6 +101,7 @@ function Header(){
                                                         <Link to="/contact-us" className="text-capitalize">contact us</Link>
                                                     </div>
                                                 </li>
+            
                                             </ul>
                                         </div>
                                     </Col>
