@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import {Container, Row} from 'react-bootstrap';
 import { Outlet } from "react-router-dom";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Breadcrumb from "./Breadcrumb/Breadcrumb";
 import axios from "axios";
 import "./Dashboard.css";
@@ -9,7 +10,7 @@ import DashboardHeader from "./DashboardHeader/DashboardHeader";
 import Sidebar from "./Sidebar/Sidebar";
 
 
-const Dashboard = ({ isSidebarOpen }) =>{
+const Dashboard = () =>{
     // const [dashboardData, setDashboardData] = useState({
     //     totalReviews: 100,
     //     activeListing: 10,
@@ -37,16 +38,30 @@ const Dashboard = ({ isSidebarOpen }) =>{
         }
     }
     
-    const [isOpen, setIsOpen] = useState(true)
+    //const [isOpen, setIsOpen] = useState(true)
+    
+        const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    
+        const toggleSidebar = () => {
+            setIsSidebarOpen(!isSidebarOpen);
+        }
+
     return(
         <>
         <Container fluid className="dashboard-page-main">
             <Row>
-                <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start" 
+                    <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
                     onClick={(e) => e.stopPropagation()}>
+
                     <Sidebar />
 
-                    <div className={`dashboard-content mb-5 ${isSidebarOpen ? "sidebar-open" : ""}`}>
+                    <div className="dashboard-content mb-5">
+                        
+                        <button className="btn btn-primary toggle-sidebar-btn-dashboard" onClick={toggleSidebar}>
+                            <FaArrowRight className={`${isSidebarOpen ? "d-none" : "d-block"}`} />
+                            <FaArrowLeft className={`${isSidebarOpen ? "d-block" : "d-none"}`} />
+                        </button>
+
                         <Outlet />
                         <div className="dashboard-content-body">
                             <DashboardHeader />

@@ -4,6 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import defaultImage from "../../../images/default-profile-picture.webp";
 import defaultThumbnailImage from "../../../images/defaulThumbnailBackground.png";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -311,15 +312,26 @@ const handleUpdateProfile = async (e) => {
     }
 };
 
+const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    
+        const toggleSidebar = () => {
+            setIsSidebarOpen(!isSidebarOpen);
+        }
+
     return(
         <>
             <ToastContainer position="top-right" autoClose={3000} />
             <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
+                    <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
+                    onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                     <div className="dashboard-content bg-white">
+                        <button className="btn btn-primary toggle-sidebar-btn-dashboard" onClick={toggleSidebar}>
+                            <FaArrowRight className={`${isSidebarOpen ? "d-none" : "d-block"}`} />
+                            <FaArrowLeft className={`${isSidebarOpen ? "d-block" : "d-none"}`} />
+                        </button>
                         <div className="dashboard-content-body">
                             <DashboardHeader />
 

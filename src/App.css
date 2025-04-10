@@ -218,7 +218,7 @@ width: 20px;height: 20px;left: -30px;background-repeat: no-repeat;background-siz
 .beyond-the-treatment-section aside a.buttonStyle {background-color: var(--jetGreen);color: var(--white);padding-block: 16px;padding-inline: 24px;border-radius: 100px;}
 .beyond-the-treatment-section aside a.buttonStyle:hover, .beyond-the-treatment-section aside a.buttonStyle:focus {background-color: var(--black);outline: none;}
 .beyond-the-treatment-section h5:first-letter {text-transform: capitalize;}
-.beyond-the-treatment-section iframe {height: 350px;}
+.beyond-the-treatment-section iframe {height: 350px; border-radius: 20px;}
 /* beyond the treatment end here */
 
 

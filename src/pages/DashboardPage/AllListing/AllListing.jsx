@@ -5,6 +5,7 @@ import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { FaEdit, FaTrash } from "react-icons/fa"; 
 import defaultImage from "../../../images/default-profile-picture.webp";
 import defaultThumbnailImage from "../../../images/defaulThumbnailBackground.png";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
@@ -562,14 +563,25 @@ const AllListing = () => {
     const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
     const currentEntries = filteredEntries.slice(indexOfFirstEntry, indexOfLastEntry); 
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    
+        const toggleSidebar = () => {
+            setIsSidebarOpen(!isSidebarOpen);
+        }
+
     return (
         <>
             <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
+                    <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
+                    onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                         <div className="dashboard-content">
+                        <button className="btn btn-primary toggle-sidebar-btn-dashboard" onClick={toggleSidebar}>
+                            <FaArrowRight className={`${isSidebarOpen ? "d-none" : "d-block"}`} />
+                            <FaArrowLeft className={`${isSidebarOpen ? "d-block" : "d-none"}`} />
+                        </button>
                             <div className="dashboard-content-body">
                                 <DashboardHeader />
 
@@ -614,6 +626,7 @@ const AllListing = () => {
                                             />
                                         </Col> 
                                     </Row>
+                                    <div className="table-main-div">
                                     <table className="table table-bordered">
                                         <thead>
                                             <tr>
@@ -643,6 +656,7 @@ const AllListing = () => {
                                             ))}
                                         </tbody>
                                     </table>
+                                    </div>
                                     <div className="d-flex justify-content-between align-items-center pagination-controls">
                                         <div>Showing {indexOfFirstEntry + 1} to {Math.min(indexOfLastEntry, entries.length)} of {totalFilteredEntries} entries</div>
                                         <div>

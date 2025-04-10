@@ -69,3 +69,17 @@ padding: 0px;}
 text-transform: uppercase;line-height: 24px;}
 .popular-posts-list .list-unstyled a>h4>small {font-size: 14px;line-height: 20px;color: #777;}
 .blog-card .blog-card-description {min-height: 110px;}
+
+/*Responsive*/
+@media(max-width:991px){
+    .single-blog-post-description span {
+        display: inline !important;
+    }
+    .single-blog-post-footer ul.d-flex.ps-0.mb-0 li {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .single-blog-post-footer ul {
+        flex-wrap: wrap;
+    }
+}

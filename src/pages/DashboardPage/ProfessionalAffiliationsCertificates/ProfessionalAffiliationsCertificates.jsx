@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import { ToastContainer, toast } from 'react-toastify';
@@ -394,15 +395,27 @@ const ProfessionalAffiliationsCertificates = () => {
         setShowRawResponse(!showRawResponse);
     };
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    
+        const toggleSidebar = () => {
+            setIsSidebarOpen(!isSidebarOpen);
+        }
+
     return (
         <>
         <ToastContainer position="top-right" autoClose={3000} />
           <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
+                    <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
+                    onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                     <div className="dashboard-content">
+                    <button className="btn btn-primary toggle-sidebar-btn-dashboard" onClick={toggleSidebar}>
+                            <FaArrowRight className={`${isSidebarOpen ? "d-none" : "d-block"}`} />
+                            <FaArrowLeft className={`${isSidebarOpen ? "d-block" : "d-none"}`} />
+                        </button>
+
                         <div className="dashboard-content-body">
                             <DashboardHeader />
 
@@ -524,7 +537,7 @@ const ProfessionalAffiliationsCertificates = () => {
                                     />
                                 </Col>
                             </Row>
-
+                            <div className="table-main-div">         
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
@@ -561,6 +574,7 @@ const ProfessionalAffiliationsCertificates = () => {
                                     )}
                                 </tbody>
                             </table>
+                            </div>
                             
                             <div className="d-flex justify-content-between align-items-center">
                                 <div>
