@@ -25,14 +25,16 @@ const ServiceCategories = () => {
     <>
         <div className="service-categories">
             <Container>
-                <Row>
+
+            <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <h1 className='text-center py-5 mb-0 font-bold'>Service Categories</h1>
                     </Col>
-
+                    </Row>
+                <Row className='category-cards'>
                     {categories.map((category) => {
                         return (
-                            <Col key={category.id} xxl={3} xl={3} lg={3} md={3} sm={12} xs={12}>
+                            <Col key={category.id} xxl={3} xl={3} lg={3} md={4} sm={6} xs={12}>
                                 <div className='service-category-card'>
                                     <img src={`http://3.8.140.227:8000${category.background_image}`} alt={category.name} className='img-fluid' />
                                     <h3>{category.name}</h3>

@@ -11,6 +11,16 @@ import Sidebar from "./Sidebar/Sidebar";
 
 
 const Dashboard = () =>{
+<<<<<<< HEAD
+    // const [dashboardData, setDashboardData] = useState({
+    //     totalReviews: 100,
+    //     activeListing: 10,
+    //     wishlist: 5,
+    //     message: 20
+    // });
+
+=======
+>>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
     const checkToken = async () => {
         const token = localStorage.getItem("token");
         if(!token){
@@ -31,14 +41,40 @@ const Dashboard = () =>{
         }
     }
     
+<<<<<<< HEAD
+    //const [isOpen, setIsOpen] = useState(true)
+    
+        const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    
+        const toggleSidebar = () => {
+            setIsSidebarOpen(!isSidebarOpen);
+        }
+
+=======
+>>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
     return(
         <>
         <Container fluid className="dashboard-page-main">
             <Row>
+<<<<<<< HEAD
+                    <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
+                    onClick={(e) => e.stopPropagation()}>
+
+                    <Sidebar />
+
+                    <div className="dashboard-content mb-5">
+                        
+                        <button className="btn btn-primary toggle-sidebar-btn-dashboard" onClick={toggleSidebar}>
+                            <FaArrowRight className={`${isSidebarOpen ? "d-none" : "d-block"}`} />
+                            <FaArrowLeft className={`${isSidebarOpen ? "d-block" : "d-none"}`} />
+                        </button>
+
+=======
                 <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start" onClick={(e) => e.stopPropagation()}>
                     <Sidebar />
 
                     <div className="dashboard-content mb-5">
+>>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
                         <Outlet />
                         <div className="dashboard-content-body">
                             <DashboardHeader />

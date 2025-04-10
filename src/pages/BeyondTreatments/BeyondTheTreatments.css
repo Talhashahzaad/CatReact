@@ -20,3 +20,21 @@
     overflow-x: hidden;
     max-height: 80px;
 }
+
+/* Responsive */
+@media(max-width:1200px){
+.beyond-treatments-clips-item p {
+    max-height: inherit;
+}
+.beyond-treatments-clips-item h3 {
+    min-height: 60px;
+    height: 100%;
+}
+}
+
+@media(max-width:991px){
+.beyond-treatments-clips-item h3 {
+    min-height: 60px;
+    height: 100%;
+}
+}

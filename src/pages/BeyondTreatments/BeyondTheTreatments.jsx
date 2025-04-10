@@ -48,7 +48,7 @@ const BeyondTheTreatments = () => {
                 <Container>
                     <Row>
                         {clipList.map((clipListing, index) => (
-                            <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12} className='pb-5' key={index}>
+                            <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12} className='pb-5' key={index}>
                                 <div className='beyond-treatments-clips-item'>
                                     <h3 className='text-black text-lowercase h4 mb-3'>{clipListing.video_title}</h3><hr />
                                     <p>{clipListing.video_description}</p>

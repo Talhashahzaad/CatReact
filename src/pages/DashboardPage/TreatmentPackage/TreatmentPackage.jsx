@@ -3,6 +3,8 @@ import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
 import './TreatmentPackage.css';
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 
@@ -108,14 +110,25 @@ const TreatmentPackage = () => {
     // show hide the editable form
     const [packageEditableForm, setPackageEditableForm] = useState(false);
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    
+        const toggleSidebar = () => {
+            setIsSidebarOpen(!isSidebarOpen);
+        }
+
   return (
     <>
         <Container fluid className="dashboard-page-main">
                 <Row>
-                    <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start pb-5" onClick={(e) => e.stopPropagation()}>
+                    <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
+                    onClick={(e) => e.stopPropagation()}>
                         <Sidebar />
 
                         <div className="dashboard-content">
+                        <button className="btn btn-primary toggle-sidebar-btn-dashboard" onClick={toggleSidebar}>
+                            <FaArrowRight className={`${isSidebarOpen ? "d-none" : "d-block"}`} />
+                            <FaArrowLeft className={`${isSidebarOpen ? "d-block" : "d-none"}`} />
+                        </button>
                             <div className="dashboard-content-body">
                                 <DashboardHeader />
 
@@ -159,7 +172,7 @@ const TreatmentPackage = () => {
                                             />
                                         </Col>
                                     </Row>
-                                    
+                                    <div className="table-main-div">
                                     <table className="table table-bordered">
                                         <thead>
                                             <tr>
@@ -194,6 +207,7 @@ const TreatmentPackage = () => {
                                             ))}
                                         </tbody>
                                     </table>
+                                    </div>
                                     <div className="d-flex justify-content-between align-items-center pagination-controls">
                                         <div>
                                             Showing {indexOfFirstEntry + 1} to {Math.min(indexOfLastEntry, entries.length)} of {entries.length} entries

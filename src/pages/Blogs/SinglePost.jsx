@@ -70,7 +70,7 @@ const SinglePost = (  ) => {
             {/* The quick brown fox jumped over the lazy dog. */}
             <Container className='py-5'>
                 <Row>
-                    <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={12}>
+                    <Col xxl={8} xl={8} lg={8} md={12} sm={12} xs={12}>
                         <div className="single-blog-post">
                             <h1>{BlogListingData.title}</h1>
                             

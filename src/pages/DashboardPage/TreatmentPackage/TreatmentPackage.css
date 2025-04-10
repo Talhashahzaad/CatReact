@@ -15,3 +15,17 @@ left: 0;margin-bottom: 0px;z-index: 11;background-color: transparent;border-radi
 
 .selected-treatments-package-details ul.d-flex li.d-flex input[type="checkbox"]:checked {background-color: var(--green25);}
 .selected-treatments-package-details ul.d-flex li.d-flex input[type="checkbox"]:focus {outline: none;box-shadow: none;border-color: var(--green25);}
+
+/*Responsive*/
+
+@media(max-width:991px){
+.table-main-div table tbody td , .table-main-div table tbody th {
+    word-wrap: normal;
+    white-space: nowrap;
+}
+
+.dashboard-content-table table thead th , .dashboard-content-table table thead td{
+    word-wrap: normal;
+    white-space: nowrap;
+}
+}
