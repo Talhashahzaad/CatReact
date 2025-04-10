@@ -138,7 +138,7 @@ const ForBusiness = () => {
                                             <Link to="/checkout" state={{ planId: subscriptionPlans[0].id }} className="btn form-control"
                                             onClick={() => {
                                                 window.scrollTo(0, 0);
-                                            }}>checkout</Link>
+                                            }}>activated</Link>
                                         </div>
 
                                         <div className="middle-side-subscription-plan-section text-center">
