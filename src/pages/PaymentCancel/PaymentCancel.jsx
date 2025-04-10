@@ -1,16 +1,16 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import "./PaymentFailed.css";
+import "./PaymentCancel.css";
 
-const PaymentFailed = () => {
+const PaymentCancel = () => {
     return (
         <>
-        <div className="payment-failed-container">
+        <div className="payment-cancel-container">
             <Container>
                 <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <div className='payment-failed-container d-flex justify-content-center align-items-center flex-column py-5'>
-                            <h1 className="mb-4 display-3">Payment Failed</h1>
+                        <div className='payment-cancel-container d-flex justify-content-center align-items-center flex-column py-5'>
+                            <h1 className="mb-4 display-3">Payment Canceled</h1>
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
                                 <g>
@@ -19,7 +19,7 @@ const PaymentFailed = () => {
                                 </g>
                             </svg>
                             
-                            <h4 className="b-0 pt-3 text-normal text-dark text-center lh-lg">Payment failed. Please try again.</h4>
+                            <h4 className="b-0 pt-3 text-normal text-dark text-center lh-lg">Payment canceled. Please try again.</h4>
                         </div>
                     </Col>
                 </Row>
@@ -29,4 +29,4 @@ const PaymentFailed = () => {
     );
 };
 
-export default PaymentFailed;
+export default PaymentCancel;

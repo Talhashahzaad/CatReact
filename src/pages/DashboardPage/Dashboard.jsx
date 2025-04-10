@@ -11,6 +11,7 @@ import Sidebar from "./Sidebar/Sidebar";
 
 
 const Dashboard = () =>{
+<<<<<<< HEAD
     // const [dashboardData, setDashboardData] = useState({
     //     totalReviews: 100,
     //     activeListing: 10,
@@ -18,6 +19,8 @@ const Dashboard = () =>{
     //     message: 20
     // });
 
+=======
+>>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
     const checkToken = async () => {
         const token = localStorage.getItem("token");
         if(!token){
@@ -38,6 +41,7 @@ const Dashboard = () =>{
         }
     }
     
+<<<<<<< HEAD
     //const [isOpen, setIsOpen] = useState(true)
     
         const [isSidebarOpen, setIsSidebarOpen] = useState(true)
@@ -46,10 +50,13 @@ const Dashboard = () =>{
             setIsSidebarOpen(!isSidebarOpen);
         }
 
+=======
+>>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
     return(
         <>
         <Container fluid className="dashboard-page-main">
             <Row>
+<<<<<<< HEAD
                     <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
                     onClick={(e) => e.stopPropagation()}>
 
@@ -62,6 +69,12 @@ const Dashboard = () =>{
                             <FaArrowLeft className={`${isSidebarOpen ? "d-block" : "d-none"}`} />
                         </button>
 
+=======
+                <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start" onClick={(e) => e.stopPropagation()}>
+                    <Sidebar />
+
+                    <div className="dashboard-content mb-5">
+>>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
                         <Outlet />
                         <div className="dashboard-content-body">
                             <DashboardHeader />
@@ -73,29 +86,7 @@ const Dashboard = () =>{
                             
 
 
-                            {/* <div className="dashboard-message-notification">
-                                <ul className="ps-0 mb-0 d-flex justify-content-between align-items-center">
-                                    <li>
-                                        <h3>{dashboardData.totalReviews}</h3>
-                                        <strong>total admin</strong>
-                                    </li>
-
-                                    <li>
-                                        <h3>{dashboardData.activeListing}</h3>
-                                        <strong>news</strong>
-                                    </li>
-
-                                    <li>
-                                        <h3>{dashboardData.wishlist}</h3>
-                                        <strong>reports</strong>
-                                    </li>
-
-                                    <li>
-                                        <h3>{dashboardData.message}</h3>
-                                        <strong>online users</strong>
-                                    </li>
-                                </ul>
-                            </div> */}
+                            
 
                             <div className="dashboard-active-packages">
                                 <h5 className="default-font fw-bold mt-5">Active Packages</h5>

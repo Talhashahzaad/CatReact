@@ -45,6 +45,7 @@ const Login = ({ children }) => {
             setData(response.data);
 
             if (response.status === 200 || response.status === 201) {
+                //const token = JSON.parse(response.data.token);
                 localStorage.setItem("token", JSON.stringify(response.data.token));
                 localStorage.setItem("role", JSON.stringify(response.data.role));
                 if (rememberMe) {

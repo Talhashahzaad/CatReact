@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { Container, Row, Col } from 'react-bootstrap';
 import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
-import { FaEdit, FaTrash } from "react-icons/fa"; 
+import { FaEdit, FaTrash, FaRegSun, FaCaretLeft } from "react-icons/fa"; 
 import defaultImage from "../../../images/default-profile-picture.webp";
 import defaultThumbnailImage from "../../../images/defaulThumbnailBackground.png";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
@@ -10,7 +10,7 @@ import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
 import FroalaEditorComponent from 'react-froala-wysiwyg'; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
@@ -35,6 +35,13 @@ const AllListing = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [content, setContent] = useState('');
     const [editorInitialized, setEditorInitialized] = useState(false);
+    const [mediaFilesToggle, setMediaFilesToggle] = useState(false);
+    const [imageGalleryToggle, setImageGalleryToggle] = useState(false);
+    const [showListingForm, setShowListingForm] = useState(false);
+    const [showImageGalleryForm, setShowImageGalleryForm] = useState(false);
+    const [showVideoGalleryForm, setShowVideoGalleryForm] = useState(false);
+    const [showScheduleTableForm, setShowScheduleTableForm] = useState(false);
+    const [showScheduleEditableForm, setShowScheduleEditableForm] = useState(false);
     const editorRef = useRef(null);
     //Utility function to prevent auto-scrolling.
     const preventAutoScroll = (event) => {
@@ -109,13 +116,7 @@ const AllListing = () => {
         isVerified: ''
 
     });
-    // State for files and images
-    // const [bodyPicture, setBodyPicture] = useState(null);
-    // const [bodyPicturePreview, setBodyPicturePreview] = useState('');
-    // const [thumbnailImage, setThumbnailImage] = useState(null);
-    // const [thumbnailImagePreview, setThumbnailImagePreview] = useState('');
-    // const [attachment, setAttachment] = useState(null); 
-    // const [description, setDescription] = useState(''); 
+    
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
     const [title, setTitle] = useState('');
@@ -596,8 +597,9 @@ const AllListing = () => {
                                             <button
                                                 className="bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center border-0 text-white py-2 px-3 h6"
                                                 onClick={() => {
-                                                    document.querySelector('.dashboard-content-table').style.display = 'none';
+                                                    document.querySelector('.dashboard-content-table ').style.display = 'none';
                                                     document.querySelector('.sidebar-listing-form').style.display = 'block';
+                                                    document.querySelector('.sidebar-image-gallery-form').style.display = 'none';
                                                 }}
                                             >
                                                 <span className="all-listing-create-button-plus">&#43;</span> Create
@@ -636,7 +638,7 @@ const AllListing = () => {
                                                 <th>Phone</th>  
                                                 <th>Address</th> 
                                                 <th>Status</th>  
-                                                {/* <th>Ation</th> */}
+                                                <th>Ation</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -648,10 +650,40 @@ const AllListing = () => {
                                                     <td>{entry.phone}</td>   
                                                     <td>{entry.address}</td> 
                                                     <td>Active</td> 
-                                                    {/* <td>
+                                                    <td>
                                                         <button className="btn btn-success"><FaEdit /></button>
                                                         <button className="btn btn-danger"><FaTrash /></button>
-                                                    </td> */}
+                                                        <button className="btn btn-dark position-relative" onClick={(e) => {
+                                                            setMediaFilesToggle(mediaFilesToggle === entry.id ? null : entry.id);
+                                                            e.stopPropagation();
+                                                        }}>
+                                                            <FaCaretLeft /><FaRegSun />
+
+                                                            <div className={`media-files ${mediaFilesToggle === entry.id ? 'd-flex' : 'd-none'}`} onClick={(e) => e.stopPropagation()}>
+                                                                <button className="media-files-link" onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    setShowListingForm(false);
+                                                                    setShowImageGalleryForm(true);
+                                                                    document.querySelector('.dashboard-content-table').style.display = 'none';
+                                                                    document.querySelector('.sidebar-image-gallery-form').style.display = 'block';
+                                                                }}>image gallery</button>
+                                                                <button className="media-files-link" onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    setShowListingForm(false);
+                                                                    setShowVideoGalleryForm(true);
+                                                                    document.querySelector('.dashboard-content-table').style.display = 'none';
+                                                                    document.querySelector('.sidebar-video-gallery-form').style.display = 'block';
+                                                                }}>video gallery</button>
+                                                                <button className="media-files-link" onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    setShowListingForm(false);
+                                                                    setShowScheduleTableForm(true);
+                                                                    document.querySelector('.dashboard-content-table').style.display = 'none';
+                                                                    document.querySelector('.sidebar-schedule-table-form').style.display = 'block';
+                                                                }}>schedule</button>
+                                                            </div>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -665,34 +697,12 @@ const AllListing = () => {
                                             <button onClick={handleNextPage} disabled={currentPage === totalPages} className="btn btn-next">Next</button>
                                         </div>
                                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    
-
-
-                                    
                                 </div>
+
+
+
+
+
 
                                 <div className="sidebar-listing-form">
                                     <div className="dashboard-all-listing-create-form">
@@ -1127,6 +1137,387 @@ const AllListing = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {/* sidebar listing form end here */}
+
+
+                                {/* image gallery start here */}
+                                <div className="sidebar-image-gallery-form" style={{ display: showImageGalleryForm ? 'block' : 'none' }} onClick={(e) => e.stopPropagation()}>
+                                    <div className="sidebar-image-gallery-form-header">
+                                        <Row>
+                                            <div className="d-flex justify-content-flex-start align-items-center listing-header">
+                                                <button className="btn bg-jetGreen all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2"
+                                                    onClick={() => {
+                                                        document.querySelector('.dashboard-content-table').style.display = 'block';
+                                                        document.querySelector('.sidebar-image-gallery-form').style.display = 'none';
+                                                    }}
+                                                >
+                                                    <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back
+                                                </button>
+                                                <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">listing image gallery</h2>
+                                            </div>
+                                        </Row>
+                                        <hr />
+                                        <div className="dashboard-all-listing-create-form-body">
+                                            <div className="form-container">
+                                                <form onSubmit={(event) => {
+                                                    event.preventDefault();
+                                                    handleSubmit(event);
+                                                }}>
+                                                    <Row>
+                                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <label htmlFor="selectImages" className="form-label text-capitalize fw-bold small">image <samp className="text-danger small fw-normal">(multi images supported)</samp> </label>
+                                                                <input type="file" className="form-control" id="selectImages" name="selectImages" multiple />
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <input type="submit" className="text-white rounded-0 bg-jetGreen border-0 py-2 px-3" value="Upload" onClick={handleSubmit} />
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <strong className="form-label text-capitalize fw-bold small lh-lg w-100 h-auto d-block">all images</strong>
+                                                                <table className="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Image</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td className="w-25">1</td>
+                                                                            <td className="w-50"><img src={defaultThumbnailImage} alt="image" /></td>
+                                                                            <td className="w-25">
+                                                                                <button className="btn btn-sm btn-danger"><FaTrash /></button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* image gallery end here */}
+
+
+                                {/* video gallery start here */}
+                                <div className="sidebar-video-gallery-form" style={{ display: showVideoGalleryForm ? 'block' : 'none' }} onClick={(e) => e.stopPropagation()}>
+                                    <div className="sidebar-video-gallery-form-header">
+                                        <Row>
+                                            <div className="d-flex justify-content-flex-start align-items-center listing-header">
+                                                <button className="btn bg-jetGreen all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2"
+                                                    onClick={() => {
+                                                        document.querySelector('.dashboard-content-table').style.display = 'block';
+                                                        document.querySelector('.sidebar-video-gallery-form').style.display = 'none';
+                                                    }}
+                                                >
+                                                    <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back
+                                                </button>
+                                                <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">listing video gallery</h2>
+                                            </div>
+                                        </Row>
+                                        <hr />
+                                        <div className="dashboard-all-listing-create-form-body">
+                                            <div className="form-container">
+                                                <form onSubmit={(event) => {
+                                                    event.preventDefault();
+                                                    handleSubmit(event);
+                                                }}>
+                                                    <Row>
+                                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <label htmlFor="selectVideos" className="form-label text-capitalize fw-bold small">video URL </label>
+                                                                <input type="text" className="form-control" id="selectVideos" name="selectVideos" />
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col xxl={4} xl={4} lg={4} md={4} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <input type="submit" className="text-white rounded-0 bg-jetGreen border-0 py-2 px-3" value="Upload" onClick={handleSubmit} />
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <strong className="form-label text-capitalize fw-bold small lh-lg w-100 h-auto d-block">all videos</strong>
+                                                                <table className="table table-bordered">
+                                                                    <thead>
+                                                                        <tr className="text-capitalize">
+                                                                            <th>ID</th>
+                                                                            <th>thumbnail</th>
+                                                                            <th>URL</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td valign="middle" className="w-25">1</td>
+                                                                            <td valign="middle" className="w-50"><img src={defaultThumbnailImage} alt="video thumbnail" /></td>
+                                                                            <td valign="middle" className="w-25">https://www.youtube.com/watch?v=dQw4w9WgXcQ</td>
+                                                                            <td valign="middle" className="w-25">
+                                                                                <button className="btn btn-sm btn-danger"><FaTrash /></button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* video gallery end here */}
+
+
+
+                                {/* schedule table start here */}
+                                <div className="sidebar-schedule-table-form" style={{ display: showScheduleTableForm ? 'block' : 'none' }} onClick={(e) => e.stopPropagation()}>
+                                    <div className="sidebar-schedule-table-form-header">
+                                        <Row>
+                                            <div className="d-flex justify-content-flex-start align-items-center listing-header">
+                                                <button className="btn bg-jetGreen all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2"
+                                                    onClick={() => {
+                                                        document.querySelector('.dashboard-content-table').style.display = 'block';
+                                                        document.querySelector('.sidebar-schedule-table-form').style.display = 'none';
+                                                    }}
+                                                >
+                                                    <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back
+                                                </button>
+                                                <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">listing schedule</h2>
+                                            </div>
+                                        </Row>
+                                        <hr />
+                                        <div className="dashboard-all-listing-create-form-body">
+                                            <div className="form-container">
+                                                <Row>
+                                                    <div className="d-flex justify-content-between align-items-center listing-header">
+                                                        <strong className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">all schedule</strong>
+                                                        <button 
+                                                            className="bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center border-0 text-white py-2 px-3 h6" 
+                                                            onClick={() => {
+                                                                document.querySelector('.dashboard-content-table').style.display = 'none';
+                                                                document.querySelector('.sidebar-schedule-table-form').style.display = 'none';
+                                                                document.querySelector('.sidebar-schedule-editable-form').style.display = 'block';
+                                                            }}
+                                                        >
+                                                            <span className="all-listing-create-button-plus">&#43;</span> Create  
+                                                        </button>
+                                                    </div>
+                                                </Row>
+                                                <hr/>
+                                                
+                                                <Row className="d-flex justify-content-between align-items-center mb-3">
+                                                    <Col>
+                                                        <label htmlFor="entriesPerPage">Show entries:</label>
+                                                        <select
+                                                            id="entriesPerPage"
+                                                            onChange={handleEntriesPerPageChange}
+                                                            className={`setEntriesPerPage ${entriesPerPage}`}
+                                                            defaultValue={entriesPerPage}
+                                                        >
+                                                            <option value={5}>5</option>
+                                                            <option value={10}>10</option>
+                                                            <option value={15}>10</option>
+                                                            <option value={20}>20</option>
+                                                        </select>
+                                                    </Col>
+                                                    <Col xxl={3} xl={3} lg={3} md={3} sm={12} className="text-end border rounded-2">
+                                                        <label htmlFor="search-input" className="visually-hidden">Search treatments</label>
+                                                        <input 
+                                                            type="search" 
+                                                            placeholder="Search..." 
+                                                            value={searchTerm} 
+                                                            onChange={handleSearchChange} 
+                                                            id="search-input"
+                                                            name="search-input"
+                                                        />
+                                                    </Col>
+                                                </Row>
+
+                                                <table className="table table-bordered">
+                                                    <thead>
+                                                        <tr className="text-capitalize">
+                                                            <th>ID</th>
+                                                            <th>date</th>
+                                                            <th>start date</th>
+                                                            <th>end date</th>
+                                                            <th>status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>2024-01-01</td>
+                                                            <td>10:00 AM</td>
+                                                            <td>11:00 AM</td>
+                                                            <td>active</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <div className="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        Showing 0 to 5 entries
+                                                    </div>
+                                                    <div>
+                                                        <button className="btn btn-previous">Previous</button>
+                                                        <span> Page 0 of 1 </span>
+                                                        <button className="btn btn-next">Next</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* schedule table end here */}
+
+
+
+
+                                {/* create schedule form start here */}
+                                <div className="sidebar-schedule-editable-form" style={{ display: showScheduleEditableForm ? 'block' : 'none' }} onClick={(e) => e.stopPropagation()}>
+                                    <div className="sidebar-schedule-editable-form-header">
+                                        <Row>
+                                            <div className="d-flex justify-content-flex-start align-items-center listing-header">
+                                                <button className="btn bg-jetGreen all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2"
+                                                    onClick={() => {
+                                                        document.querySelector('.sidebar-schedule-editable-form').style.display = 'none';
+                                                        document.querySelector('.sidebar-schedule-table-form').style.display = 'block';
+                                                    }}
+                                                >
+                                                    <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back
+                                                </button>
+                                                <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">All schedule</h2>
+                                            </div>
+                                        </Row>
+                                        <hr />
+                                        <div className="dashboard-all-listing-create-form-body">
+                                            <div className="form-container">
+                                                <Row>
+                                                    <div className="d-flex justify-content-between align-items-center listing-header">
+                                                        <strong className="dashboard-content-title mb-3 h3 fw-bold text-capitalize headingFont">create listing schedule</strong>
+                                                    </div>
+                                                </Row>
+
+                                                <form>
+                                                    <Row>
+                                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <label htmlFor="date" className="form-label text-capitalize fw-bold small">days <sup className="text-danger small fw-normal">*</sup></label>
+                                                                <select name="date" id="date" className="form-control text-capitalize">
+                                                                    <option value="">choose</option>
+                                                                    <option value="monday">monday</option>
+                                                                    <option value="tuesday">tuesday</option>
+                                                                    <option value="wednesday">wednesday</option>
+                                                                    <option value="thursday">thursday</option>
+                                                                    <option value="friday">friday</option>
+                                                                    <option value="saturday">saturday</option>
+                                                                    <option value="sunday">sunday</option>
+                                                                </select>
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <label htmlFor="startTime" className="form-label text-capitalize fw-bold small">start time <sup className="text-danger small fw-normal">*</sup></label>
+                                                                <select name="startTime" id="startTime" className="form-control text-capitalize">
+                                                                    <option value="">choose</option>
+                                                                    <option value="09:00 AM">09:00 AM</option>
+                                                                    <option value="10:00 AM">10:00 AM</option>
+                                                                    <option value="11:00 AM">11:00 AM</option>
+                                                                    <option value="12:00 PM">12:00 PM</option>
+                                                                    <option value="01:00 PM">01:00 PM</option>
+                                                                    <option value="02:00 PM">02:00 PM</option>
+                                                                    <option value="03:00 PM">03:00 PM</option>
+                                                                    <option value="04:00 PM">04:00 PM</option>
+                                                                    <option value="05:00 PM">05:00 PM</option>
+                                                                    <option value="06:00 PM">06:00 PM</option>
+                                                                    <option value="07:00 PM">07:00 PM</option>
+                                                                    <option value="08:00 PM">08:00 PM</option>
+                                                                    <option value="09:00 PM">09:00 PM</option>
+                                                                    <option value="10:00 PM">10:00 PM</option>
+                                                                    <option value="11:00 PM">11:00 PM</option>
+                                                                    <option value="12:00 AM">12:00 AM</option>
+                                                                    <option value="01:00 AM">01:00 AM</option>
+                                                                    <option value="02:00 AM">02:00 AM</option>
+                                                                    <option value="03:00 AM">03:00 AM</option>
+                                                                    <option value="04:00 AM">04:00 AM</option>
+                                                                    <option value="05:00 AM">05:00 AM</option>
+                                                                    <option value="06:00 AM">06:00 AM</option>
+                                                                    <option value="07:00 AM">07:00 AM</option>
+                                                                    <option value="08:00 AM">08:00 AM</option>
+                                                                </select>
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <label htmlFor="endTime" className="form-label text-capitalize fw-bold small">end time <sup className="text-danger small fw-normal">*</sup></label>
+                                                                <select name="endTime" id="endTime" className="form-control text-capitalize">
+                                                                    <option value="">choose</option>
+                                                                    <option value="09:00 AM">09:00 AM</option>
+                                                                    <option value="10:00 AM">10:00 AM</option>
+                                                                    <option value="11:00 AM">11:00 AM</option>
+                                                                    <option value="12:00 PM">12:00 PM</option>
+                                                                    <option value="01:00 PM">01:00 PM</option>
+                                                                    <option value="02:00 PM">02:00 PM</option>
+                                                                    <option value="03:00 PM">03:00 PM</option>
+                                                                    <option value="04:00 PM">04:00 PM</option>
+                                                                    <option value="05:00 PM">05:00 PM</option>
+                                                                    <option value="06:00 PM">06:00 PM</option>
+                                                                    <option value="07:00 PM">07:00 PM</option>
+                                                                    <option value="08:00 PM">08:00 PM</option>
+                                                                    <option value="09:00 PM">09:00 PM</option>
+                                                                    <option value="10:00 PM">10:00 PM</option>
+                                                                    <option value="11:00 PM">11:00 PM</option>
+                                                                    <option value="12:00 AM">12:00 AM</option>
+                                                                    <option value="01:00 AM">01:00 AM</option>
+                                                                    <option value="02:00 AM">02:00 AM</option>
+                                                                    <option value="03:00 AM">03:00 AM</option>
+                                                                    <option value="04:00 AM">04:00 AM</option>
+                                                                    <option value="05:00 AM">05:00 AM</option>
+                                                                    <option value="06:00 AM">06:00 AM</option>
+                                                                    <option value="07:00 AM">07:00 AM</option>
+                                                                    <option value="08:00 AM">08:00 AM</option>
+                                                                </select>
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <label htmlFor="status" className="form-label text-capitalize fw-bold small">status <sup className="text-danger small fw-normal">*</sup></label>
+                                                                <select name="status" id="status" className="form-control text-capitalize">
+                                                                    <option value="">choose</option>
+                                                                    <option value="active">active</option>
+                                                                    <option value="inactive">inactive</option>
+                                                                </select>
+                                                            </div>
+                                                        </Col>
+
+
+                                                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
+                                                            <div className="form-group my-2">
+                                                                <input type="submit" className="text-white rounded-0 bg-jetGreen border-0 py-2 px-3" value="Create" />
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* create schedule form end here */}
                             </div>
                         </div>
                     </div>

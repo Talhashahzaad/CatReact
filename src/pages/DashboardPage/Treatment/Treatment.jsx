@@ -2,8 +2,12 @@ import { React, useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
+<<<<<<< HEAD
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+=======
+import { FaEdit, FaTrash, FaTimes, FaPencilAlt} from "react-icons/fa";
+>>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import axios from "axios";
 import "./Treatment.css";

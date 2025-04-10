@@ -14,7 +14,7 @@ import axios from "axios";
 
 const ForBusiness = () => {
     const [subscriptionPlans, setSubscriptionPlans] = useState([]);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState({ error: '' });
 
     const token = localStorage.getItem("token");
     const fetchSubscriptionPlans = async () => {
@@ -36,11 +36,26 @@ const ForBusiness = () => {
         fetchSubscriptionPlans();
     }, []);
 
-    const [planID, setPlanID] = useState(null);
-
+    const [planID, setPlanID] = useState({ planID: '' });
     const fetchSelectedPlan = async () => {
-        const response = await axios.get(`http://3.8.140.227:8000/api/checkout/${planID}`);
-        setPlanID(response.data);
+        const token = JSON.parse(localStorage.getItem("token"));
+        const planID = localStorage.getItem("planID");
+        
+        if (!planID || planID === '') {
+            setError("No planID found in localStorage");
+            return;
+        }
+        
+        const response = await axios.get(`http://3.8.140.227:8000/api/checkout/${planID}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        });
+        if (Array.isArray(response.data) && response.data.length > 0) {
+            setPlanID(response.data[0]);
+        }
     }
 
     useEffect(() => {
@@ -96,7 +111,7 @@ const ForBusiness = () => {
                                                 <p className="mb-0"><strong>Check a Treatment Marketplace:</strong> Sell products directly to clients, with tailored commission rates based on your membership plan.</p>
                                             </li>
                                         </ol>
-                                        <aside><Link to="/" className="green-btn text-capitalize">add listing</Link></aside>
+                                        <aside><Link to="/business-registration" className="green-btn text-capitalize">add listing</Link></aside>
                                     </div>
                                 </Col>
                             </Row>
@@ -117,7 +132,9 @@ const ForBusiness = () => {
                                         <div className="left-side-subscription-plan-section text-center">
                                             <strong>{subscriptionPlans[0].name}</strong>
                                             <h3 className="text-uppercase display-2 fw-bold">{subscriptionPlans[0].type}</h3>
-                                            <p>Check a Treatment Online Store front </p>
+                                            <p>Advanced Business Profile Listing</p>
+                                            <p>Check a Treatment Online Store front <b>10% commission</b></p>
+                                            <p>CaT Pro Social Media <br/><b>(Comming Soon)</b></p>
                                             <Link to="/checkout" state={{ planId: subscriptionPlans[0].id }} className="btn form-control"
                                             onClick={() => {
                                                 window.scrollTo(0, 0);
@@ -127,7 +144,8 @@ const ForBusiness = () => {
                                         <div className="middle-side-subscription-plan-section text-center">
                                             <strong>{subscriptionPlans[2].name}</strong>
                                             <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>{subscriptionPlans[2].price}<small>/m</small></h3>
-                                            <p>Check a Treatment Online Store front </p>
+                                            <p>Advanced Business Profile Listing</p>
+                                            <p>Check a Treatment Online Store front <b>0% commission</b></p>
                                             <p>CaT Pro Social Media <br/><b>(Comming Soon)</b></p>
                                             <p>Priority listing in search results</p>
                                             <p>Maximized Business Profile</p>
@@ -143,7 +161,8 @@ const ForBusiness = () => {
                                         <div className="right-side-subscription-plan-section text-center">
                                             <strong>{subscriptionPlans[1].name}</strong>
                                             <h3 className="text-uppercase display-2 fw-bold"><dd>&pound;</dd>{subscriptionPlans[1].price}<small>/m</small></h3>
-                                            <p>Check a Treatment Online Store front </p>
+                                            <p>Advanced Business Profile Listing</p>
+                                            <p>Check a Treatment Online Store front <b>4% commission</b></p>
                                             <p>CaT Pro Social Media <br/><b>(Comming Soon)</b></p>
                                             <Link to="/checkout" state={{ planId: subscriptionPlans[1].id }} className="btn form-control"
                                             onClick={() => {
@@ -168,7 +187,7 @@ const ForBusiness = () => {
                                     <p>&#x2022; <strong>Enhanced Professional Growth:</strong> Network with other professionals on CaT Pro Social Media and exchange valuable insights.</p>
                                     <p>&#x2022; <strong>Effortless Updates:</strong> Keep your profile updated automatically through our Social Media Autouploads<sup>TM</sup> feature.</p>
                                     <p>&#x2022; <strong>Revenue Growth:</strong> Use the Marketplace to sell products and expand your business reach with competitive commission rates.</p>
-                                    <aside><Link to="/" className="green-btn text-capitalize">add listing</Link></aside>
+                                    <aside><Link to="/business-registration" className="green-btn text-capitalize">add listing</Link></aside>
                                 </div>
                             </Col>
 
@@ -210,7 +229,7 @@ const ForBusiness = () => {
                                         
                                         <h3 className="mb-3 fw-normal">Join Us Today!</h3>
                                         <p>Start showcasing your services and connecting with a supportive community. Choose the plan that's right for you and take your business to the next level.</p>
-                                        <aside><Link to="/" className="green-btn text-capitalize">add listing</Link></aside>
+                                        <aside><Link to="/business-registration" className="green-btn text-capitalize">add listing</Link></aside>
                                     </div>
                                 </Col>
 
