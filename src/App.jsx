@@ -35,8 +35,8 @@ import FeaturedListing from './pages/FeaturedListing/FeaturedSearchListing';
 import ProtectedRoute from './component/ProtectedRoute';
 import ServiceCategories from './pages/ServiceCategories/ServiceCategories';
 import Checkout from './pages/Checkout/Checkout';
-import PaymentSuccess from './pages/PaymentSuccess/PaymentSuccess';
-import PaymentCancel from './pages/PaymentCancel/PaymentCancel';
+import PaypalSuccess from './pages/PaypalSuccess/PaypalSuccess';
+import PaypalCancel from './pages/PaypalCancel/PaypalCancel';
 function App () {
 
   const location = useLocation();
@@ -119,8 +119,8 @@ function App () {
             </ProtectedRoute>
           } />
           
-          <Route path="/payment-success" element={<PaymentSuccess/>} />
-          <Route path="/payment-cancel" element={<PaymentCancel/>} />
+          <Route path="/paypal-success" element={<PaypalSuccess/>} />
+          <Route path="/paypal-cancel" element={<PaypalCancel/>} />
         </Routes>
       </main>
       {!isDashboard && <Footer />}

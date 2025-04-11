@@ -101,7 +101,7 @@ const DashboardHeader = () => {
             />
             <div className="dashboard-sidebar-header-top">
                 <div className="dashboard-header-logout">
-                    <Link to="#" onClick={handleLogout} className="text-decoration-none text-dark text-capitalize">
+                    <Link to="#" onClick={handleLogout} className="text-decoration-none text-white text-capitalize">
                         <span className="item-icon">
                             <img src={logoutIcon} alt="Logout" />
                         </span>
@@ -115,7 +115,7 @@ const DashboardHeader = () => {
                     </figure>
                     <div className="d-flex flex-column ms-2 text-white">
                         {profileInfo && (
-                            <Link to="/dashboard/my-profile" className="text-dark">
+                            <Link to="/dashboard/my-profile" className="text-white">
                                 hi, {profileInfo.user.name}
                             </Link>
                         )}

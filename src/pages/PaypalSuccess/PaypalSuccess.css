@@ -1,13 +1,13 @@
-.payment-success-container svg {
+.paypal-success-container svg {
     width: 300px;
     max-width: 300px;
 }
-.payment-success-container h1 {
+.paypal-success-container h1 {
     color: var(--jetGreen);
 }
 
 @media (max-width: 767px) {
-    .payment-success-container svg {
+    .paypal-success-container svg {
         max-width: 175px;
     }
 }

@@ -1,15 +1,15 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import "./PaymentCancel.css";
+import "./PaypalCancel.css";
 
-const PaymentCancel = () => {
+const PaypalCancel = () => {
     return (
         <>
-        <div className="payment-cancel-container">
+        <div className="paypal-cancel-container">
             <Container>
                 <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                        <div className='payment-cancel-container d-flex justify-content-center align-items-center flex-column py-5'>
+                        <div className='paypal-cancel-container d-flex justify-content-center align-items-center flex-column py-5'>
                             <h1 className="mb-4 display-3">Payment Canceled</h1>
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
@@ -29,4 +29,4 @@ const PaymentCancel = () => {
     );
 };
 
-export default PaymentCancel;
+export default PaypalCancel;

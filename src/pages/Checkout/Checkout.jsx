@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import paypalIcon from '../../images/paypalicon.svg';
 import './Checkout.css';
 import axios from 'axios';
+import { $siteURL } from '../../common/SiteURL';
 
 const Checkout = () => {
     const location = useLocation();
@@ -27,7 +28,7 @@ const Checkout = () => {
         const token = JSON.parse(localStorage.getItem('token'));
         try {
             setLoading(true);
-            const response = await axios.get(`http://3.8.140.227:8000/api/checkout/${planId}`, {
+            const response = await axios.get(`${$siteURL}/api/checkout/${planId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -73,13 +74,17 @@ const Checkout = () => {
 
         try {
             setLoading(true);
-            const response = await axios.get(`http://3.8.140.227:8000/api/paypal/payment/?selected_package_id=${planId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+            const response = await axios.post(
+                `${$siteURL}/api/paypal/payment?selected_package_id=${planId}`,
+                {}, // empty request body since we're passing the planId in the URL
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
                 }
-            });
+            );
             console.log(response.data, 'response');
             if (response.data?.approval_url) {
                 setPayment_url(response.data.approval_url);
@@ -87,7 +92,6 @@ const Checkout = () => {
                 setError('Failed to create payment');
             }
         } catch (error) {
-//            console.error('Payment creation failed:', error);
             setError(error.response?.data?.message || 'Failed to create payment. Please try again later.');
         } finally {
             setLoading(false);

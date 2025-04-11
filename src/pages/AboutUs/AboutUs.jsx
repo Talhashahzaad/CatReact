@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import {Link} from "react-router-dom";
 import InspiredBySuccess from '../../images/Inspired-by-Success.webp';
 import SimplifyingBeautySearches from '../../images/Simplifying-Beauty-Searches.webp';
-import OurMission from '../../images/Our-Mission.png';
+//import OurMission from '../../images/Our-Mission.png';
 
 import './AboutUs.css';
 
@@ -24,10 +24,6 @@ function AboutUs(){
             <div className="about-section-b">
                 <Container>
                     <Row>
-                        <Col xxl={5} xl={5} lg={5} md={12} sm={12} xs={12}>
-                            <figure className="mb-0"><img src={InspiredBySuccess} alt="" title="" width="" height="" className="img-fluid" /></figure>
-                        </Col>
-
                         <Col xxl={7} xl={7} lg={7} md={12} sm={12} xs={12}>
                             <div className="d-flex flex-column justify-content-center align-items-start h-100">
                                 <h2>Meet Our Founder</h2>
@@ -37,6 +33,9 @@ function AboutUs(){
                                 <p className="pb-3">With years of experience in mental health, healthcare, and education, Tallulah envisioned a platform that caters to every individual’s unique needs while championing inclusivity and accessibility. Her passion for creating meaningful connections inspired the launch of Check a Treatment, a space where all businesses, from small independents to industry leaders, can shine.</p>
                             </div>
                         </Col>
+                        <Col xxl={5} xl={5} lg={5} md={12} sm={12} xs={12}>
+                            <figure className="mb-0"><img src={InspiredBySuccess} alt="" title="" width="" height="" className="img-fluid" /></figure>
+                        </Col>
                     </Row>
                 </Container>
             </div>
@@ -44,6 +43,10 @@ function AboutUs(){
             <div className="about-section-a">
                 <Container>
                     <Row>
+                        <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12}>
+                            <figure className="mb-0"><img src={SimplifyingBeautySearches} alt="" title="" width="" height="" className="img-fluid" /></figure>
+                        </Col>
+
                         <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12}>
                             <h2 className="pb-3">What Makes Us Unique</h2>
                             <p><em>We believe beauty and wellness go beyond treatments—they’re experiences that enhance lives and foster happiness. <strong>At Check a Treatment, we provide:</strong></em></p>
@@ -58,10 +61,6 @@ function AboutUs(){
                             </ul>
                             
                             <p>These features aren’t just tools—they’re pathways to creating happiness, fostering connections, and enhancing the lives of everyone who uses or views them. At Check a Treatment, every moment is an opportunity to make a meaningful impact</p>
-                        </Col>
-
-                        <Col xxl={6} xl={6} lg={6} md={12} sm={12} xs={12}>
-                            <figure className="mb-0"><img src={SimplifyingBeautySearches} alt="" title="" width="" height="" className="img-fluid" /></figure>
                         </Col>
                     </Row>
                 </Container>

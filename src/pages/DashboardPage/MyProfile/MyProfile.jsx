@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./MyProfile.css";
-//import { data } from "react-router-dom";
+import { $siteURL } from "../../../common/SiteURL";
 
 const MyProfile = () => {
     const [profilePicture, setProfilePicture] = useState(defaultImage);
@@ -32,7 +32,7 @@ const MyProfile = () => {
 
             try {
                 const token = JSON.parse(localStorage.getItem("token"));
-                const response = await axios.post('http://3.8.140.227:8000/api/user-avatar-update', 
+                const response = await axios.post(`${$siteURL}/api/user-avatar-update`, 
                     formData,
                     {
                         headers: {
@@ -74,7 +74,7 @@ const MyProfile = () => {
 
             try {
                 const token = JSON.parse(localStorage.getItem("token"));
-                const response = await axios.post('http://3.8.140.227:8000/api/user-banner-update', 
+                const response = await axios.post(`${$siteURL}/api/user-banner-update`, 
                     formData,
                     {
                         headers: {
@@ -144,6 +144,11 @@ const MyProfile = () => {
                 }
             });
             setProfileInfo(response.data);
+            
+            // Export user ID to localStorage for use in PaypalSuccess page
+            if (response.data && response.data.user && response.data.user.id) {
+                localStorage.setItem('user_id', response.data.user.id);
+            }
         } catch (error) {
             setError(error);
         }
@@ -233,7 +238,7 @@ const handleUpdateProfile = async (e) => {
                 'Content-Type': 'application/json'
             }
         });
-        
+
         // if (response.data && response.data.user) {
         //     setProfileInfo(response.data);
         // }

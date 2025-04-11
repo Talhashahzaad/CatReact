@@ -1,14 +1,14 @@
-.payment-cancel-container svg {
+.paypal-cancel-container svg {
     width: 200px;
     max-width: 200px;
     height: 200px;
 }
-.payment-cancel-container h1 {
+.paypal-cancel-container h1 {
     color: #f44336;
 }
 
 @media (max-width: 767px) {
-    .payment-cancel-container svg {
+    .paypal-cancel-container svg {
         max-width: 175px;
     }
 }

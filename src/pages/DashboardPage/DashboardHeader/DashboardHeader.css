@@ -2,9 +2,9 @@
 .dashboard-header-logout .item-icon img {max-width: 20px;}
 .dashboard-header-logout .item-icon {background-color: var(--white);width: 40px;height: 40px;display: inline-flex;align-items: anchor-center;justify-content: center;line-height: 40px;border-radius: 100px;border: 1px solid var(--jetGreen);margin-inline-end: 8px;}
 .dashboard-header-logout a.text-decoration-none {line-height: 40px;display: inline-flex;align-items: center;font-weight: 600;}
-.dashboard-sidebar-header-top {position: fixed; top: 0;right: 0;width: 80%;background-color: var(--green25);padding-block: 8px;z-index: 10;
+.dashboard-sidebar-header-top {position: fixed; top: 0;right: 0;width: 80%;background-color: rgb(145 172 143);padding-block: 8px;z-index: 10;
 padding-inline: 30px;display: flex;justify-content: flex-end;align-items: center;order: -1;}
-.dash-profile-picture .d-flex a.text-dark { text-transform: capitalize; font-weight: 600; cursor: pointer;}
+.dash-profile-picture .d-flex a.text-white { text-transform: capitalize; font-weight: 600; cursor: pointer;}
 
 /*Responsive*/
 

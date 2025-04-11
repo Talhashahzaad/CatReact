@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {Container, Row} from 'react-bootstrap';
 import { Outlet } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
@@ -8,26 +8,17 @@ import "./Dashboard.css";
 import "../../App.css";
 import DashboardHeader from "./DashboardHeader/DashboardHeader";
 import Sidebar from "./Sidebar/Sidebar";
+import { $siteURL } from "../../common/SiteURL";
 
 
 const Dashboard = () =>{
-<<<<<<< HEAD
-    // const [dashboardData, setDashboardData] = useState({
-    //     totalReviews: 100,
-    //     activeListing: 10,
-    //     wishlist: 5,
-    //     message: 20
-    // });
-
-=======
->>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
     const checkToken = async () => {
         const token = localStorage.getItem("token");
         if(!token){
             localStorage.removeItem("token");
             navigate("/login");
         } else{
-            const response = await axios.get("http://3.8.140.227:8000/api/login", {
+            const response = await axios.get(`${$siteURL}/api/login`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -41,22 +32,46 @@ const Dashboard = () =>{
         }
     }
     
-<<<<<<< HEAD
-    //const [isOpen, setIsOpen] = useState(true)
-    
-        const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-    
-        const toggleSidebar = () => {
-            setIsSidebarOpen(!isSidebarOpen);
-        }
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
-=======
->>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    }
+
+    const [dashboardData, setDashboardData] = useState(null);
+
+    const convertToYesNo = (value) => {
+        return String(value) === '1' ? 'Yes' : 'No';
+    }; 
+
+    const convertToListingData = (value) => {
+        return String(value) === '10' ? 'Unlimited' : String(value);
+    }; 
+
+    
+
+    const fetchDashboardData = async () => {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${$siteURL}/api/listing-packages`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        });
+        if(Array.isArray(response.data) && response.data.length > 0){
+            setDashboardData(response.data);
+        }
+    }
+
+    useEffect(() => {
+        fetchDashboardData();
+    }, []);
+
     return(
         <>
         <Container fluid className="dashboard-page-main">
             <Row>
-<<<<<<< HEAD
                     <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
                     onClick={(e) => e.stopPropagation()}>
 
@@ -69,12 +84,6 @@ const Dashboard = () =>{
                             <FaArrowLeft className={`${isSidebarOpen ? "d-block" : "d-none"}`} />
                         </button>
 
-=======
-                <div className="dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start" onClick={(e) => e.stopPropagation()}>
-                    <Sidebar />
-
-                    <div className="dashboard-content mb-5">
->>>>>>> 0e8f8eccd1a8eb27335bb9e841fbd8fca6d0350a
                         <Outlet />
                         <div className="dashboard-content-body">
                             <DashboardHeader />
@@ -84,10 +93,6 @@ const Dashboard = () =>{
                             </div>
                             <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">Dashboard</h1>
                             
-
-
-                            
-
                             <div className="dashboard-active-packages">
                                 <h5 className="default-font fw-bold mt-5">Active Packages</h5>
                                 <hr/>
@@ -99,45 +104,51 @@ const Dashboard = () =>{
                                             <th>summary</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="text-capitalize">
-
-                                        <tr>
-                                            <td>Package name</td>
-                                            <td>basic</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Package price</td>
-                                            <td>&#163; 0.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>purchase date</td>
-                                            <td>24 dec 2024</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Expiry date</td>
-                                            <td>23 dec 2025</td>
-                                        </tr>
-                                        <tr>
-                                            <td>maximum listing</td>
-                                            <td>10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>maximum amenities</td>
-                                            <td>10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>maximum photos</td>
-                                            <td>10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>maximum videos</td>
-                                            <td>10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>feature listing available</td>
-                                            <td>yes</td>
-                                        </tr>
-                                    </tbody>
+                                    {dashboardData && dashboardData.length > 0 && (
+                                        <tbody className="text-capitalize">
+                                            <tr>
+                                                <td>Package name</td>
+                                                <td>{dashboardData[0].name}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Package price</td>
+                                                <td>&#163; {dashboardData[0].price}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>number of listing</td>
+                                                <td>{convertToListingData(dashboardData[0].num_of_listing)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>plan active for</td>
+                                                <td>{dashboardData[0].number_of_days} days</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>ecommerce</td>
+                                                <td>{convertToYesNo(dashboardData[0].cat_ecommarce)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>status</td>
+                                                <td>{convertToYesNo(dashboardData[0].status)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>pro social media</td>
+                                                <td>{convertToYesNo(dashboardData[0].cat_pro_social_media)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>featured listing</td>
+                                                <td>{convertToYesNo(dashboardData[0].featured_listing)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>live chat</td>
+                                                <td>{convertToYesNo(dashboardData[0].live_chat)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>multiple locations</td>
+                                                <td>{convertToYesNo(dashboardData[0].multiple_locations)}</td>
+                                            </tr>
+                                        </tbody>
+                                    )}
                                 </table>
                             </div>
                         </div>
