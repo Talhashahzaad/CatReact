@@ -6,6 +6,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "../Dashboard.css";
 import axios from "axios";
+import { $siteURL } from "../../../common/SiteURL";
 
 
 const Order = () =>{
@@ -39,7 +40,7 @@ const Order = () =>{
     useEffect(() => {
         const fetchProfileInfo = async () => {
             const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
+            const response = await axios.get(`${$siteURL}/api/user-profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
@@ -74,7 +75,7 @@ const Order = () =>{
                             <div className="dashboard-sidebar-header-top">
                                     <div className="dash-profile-picture d-flex justify-content-flex-end align-items-center text-end float-end">
                                     <figure className="mb-0">
-                                        <img src={`http://3.8.140.227:8000/${profileInfo?.user?.avatar}`} alt="Profile" />
+                                        <img src={`${$siteURL}${profileInfo?.user?.avatar}`} alt="Profile" />
                                     </figure>
                                     <div className="d-flex flex-column ms-2 text-white">
                                         {profileInfo && (

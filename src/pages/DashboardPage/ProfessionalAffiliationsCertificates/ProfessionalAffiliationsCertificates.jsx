@@ -9,6 +9,7 @@ import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { $siteURL } from '../../../common/SiteURL';
 
 
 const ProfessionalAffiliationsCertificates = () => {
@@ -93,7 +94,7 @@ const ProfessionalAffiliationsCertificates = () => {
                 return;
             }
             
-            await axios.delete(`http://3.8.140.227:8000/api/professional-certificate/${id}`, {
+            await axios.delete(`${$siteURL}/api/professional-certificate/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${parsedToken}`,
                     'Accept': 'application/json',
@@ -143,11 +144,11 @@ const ProfessionalAffiliationsCertificates = () => {
             };
             
             if (formMode === 'create') {
-                await axios.post(`http://3.8.140.227:8000/api/professional-certificate`, formData, { headers });
+                await axios.post(`${$siteURL}/api/professional-certificate`, formData, { headers });
                 setCreateAlert(true);
                 setTimeout(() => setCreateAlert(false), 3000);
             } else {
-                await axios.put(`http://3.8.140.227:8000/api/professional-certificate/${formData.id}`, formData, { headers });
+                await axios.put(`${$siteURL}/api/professional-certificate/${formData.id}`, formData, { headers });
                 setUpdateAlert(true);
                 setTimeout(() => setUpdateAlert(false), 3000);
             }
@@ -188,7 +189,7 @@ const ProfessionalAffiliationsCertificates = () => {
     const testApiConnection = async () => {
         try {
             setApiStatus("testing");
-            const response = await axios.get("http://3.8.140.227:8000/api/health-check", {
+            const response = await axios.get(`${$siteURL}/api/health-check`, {
                 timeout: 5000
             });
             if (response.status === 200) {
@@ -223,7 +224,7 @@ const ProfessionalAffiliationsCertificates = () => {
                 return null;
             }
             
-            const response = await axios.post(`http://3.8.140.227:8000/api/refresh-token`, {}, {
+            const response = await axios.post(`${$siteURL}/api/refresh-token`, {}, {
                 headers: {
                     'Authorization': `Bearer ${parsedToken}`,
                     'Accept': 'application/json',
@@ -276,7 +277,7 @@ const ProfessionalAffiliationsCertificates = () => {
             //console.log("Fetching certificates with token:", parsedToken);
             //console.log(`Fetching page ${currentPage} with ${entriesPerPage} entries per page`);
             
-            const response = await axios.get(`http://3.8.140.227:8000/api/professional-certificate`, {
+            const response = await axios.get(`${$siteURL}/api/professional-certificate`, {
                 params: {
                     page: currentPage,
                     per_page: entriesPerPage

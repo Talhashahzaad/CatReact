@@ -21,57 +21,64 @@ const PaypalSuccess = () => {
         }
     };
     
-    // We are getting the order_id, package_id from the url and localStorage
+    const parseToken = (token) => {
+        if (token && token.startsWith('{')) {
+            try {
+                return JSON.parse(token);
+            } catch (e) {
+                return token;
+            }
+        }
+        return token;
+    };
+
+    const handleError = (error) => {
+        const errorMessage = error.response?.data?.message || 'Failed to fetch order details';
+        setError(errorMessage);
+        setLoading(false);
+        
+        // Fallback to using the values we have from localStorage/URL
+        const urlParams = new URLSearchParams(window.location.search);
+        setOrderid(urlParams.get('token') || '');
+        setPackageid(urlParams.get('package_id') || getSelectedPackageIdFromLocalStorage());
+    };
+
     const fetchOrderID = async () => {
         try {
-            let token = localStorage.getItem('token');
-            if (token && token.startsWith('{')) {
-                try {
-                    token = JSON.parse(token);
-                } catch (e) {
-                    // If parsing fails, use the raw string
-                }
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
+            
+            // Parse token if it's a JSON string
+            let parsedToken;
+            try {
+                parsedToken = JSON.parse(token);
+            } catch (e) {
+                parsedToken = token;
             }
             
             const urlParams = new URLSearchParams(window.location.search);
             const orderIdFromUrl = urlParams.get('token') || '';
-            const packageIdFromStorage = getSelectedPackageIdFromLocalStorage();
-            
-            console.log('Making API request with:', { 
-                token: orderIdFromUrl, 
-                package_id: packageIdFromStorage 
-            });
-            
-            // Make the API call with all available parameters
-            const response = await axios.get(`${$siteURL}/api/paypal/success?token=${orderIdFromUrl}&package_id=${packageIdFromStorage}`,
+            const packageIdFromUrl = urlParams.get('package_id') || '';
+            const response = await axios.get(
+                `${$siteURL}/api/paypal/success?token=${orderIdFromUrl}&package_id=${packageIdFromUrl}`,
                 {
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        'Authorization': `Bearer ${parsedToken}`,
+                        'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'role': role
                     }
                 }
             );
             
-            
-            // Set state with data from response, with fallbacks to our stored values
             setOrderid(response.data.order_id || orderIdFromUrl);
-            setPackageid(response.data.package_id || packageIdFromStorage);
-            
+            setPackageid(response.data.package_id || packageIdFromUrl);
             setLoading(false);
+            
         } catch (error) {
-            console.error('API Error:', error);
-            // Try to extract more detailed error information
-            const errorMessage = error.response?.data?.message || 'Failed to fetch order details';
-            setError(errorMessage);
-            setLoading(false);
-            
-            // Fallback to using the values we have from localStorage/URL
-            const urlParams = new URLSearchParams(window.location.search);
-            setOrderid(urlParams.get('token') || '');
-            setPackageid(getSelectedPackageIdFromLocalStorage());
+            handleError(error);
         }
-    }
+    };
     
     useEffect(() => {
         fetchOrderID();
@@ -92,7 +99,7 @@ const PaypalSuccess = () => {
                                 <>
                                     <h1 className="mb-0 display-3">Payment Received</h1>
                                     <h3 className="mb-0 display-6">your order id is {order_id}</h3>
-                                    {package_id && <p className="text-muted">Package ID: {package_id}</p>}
+                                    <h3 className="mb-0 display-6">your package id is {package_id}</h3>
                                     
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%', transform: 'translate3d(0px, 0px, 0px)', contentVisibility: 'visible' }}>
                                         <defs>

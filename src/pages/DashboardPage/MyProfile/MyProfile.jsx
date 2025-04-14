@@ -136,7 +136,7 @@ const MyProfile = () => {
     const fetchProfileInfo = async () => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
+            const response = await axios.get(`${$siteURL}/api/user-profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
@@ -193,7 +193,7 @@ const handleUpdateProfile = async (e) => {
 
     try {
         const token = JSON.parse(localStorage.getItem("token"));
-        await axios.post('http://3.8.140.227:8000/api/user-profile-update',
+        await axios.post(`${$siteURL}/api/user-profile-update`,
             {
                 name: profileInfo.user.name,
                 phone: profileInfo.user.phone,
@@ -231,7 +231,7 @@ const handleUpdateProfile = async (e) => {
         }
 
         // Refresh profile data
-        const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
+        const response = await axios.get(`${$siteURL}/api/user-profile`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
@@ -295,7 +295,7 @@ const handleUpdateProfile = async (e) => {
 
         try {
             const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.post('http://3.8.140.227:8000/api/user-password-update', {
+            const response = await axios.post(`${$siteURL}/api/user-password-update`, {
                 password: password.password,
                 password_confirmation: password.password_confirmation
             },
@@ -357,7 +357,7 @@ const [isSidebarOpen, setIsSidebarOpen] = useState(true)
                                         <Col xxl={12} xl={12} lg={12} md={12} sm={12} className="position-relative">
                                             <div className="dashboard-my-profile-body-feature-picture-row">
                                                 <span className="dashboard-my-profile-body-feature-picture w-100 position-relative d-flex flex-column align-items-center justify-content-center">
-                                                    <img src={ profileInfo?.user?.banner ? `http://3.8.140.227:8000/${profileInfo?.user?.banner}` : defaultThumbnailBackground} alt="" className="img-fluid" loading="lazy" />
+                                                    <img src={ profileInfo?.user?.banner ? `${$siteURL}/${profileInfo?.user?.banner}` : defaultThumbnailBackground} alt="" className="img-fluid" loading="lazy" />
                                                     {/* <button className="btn bg-jetGreen position-absolute" id="change-feature-picture-btn" type="file">
                                                         <FaCamera /> edit
                                                     </button> */}
@@ -366,7 +366,7 @@ const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
                                             <div className="dashboard-my-profile-body-myProfile-picture-row">
                                                 <span className="dashboard-my-profile-body-myProfile-picture ">
-                                                    <img src={ profileInfo?.user?.avatar ? `http://3.8.140.227:8000/${profileInfo?.user?.avatar}` : defaultProfilePicture} alt="" loading="lazy" />
+                                                    <img src={ profileInfo?.user?.avatar ? `${$siteURL}/${profileInfo?.user?.avatar}` : defaultImage} alt="" loading="lazy" />
                                                     {/* <button className="btn bg-jetGreen position-absolute" id="change-my-profile-picture-btn" type="file">
                                                         <FaCamera />
                                                     </button> */}

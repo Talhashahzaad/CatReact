@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import "./PricingPackage.css";
 import axios from 'axios';
+import { $siteURL } from "../../common/SiteURL";
 
 const PricingPackage = () => {
     const [pricingList, setPricingList] = useState([]);
@@ -11,7 +12,7 @@ const PricingPackage = () => {
     const token = JSON.parse(localStorage.getItem("token"));
     const fetchPricingList = async () => {
         try {
-            const response = await axios.get("http://3.8.140.227:8000/api/listing-packages", {
+            const response = await axios.get(`${$siteURL}/api/listing-packages`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"

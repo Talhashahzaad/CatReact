@@ -12,6 +12,7 @@ import mapMarkerIcon from "../images/mapMarkerIcon.svg";
 import WantToSeeMoreCarousel from "../component/WanToSeeMoreCarousel";
 import ProductComingSoon from "../images/check-a-treatment-coming-soon-banner.png";
 import axios from "axios";
+import { $siteURL } from "../common/SiteURL";
 
 function Home(){
     const [blogListing, setBlogListing] = useState([]);
@@ -19,10 +20,8 @@ function Home(){
     const [error, setError] = useState(null);
     const [featureListing, setFeatureListing] = useState([]);
 
-    const siteURL = "http://3.8.140.227:8000";
-
     const fetchFeatureListing = async () => {
-        const response = await axios.get("http://3.8.140.227:8000/api/category");
+        const response = await axios.get(`${$siteURL}/api/category`);
         setFeatureListing(response.data);
     }
 
@@ -32,7 +31,7 @@ function Home(){
 
     useEffect(() => {
         const blogs = async () => {
-            const response = await fetch('http://3.8.140.227:8000/api/blog/');
+            const response = await fetch(`${$siteURL}/api/blog/`);
             const data = await response.json();
             setBlogListing(data);
         }
@@ -42,7 +41,7 @@ function Home(){
     useEffect(() => {
         const fetchAuthors = async () => {
             try {
-                const response = await fetch(`http://3.8.140.227:8000/api/blog/`);
+                const response = await fetch(`${$siteURL}/api/blog/`);
                 const data = await response.json();
 
                 const authorMap = {};
@@ -169,7 +168,7 @@ function Home(){
 
     const fetchClipList = async () => {
         try {
-            const response = await axios.get(`http://3.8.140.227:8000/api/cat-video-upload`);
+            const response = await axios.get(`${$siteURL}/api/cat-video-upload`);
             setClipList(response.data);
             if (response.data.length === 0) {
                 setError("No, clip has been uploaded yet.");

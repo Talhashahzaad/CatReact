@@ -3,6 +3,7 @@ import beyondTreatments from '../../images/beyondTheTreatments.jpg';
 import { Container, Row, Col } from 'react-bootstrap';
 import './BeyondTheTreatments.css';
 import axios from 'axios';
+import { $siteURL } from "../../common/SiteURL";
 
 const BeyondTheTreatments = () => {
     const [clipList, setClipList] = useState([]);
@@ -18,7 +19,7 @@ const BeyondTheTreatments = () => {
 
     const fetchClipList = async () => {
         try {
-            const response = await axios.get(`http://3.8.140.227:8000/api/cat-video-upload`);
+            const response = await axios.get(`${$siteURL}/api/cat-video-upload`);
             setClipList(response.data);
             if (response.data.length === 0) {
                 setError("No, clip has been uploaded yet.");

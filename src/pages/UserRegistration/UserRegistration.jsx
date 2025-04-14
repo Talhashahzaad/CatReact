@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './UserRegistration.css';
-import userLoginPictureSecond from '../../images/user-login-banner-second.jpg';
+
+import userLoginPicture from "../../images/userLoginPicture.webp";
 import arrowNext from '../../images/arrowNext.svg';
 import arrowBack from '../../images/arrowBack.svg';
 import eyeOpen from "../LoginPage/eyeOpen.svg";
@@ -11,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
+import { $siteURL } from "../../common/SiteURL";
 
 const UserRegistration = () => {
     const navigate = useNavigate();
@@ -99,7 +101,7 @@ const UserRegistration = () => {
         try {
             const token = localStorage.getItem('token');
             const role = localStorage.getItem('role');
-            const response = await axios.post('http://3.8.140.227:8000/api/user-signup', formData, {
+            const response = await axios.post(`${$siteURL}/api/user-signup`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -134,7 +136,7 @@ const UserRegistration = () => {
                 <Row>
                     <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
                         <div className="user-registration-picture">
-                            <img loading="lazy" src={userLoginPictureSecond} alt="User Login" className="img-fluid" />
+                            <img loading="lazy" src={userLoginPicture} alt="User Login" className="img-fluid" />
                         </div>
                     </Col>
                     <Col xxl={6} xl={6} lg={6} md={12} sm={12}>

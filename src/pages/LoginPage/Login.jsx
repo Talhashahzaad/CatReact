@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom"; // Added useNavigate for redirection
 import { Container, Row, Col } from "react-bootstrap";
 import "./Login.css";
 import eyeOpen from "../LoginPage/eyeOpen.svg";
@@ -10,9 +10,9 @@ import userLoginPicture from "../../images/userLoginPicture.webp";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
+import {$siteURL} from '../../common/SiteURL';
 
-const Login = ({ children }) => {
+function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
     const [email, setEmail] = React.useState(""); // State for email
     const [password, setPassword] = React.useState(""); // State for password
@@ -38,16 +38,16 @@ const Login = ({ children }) => {
         e.preventDefault();
         setErrorMessage("");
         try {
-            const response = await axios.post("http://3.8.140.227:8000/api/login", {
+            const response = await axios.post(`${$siteURL}/api/login`, {
                 email,
                 password
             });
             setData(response.data);
+            //console.log(response.data);
 
-            if (response.status === 200 || response.status === 201) {
-                //const token = JSON.parse(response.data.token);
+            if (response.status === 200) {
                 localStorage.setItem("token", JSON.stringify(response.data.token));
-                localStorage.setItem("role", JSON.stringify(response.data.role));
+                localStorage.setItem("role", "user"); // Set the role
                 if (rememberMe) {
                     localStorage.setItem('rememberedUser', JSON.stringify({
                         rememberedEmail: email,
@@ -59,7 +59,7 @@ const Login = ({ children }) => {
                 successNotify();
                 setTimeout(() => {
                     navigate("/dashboard");
-                }, 500);
+                }, 3000);
             } else {
                 setErrorMessage(response.data.message || "Login failed. Please try again.");
             }
@@ -73,7 +73,6 @@ const Login = ({ children }) => {
                 setErrorMessage("Login failed. Please try again.");
             }
         }
-        return children;
     };
 
     return (
@@ -81,23 +80,24 @@ const Login = ({ children }) => {
             <Container>
                 <div className="loginPage">
                     <Row>
-                        <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
+                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                             <div className="login-picture">
                                 <img src={userLoginPicture} alt="User Login" className="img-fluid" />
                             </div>
                         </Col>
                     
-                        <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
+                        <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                         
                             <h1 className="pb-2 text-uppercase text-center fw-bold">login</h1>
                             <small className="d-block text-lowercase text-center fw-normal">sign in to continue</small>
                             <hr />
                             <form onSubmit={handleSubmit}> {/* Updated to handle form submission */}
                                 <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <label className="w-100 d-block h-auto lh-lg text-capitalize">email address</label>
+                                    <label htmlFor="loginEmailAddress" name="loginEmailAddress" className="w-100 d-block h-auto lh-lg text-capitalize">email address</label>
                                     <input
                                         type="email"
                                         name="loginEmailAddress"
+                                        id="loginEmailAddress"
                                         placeholder="Your Email Address"
                                         className="form-control"
                                         required="required"
@@ -107,11 +107,12 @@ const Login = ({ children }) => {
                                 </div>
 
                                 <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <label className="w-100 d-block h-auto lh-lg text-capitalize">password</label>
+                                    <label htmlFor="loginPassword" name="loginPassword" className="w-100 d-block h-auto lh-lg text-capitalize">password</label>
                                     <div className="position-relative">
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             name="loginPassword"
+                                            id="loginPassword"
                                             placeholder="**********"
                                             className="form-control"
                                             required="required"
@@ -175,7 +176,7 @@ const Login = ({ children }) => {
             
             <ToastContainer 
                 position="top-right"
-                autoClose={500}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={true}
                 closeOnClick
@@ -190,4 +191,4 @@ const Login = ({ children }) => {
     )
 }
 
-export default ProtectedAuthRoute(Login);
+export default Login;

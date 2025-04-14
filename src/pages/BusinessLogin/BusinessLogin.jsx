@@ -10,7 +10,7 @@ import businessLoginBanner from "../../images/businessLoginBanner.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
+
 
 
 function Login() {
@@ -28,22 +28,16 @@ function Login() {
         e.preventDefault(); // Prevent default form submission
         setErrorMessage(""); // Clear previous error messages
         try {
-            const token = localStorage.getItem('token');
-            const role = localStorage.getItem('role');
             const response = await axios.post("http://3.8.140.227:8000/api/login", {
                 email,
                 password
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'role': role
-                }
             });
             setSuccessMessage(response.data.message);
             successNotify();
             if (response.status === 200) {
-                navigate("/dashboard");
                 localStorage.setItem("token", JSON.stringify(response.data.token));
+                localStorage.setItem("role", "business"); // Set the role
+                navigate("/dashboard");
             } else {
                 setErrorMessage(response.data.message || "Login failed. Please try again.");
                 errorNotify();
@@ -60,13 +54,13 @@ function Login() {
             <Container>
             <div className="businessLoginPage">
                 <Row>
-                    <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
+                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                         <div className="businessLoginBanner">
                             <img src={businessLoginBanner} alt="Business Login" className="img-fluid" />
                         </div>
                     </Col>
                     
-                    <Col xxl={6} xl={6} lg={6} md={12} sm={12}>
+                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                         <h1 className="text-center text-capitalize fw-bold">Business <mark>login</mark></h1>
                         <small className="d-block text-lowercase text-center fw-normal">sign in to continue</small>
                         <hr />
@@ -108,7 +102,7 @@ function Login() {
                             </div>
 
                             <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div className="w-100 h-auto d-flex justify-content-between align-items-center mb-3 password-row">
+                                <div className="w-100 h-auto d-flex justify-content-between align-items-center mb-3">
                                     <div className="checkBoxWrapper d-inline-flex position-relative">
                                         <input type="checkbox" name="rememberMe" id="rememberMe" className="position-absolute" />
                                         <label htmlFor="rememberMe" className="text-rememberField">remember me</label>
@@ -147,4 +141,4 @@ function Login() {
     )
 }
 
-export default ProtectedAuthRoute(Login);
+export default Login;

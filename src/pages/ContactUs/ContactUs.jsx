@@ -9,6 +9,7 @@ import youtubeIcon from "../../images/youtube.svg";
 import phoneIconTiny from "../../images/phoneIcon-tiny.svg";
 import envelopeIconTiny from "../../images/envelopeIcon-tiny.svg";
 import tiktokIcon from "../../images/tiktok.svg";
+import { $siteURL } from "../../common/SiteURL";
 
 import "../../App.css";
 import "./ContactUs.css";
@@ -38,7 +39,7 @@ const ContactUs = () => {
         setErrorMessage('');
 
         try {
-            const response = await axios.post('http://3.8.140.227:8000/api/contact-store', formData, {
+            const response = await axios.post(`${$siteURL}/api/contact-store`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

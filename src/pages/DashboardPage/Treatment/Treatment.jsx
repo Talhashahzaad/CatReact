@@ -6,6 +6,7 @@ import { FaEdit, FaTrash, FaTimes,FaArrowLeft, FaArrowRight } from "react-icons/
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 //import axios from "axios";
 import "./Treatment.css";
+import { $siteURL } from "../../../common/SiteURL";
 
 const Treatment = () => {
     const [entriesPerPage, setEntriesPerPage] = useState(5);
@@ -20,55 +21,6 @@ const Treatment = () => {
     const [treatmentName, setTreatmentName] = useState("");
     const [editableForm, setEditableForm] = useState(false);
 
-    // we are getting the treatment list from the backend
-    // const fetchingTreatmentList = async () => {
-    //     setLoading(true);
-    //     setError(null);
-
-    //     try {
-    //         const token = localStorage.getItem("token");
-    //         if (!token) {
-    //             setError("No authentication token found");
-    //             setLoading(false);
-    //             return;
-    //         }
-
-    //         const parsedToken = JSON.parse(token);
-    //         const response = await axios.get(`http://3.8.140.227:8000/api/treatment`,
-    //             {
-    //                 params: {
-    //                     page: currentPage,
-    //                     per_page: entriesPerPage
-    //                 },
-    //                 headers: {
-    //                     'Authorization': `Bearer ${parsedToken}`,
-    //                     'Accept': 'application/json',
-    //                     'Content-Type': 'application/json'
-    //                 }
-    //             }
-    //         );
-            
-    //         if (response.data && response.status === 200) {
-    //             const treatmentsArray = Array.isArray(response.data.data) ? response.data.data : [];
-    //             setTreatmentListing(treatmentsArray);
-    //             setEntries(treatmentsArray);
-    //             setTotalEntries(response.data.total || treatmentsArray.length);
-    //         } else {
-    //             setError(response.data.message || "Failed to fetch treatments");
-    //         }
-    //     } catch (error) {
-    //         console.error("Error fetching treatments:", error);
-    //         setError(error.response?.data?.message || "Failed to fetch treatments");
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     fetchingTreatmentList();
-    // }, [currentPage, entriesPerPage]);
-    // close getting the treatment list from the backend
-    
     const handleEntriesPerPageChange = (e) => {
         setEntriesPerPage(Number(e.target.value));
         setCurrentPage(1);

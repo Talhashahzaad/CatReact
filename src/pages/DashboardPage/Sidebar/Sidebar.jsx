@@ -12,6 +12,7 @@ import qualificationDashIcon from "../../../images/qualification-dashIcon.svg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Dashboard.css";
+import { $siteURL } from '../../../common/SiteURL';
 
 
 import axios from "axios";
@@ -45,7 +46,7 @@ const Sidebar = () => {
         const fetchProfileInfo = async () => {
             const token = JSON.parse(localStorage.getItem("token"));
             const role = localStorage.getItem('role');
-            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
+            const response = await axios.get(`${$siteURL}/api/user-profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'role': role

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col } from 'react-bootstrap';
 //import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { $siteURL } from "../../common/SiteURL";
 
 const SingleSidebar = () => {
     const [BlogListingData, setBlogListingData] = useState([]);
@@ -15,7 +16,7 @@ const SingleSidebar = () => {
 
     useEffect(() => {
         const BlogListingData = async () => {
-            const response = await fetch('http://3.8.140.227:8000/api/blog/');
+            const response = await fetch(`${$siteURL}/api/blog/`);
             const data = await response.json();
             setBlogListingData(data);
         }
@@ -30,7 +31,7 @@ const SingleSidebar = () => {
 
     useEffect(() => {
         const BlogListingCategory = async () => {
-            const response = await fetch('http://3.8.140.227:8000/api/blog-category');
+            const response = await fetch(`${$siteURL}/api/blog-category`);
             const data = await response.json();
             setBlogListingCategory(data);
         }
@@ -77,7 +78,7 @@ const SingleSidebar = () => {
                                                 <li key={blog.id}>
                                                     <Link to={`/blog/${blog.slug}`} onClick={() => { window.scrollTo({top: 0, behavior: 'smooth'}); window.location.href = `/blog/${blog.slug}`; }} className='d-flex align-items-center'>
                                                         <figure className='mb-0'>
-                                                            <img src={`http://3.8.140.227:8000${blog.image}`} alt={blog.title} title={blog.title} className='img-fluid' loading='lazy' />
+                                                            <img src={`${$siteURL}${blog.image}`} alt={blog.title} title={blog.title} className='img-fluid' loading='lazy' />
                                                         </figure>
                                                         <h4 className='mb-0'>
                                                             <small className='text-capitalize d-block h6'>
@@ -106,7 +107,7 @@ const SingleSidebar = () => {
                                     .map((blog, index) => (
                                         <li key={blog.id}>
                                             <Link to={`/blog/${blog.slug}`} onClick={() => { window.scrollTo({top: 0, behavior: 'smooth'}); window.location.href = `/blog/${blog.slug}`; }}>
-                                                <figure><img src={`http://3.8.140.227:8000${blog.image}`} alt={blog.title} title={blog.title} className='img-fluid' loading='lazy' /></figure>
+                                                <figure><img src={`${$siteURL}${blog.image}`} alt={blog.title} title={blog.title} className='img-fluid' loading='lazy' /></figure>
                                                 <h4 className='mb-0'>{blog.title.length > 20 ? blog.title.substring(0, 20) + '...' : blog.title}
                                                     <small className='text-capitalize d-block h6'>{BlogListingCategory[index].name ? BlogListingCategory[index].name : ''}</small>
                                                 </h4>
@@ -127,7 +128,7 @@ const SingleSidebar = () => {
                                     .map((blog) => (
                                         <li key={blog.id}>
                                             <Link to={`/blog/${blog.slug}`} onClick={() => { window.scrollTo({top: 0, behavior: 'smooth'}); window.location.href = `/blog/${blog.slug}`; }}>
-                                                <figure><img src={`http://3.8.140.227:8000${blog.image}`} alt={blog.title} title={blog.title} className='img-fluid' loading='lazy' /></figure>
+                                                <figure><img src={`${$siteURL}${blog.image}`} alt={blog.title} title={blog.title} className='img-fluid' loading='lazy' /></figure>
                                                 <h4 className='mb-0'>{blog.title.length > 20 ? blog.title.substring(0, 20) + '...' : blog.title}
                                                     <small className='text-capitalize d-block h6' dangerouslySetInnerHTML={{ __html: blog.description.substring(0, 40) + '...' }}  />
                                                 </h4>

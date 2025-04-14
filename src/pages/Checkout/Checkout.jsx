@@ -5,6 +5,8 @@ import paypalIcon from '../../images/paypalicon.svg';
 import './Checkout.css';
 import axios from 'axios';
 import { $siteURL } from '../../common/SiteURL';
+import poundIcon from '../../images/poundIcon.svg';
+import poundGreenIcon from '../../images/poundGreenIcon.svg';
 
 const Checkout = () => {
     const location = useLocation();
@@ -36,7 +38,7 @@ const Checkout = () => {
                     'X-CSRFToken': token
                 }
             });
-
+            
             if (response.data?.error) {
                 setError(response.data.error);
                 return;
@@ -56,6 +58,7 @@ const Checkout = () => {
     useEffect(() => {
         const planId = location.state?.planId;
         if (planId) {
+            localStorage.setItem('planID', planId);
             fetchSubscriptionPlan(planId);
         } else {
             setError('No plan selected');
@@ -66,6 +69,7 @@ const Checkout = () => {
     const handleCheckout = async () => {
         const token = JSON.parse(localStorage.getItem('token'));
         const planId = location.state?.planId || localStorage.getItem('planID');
+        
         
         if (!planId) {
             setError('No payment details available');
@@ -115,7 +119,7 @@ const Checkout = () => {
                                     <p className='text-capitalize mb-0'>Package Type: <strong>{planData.listing.type}</strong></p>
                                     <p className='text-capitalize mb-0'>Package Duration: <strong>{planData.listing.number_of_days}</strong> Days.</p>
                                     <div className='display-1 my-1'>
-                                        <p className='boldness'>£ {planData.listing.price}/m</p>
+                                        <p className='boldness'><img src={poundGreenIcon} alt="pound" className='gbp-icon' /> {planData.listing.price}/m</p>
                                     </div>
                                 </div>
                             )}
@@ -145,7 +149,7 @@ const Checkout = () => {
                                 </li>
                                 <li className='d-flex justify-content-between align-items-center'>
                                     <p className='mb-0'>price</p>
-                                    <p className='mb-0'>£{planData.listing.price}/m</p>
+                                    <p className='mb-0'><img src={poundIcon} alt="pound" className='gbp-icon' />{planData.listing.price}/m</p>
                                 </li>
                                 <li className='d-flex justify-content-between align-items-center'>
                                     {planData.listing.type !== 'free' ? (

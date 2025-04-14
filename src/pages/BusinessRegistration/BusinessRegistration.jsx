@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import ProtectedAuthRoute from '../../component/ProtectedAuthRoute';
+import { $siteURL } from "../../common/SiteURL";
 
 const BusinessRegistration = () => {
     const navigate = useNavigate();
@@ -144,7 +145,7 @@ const BusinessRegistration = () => {
       console.log('Sending data:', formattedData); // Debug the data being sent
       
       // Use formattedData instead of formData
-      const response = await axios.post('http://3.8.140.227:8000/api/signup', formattedData, {
+      const response = await axios.post(`${$siteURL}/api/signup`, formattedData, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -180,7 +181,7 @@ const BusinessRegistration = () => {
         try {
             const token = localStorage.getItem('token');
             const role = localStorage.getItem('role');
-            const response = await axios.get('http://3.8.140.227:8000/api/category', {
+            const response = await axios.get(`${$siteURL}/api/category`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'role': role

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './ServiceCategories.css';
 import axios from 'axios';
+import { $siteURL } from "../../common/SiteURL";
 
 const ServiceCategories = () => {
     const [categories, setCategories] = useState([]);
@@ -11,7 +12,7 @@ const ServiceCategories = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://3.8.140.227:8000/api/category');
+                const response = await axios.get(`${$siteURL}/api/category`);
                 setCategories(response.data);
             } catch (error) {
                 setError(error || 'Category not found');
@@ -36,7 +37,7 @@ const ServiceCategories = () => {
                         return (
                             <Col key={category.id} xxl={3} xl={3} lg={3} md={4} sm={6} xs={12}>
                                 <div className='service-category-card'>
-                                    <img src={`http://3.8.140.227:8000${category.background_image}`} alt={category.name} className='img-fluid' />
+                                    <img src={`${$siteURL}${category.background_image}`} alt={category.name} className='img-fluid' />
                                     <h3>{category.name}</h3>
                                     {/* <p>{category.description.split(' ').slice(0, 12).join(' ') + '...'}</p> */}
                                 </div>

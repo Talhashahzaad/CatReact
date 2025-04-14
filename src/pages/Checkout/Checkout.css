@@ -14,6 +14,9 @@ display: inline-block;}
 .checkout-page blockquote.text-left .boldness {font-family: var(--defaultHeading);color: var(--jetGreen);display: inline-table;margin-bottom: 0px;
 line-height: 90px; font-weight: 600;}
 
+.checkout-page blockquote.text-left .boldness img {max-width: 60px;}
+.checkout-page .col-xxl-4 ul.ps-0.mb-0 li p.mb-0 img {max-width: 16px;}
+
 @media (max-width: 991px){
 .checkout-page .col-xxl-8 {padding-bottom: 50px;}
 }

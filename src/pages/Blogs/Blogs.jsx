@@ -5,6 +5,7 @@ import blogFeatureImage from '../../images/blogFeature.webp';
 //import BlogListing from './BlogListing';
 import BlogCard from './BlogCard';
 import { Link } from 'react-router-dom';
+import { $siteURL } from "../../common/SiteURL";
 
 const Blogs = () => {
 
@@ -12,7 +13,7 @@ const Blogs = () => {
 
     useEffect(() =>{
         const BlogListingData = async () =>{
-            const response = await fetch('http://3.8.140.227:8000/api/blog/');
+            const response = await fetch(`${$siteURL}/api/blog/`);
             const data = await response.json();
             // Sort blogs by updated_at in descending order
             data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
@@ -31,7 +32,7 @@ const Blogs = () => {
 
     useEffect(() => {
         const fetchBlogListingCategory = async () => {
-            const response = await fetch('http://3.8.140.227:8000/api/blog-category');
+            const response = await fetch(`${$siteURL}/api/blog-category`);
             const data = await response.json();
             setBlogListingCategory(data);
         }
@@ -46,7 +47,7 @@ const Blogs = () => {
     useEffect(() => {
         const fetchAuthors = async () => {
             try {
-                const response = await fetch('http://3.8.140.227:8000/api/blog/');
+                const response = await fetch(`${$siteURL}/api/blog/`);
                 const data = await response.json();
 
                 const authorMap = {};
@@ -93,7 +94,7 @@ const Blogs = () => {
                         <Col key={blog.title} xxl={4} xl={4} lg={4} md={6} sm={12} xs={12}>
                             <Link to={`/blog/${blog.slug}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
                                 <BlogCard
-                                    image={`http://3.8.140.227:8000${blog.image}`}
+                                    image={`${$siteURL}${blog.image}`}
                                     title={blog.title.split(' ').slice(0, 5).join(' ') + '...'}
                                     description={stripHTML(blog.description).split(' ').slice(0, 30).join(' ') + '...'}
                                     slug={blog.slug}

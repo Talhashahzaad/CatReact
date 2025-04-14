@@ -3,15 +3,14 @@ import Slider from "react-slick";
 import arrowTopRight from"../images/arrowTopRight.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { $siteURL } from "../common/SiteURL";
 
 export default function FeatureCarousel() {
   const [featureListing, setFeatureListing] = useState([]);
   const [error, setError] = useState(null);
 
-  const siteURL = "http://3.8.140.227:8000";
-
-  const fetchFeatureListing = async () => {
-    const response = await axios.get("http://3.8.140.227:8000/api/category");
+    const fetchFeatureListing = async () => {
+    const response = await axios.get(`${$siteURL}/api/category`);
     setFeatureListing(response.data);
   }
 

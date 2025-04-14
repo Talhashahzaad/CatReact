@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './DashboardHeader.css';
+import { $siteURL } from "../../../common/SiteURL";
 
 const DashboardHeader = () => {
     const [profileInfo, setProfileInfo] = useState();
@@ -24,7 +25,7 @@ const DashboardHeader = () => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
             const role = localStorage.getItem('role');
-            const response = await axios.post("http://3.8.140.227:8000/api/logout", {}, {
+            const response = await axios.post(`${$siteURL}/api/logout`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
@@ -66,7 +67,7 @@ const DashboardHeader = () => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
             const role = localStorage.getItem('role');
-            const response = await axios.get('http://3.8.140.227:8000/api/user-profile', {
+            const response = await axios.get(`${$siteURL}/api/user-profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'role': role,
@@ -111,7 +112,7 @@ const DashboardHeader = () => {
 
                 <div className="dash-profile-picture d-flex justify-content-flex-end align-items-center text-end float-end">
                     <figure className="mb-0">
-                        <img src={profileInfo?.user?.avatar ? `http://3.8.140.227:8000/${profileInfo?.user?.avatar}` : defaultAvatar} alt="Profile" />
+                        <img src={profileInfo?.user?.avatar ? `${$siteURL}/${profileInfo?.user?.avatar}` : defaultAvatar} alt="Profile" />
                     </figure>
                     <div className="d-flex flex-column ms-2 text-white">
                         {profileInfo && (

@@ -7,6 +7,7 @@ import { FaTag } from "react-icons/fa";
 import SingleSidebar from './SingleSidebar';
 import Error404Page from '../Error404/Error404';
 import blogFeatureImage from '../../images/blogFeature.webp';
+import { $siteURL } from "../../common/SiteURL";
 
 
 const SinglePost = (  ) => {
@@ -15,7 +16,7 @@ const SinglePost = (  ) => {
 
     useEffect(() =>{
         const BlogListingData = async () =>{
-            const response = await fetch(`http://3.8.140.227:8000/api/blog/${title}`);
+            const response = await fetch(`${$siteURL}/api/blog/${title}`);
             const data = await response.json();
             setBlogListingData(data);
         }
@@ -30,7 +31,7 @@ const SinglePost = (  ) => {
 
     useEffect(() => {
         const BlogListingCategory = async () => {
-            const response = await fetch('http://3.8.140.227:8000/api/blog-category');
+            const response = await fetch(`${$siteURL}/api/blog-category`);
             const data = await response.json();
             setBlogListingCategory(data);
         }
@@ -44,7 +45,7 @@ const SinglePost = (  ) => {
     useEffect(() => {
         const fetchAuthors = async () => {
             try {
-                const response = await fetch('http://3.8.140.227:8000/api/blog/');
+                const response = await fetch(`${$siteURL}/api/blog/`);
                 const data = await response.json();
 
                 const authorMap = {};
@@ -90,7 +91,7 @@ const SinglePost = (  ) => {
                                 </ul>
                             </div>
                             <figure>
-                                <img src={`http://3.8.140.227:8000${BlogListingData.image}`} alt={BlogListingData.title} title={BlogListingData.title} className='img-fluid' loading='lazy' />
+                                <img src={`${$siteURL}${BlogListingData.image}`} alt={BlogListingData.title} title={BlogListingData.title} className='img-fluid' loading='lazy' />
                             </figure>
                             <div className='single-blog-post-description' dangerouslySetInnerHTML={{ __html: BlogListingData.description }} />
                         </div>

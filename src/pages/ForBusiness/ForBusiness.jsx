@@ -10,7 +10,7 @@ import GetMore from "../../images/Get-More.png";
 import DriveTrafficToYourBusiness from "../../images/Drive-Traffic-to-Your-Business.png";
 import "./ForBusiness.css";
 import axios from "axios";
-
+import { $siteURL } from "../../common/SiteURL";
 
 const ForBusiness = () => {
     const [subscriptionPlans, setSubscriptionPlans] = useState([]);
@@ -19,7 +19,7 @@ const ForBusiness = () => {
     const token = localStorage.getItem("token");
     const fetchSubscriptionPlans = async () => {
         try {
-            const response = await axios.get("http://3.8.140.227:8000/api/listing-packages", {
+            const response = await axios.get(`${$siteURL}/api/listing-packages`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
@@ -46,7 +46,7 @@ const ForBusiness = () => {
             return;
         }
         
-        const response = await axios.get(`http://3.8.140.227:8000/api/checkout/${planID}`, {
+        const response = await axios.get(`${$siteURL}/api/checkout/${planID}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json",

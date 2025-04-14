@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import './Practitioner.css';
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import axios from 'axios';
+import { $siteURL } from "../../../common/SiteURL";
 
 const Practitioner = () => {
     const [practitionerListingData, setPractitionerListingData] = useState([]);
@@ -39,9 +40,8 @@ const Practitioner = () => {
             }
 
             const parsedToken = JSON.parse(token);
-            const response = await axios.get(`http://3.8.140.227:8000/api/practitioner?page=${currentPage}&per_page=${entriesPerPage}`,
-            //const response = await axios.get(`http://3.8.140.227:8000/api/practitioner`,
-                {
+            const response = await axios.get(`${$siteURL}/api/practitioner?page=${currentPage}&per_page=${entriesPerPage}`,
+                    {
                     headers: {
                         'Authorization': `Bearer ${parsedToken}`,
                         'Accept': 'application/json',
@@ -151,7 +151,7 @@ const Practitioner = () => {
 
         try {
             const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.post('http://3.8.140.227:8000/api/practitioner', 
+            const response = await axios.post(`${$siteURL}/api/practitioner`, 
                 practitionerData,
                 {
                     headers: {
@@ -200,7 +200,7 @@ const Practitioner = () => {
     const handleDelete = async (id) => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
-            await axios.delete(`http://3.8.140.227:8000/api/practitioner/${id}`, {
+            await axios.delete(`${$siteURL}/api/practitioner/${id}`, {
                 headers: {  
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
@@ -228,7 +228,7 @@ const Practitioner = () => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
             const response = await axios.put(
-                `http://3.8.140.227:8000/api/practitioner/${practitionerData.id}`, 
+                `${$siteURL}/api/practitioner/${practitionerData.id}`, 
                 {
                     name: practitionerData.name || '',
                     qualification: practitionerData.qualification || '',

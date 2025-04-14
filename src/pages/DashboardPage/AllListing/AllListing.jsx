@@ -14,6 +14,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
+import { $siteURL } from "../../../common/SiteURL";
  
 //import Select from 'react-select';
 const AllListing = () => {
@@ -162,7 +163,7 @@ const AllListing = () => {
                 errors: { ...prev.errors, categories: null }
             }));
             // Add this to your fetchCategories function temporarily
-            const response = await axios.get('http://3.8.140.227:8000/api/category');
+            const response = await axios.get(`${$siteURL}/api/category`);
             // console.log('Category API Response Structure:', response);
             // console.log('Category API Response Is Array:', Array.isArray(   ));
             // console.log('Category API Response Data:', response.data.category);
@@ -190,7 +191,7 @@ const AllListing = () => {
                 loading: { ...prev.loading, location: true },  // Changed to 'locations'
                 errors: { ...prev.errors, location: null }    // Changed to 'locations'
             }));
-            const response = await axios.get('http://3.8.140.227:8000/api/location');
+            const response = await axios.get(`${$siteURL}/api/location`);
             // console.log('Location API Response Structure:', response);
             // console.log('Location API Response Is Array:', Array.isArray(response.data));
             // console.log('Location API Response Data:', response.data);
@@ -228,7 +229,7 @@ const AllListing = () => {
             }
             const parsedToken = JSON.parse(token);
             //Add this to your fetchCategories function temporarily
-            const response = await axios.get('http://3.8.140.227:8000/api/professional-certificate', {
+            const response = await axios.get(`${$siteURL}/api/professional-certificate`, {
                 headers: {
                     'Authorization': `Bearer ${parsedToken}`,
                     'Accept': 'application/json',
@@ -276,7 +277,7 @@ const AllListing = () => {
             }
             const parsedToken = JSON.parse(token);
             // Add this to your fetch categories function temporarily.
-            const response = await axios.get('http://3.8.140.227:8000/api/practitioner',
+            const response = await axios.get(`${$siteURL}/api/practitioner`,
                 {
                     headers: {
                         'Authorization': `Bearer ${parsedToken}`,
@@ -314,7 +315,7 @@ const AllListing = () => {
                 errors: { ...prev.errors, amenities: null }
             }));
             // Add this to your fetchCategories function temporarily
-            const response = await axios.get('http://3.8.140.227:8000/api/amenity');
+            const response = await axios.get(`${$siteURL}/api/amenity`);
             // console.log('Amenities API Response Structure:', response);
             // console.log('Amenities Is Array:', Array.isArray(response.data));
             // console.log('Amenities Data:', response.data.amenity);
@@ -342,7 +343,7 @@ const AllListing = () => {
                 errors: { ...prev.errors, amenities: null }
             }));
             // Add this to your fetchCategories function temporarily
-            const response = await axios.get('http://3.8.140.227:8000/api/tag'); 
+            const response = await axios.get(`${$siteURL}/api/tag`); 
             const fetchTagsData = Array.isArray(response.data) ? response.data : response.data || []; // Fallback to response.data.data or empty array
             setDropdownOptions(prev => ({
                 ...prev,
@@ -433,7 +434,7 @@ const AllListing = () => {
 
             const parsedToken = JSON.parse(token);
 
-            const response = await axios.post('http://3.8.140.227:8000/api/listing', formDataToSend, {
+            const response = await axios.post(`${$siteURL}/api/listing`, formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${parsedToken}`,
                     'Accept': 'application/json',
@@ -501,7 +502,7 @@ const AllListing = () => {
                 return;
             }
             const parsedToken = JSON.parse(token);
-            const response = await axios.get(`http://3.8.140.227:8000/api/listing?page=${currentPage}&per_page=${entriesPerPage}`, {
+            const response = await axios.get(`${$siteURL}/api/listing?page=${currentPage}&per_page=${entriesPerPage}`, {
                 headers: {
                     'Authorization': `Bearer ${parsedToken}`,
                     'Accept': 'application/json',

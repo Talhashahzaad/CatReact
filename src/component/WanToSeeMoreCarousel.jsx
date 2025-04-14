@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import axios from "axios";
+import { $siteURL } from "../common/SiteURL";
 
 export default function WantToSeeMoreCarousel() {
     const [featureListing, setFeatureListing] = useState([]);
     const [error, setError] = useState(null);
 
-    const siteURL = "http://3.8.140.227:8000";
-
     const fetchFeatureListing = async () => {
-        const response = await axios.get("http://3.8.140.227:8000/api/category");
+        const response = await axios.get(`${$siteURL}/api/category`);
         setFeatureListing(response.data);
     }
 
@@ -56,7 +55,7 @@ export default function WantToSeeMoreCarousel() {
                 {featureListing.map((item) => (
                 <div className="want-to-see-more-item" key={item.id}>
                     <div className="want-to-see-more-card">
-                        <figure><img src={`${siteURL}${item.image_icon}`} alt={item.name} /></figure>
+                        <figure><img src={`${$siteURL}${item.image_icon}`} alt={item.name} /></figure>
                         <h4>{item.name}</h4>
                     </div>
                 </div>
