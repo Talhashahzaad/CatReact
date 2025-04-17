@@ -61,7 +61,7 @@ export default function FeatureCarousel() {
       <div className="feature-products-carousel-item" key={index}>
         <div className="feature-products-carousel-card position-relative">
                 
-            <figure className="mb-0 position-absolute"><img src={`${siteURL}${item.background_image}`} alt={item.name} loading="lazy" /></figure>
+            <figure className="mb-0 position-absolute"><img src={`${$siteURL}${item.background_image}`} alt={item.name} loading="lazy" /></figure>
             <h3>{item.name}</h3>
             <article>
             <p>{item.description}</p>

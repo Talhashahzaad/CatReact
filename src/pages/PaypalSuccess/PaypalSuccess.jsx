@@ -17,6 +17,7 @@ const PaypalSuccess = () => {
             return storedPackageId || '';
         } catch (error) {
             console.error('Error retrieving package ID from localStorage:', error);
+            console.log('Error retrieving package ID from localStorage:', error);
             return '';
         }
     };

@@ -36,7 +36,7 @@ function Login() {
             successNotify();
             if (response.status === 200) {
                 localStorage.setItem("token", JSON.stringify(response.data.token));
-                localStorage.setItem("role", "business"); // Set the role
+                localStorage.setItem("role", "agent"); // Set the role
                 navigate("/dashboard");
             } else {
                 setErrorMessage(response.data.message || "Login failed. Please try again.");

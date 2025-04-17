@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './DashboardHeader.css';
 import { $siteURL } from "../../../common/SiteURL";
+import homeIcon from "../../../images/homeIcon.svg";
 
 const DashboardHeader = () => {
     const [profileInfo, setProfileInfo] = useState();
@@ -36,6 +37,7 @@ const DashboardHeader = () => {
 
             if (response.status === 200) {
                 localStorage.removeItem("token");
+                localStorage.removeItem("role");
                 setLoggedOutMessage({
                     show: true,
                     message: response.data.message
@@ -110,6 +112,15 @@ const DashboardHeader = () => {
                     </Link>
                 </div>
 
+                <div className="dashboard-return-home">
+                    <Link to="/" className="text-white">
+                        <span className="item-icon">
+                            <img src={homeIcon} alt="Home" />
+                        </span>
+                        <span className="item-text">home</span>
+                    </Link>
+                </div>
+
                 <div className="dash-profile-picture d-flex justify-content-flex-end align-items-center text-end float-end">
                     <figure className="mb-0">
                         <img src={profileInfo?.user?.avatar ? `${$siteURL}/${profileInfo?.user?.avatar}` : defaultAvatar} alt="Profile" />
@@ -122,6 +133,7 @@ const DashboardHeader = () => {
                         )}
                     </div>
                 </div>
+               
             </div>
         </>
     );

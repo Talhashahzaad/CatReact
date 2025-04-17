@@ -1,19 +1,17 @@
 import { React, useState, useEffect } from "react";
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { $siteURL } from '../../../common/SiteURL';
+import { Alert } from 'react-bootstrap';
 
 
 const ProfessionalAffiliationsCertificates = () => {
-
     const [certificates, setCertificates] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -23,10 +21,11 @@ const ProfessionalAffiliationsCertificates = () => {
     const [totalEntries, setTotalEntries] = useState(0);
     const [searchTerm, setSearchTerm] = useState("");
     const [deleteAlert, setDeleteAlert] = useState(false);
-
     const [createAlert, setCreateAlert] = useState(false);
     const [updateAlert, setUpdateAlert] = useState(false);
     const [editableForm, setEditableForm] = useState(false);
+    const [certificateToDelete, setCertificateToDelete] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         id: null,
         name: '',
@@ -73,47 +72,23 @@ const ProfessionalAffiliationsCertificates = () => {
         document.querySelector('.sidebar-listing-form').style.display = 'block';
     };
 
+    // We are handling the delete functionality here
     const handleDelete = async (id) => {
-        setDeleteAlert(true);
-        setTimeout(() => setDeleteAlert(false), 3000);
-
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                navigate('/login');
-                return;
-            }
-            
-            let parsedToken;
-            try {
-                parsedToken = JSON.parse(token);
-            } catch (e) {
-                //console.error("Token parsing error:", e);
-                setError("Invalid token format");
-                navigate('/login');
-                return;
-            }
-            
+            const token = JSON.parse(localStorage.getItem("token"));
             await axios.delete(`${$siteURL}/api/professional-certificate/${id}`, {
                 headers: {
-                    'Authorization': `Bearer ${parsedToken}`,
+                    'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
             });
-
-            setDeleteAlert(true);
-            setTimeout(() => setDeleteAlert(false), 3000);
+            setDeleteAlert(false);
             fetchCertificates();
         } catch (error) {
             console.error("Delete error:", error);
-            if (error.response && error.response.data && error.response.data.message === 'Unauthenticated.') {
-                localStorage.removeItem('token');
-                navigate('/login');
-            } else {
-                const errorMessage = error.response?.data?.message || 'Failed to delete certificate';
-                alert(errorMessage);
-            }
+            setErrorMessage(error.response?.data?.message || 'Error deleting certificate');
+            setDeleteAlert(false);
         }
     };
 
@@ -404,7 +379,6 @@ const ProfessionalAffiliationsCertificates = () => {
 
     return (
         <>
-        <ToastContainer position="top-right" autoClose={3000} />
           <Container fluid className="dashboard-page-main">
                 <Row>
                     <div className={`dashboard-page-section w-100 h-auto d-flex justify-content-between align-items-start ${isSidebarOpen ? "sidebar-open" : "sidebar-close"}`} 
@@ -426,9 +400,6 @@ const ProfessionalAffiliationsCertificates = () => {
                         </div>  
 
                         <div className="dashboard-content-table">
-                            {deleteAlert && (
-                                <div className="alert alert-success">Certificate deleted successfully!</div>
-                            )}
                             {createAlert && (
                                 <div className="alert alert-success">Certificate created successfully!</div>
                             )}
@@ -568,7 +539,13 @@ const ProfessionalAffiliationsCertificates = () => {
                                                 <td>{certificate?.description}</td>
                                                 <td>
                                                     <button className="btn btn-success me-2" onClick={() => handleEdit(certificate)}><FaEdit /></button>
-                                                    <button className="btn btn-danger" onClick={() => handleDelete(certificate.id) && setDeleteAlert(true)}><FaTrash /></button>
+                                                    <button className="btn btn-danger"
+                                                        onClick={() => {
+                                                        setCertificateToDelete(certificate.id);
+                                                        setDeleteAlert(true);
+                                                    }}>
+                                                        <FaTrash />
+                                                    </button>
                                                 </td>
                                             </tr>
                                         ))
@@ -676,6 +653,31 @@ const ProfessionalAffiliationsCertificates = () => {
                 </div>
             </Row>
             </Container>
+
+            <div className="alert-container position-relative">
+                <div className="alert-box delete-alert-box">
+                    <Alert show={deleteAlert} variant="success">
+                        <Alert.Heading className="text-center h4">&#9888; Are you sure?</Alert.Heading>
+                        <p className="text-center py-1">You won't be able to revert this!</p>
+                        <hr />
+                        <div className="d-flex justify-content-center align-items-center">
+                            <Button 
+                                onClick={() => handleDelete(certificateToDelete)} 
+                                variant="outline-success bg-success text-white mx-1"
+                            >
+                                Yes, Delete it!
+                            </Button>
+
+                            <Button 
+                                onClick={() => setDeleteAlert(false)} 
+                                variant="outline-danger bg-danger text-white mx-1"
+                            >
+                                No, Cancel
+                            </Button>
+                        </div>
+                    </Alert>
+                </div>
+            </div>
         </>
     );
 };

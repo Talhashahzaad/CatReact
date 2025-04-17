@@ -20,8 +20,6 @@ import axios from "axios";
 const Sidebar = () => {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(true);
-    
-    
     const handleClickOutside = (event) => {
         if (event.target.closest('.dropdown-menu') === null && !event.target.closest('.btn')) {
             setIsDropdownOpen(false);
@@ -41,22 +39,34 @@ const Sidebar = () => {
     };
 
     const [profileInfo, setProfileInfo] = useState(null);
+    const [role, setRole] = useState('');
     
     useEffect(() => {
         const fetchProfileInfo = async () => {
-            const token = JSON.parse(localStorage.getItem("token"));
-            const role = localStorage.getItem('role');
-            const response = await axios.get(`${$siteURL}/api/user-profile`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'role': role
-                }
-            });
-            setProfileInfo(response.data);
+            try {
+                const token = JSON.parse(localStorage.getItem("token"));
+                const storedRole = localStorage.getItem('role');
+                
+                setRole(storedRole);
+                
+                const response = await axios.get(`${$siteURL}/api/user-profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'role': storedRole
+                    }
+                });
+                setProfileInfo(response.data);
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
         };
         fetchProfileInfo();
     }, []);
 
+    // Add debug render logging
+    useEffect(() => {
+        setIsDropdownOpen(false);
+    }, [profileInfo, role]);
 
     return (
             <>
@@ -91,6 +101,7 @@ const Sidebar = () => {
                                 </Link>
                             </li>
 
+                            {profileInfo && profileInfo.user.role === 'agent' && role === 'agent' && (
                             <li>
                                 <Link to="#" className="d-flex justify-content-flex-start align-items-center position-relative" onClick={handleDropdownToggle}>
                                     <span className="item-icon">
@@ -139,9 +150,9 @@ const Sidebar = () => {
                                     </Link>
                                 </div>
                             </li>
-                            
+                            )}
 
-                            
+                            {profileInfo && profileInfo.user.role === 'agent' && role === 'agent' && (
                             <li>
                                 <Link to="/dashboard/order" className="dropdown-item" onClick={(e) => (e).stopPropagation() && setIsDropdownOpen(false) && window.scrollTo(0, 0)}>
                                     <span className="item-icon">
@@ -150,15 +161,18 @@ const Sidebar = () => {
                                     <span className="item-text">order</span>
                                 </Link>
                             </li>
+                            )}
                         </ul>
                     </div>
 
+                    {profileInfo && profileInfo.user.role === 'agent' && role === 'agent' && (
                     <div className="dashboard-sidebar-footer">
                         <div className="dashboard-sidebar-footer-text d-flex flex-column justify-content-center align-items-start w-100 h-100">
                             <h6 className="text-white headingFont h4 fw-bold mb-4">Don't miss out on elite features.</h6>
                             <Link to="/for-business" className="btn btn-md text-dark bg-white text-capitalize fw-bold w-100 py-2">Upgrade Now</Link>
                         </div>
                     </div>
+                    )}
                 </div>
             <Outlet />
         </>

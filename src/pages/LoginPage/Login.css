@@ -63,7 +63,7 @@ top: 0;left: 0;border-radius: 15px;overflow: hidden;}
 margin-block-end: 0;padding-inline: 20px; outline: 10px solid var(--green25);}
 
 .login-picture{height: 100%;border-radius: 20px; overflow: hidden;}
-.login-picture img {object-fit: scale-down;height: 100%;object-position: right;}
+.login-picture img {object-fit: cover;height: 100%;object-position: right;}
 @media(max-width:1366px){
 .loginPage ul.signInIcons li a {font-size: 12px;}
 }

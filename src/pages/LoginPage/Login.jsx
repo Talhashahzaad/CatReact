@@ -6,7 +6,7 @@ import eyeOpen from "../LoginPage/eyeOpen.svg";
 import eyeClose from "../LoginPage/eyeClose.svg";
 import googleShortIcon from "../../images/google-short-icon.svg";
 import facebookShortIcon from "../../images/facebook-short-icon.svg";
-import userLoginPicture from "../../images/userLoginPicture.webp";
+import userLoginBannerSecond from "../../images/user-login-banner-second.jpg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
@@ -59,7 +59,7 @@ function Login() {
                 successNotify();
                 setTimeout(() => {
                     navigate("/dashboard");
-                }, 3000);
+                }, 500);
             } else {
                 setErrorMessage(response.data.message || "Login failed. Please try again.");
             }
@@ -82,7 +82,7 @@ function Login() {
                     <Row>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                             <div className="login-picture">
-                                <img src={userLoginPicture} alt="User Login" className="img-fluid" />
+                                <img src={userLoginBannerSecond} alt="User Login" className="img-fluid" />
                             </div>
                         </Col>
                     
