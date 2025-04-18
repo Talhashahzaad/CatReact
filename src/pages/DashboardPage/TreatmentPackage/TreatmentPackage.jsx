@@ -463,7 +463,7 @@ const handlePackageDataChange = (e) => {
                                             <tr>
                                                 <th>id</th>
                                                 <th>name</th>
-                                                <th>category</th>
+                                                {/* <th>category</th> */}
                                                 <th>price type</th>
                                                 <th>available for</th>
                                                 <th>status</th>
@@ -484,7 +484,7 @@ const handlePackageDataChange = (e) => {
                                                     <tr key={index}>
                                                         <td>{treatmentPackage.id}</td>
                                                         <td>{treatmentPackage.name}</td>
-                                                        <td>{treatmentPackage.category || '-'}</td>
+                                                        {/* <td>{treatmentPackage.category || '-'}</td> */}
                                                         <td>{treatmentPackage.price_type || '-'}</td>
                                                         <td>{treatmentPackage.available_for || '-'}</td>
                                                         <td>{treatmentPackage.status === true ? 'Active' : 'Inactive'}</td>
