@@ -30,6 +30,7 @@ const Treatment = () => {
   const [treatmentToDelete, setTreatmentToDelete] = useState(null);
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [variantFormError, setVariantFormError] = useState("");
 
   // Update your fetchTreatments function to match the API response structure
   const fetchTreatments = async () => {
@@ -171,17 +172,108 @@ const Treatment = () => {
     {},
   ]);
   const [variantPriceTypes, setVariantPriceTypes] = useState(["free"]);
+  const [variantNames, setVariantNames] = useState(["service"]);
+  const [variantPrices, setVariantPrices] = useState(["0"]);
+  const [variantDurations, setVariantDurations] = useState(["0"]);
+
+  // Function to check if Add Variant button should be disabled
+  const isAddVariantDisabled = () => {
+    // Check if any variant with "fixed" price type has price <= 0
+    return variantPriceTypes.some((type, index) => 
+      type === "fixed" && (Number(variantPrices[index]) <= 0)
+    );
+  };
+
+  // Create helper function to validate fixed price
+  const validateFixedPrice = (priceInput, priceType) => {
+    if (priceType === "fixed" && Number(priceInput) <= 0) {
+      return false;
+    }
+    return true;
+  };
+
+  // Helper to set validation message on price inputs
+  const handlePriceInputValidation = (inputElement, priceType, price) => {
+    if (priceType === "fixed" && Number(price) <= 0) {
+      inputElement.setCustomValidity("Price must be greater than 0 for Fixed price type");
+    } else {
+      inputElement.setCustomValidity("");
+    }
+  };
 
   const handlePricingAndDurationAmount = (e, index) => {
     const newPriceTypes = [...variantPriceTypes];
     newPriceTypes[index] = e.target.value;
     setVariantPriceTypes(newPriceTypes);
+    
+    // When changing price type, validate the price input if needed
+    if (e.target.value === "fixed") {
+      const priceInput = document.getElementById(`pricingAmount-${index}`);
+      if (priceInput) {
+        handlePriceInputValidation(priceInput, "fixed", variantPrices[index]);
+      }
+    }
+  };
+
+  // Update the price input onChange handler
+  const handlePriceChange = (e, index) => {
+    const newPrices = [...variantPrices];
+    newPrices[index] = e.target.value;
+    setVariantPrices(newPrices);
   };
 
   const addVariant = (e) => {
     e.preventDefault();
-    setPricingAndDurationVariants([...pricingAndDurationVariants, {}]);
-    setVariantPriceTypes([...variantPriceTypes, "free"]);
+    const variantName = document.getElementById("variant-name").value;
+    
+    // Check if name field is empty
+    if (!variantName || variantName.trim() === "") {
+      setVariantFormError("Name field can not be empty.");
+      return;
+    }
+    
+    // Clear previous error
+    setVariantFormError("");
+    
+    const variantPrice = document.getElementById("variant-price").value;
+    const variantPriceType = document.getElementById("variant-price-type").value;
+    const variantDuration = document.getElementById("variant-duration").value;
+    
+    // Create new variant with the form data
+    const newVariant = {
+      name: variantName,
+      price: variantPrice,
+      priceType: variantPriceType,
+      duration: variantDuration
+    };
+    
+    setPricingAndDurationVariants([...pricingAndDurationVariants, newVariant]);
+    setVariantPriceTypes([...variantPriceTypes, variantPriceType]);
+    setVariantNames([...variantNames, variantName || "service"]);
+    setVariantPrices([...variantPrices, variantPrice]);
+    setVariantDurations([...variantDurations, variantDuration]);
+    
+    setVariantForm(false);
+    
+    // Reset form fields
+    document.getElementById("variant-name").value = "";
+    document.getElementById("variant-description").value = "";
+    document.getElementById("variant-price").value = "";
+    document.getElementById("variant-price-type").value = "free";
+    document.getElementById("variant-duration").value = "0";
+  };
+
+  const closeVariantForm = (e) => {
+    if (e) e.preventDefault();
+    setVariantForm(false);
+    setVariantFormError("");
+    
+    // Reset form fields
+    document.getElementById("variant-name").value = "";
+    document.getElementById("variant-description").value = "";
+    document.getElementById("variant-price").value = "";
+    document.getElementById("variant-price-type").value = "free";
+    document.getElementById("variant-duration").value = "0";
   };
 
   const handleSubmit = (e) => {
@@ -640,7 +732,7 @@ const Treatment = () => {
                                             service name
                                           </label>
                                           <strong className="d-block text-capitalize">
-                                            {treatmentName || "service"}
+                                            {variantNames[index] || treatmentName || "service"}
                                           </strong>
                                         </li>
                                         <li className="pricing-and-duration-hours">
@@ -680,14 +772,18 @@ const Treatment = () => {
                                             name={`priceType-${index}`}
                                             id={`priceType-${index}`}
                                             className="form-control text-capitalize"
-                                            required
                                             value={variantPriceTypes[index]}
-                                            onChange={(e) =>
-                                              handlePricingAndDurationAmount(
-                                                e,
-                                                index
-                                              )
-                                            }
+                                            onChange={(e) => {
+                                              e.preventDefault();
+                                              handlePricingAndDurationAmount(e, index);
+                                              // Validate price if switching to fixed type
+                                              if (e.target.value === "fixed") {
+                                                const priceInput = document.getElementById(`pricingAmount-${index}`);
+                                                if (priceInput) {
+                                                  handlePriceInputValidation(priceInput, "fixed", variantPrices[index]);
+                                                }
+                                              }
+                                            }}
                                           >
                                             <option
                                               value="free"
@@ -726,30 +822,52 @@ const Treatment = () => {
                                               className="form-control"
                                               id={`pricingAmount-${index}`}
                                               name={`pricingAmount-${index}`}
+                                              value={variantPrices[index]}
+                                              onChange={(e) => {
+                                                handlePriceChange(e, index);
+                                              }}
                                               required
                                             />
                                           </li>
                                         )}
-                                        {index > 0 && (
-                                          <li className="remove-pricing-and-duration">
-                                            <label className="visually-hidden form-label text-capitalize fw-bold small">
-                                              remove
-                                            </label>
-                                            <button
-                                              className="btn btn-danger text-capitalize rounded"
-                                              onClick={(e) => {
-                                                setPricingAndDurationVariants(
-                                                  pricingAndDurationVariants.filter(
-                                                    (_, i) => i !== index
-                                                  )
-                                                );
-                                                e.preventDefault();
-                                              }}
-                                            >
-                                              remove
-                                            </button>
-                                          </li>
-                                        )}
+                                        <li className="remove-pricing-and-duration">
+                                          <label className="visually-hidden form-label text-capitalize fw-bold small">
+                                            remove
+                                          </label>
+                                          <button
+                                            className="btn btn-danger text-capitalize rounded"
+                                            onClick={(e) => {
+                                              setPricingAndDurationVariants(
+                                                pricingAndDurationVariants.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              setVariantPriceTypes(
+                                                variantPriceTypes.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              setVariantNames(
+                                                variantNames.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              setVariantPrices(
+                                                variantPrices.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              setVariantDurations(
+                                                variantDurations.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              e.preventDefault();
+                                            }}
+                                          >
+                                            remove
+                                          </button>
+                                        </li>
                                       </ol>
                                     </div>
                                   )
@@ -762,6 +880,7 @@ const Treatment = () => {
                                       setVariantForm(true);
                                       e.preventDefault();
                                     }}
+                                    disabled={isAddVariantDisabled()}
                                   >
                                     {" "}
                                     &#43; Add variant
@@ -778,46 +897,39 @@ const Treatment = () => {
                                       </strong>
                                       <button
                                         className="variantModal-form-header-close"
-                                        onClick={() => setVariantForm(false)}
+                                        onClick={closeVariantForm}
                                       >
                                         <FaTimes />
                                       </button>
                                     </span>
                                     <hr />
-                                    <form>
+                                    <form onSubmit={addVariant}>
                                       <Row>
-                                        <Col
-                                          xxl={12}
-                                          xl={12}
-                                          lg={12}
-                                          md={12}
-                                          sm={12}
-                                        >
+                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                           <div className="form-group my-2">
                                             <label
                                               htmlFor="variant-name"
                                               className="form-label text-capitalize fw-bold small"
                                             >
-                                              name
+                                              name <sup className="text-danger">*</sup>
                                             </label>
                                             <input
                                               type="text"
-                                              className="form-control"
+                                              className={`form-control ${variantFormError ? 'is-invalid' : ''}`}
                                               id="variant-name"
                                               name="name"
                                               required
                                               autoComplete="off"
                                             />
+                                            {variantFormError && (
+                                              <div className="invalid-feedback">
+                                                <span>{variantFormError}</span>
+                                              </div>
+                                            )}
                                           </div>
                                         </Col>
 
-                                        <Col
-                                          xxl={12}
-                                          xl={12}
-                                          lg={12}
-                                          md={12}
-                                          sm={12}
-                                        >
+                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                           <div className="form-group my-2">
                                             <label
                                               htmlFor="variant-description"
@@ -829,18 +941,12 @@ const Treatment = () => {
                                               className="form-control"
                                               id="variant-description"
                                               name="description"
-                                              required
+                                              autoComplete="off"
                                             ></textarea>
                                           </div>
                                         </Col>
 
-                                        <Col
-                                          xxl={12}
-                                          xl={12}
-                                          lg={12}
-                                          md={12}
-                                          sm={12}
-                                        >
+                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                           <div className="form-group my-2">
                                             <label
                                               htmlFor="variant-price"
@@ -853,19 +959,16 @@ const Treatment = () => {
                                               className="form-control"
                                               id="variant-price"
                                               name="price"
-                                              required
                                               autoComplete="off"
+                                              onChange={(e) => {
+                                                const priceType = document.getElementById("variant-price-type")?.value;
+                                                handlePriceInputValidation(e.target, priceType, e.target.value);
+                                              }}
                                             />
                                           </div>
                                         </Col>
 
-                                        <Col
-                                          xxl={12}
-                                          xl={12}
-                                          lg={12}
-                                          md={12}
-                                          sm={12}
-                                        >
+                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                           <div className="form-group my-2">
                                             <label
                                               htmlFor="variant-price-type"
@@ -877,7 +980,15 @@ const Treatment = () => {
                                               name="priceType"
                                               id="variant-price-type"
                                               className="form-control text-capitalize"
-                                              required
+                                              onChange={(e) => {
+                                                // If selecting "fixed", ensure price input gets proper validation
+                                                if (e.target.value === "fixed") {
+                                                  const priceInput = document.getElementById("variant-price");
+                                                  if (priceInput) {
+                                                    handlePriceInputValidation(priceInput, "fixed", priceInput.value);
+                                                  }
+                                                }
+                                              }}
                                             >
                                               <option
                                                 value="free"
@@ -901,13 +1012,7 @@ const Treatment = () => {
                                           </div>
                                         </Col>
 
-                                        <Col
-                                          xxl={12}
-                                          xl={12}
-                                          lg={12}
-                                          md={12}
-                                          sm={12}
-                                        >
+                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                           <div className="form-group my-2">
                                             <label
                                               htmlFor="variant-duration"
@@ -936,28 +1041,22 @@ const Treatment = () => {
                                           </div>
                                         </Col>
 
-                                        <Col
-                                          xxl={12}
-                                          xl={12}
-                                          lg={12}
-                                          md={12}
-                                          sm={12}
-                                        >
+                                        <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                           <div className="form-group my-2 d-flex align-items-center justify-content-between">
                                             <button
                                               className="btn btn-danger text-capitalize rounded"
-                                              onClick={(e) => {
-                                                setVariantForm(false);
-                                                e.preventDefault();
-                                              }}
+                                              onClick={closeVariantForm}
                                             >
                                               close
                                             </button>
 
                                             <div className="pricing-and-duration-form-button rounded">
                                               <button
-                                                className="btn text-capitalize rounded"
-                                                onClick={addVariant}
+                                                className="btn text-capitalize rounded" 
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  addVariant(e);
+                                                }}
                                               >
                                                 {" "}
                                                 Save variant
@@ -1142,7 +1241,7 @@ const Treatment = () => {
                                             service name
                                           </label>
                                           <strong className="d-block text-capitalize">
-                                            {treatmentName || "service"}
+                                            {variantNames[index] || treatmentName || "service"}
                                           </strong>
                                         </li>
                                         <li className="pricing-and-duration-hours">
@@ -1182,14 +1281,18 @@ const Treatment = () => {
                                             name={`priceType-${index}`}
                                             id={`priceType-${index}`}
                                             className="form-control text-capitalize"
-                                            required
                                             value={variantPriceTypes[index]}
-                                            onChange={(e) =>
-                                              handlePricingAndDurationAmount(
-                                                e,
-                                                index
-                                              )
-                                            }
+                                            onChange={(e) => {
+                                              e.preventDefault();
+                                              handlePricingAndDurationAmount(e, index);
+                                              // Validate price if switching to fixed type
+                                              if (e.target.value === "fixed") {
+                                                const priceInput = document.getElementById(`pricingAmount-${index}`);
+                                                if (priceInput) {
+                                                  handlePriceInputValidation(priceInput, "fixed", variantPrices[index]);
+                                                }
+                                              }
+                                            }}
                                           >
                                             <option
                                               value="free"
@@ -1228,6 +1331,10 @@ const Treatment = () => {
                                               className="form-control"
                                               id={`pricingAmount-${index}`}
                                               name={`pricingAmount-${index}`}
+                                              value={variantPrices[index]}
+                                              onChange={(e) => {
+                                                handlePriceChange(e, index);
+                                              }}
                                               required
                                             />
                                           </li>
@@ -1242,6 +1349,26 @@ const Treatment = () => {
                                             onClick={(e) => {
                                               setPricingAndDurationVariants(
                                                 pricingAndDurationVariants.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              setVariantPriceTypes(
+                                                variantPriceTypes.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              setVariantNames(
+                                                variantNames.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              setVariantPrices(
+                                                variantPrices.filter(
+                                                  (_, i) => i !== index
+                                                )
+                                              );
+                                              setVariantDurations(
+                                                variantDurations.filter(
                                                   (_, i) => i !== index
                                                 )
                                               );
@@ -1263,6 +1390,7 @@ const Treatment = () => {
                                       setVariantForm(true);
                                       e.preventDefault();
                                     }}
+                                    disabled={isAddVariantDisabled()}
                                   >
                                     {" "}
                                     &#43; Add variant
@@ -1279,13 +1407,13 @@ const Treatment = () => {
                                       </strong>
                                       <button
                                         className="variantModal-form-header-close"
-                                        onClick={() => setVariantForm(false)}
+                                        onClick={closeVariantForm}
                                       >
                                         <FaTimes />
                                       </button>
                                     </span>
                                     <hr />
-                                    <form>
+                                    <form onSubmit={addVariant}>
                                       <Row>
                                         <Col
                                           xxl={12}
@@ -1299,16 +1427,21 @@ const Treatment = () => {
                                               htmlFor="variant-name"
                                               className="form-label text-capitalize fw-bold small"
                                             >
-                                              name
+                                              name <sup className="text-danger">*</sup>
                                             </label>
                                             <input
                                               type="text"
-                                              className="form-control"
+                                              className={`form-control ${variantFormError ? 'is-invalid' : ''}`}
                                               id="variant-name"
                                               name="name"
                                               required
                                               autoComplete="off"
                                             />
+                                            {variantFormError && (
+                                              <div className="invalid-feedback">
+                                                {variantFormError}
+                                              </div>
+                                            )}
                                           </div>
                                         </Col>
 
@@ -1330,7 +1463,7 @@ const Treatment = () => {
                                               className="form-control"
                                               id="variant-description"
                                               name="description"
-                                              required
+                                              autoComplete="off"
                                             ></textarea>
                                           </div>
                                         </Col>
@@ -1354,8 +1487,11 @@ const Treatment = () => {
                                               className="form-control"
                                               id="variant-price"
                                               name="price"
-                                              required
                                               autoComplete="off"
+                                              onChange={(e) => {
+                                                const priceType = document.getElementById("variant-price-type")?.value;
+                                                handlePriceInputValidation(e.target, priceType, e.target.value);
+                                              }}
                                             />
                                           </div>
                                         </Col>
@@ -1378,7 +1514,15 @@ const Treatment = () => {
                                               name="priceType"
                                               id="variant-price-type"
                                               className="form-control text-capitalize"
-                                              required
+                                              onChange={(e) => {
+                                                // If selecting "fixed", ensure price input gets proper validation
+                                                if (e.target.value === "fixed") {
+                                                  const priceInput = document.getElementById("variant-price");
+                                                  if (priceInput) {
+                                                    handlePriceInputValidation(priceInput, "fixed", priceInput.value);
+                                                  }
+                                                }
+                                              }}
                                             >
                                               <option
                                                 value="free"
@@ -1447,18 +1591,18 @@ const Treatment = () => {
                                           <div className="form-group my-2 d-flex align-items-center justify-content-between">
                                             <button
                                               className="btn btn-danger text-capitalize rounded"
-                                              onClick={(e) => {
-                                                setVariantForm(false);
-                                                e.preventDefault();
-                                              }}
+                                              onClick={closeVariantForm}
                                             >
                                               close
                                             </button>
 
                                             <div className="pricing-and-duration-form-button rounded">
                                               <button
-                                                className="btn text-capitalize rounded"
-                                                onClick={addVariant}
+                                                className="btn text-capitalize rounded" 
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  addVariant(e);
+                                                }}
                                               >
                                                 {" "}
                                                 Save variant

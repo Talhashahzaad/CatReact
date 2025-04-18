@@ -155,7 +155,7 @@ font-size: 14px;}
 .sidebar-schedule-table-form-header table.table-bordered thead th {background-color: #f4f4f4;}
 /* media files for all treatment listing end */
 
-
+.dashboard-content-table {height: 100%;min-height: 100vh;}
 button.toggle-sidebar-btn-dashboard , button.toggle-sidebar-btn-dashboard:active , button.toggle-sidebar-btn-dashboard.active{
     background: #000;
     border-color: #000;

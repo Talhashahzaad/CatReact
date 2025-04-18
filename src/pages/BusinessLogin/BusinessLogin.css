@@ -63,65 +63,38 @@
 .businessLoginPage h1>mark {background-color: transparent;color: var(--jetGreen);padding: 0;}
 
 @media (min-width: 991px) and (max-width:1280px){
-.businessLoginPage ul.signInIcons li a {
-    font-size: 10px;
+.businessLoginPage ul.signInIcons li a {font-size: 10px;}
 }
-}
-
+/* 1280 */
 
 @media (max-width: 991px){
-.businessLoginBanner {
-    height: 200px;
-    margin-bottom: 30px;
+.businessLoginBanner {height: 100%;margin-bottom: 0px;}
+.businessLoginBanner .img-fluid {max-width: 100%;height: auto;margin: unset;}
+.businessLoginPage::before {display: none;}
+.businessLoginPage ul.signInIcons {flex-flow: column;}
+.businessLoginPage ul.signInIcons li {display: block;}
 }
+/* 991 */
 
-.businessLoginBanner .img-fluid {
-    max-width: 100%;
-    height: auto;
-    margin: -1000% 0;
+@media (max-width: 767px){
+.businessLoginPage {max-width: 90%;width: 90%;padding: 20px 15px; margin: 50px auto 50px;}
+.businessLoginPage h1 {font-size: 26px;}
+/* login page */
+
+.businessLoginPage ul.signInIcons li img {max-width: 100%;}
+.businessLoginPage ul.signInIcons li:last-child {justify-content: unset;}
+.businessLoginPage ul.signInIcons {flex-wrap: wrap;}
+.businessLoginBanner {overflow: hidden;height: 100%;margin-bottom: 0px; padding-block-end: 30px;}
+.businessLoginPage hr {margin: 15px auto 15px;}
 }
+/* 767 */
 
-
-.businessLoginPage::before {
-    display: none;
+@media (max-width: 667px){
+.businessLoginPage ul.signInIcons li a {font-size: 12px;}
 }
-
-}
-
-    @media (max-width: 767px){
-        .businessLoginPage {max-width: 90%;width: 90%;padding: 20px 15px; margin: 50px auto 50px;}
-        .businessLoginPage h1 {font-size: 26px;}
-        /* login page */
-    
-        .businessLoginPage ul.signInIcons li img {
-            max-width: 100%;
-        }
-        .businessLoginPage ul.signInIcons li:last-child {
-            justify-content: unset;
-        }
-        .businessLoginPage ul.signInIcons {
-            flex-wrap: wrap;
-        }
-        .businessLoginBanner {
-            overflow: hidden;
-            height: 200px;
-            margin-bottom: 30px;
-        }
-        .businessLoginPage hr {
-            margin: 15px auto 15px;
-        }
-    }
-    /* 767 */
-
-    @media (max-width: 667px){
-    .businessLoginPage ul.signInIcons li a {
-        font-size: 12px;
-    }
-}
+/* 667 */
 
 @media (max-width: 560px){
-.password-row {
-    flex-wrap: wrap;
-    gap: 10px;
+.password-row {flex-wrap: wrap;gap: 10px;}
 }
-}
+/* 560 */

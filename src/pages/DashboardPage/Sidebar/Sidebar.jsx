@@ -103,7 +103,7 @@ const Sidebar = () => {
 
                             {profileInfo && profileInfo.user.role === 'agent' && role === 'agent' && (
                             <li>
-                                <Link to="#" className="d-flex justify-content-flex-start align-items-center position-relative" onClick={handleDropdownToggle}>
+                                <Link to="javascript:void(0)" className="d-flex justify-content-flex-start align-items-center position-relative" onClick={handleDropdownToggle}>
                                     <span className="item-icon">
                                         <img src={listIcon} alt="Listings" />
                                     </span>

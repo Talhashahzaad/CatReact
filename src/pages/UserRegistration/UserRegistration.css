@@ -1,12 +1,15 @@
-.user-registration-container {width: 100%;height: auto;padding-block: 50px;display: flex;align-items: flex-start;border: 1px solid #EAEAEA;border-radius: 29px;
-padding-inline: 50px;margin-block: 100px;/*box-shadow: 4px 4px 25px rgba(0,0,0,0.05);*/background-blend-mode: normal;background-image: url('../src/images/bannerCaptionVector.svg');background-repeat: no-repeat;background-position: bottom -85px right -160px;background-size: 35%;z-index: 0; position: relative;}
+.user-registration-container {width: 100%;height: auto;padding-block: 50px;display: flex;justify-content: space-around;border: 1px solid #EAEAEA;
+border-radius: 29px;padding-inline: 50px;margin-block: 100px;background-blend-mode: normal;background-image: url('../src/images/bannerCaptionVector.svg');
+background-repeat: no-repeat;background-position: bottom -85px right -160px;background-size: 35%;z-index: 0;position: relative;}
+.user-registration-container .row {width: 100%;justify-content: space-between;}
 
 .user-registration-container::before {position: absolute;content: '';width: 100%;height: 100px;background-image: url('../src/images/circle-shadow.png');
 left: 0;bottom: -100px;background-position: bottom center;background-repeat: no-repeat;}
 
 .user-registration-form hr {height: 3px;background-color: var(--jetGreen);border: none;opacity: 1;border-radius: 10px;width: 94px;margin: 31px auto 34px;}
-.user-registration-picture {margin-inline-end: 60px;}
+.user-registration-picture {margin-inline-end: 0px; width: 100%;}
 .user-registration-form .form-group label, .user-registration-form .form-group legend {font-size: 15px;font-weight: 600;margin-block-end: 10px;text-transform: capitalize;}
+.user-registration-picture img {width: 100%;max-width: 570px;min-width: 570px;}
 
 .user-registration-form .form-group input[type="text"],
 .user-registration-form .form-group input[type="email"],
@@ -63,25 +66,28 @@ border-color: transparent;outline: none;}
 border-radius: 100px;text-transform: uppercase;font-weight: 700;} */
     
 .user-registration-form h1>mark { background-color: transparent; color: var(--jetGreen); padding: 0;}
-.user-registration-form .form-group select {
-    background-image: url('../src/images/angleDownBlack.svg');
-    background-position: center right 15px;
-    background-repeat: no-repeat;
-    background-size: 3%;
+.user-registration-form .form-group select {background-image: url('../src/images/angleDownBlack.svg');background-position: center right 15px;background-repeat: no-repeat;background-size: 3%;}
+
+@media (min-width: 1366px) and (max-width: 1400px) {
+.user-registration-picture img {min-height: 500px; min-width: 100%;}
 }
+/* 1366 */
+
+@media (max-width: 1299px) {
+.user-registration-picture img {min-width: 100%;}
+.user-registration-picture img {min-height: 375px;}
+}
+/* 1299 */
 
 @media (max-width: 991px) {
 .user-registration-container::before{display: none;}
-.user-registration-picture {
-    margin-inline-end: 60px;
-    margin-bottom: 30px;
+.user-registration-picture {margin-inline-end: 60px;margin-bottom: 30px;}
 }
+/* 991px */
+
+@media (max-width: 767px) {
+.user-login-picture {margin-inline-end: 0;margin-block-end: 20px;}
+.user-registration-container {padding-block: 20px;padding-inline: 15px;}
+.user-registration-picture img {min-height: 300px; min-width: 300px;}
 }
-    
-    @media (max-width: 767px) {
-        .user-login-picture {
-            margin-inline-end: 0;
-            margin-block-end: 20px;
-        }
-    }
-    
+/* 767px */
