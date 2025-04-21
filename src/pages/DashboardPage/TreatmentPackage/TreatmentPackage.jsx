@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect  } from 'react';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import Sidebar from '../Sidebar/Sidebar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import './TreatmentPackage.css';
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
@@ -20,6 +20,7 @@ const TreatmentPackage = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [totalEntries, setTotalEntries] = useState(0);
     const [showModalPopUp, setShowModalPopUp] = useState(false);
+    const [showEditModalPopUp, setShowEditModalPopUp] = useState(false);
     const [retailPrice, setRetailPrice] = useState();
     const [selectedPriceType, setSelectedPriceType] = useState('');
     const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -55,9 +56,26 @@ const TreatmentPackage = () => {
                     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
                 }
             });
+            console.log(response.data.packages);
             
-            if(response.data && Array.isArray(response.data.packages)){
-                setTreatmentPackages(response.data.packages || []);
+            // Check if the response contains the packages array
+            if(response.data && response.data.packages && Array.isArray(response.data.packages)){
+                // Store only the packages data
+                const packagesData = response.data.packages;
+                
+                // Map over the packages and ensure all expected fields are present
+                const processedPackages = packagesData.map(pkg => {
+                    return {
+                        ...pkg,
+                        package: {
+                            ...pkg.package,
+                            total_time: pkg.packages?.total_time,
+                            total_price: pkg.packages?.total_price
+                        }
+                    };
+                });
+                
+                setTreatmentPackages(processedPackages || []);
                 setTotalPages(response.data.last_page || 1);
                 setTotalEntries(response.data.total || 0);
                 setSuccess(true);
@@ -110,15 +128,27 @@ const TreatmentPackage = () => {
 
     const handleCloseModalPopUp = () => setShowModalPopUp(false);
     const handleShowModalPopUp = () => setShowModalPopUp(true);
+    const handleCloseEditModalPopUp = () => setShowEditModalPopUp(false);
+    const handleShowEditModalPopUp = () => setShowEditModalPopUp(true);
 
     const calculateTotalDuration = () => {
         const totalMinutes = selectedTreatments.reduce((total, treatment) => {
-            if (!treatment || !treatment.duration) return total;
+            // First check for total_time, then fall back to duration
+            if (!treatment) return total;
+            
+            const durationString = treatment.total_time || treatment.duration;
+            if (!durationString) return total;
             
             try {
-                const parts = treatment.duration.split('h');
+                // Remove any spaces from the duration string
+                const cleanDurationString = durationString.replace(/\s+/g, '');
+                const parts = cleanDurationString.split('h');
                 const hours = parseInt(parts[0]) || 0;
-                const minutes = parseInt(parts[1]) || 0;
+                
+                // Extract minutes, removing any non-digit characters
+                const minutesPart = parts[1] ? parts[1].replace(/\D/g, '') : '0';
+                const minutes = parseInt(minutesPart) || 0;
+                
                 return total + (hours * 60) + minutes;
             } catch (error) {
                 console.error("Error parsing duration:", error);
@@ -176,32 +206,96 @@ const TreatmentPackage = () => {
     
     // Function to handle checkbox change
     const handleCheckboxChange = (treatment, isChecked) => {
-        if (!treatment) return;
-        
+        setSelectedTreatments(prevSelected => {
+            if (isChecked) {
+                // Store package details in localStorage when checkbox is checked
+                storePackageDetails(treatment);
+                return [...prevSelected, treatment];
+            } else {
+                // Remove package details from localStorage when checkbox is unchecked
+                removePackageDetails(treatment.id);
+                return prevSelected.filter(item => item.id !== treatment.id);
+            }
+        });
+    };
+
+    // Function to store package details in localStorage
+    const storePackageDetails = (packageData) => {
         try {
-            setSelectedTreatments(prevSelected => {
-                if (isChecked) {
-                    // Ensure the treatment has all required properties before adding
-                    const safetreatment = {
-                        ...treatment,
-                        duration: treatment.duration || '0h0',
-                        price: treatment.price || 0,
-                        id: treatment.id
-                    };
-                    return [...prevSelected, safetreatment];
-                } else {
-                    return prevSelected.filter(item => item.id !== treatment.id);
-                }
-            });
+            // Get existing stored packages or initialize empty array
+            const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
+            
+            // Extract package details, ensuring we use the right properties
+            // Check for different possible property paths
+            const totalPrice = packageData.total_price || 
+                               packageData.price || 
+                               (packageData.packages && packageData.packages.total_price) || 
+                               (packageData.package && packageData.package.total_price) || 
+                               0;
+                               
+            const totalTime = packageData.total_time || 
+                              packageData.duration || 
+                              (packageData.packages && packageData.packages.total_time) || 
+                              (packageData.package && packageData.package.total_time) || 
+                              '0h 0min';
+            
+            const packageToStore = {
+                id: packageData.id,
+                total_price: totalPrice,
+                total_time: totalTime,
+                name: packageData.name || '',
+                category: packageData.category || '',
+                price_type: packageData.price_type || ''
+            };
+            
+            // Add package if not already in storage
+            if (!storedPackages.some(pkg => pkg.id === packageToStore.id)) {
+                storedPackages.push(packageToStore);
+                localStorage.setItem('selectedPackages', JSON.stringify(storedPackages));
+                console.log(`Package ${packageToStore.id} stored in localStorage`, packageToStore);
+            }
         } catch (error) {
-            console.error("Error in handleCheckboxChange:", error);
+            console.error("Error storing package in localStorage:", error);
+        }
+    };
+
+    // Function to remove package details from localStorage
+    const removePackageDetails = (packageId) => {
+        try {
+            const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
+            const updatedPackages = storedPackages.filter(pkg => pkg.id !== packageId);
+            localStorage.setItem('selectedPackages', JSON.stringify(updatedPackages));
+            console.log(`Packages ${packageId} removed from localStorage`);
+        } catch (error) {
+            console.error("Error removing package from localStorage:", error);
         }
     };
 
     // Calculate total price safely
-    const totalPrice = selectedTreatments.reduce((total, treatment) => 
-        total + (treatment && typeof treatment.price === 'number' ? treatment.price : 0), 0);
-
+    const calculateTotalPrice = () => {
+        return selectedTreatments.reduce((total, treatment) => {
+            // First check for total_price, then fall back to price
+            let price = 0;
+            
+            if (treatment?.total_price) {
+                price = typeof treatment.total_price === 'number' ? 
+                    treatment.total_price : 
+                    parseFloat(treatment.total_price) || 0;
+            } else if (treatment?.price) {
+                price = typeof treatment.price === 'number' ? 
+                    treatment.price : 
+                    parseFloat(treatment.price) || 0;
+            }
+            
+            return total + price;
+        }, 0);
+    };
+    
+    const [totalPrice, setTotalPrice] = useState(0);
+    
+    useEffect(() => {
+        setTotalPrice(calculateTotalPrice());
+    }, [selectedTreatments]);
 
     // show hide the editable form
     const [packageEditableForm, setPackageEditableForm] = useState(false);
@@ -278,45 +372,72 @@ const TreatmentPackage = () => {
         available_for: ''
     });
 
+    const resetForm = () => {
+        setTreatmentPackageData({
+            name: '',
+            status: '',
+            category: '',
+            description: '',
+            services: [],
+            variants: [],
+            service_prices: [],
+            service_durations: [],
+            price_type: '',
+            retail_price: '',
+            total_duration: '',
+            discount_percentage: '',
+            available_for: ''
+        });
+        setSelectedTreatments([]);
+        setSelectedPriceType('');
+        setRetailPrice('');
+        setDiscountPercentage(0);
+        setTotalDuration({ hours: 0, minutes: 0 });
+        setTotalPrice(0);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
+            // Format the total_duration to match the format used in the API response
+            const formattedTotalDuration = `${totalDuration.hours}h ${totalDuration.minutes}min`;
+            
+            // Extract IDs from selected treatments
+            const selectedTreatmentIds = selectedTreatments.map(treatment => treatment.id);
+            
             const token = JSON.parse(localStorage.getItem("token"));
             const response = await axios.post(`${$siteURL}/api/treatment-package`,
-                treatmentPackageData, {
+                {
+                    ...treatmentPackageData,
+                    services: selectedTreatmentIds, // Add the selected treatment IDs
+                    total_duration: formattedTotalDuration,
+                    total_price: totalPrice,
+                    retail_price: selectedPriceType === 'Custom Pricing' ? treatmentPackageData.retail_price : totalPrice,
+                }, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     }
                 });
-                if(response.status === 201){
-                    setCreateAlert(true);
-                    document.querySelector('.sidebar-listing-form').style.display = 'none';
-                    document.querySelector('.dashboard-content-table').style.display = 'block';
-                    // Reset form data
-                    setTreatmentPackageData({
-                        name: '',
-                        status: '',
-                        category: '',
-                        description: '',
-                        services: [],
-                        variants: [],
-                        service_prices: [],
-                        service_durations: [],
-                        price_type: '',
-                        retail_price: '',
-                        total_duration: '',
-                        discount_percentage: '',
-                        available_for: ''
-                    });
-                    setSelectedTreatments([]);
-                    fetchTreatmentPackages();
-                }
+                
+            if(response.status === 201){
+                setCreateAlert(true);
+                document.querySelector('.sidebar-listing-form').style.display = 'none';
+                document.querySelector('.dashboard-content-table').style.display = 'block';
+                resetForm();
+                setSelectedTreatments([]);
+                fetchTreatmentPackages();
+                setTimeout(() => {
+                    setCreateAlert(false);
+                    window.location.href = '/dashboard/treatment-package';
+                }, 500);
+            }
         } catch (error) {
             console.error('API Error:', error);
             setCreateAlert(false);
+            alert("Error creating treatment package: " + (error.response?.data?.message || error.message));
         }
     }
     
@@ -328,71 +449,6 @@ const TreatmentPackage = () => {
             return () => clearTimeout(timer);
         }
     }, [createAlert]);
-
-// We are handling the update functionality here
-const handlePackageDataChange = (e) => {
-    const { name, status, category, description, services, variants, service_prices, service_durations, price_type, retail_price, total_duration, discount_percentage, available_for } = e.target;
-
-    setTreatmentPackageData(prevData => ({
-            ...prevData,
-            [name]: name,
-            [status]: status,
-            [category]: category,
-            [description]: description,
-            [services]: services,
-            [variants]: variants,
-            [service_prices]: service_prices,
-            [service_durations]: service_durations,
-            [price_type]: price_type,
-            [retail_price]: retail_price,
-            [total_duration]: total_duration,
-            [discount_percentage]: discount_percentage,
-            [available_for]: available_for
-        }));
-    }
-
-    const handlePackageDataUpdate = async (e) => {
-        e.preventDefault();
-
-        try {
-            const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.put(`${$siteURL}/api/treatment-package/${treatmentPackageData.id}`, 
-                {
-                    name: treatmentPackageData.name,
-                    status: treatmentPackageData.status,
-                    category: treatmentPackageData.category,
-                    description: treatmentPackageData.description,
-                    services: treatmentPackageData.services,
-                    variants: treatmentPackageData.variants,
-                    service_prices: treatmentPackageData.service_prices,
-                    service_durations: treatmentPackageData.service_durations,
-                    price_type: treatmentPackageData.price_type,
-                    retail_price: treatmentPackageData.retail_price,
-                    total_duration: treatmentPackageData.total_duration,
-                    discount_percentage: treatmentPackageData.discount_percentage,
-                },
-                {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            });
-            if(response.status === 200){
-                setUpdateAlert(true);
-                document.querySelector('.sidebar-editable-form').style.display = 'none';
-                document.querySelector('.dashboard-content-table').style.display = 'block';
-                fetchTreatmentPackages();
-            }
-        } catch (error) {
-            console.error('API Error:', error);
-        }
-    }
-
-
-
-
-
 
   return (
     <>
@@ -424,6 +480,8 @@ const handlePackageDataChange = (e) => {
                                                 onClick={() => {
                                                     document.querySelector('.dashboard-content-table').style.display = 'none';
                                                     document.querySelector('.sidebar-listing-form').style.display = 'block';
+                                                    resetForm();
+                                                    setSelectedTreatments([]);
                                                 }}
                                             >
                                                 <span className="all-listing-create-button-plus">&#43;</span> Create   
@@ -489,12 +547,6 @@ const handlePackageDataChange = (e) => {
                                                         <td>{treatmentPackage.available_for || '-'}</td>
                                                         <td>{treatmentPackage.status === true ? 'Active' : 'Inactive'}</td>
                                                         <td>
-                                                            <button className="btn btn-success" onClick={() => {
-                                                                document.querySelector('.dashboard-content-table').style.display = 'none';
-                                                                document.querySelector('.sidebar-editable-form').style.display = 'block';
-                                                            }}>
-                                                                <FaEdit />
-                                                            </button>
                                                             <button className="btn btn-danger" onClick={() => {
                                                                 setPackageToDelete(treatmentPackage.id);
                                                                 setDeleteAlert(true);
@@ -533,6 +585,7 @@ const handlePackageDataChange = (e) => {
                                                     onClick={() => {
                                                         document.querySelector('.sidebar-listing-form').style.display = 'none';
                                                         document.querySelector('.dashboard-content-table').style.display = 'block';
+                                                        resetForm();
                                                     }}
                                                 >
                                                     <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back 
@@ -585,11 +638,20 @@ const handlePackageDataChange = (e) => {
                                                     <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                         <div className="form-group my-2">
                                                             <label htmlFor="treatmentCategory" className="form-label text-capitalize fw-bold small">treatment Category</label>
-                                                            <select name="treatmentCategory" id="treatmentCategory" className="form-control text-capitalize" required>
+                                                            <select 
+                                                                name="category" 
+                                                                id="treatmentCategory" 
+                                                                className="form-control text-capitalize" 
+                                                                required
+                                                                value={treatmentPackageData.category}
+                                                                onChange={(e) => {
+                                                                    setTreatmentPackageData({...treatmentPackageData, category: e.target.value});
+                                                                }}
+                                                            >
                                                                 <option value="">Select a category</option>
                                                                 {Array.isArray(treatmentCategoriesData) && treatmentCategoriesData.length > 0 && 
                                                                     treatmentCategoriesData.map((categoryName, index) => (  
-                                                                        <option value={categoryName.id} key={index}>{categoryName.name}</option>
+                                                                        <option value={categoryName.category} key={index}>{categoryName.name}</option>
                                                                     ))
                                                                 }
                                                             </select>
@@ -629,56 +691,76 @@ const handlePackageDataChange = (e) => {
                                                             <Modal.Body>
                                                                 <div className="selected-treatments-package-details">
                                                                     <ul className="d-flex align-items-start justify-content-start ps-0 mb-0 flex-column gap-2">
-                                                                        {currentEntries.map(treatmentPackage => (
-                                                                            <li key={treatmentPackage.id} className='d-flex flex-column'>
-                                                                                <label htmlFor={`treatmentName-${treatmentPackage.id}`} className='form-label text-capitalize fw-bold small'></label>
+                                                                        {treatmentPackages.length > 0 && treatmentPackages.map((showPackages, index) => {
+                                                                            // Get stored package data from localStorage
+                                                                            const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
+                                                                            const storedPackage = storedPackages.find(pkg => pkg.id === showPackages.id);
+                                                                            
+                                                                            return (
+                                                                            <li key={index} className='d-flex flex-column'>
+                                                                                <label htmlFor={`treatmentName-${showPackages.id}`} className='form-label text-capitalize fw-bold small'></label>
                                                                                 <input 
                                                                                     type="checkbox" 
                                                                                     className="form-control" 
-                                                                                    id={`treatmentName-${treatmentPackage.id}`} 
+                                                                                    id={`treatmentName-${index}`} 
                                                                                     placeholder="treatment name" 
-                                                                                    name="treatmentName" 
-                                                                                    onChange={(e) => handleCheckboxChange(treatmentPackage, e.target.checked)}
+                                                                                    name="treatmentName"
+                                                                                    checked={selectedTreatments.some(item => item.id === showPackages.id)}
+                                                                                    onChange={(e) => handleCheckboxChange(showPackages, e.target.checked)}
                                                                                 />
                                                                                 <h6 className='text-capitalize fw-bold default-font'>
-                                                                                    {treatmentPackage?.package_service_variants?.treatment_name || treatmentPackage.name || 'Unnamed Treatment'}
+                                                                                        {showPackages?.name}
                                                                                 </h6>
                                                                                 <small className='text-capitalize fw-normal default-font'>  
                                                                                     <span id="selected-treatment-duration">
-                                                                                        {treatmentPackage?.package_service_variants?.duration || '0h0'}
+                                                                                        {storedPackage ? storedPackage.total_time : showPackages?.total_time}
                                                                                     </span> - 
                                                                                     <span id="selected-treatment-price">
-                                                                                        &pound; {treatmentPackage?.package_service_variants?.price || 0}
+                                                                                        &pound; {storedPackage ? storedPackage.total_price : showPackages?.total_price}
                                                                                     </span>
                                                                                 </small>
                                                                             </li>
-                                                                        ))}
+                                                                            );
+                                                                        })}
                                                                     </ul>
                                                                 </div>
                                                             </Modal.Body>
                                                             
                                                             <Modal.Footer className='d-flex flex-column gap-2 align-items-start justify-content-start price-and-duration-footer'>
+                                                            
                                                                 <ul className='d-flex flex-column gap-2 ps-0 mb-0'>
+                                                                
                                                                     <li>
                                                                         <label htmlFor="TotalPrice" className='text-capitalize'>total price: 
-                                                                            <span className='fw-bold selected-treatment-duration-total-price'>&pound; {totalPrice}</span>
+                                                                            <span className='fw-bold selected-treatment-duration-total-price'>&pound;  {totalPrice}</span>
                                                                         </label>
-                                                                    </li>
-                                                                    <li>
-                                                                        <label htmlFor="TotalDuration" className='text-capitalize'>Total Duration: 
+
+                                                                        <label htmlFor="TotalDuration" className='text-capitalize'>Total Duration:  
                                                                             <span className='fw-bold selected-treatment-duration-total-duration'>
                                                                                 {totalDuration.hours}h {totalDuration.minutes}min
-                                                                            </span>
+                                                                             </span>
                                                                         </label>
                                                                     </li>
+                                                                
                                                                 </ul>
                                                             </Modal.Footer>
                                                         </Modal>
                                                     </Col>
 
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <h5 className="text-capitalize h6 fw-bold default-font pt-3 text-end">Total Time: {totalDuration.hours}h {totalDuration.minutes}min | Total Price: &pound; {totalPrice}</h5>
+                                                        <h5 className="text-capitalize h6 fw-bold default-font pt-3 text-end">
+                                                            Total Time: {totalDuration.hours}h {totalDuration.minutes}min | 
+                                                            Total Price: &pound; {totalPrice}
+                                                        </h5>
                                                     </Col>
+                                                    
+                                                    <div className="selected-treatments-package-details">
+                                                        <ul className="d-flex align-items-start justify-content-start ps-0 mb-0 flex-column gap-2">
+                                                            <li>
+                                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
 
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                         <h4 className="text-capitalize fw-bold default-font pt-3 h5">Pricing</h4>
@@ -692,14 +774,17 @@ const handlePackageDataChange = (e) => {
                                                                 id="priceType" 
                                                                 className="form-control text-capitalize" 
                                                                 required
-                                                                value={treatmentPackageData.price_type}
+                                                                value={selectedPriceType}
                                                                 onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, price_type: e.target.value});
+                                                                    const selectedValue = e.target.value;
+                                                                    setSelectedPriceType(selectedValue);
+                                                                    setTreatmentPackageData({...treatmentPackageData, price_type: selectedValue});
                                                                 }}
-
-                                                            >
-                                                                <option value="Treatment Pricing">{treatmentPackageData?.price_type}</option>
-                                                                
+                                                            >           
+                                                                <option value="Treatment Pricing">Treatment Pricing</option>
+                                                                <option value="Custom Pricing">Custom Pricing</option>
+                                                                <option value="Percentage Discount">Percentage Discount</option>
+                                                                <option value="Free">Free</option>
                                                             </select>
                                                         </div>
                                                     </Col>
@@ -712,16 +797,16 @@ const handlePackageDataChange = (e) => {
                                                                 className="form-control" 
                                                                 id="retailPrice" 
                                                                 name="retailPrice" 
-                                                                value={treatmentPackageData?.retail_price} 
-                                                                readOnly={treatmentPackageData?.price_type !== 'Custom Pricing'} 
+                                                                value={selectedPriceType === 'Custom Pricing' ? treatmentPackageData.total_price || '' : totalPrice} 
+                                                                readOnly={selectedPriceType !== 'Custom Pricing'} 
                                                                 onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, retail_price: e.target.value});
+                                                                    const value = e.target.value;
+                                                                    setTreatmentPackageData({...treatmentPackageData, total_price: value});
+                                                                    setRetailPrice(value);
                                                                 }}
                                                             />
                                                             <small>
-                                                                {treatmentPackageData === 'Free' ? 'This package is free' : 
-                                                                treatmentPackageData === 'Custom Pricing' ? 'Enter custom price' : 
-                                                                treatmentPackageData?.discount_percentage === 'Percentage Discount' ? 'Discounted price will be calculated' : 'Total price of selected services'}
+                                                                {selectedPriceType === 'Free' ? 'This package is free' : selectedPriceType === 'Custom Pricing' ? 'Enter custom price' : selectedPriceType === 'Percentage Discount' ? 'Discounted price will be calculated' : 'Total price of selected services'}
                                                             </small>
                                                         </div>
                                                     </Col>
@@ -734,9 +819,10 @@ const handlePackageDataChange = (e) => {
                                                                 className="form-control" 
                                                                 id="discountPercentage" 
                                                                 name="discountPercentage" 
-                                                                value={treatmentPackageData?.discount_percentage}
+                                                                value={treatmentPackageData.discount_percentage || ''}
                                                                 onChange={(e) => {
                                                                     setTreatmentPackageData({...treatmentPackageData, discount_percentage: e.target.value});
+                                                                    setDiscountPercentage(e.target.value);
                                                                 }}
                                                             />
                                                         </div>
@@ -756,13 +842,17 @@ const handlePackageDataChange = (e) => {
                                                                     setTreatmentPackageData({...treatmentPackageData, available_for: e.target.value});
                                                                 }}
                                                             >
-                                                                <option value="">{treatmentPackageData?.available_for}</option>
+                                                                <option value="">Select availability</option>
+                                                                <option value="all genders">All genders</option>
+                                                                <option value="females only">Females only</option>
+                                                                <option value="males only">Males only</option>
+                                                                <option value="unisex">Unisex</option>
                                                             </select>
                                                         </div>
                                                     </Col>
                                                     
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <input type="submit" className="bg-jetGreen text-white border-0 py-2 px-3" value="Create" />
+                                                        <input type="submit" className="bg-jetGreen text-white border-0 py-2 px-3" onClick={handleSubmit} value="Create" />
                                                     </Col>
                                                 </Row>
                                             </form>
@@ -773,259 +863,7 @@ const handlePackageDataChange = (e) => {
 
 
 
-                                <div className="sidebar-editable-form" style={{display: packageEditableForm ? 'block' : 'none'}}>
-                                    <div className="dashboard-all-listing-create-form">
-                                        <Row>
-                                            <div className="d-flex justify-content-flex-start align-items-center listing-header">
-                                                <button 
-                                                    className="btn bg-jetGreen all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
-                                                    onClick={() => {
-                                                        document.querySelector('.sidebar-editable-form').style.display = 'none';
-                                                        document.querySelector('.dashboard-content-table').style.display = 'block';
-                                                    }}
-                                                >
-                                                    <span className="all-listing-create-form-back-button-arrow">&larr;</span> Back 
-                                                </button>
-                                                <h2 className="dashboard-all-listing-create-form-title mb-0 h5 fw-bold default-font text-capitalize">update treatment package</h2>
-                                            </div>
-                                        </Row>
-                                        <hr />
-
-                                        <div className="dashboard-all-listing-create-form-body">
-                                            <form onSubmit={handlePackageDataUpdate}>
-                                                <Row>
-                                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <div className="form-group my-2">
-                                                            <label htmlFor="name" className="form-label text-capitalize fw-bold small">name <sup className="text-danger">*</sup></label>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                id="name"
-                                                                name="name"
-                                                                required
-                                                                autoComplete="off"
-                                                                value={treatmentPackageData.name}
-                                                                onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, name: e.target.value});
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    </Col>
-                                                    
-                                                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                        <div className="form-group my-2">
-                                                            <label htmlFor="status" className="form-label text-capitalize fw-bold small">status <sup className="text-danger">*</sup></label>
-                                                            <select name="status"
-                                                                id="status"
-                                                                className="form-control text-capitalize"
-                                                                required
-                                                                value={treatmentPackageData.status}
-                                                                onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, status: e.target.value});
-                                                                }}
-                                                            >
-                                                                <option value="active">{treatmentPackageData.status}</option>
-                                                                <option value="inactive">inactive</option>
-                                                            </select>
-                                                        </div>
-                                                    </Col>
-
-                                                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                        <div className="form-group my-2">
-                                                            <label htmlFor="treatmentCategory" className="form-label text-capitalize fw-bold small">treatment Category</label>
-                                                            <select
-                                                                name="treatmentCategory"
-                                                                id="treatmentCategory"
-                                                                className="form-control text-capitalize"
-                                                                required
-                                                                value={treatmentPackageData.category}
-                                                                onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, category: e.target.value});
-                                                                }}
-                                                            >
-                                                                <option value={treatmentPackageData.category}>{treatmentPackageData.category}</option>
-                                                                {Array.isArray(treatmentCategoriesData) && treatmentCategoriesData.length > 0 && 
-                                                                    treatmentCategoriesData.map((categoryName, index) => (  
-                                                                        <option value={categoryName.id} key={index}>{categoryName.name}</option>
-                                                                    ))
-                                                                }
-                                                            </select>
-                                                        </div>
-                                                    </Col>
-
-                                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <div className="form-group my-2">
-                                                            <label htmlFor="description" className="form-label text-capitalize fw-bold small">Description</label>
-                                                            <textarea
-                                                                className="form-control"
-                                                                id="description"
-                                                                name="description"
-                                                                required
-                                                                value={treatmentPackageData.description}
-                                                                onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, description: e.target.value});
-                                                                }}
-                                                            ></textarea>
-                                                        </div>
-                                                    </Col>
-
-                                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <h4 className="text-capitalize fw-bold default-font pt-3 h5">Treatments</h4>
-                                                        <p>Select which treatments to include in this package and how they should be sequenced when booked.</p>
-
-                                                        <Button className="popup-button rounded-0" onClick={handleShowModalPopUp}>
-                                                            Add Treatment
-                                                        </Button>
-
-                                                        <Modal show={showModalPopUp} onHide={handleCloseModalPopUp} size="lg"       aria-labelledby="contained-modal-title-vcenter" centered id="add-treatment-packages-modal">
-                                                            <Modal.Header closeButton>
-                                                                <Modal.Title><h5 className="text-capitalize fw-bold default-font mb-0">Add Treatment</h5></Modal.Title>
-                                                            </Modal.Header>
-
-                                                            <Modal.Body>
-                                                                <div className="selected-treatments-package-details">
-                                                                    <ul className="d-flex align-items-start justify-content-start ps-0 mb-0 flex-column gap-2">
-                                                                        {currentEntries.map(treatmentPackage => (
-                                                                            <li key={treatmentPackage.id} className='d-flex flex-column'>
-                                                                                <label htmlFor={`treatmentName-${treatmentPackage.id}`} className='form-label text-capitalize fw-bold small'></label>
-                                                                                <input 
-                                                                                    type="checkbox" 
-                                                                                    className="form-control" 
-                                                                                    id={`treatmentName-${treatmentPackage.id}`} 
-                                                                                    placeholder="treatment name" 
-                                                                                    name="treatmentName" 
-                                                                                    onChange={(e) => handleCheckboxChange(treatmentPackage, e.target.checked)}
-                                                                                />
-                                                                                <h6 className='text-capitalize fw-bold default-font'>
-                                                                                    {treatmentPackage?.package_service_variants?.treatment_name || treatmentPackage.name || 'Unnamed Treatment'}
-                                                                                </h6>
-                                                                                <small className='text-capitalize fw-normal default-font'>  
-                                                                                    <span id="selected-treatment-duration">
-                                                                                        {treatmentPackage?.package_service_variants?.duration || '0h0'}
-                                                                                    </span> - 
-                                                                                    <span id="selected-treatment-price">
-                                                                                        &pound; {treatmentPackage?.package_service_variants?.price || 0}
-                                                                                    </span>
-                                                                                </small>
-                                                                            </li>
-                                                                        ))}
-                                                                    </ul>
-                                                                </div>
-                                                            </Modal.Body>
-                                                            
-                                                            <Modal.Footer className='d-flex flex-column gap-2 align-items-start justify-content-start price-and-duration-footer'>
-                                                                <ul className='d-flex flex-column gap-2 ps-0 mb-0'>
-                                                                    <li>
-                                                                        <label htmlFor="TotalPrice" className='text-capitalize'>total price: 
-                                                                            <span className='fw-bold selected-treatment-duration-total-price'>&pound; {totalPrice}</span>
-                                                                        </label>
-                                                                    </li>
-                                                                    <li>
-                                                                        <label htmlFor="TotalDuration" className='text-capitalize'>Total Duration: 
-                                                                            <span className='fw-bold selected-treatment-duration-total-duration'>
-                                                                                {totalDuration.hours}h {totalDuration.minutes}min
-                                                                            </span>
-                                                                        </label>
-                                                                    </li>
-                                                                </ul>
-                                                            </Modal.Footer>
-                                                        </Modal>
-                                                    </Col>
-
-                                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <h5 className="text-capitalize h6 fw-bold default-font pt-3 text-end">Total Time: {totalDuration.hours}h {totalDuration.minutes}min | Total Price: &pound; {totalPrice}</h5>
-                                                    </Col>
-
-                                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <h4 className="text-capitalize fw-bold default-font pt-3 h5">Pricing</h4>
-                                                    </Col>
-
-                                                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                        <div className="form-group my-2">
-                                                            <label htmlFor="priceType" className="form-label text-capitalize fw-bold small">price type</label>
-                                                            <select 
-                                                                name="priceType" 
-                                                                id="priceType" 
-                                                                className="form-control text-capitalize" 
-                                                                required
-                                                                value={selectedPriceType}
-                                                                onChange={(e) => setSelectedPriceType(e.target.value)}
-                                                            >           
-                                                                <option value="Treatment Pricing">{selectedPriceType}</option>
-                                                                <option value="Custom Pricing">Custom pricing</option>
-                                                                <option value="Percentage Discount">Percentage discount</option>
-                                                                <option value="Free">Free</option>
-                                                            </select>
-                                                        </div>
-                                                    </Col>
-
-                                                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                        <div className="form-group my-2">
-                                                            <label htmlFor="retailPrice" className="form-label text-capitalize fw-bold small">Retail price</label>
-                                                            <input 
-                                                                type="number" 
-                                                                className="form-control" 
-                                                                id="retailPrice" 
-                                                                name="retailPrice" 
-                                                                value={treatmentPackageData?.retail_price} 
-                                                                readOnly={selectedPriceType !== 'Custom Pricing'} 
-                                                                onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, retail_price: e.target.value});
-                                                                }}
-                                                            />
-                                                            <small>
-                                                                {selectedPriceType === 'Free' ? 'This package is free' : selectedPriceType === 'Custom Pricing' ? 'Enter custom price' : selectedPriceType === 'Percentage Discount' ? 'Discounted price will be calculated' : 'Total price of selected services'}
-                                                            </small>
-                                                        </div>
-                                                    </Col>
-
-                                                    <Col xxl={{span: 6, offset: 6}} lg={{span: 6, offset: 6}} md={{span: 6, offset: 6}} sm={12} className={`discount-percentage-col ${selectedPriceType === 'Percentage Discount' ? 'd-block' : 'd-none'}`}>
-                                                        <div className="form-group my-2">
-                                                            <label htmlFor="discountPercentage" className="form-label text-capitalize fw-bold small">Discount percentage</label>
-                                                            <input 
-                                                                type="number" 
-                                                                className="form-control" 
-                                                                id="discountPercentage" 
-                                                                name="discountPercentage" 
-                                                                value={treatmentPackageData?.discount_percentage}
-                                                                onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, discount_percentage: e.target.value});
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    </Col>
-
-                                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <h4 className="text-capitalize fw-bold default-font pt-3 h5">Availability</h4>
-                                                    </Col>
-
-
-                                                    <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
-                                                        <div className="form-group my-2">
-                                                            <label htmlFor="availableFor" className="form-label text-capitalize fw-bold small">Available for  </label>
-                                                            <select name="availableFor" id="availableFor" className="form-control text-capitalize" required
-                                                                value={treatmentPackageData?.available_for}
-                                                                onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, available_for: e.target.value});
-                                                                }}
-                                                            >
-                                                                <option value="">{treatmentPackageData?.available_for}</option>
-                                                                <option value="">all genders</option>
-                                                                <option value="">females only</option>
-                                                                <option value="">males only</option>
-                                                                <option value="">unisex</option>
-                                                            </select>
-                                                        </div>
-                                                    </Col>
-                                                    
-                                                    <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <input type="submit" className="bg-jetGreen text-white border-0 py-2 px-3" value="Update" onClick={handlePackageDataUpdate} />
-                                                    </Col>
-                                                </Row>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 {/* sidebar editable form end */}
                             </div>
                             {/* content body end */}
