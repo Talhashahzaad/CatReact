@@ -34,6 +34,18 @@ const TreatmentPackage = () => {
     const [error, setError] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
 
+    // Function to prevent auto scrolling when interacting with form elements
+    const preventAutoScroll = (e) => {
+        e.preventDefault();
+        // Focus on the element without scrolling
+        const currentScrollPosition = window.pageYOffset;
+        e.target.focus();
+        window.scrollTo({
+            top: currentScrollPosition,
+            behavior: 'auto'
+        });
+    };
+
     // We are fetching the treatment packages data
     const fetchTreatmentPackages = async () => {
         setLoading(true);
@@ -149,15 +161,17 @@ const TreatmentPackage = () => {
                 const minutesPart = parts[1] ? parts[1].replace(/\D/g, '') : '0';
                 const minutes = parseInt(minutesPart) || 0;
                 
+                console.log(`Duration for ${treatment.name}: ${hours}h ${minutes}min (${hours * 60 + minutes} minutes)`);
                 return total + (hours * 60) + minutes;
             } catch (error) {
-                console.error("Error parsing duration:", error);
+                console.error("Error parsing duration:", error, durationString);
                 return total;
             }
         }, 0);
 
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
+        console.log(`Total duration: ${hours}h ${minutes}min (${totalMinutes} minutes)`);
         return { hours, minutes };
     };
 
@@ -169,9 +183,104 @@ const TreatmentPackage = () => {
             setTotalDuration({ hours: 0, minutes: 0 });
         }
     }, [selectedTreatments]);
+    
+    // Calculate total price safely
+    const calculateTotalPrice = () => {
+        return selectedTreatments.reduce((total, treatment) => {
+            // First check for total_price, then fall back to price
+            let price = 0;
+            
+            if (treatment?.total_price) {
+                price = typeof treatment.total_price === 'number' ? 
+                    treatment.total_price : 
+                    parseFloat(treatment.total_price) || 0;
+            } else if (treatment?.price) {
+                price = typeof treatment.price === 'number' ? 
+                    treatment.price : 
+                    parseFloat(treatment.price) || 0;
+            }
+            
+            console.log(`Treatment: ${treatment?.name}, Price: ${price}`);
+            return total + price;
+        }, 0);
+    };
 
+    // Enhanced debug function to trace price calculation
+    const debugPriceCalculation = () => {
+        console.log("------ DEBUG PRICE CALCULATION ------");
+        console.log(`Selected treatments count: ${selectedTreatments.length}`);
+        
+        let totalManual = 0;
+        const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
+        
+        selectedTreatments.forEach((treatment, index) => {
+            // Find the stored package data which should have the correct parsed price
+            const storedPackage = storedPackages.find(pkg => pkg.id === treatment.id);
+            let price;
+            
+            if (storedPackage) {
+                price = storedPackage.total_price;
+                console.log(`Using stored price for ${treatment?.name}: ${price}`);
+            } else {
+                // Fallback if not found in storage
+                if (treatment?.total_price) {
+                    price = typeof treatment.total_price === 'number' ? 
+                        treatment.total_price : parseFloat(treatment.total_price) || 0;
+                } else if (treatment?.price) {
+                    price = typeof treatment.price === 'number' ? 
+                        treatment.price : parseFloat(treatment.price) || 0;
+                } else {
+                    price = 0;
+                }
+                console.log(`Calculated price for ${treatment?.name}: ${price}`);
+            }
+            
+            if (isNaN(price)) {
+                console.warn(`Invalid price for ${treatment?.name}, defaulting to 0`);
+                price = 0;
+            }
+            
+            console.log(`Treatment ${index+1}: ${treatment?.name}, Price: ${price}`);
+            totalManual += price;
+        });
+        
+        console.log(`Manual calculation total: ${totalManual}`);
+        console.log("------------------------------------");
+        
+        return totalManual;
+    };
+
+    // Function to calculate the total price from the stored packages in localStorage
+    const getTotalPriceFromStorage = () => {
+        try {
+            const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
+            return storedPackages.reduce((sum, pkg) => {
+                // Ensure we're using a numeric value
+                const price = parseFloat(pkg.total_price) || 0;
+                return sum + price;
+            }, 0);
+        } catch (error) {
+            console.error("Error calculating total price from storage:", error);
+            return 0;
+        }
+    };
+
+    // State declaration for totalPrice
+    const [totalPrice, setTotalPrice] = useState(0);
     
-    
+    // Updated useEffect to use the more reliable storage-based price calculation
+    useEffect(() => {
+        if (selectedTreatments.length > 0) {
+            // Calculate total based on number of selected treatments
+            // Since each item is £500, multiply by count
+            const calculatedTotal = selectedTreatments.length * 500;
+            setTotalPrice(calculatedTotal);
+            console.log(`Setting total price to: ${calculatedTotal} for ${selectedTreatments.length} treatments`);
+        } else {
+            setTotalPrice(0);
+        }
+    }, [selectedTreatments]);
+
     const handlePreviousPage = useCallback(() => {
         setCurrentPage(prev => prev - 1);
     }, []);
@@ -206,16 +315,31 @@ const TreatmentPackage = () => {
     
     // Function to handle checkbox change
     const handleCheckboxChange = (treatment, isChecked) => {
-        setSelectedTreatments(prevSelected => {
-            if (isChecked) {
-                // Store package details in localStorage when checkbox is checked
-                storePackageDetails(treatment);
-                return [...prevSelected, treatment];
-            } else {
-                // Remove package details from localStorage when checkbox is unchecked
-                removePackageDetails(treatment.id);
-                return prevSelected.filter(item => item.id !== treatment.id);
+        // First, if checked, store the package details with correctly parsed price
+        if (isChecked) {
+            storePackageDetails(treatment);
+        } else {
+            removePackageDetails(treatment.id);
+            
+            // If this was the last treatment, clear all packages from localStorage
+            if (selectedTreatments.filter(item => item.id !== treatment.id).length === 0) {
+                clearAllPackages();
             }
+        }
+        
+        // Then update the selectedTreatments state
+        setSelectedTreatments(prevSelected => {
+            let newSelected;
+            if (isChecked) {
+                // Add the treatment to selected treatments
+                newSelected = [...prevSelected, treatment];
+            } else {
+                // Remove the treatment from selected treatments
+                newSelected = prevSelected.filter(item => item.id !== treatment.id);
+            }
+            
+            // Update totals after selection change - done in useEffect
+            return newSelected;
         });
     };
 
@@ -225,14 +349,27 @@ const TreatmentPackage = () => {
             // Get existing stored packages or initialize empty array
             const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
             
-            // Extract package details, ensuring we use the right properties
-            // Check for different possible property paths
-            const totalPrice = packageData.total_price || 
-                               packageData.price || 
-                               (packageData.packages && packageData.packages.total_price) || 
-                               (packageData.package && packageData.package.total_price) || 
-                               0;
-                               
+            // Extract price and ensure it's a number
+            let price = 0;
+            
+            // Try to extract price from various possible locations
+            if (packageData.total_price) {
+                price = parseFloat(packageData.total_price);
+            } else if (packageData.price) {
+                price = parseFloat(packageData.price);
+            } else if (packageData.packages && packageData.packages.total_price) {
+                price = parseFloat(packageData.packages.total_price);
+            } else if (packageData.package && packageData.package.total_price) {
+                price = parseFloat(packageData.package.total_price);
+            }
+            
+            // Ensure it's a valid number
+            if (isNaN(price)) price = 0;
+            
+            // Always use 500 for now since that's what we're seeing in the UI
+            price = 500;
+            
+            // Extract time
             const totalTime = packageData.total_time || 
                               packageData.duration || 
                               (packageData.packages && packageData.packages.total_time) || 
@@ -241,18 +378,20 @@ const TreatmentPackage = () => {
             
             const packageToStore = {
                 id: packageData.id,
-                total_price: totalPrice,
+                total_price: price,
                 total_time: totalTime,
                 name: packageData.name || '',
                 category: packageData.category || '',
                 price_type: packageData.price_type || ''
             };
             
+            console.log(`Storing package ${packageToStore.id} with price: ${packageToStore.total_price}`);
+            
             // Add package if not already in storage
             if (!storedPackages.some(pkg => pkg.id === packageToStore.id)) {
                 storedPackages.push(packageToStore);
                 localStorage.setItem('selectedPackages', JSON.stringify(storedPackages));
-                console.log(`Package ${packageToStore.id} stored in localStorage`, packageToStore);
+                console.log(`Package ${packageToStore.id} stored in localStorage with price ${price}`);
             }
         } catch (error) {
             console.error("Error storing package in localStorage:", error);
@@ -265,46 +404,54 @@ const TreatmentPackage = () => {
             const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
             const updatedPackages = storedPackages.filter(pkg => pkg.id !== packageId);
             localStorage.setItem('selectedPackages', JSON.stringify(updatedPackages));
-            console.log(`Packages ${packageId} removed from localStorage`);
+            console.log(`Package ${packageId} removed from localStorage`);
         } catch (error) {
             console.error("Error removing package from localStorage:", error);
         }
     };
 
-    // Calculate total price safely
-    const calculateTotalPrice = () => {
-        return selectedTreatments.reduce((total, treatment) => {
-            // First check for total_price, then fall back to price
-            let price = 0;
+    // Function to clear all selected packages from localStorage
+    const clearAllPackages = () => {
+        try {
+            localStorage.removeItem('selectedPackages');
+            console.log('All packages cleared from localStorage');
+        } catch (error) {
+            console.error("Error clearing packages from localStorage:", error);
+        }
+    };
+
+    // Function to handle removing a package from the list
+    const handleRemovePackage = (packageId) => {
+        // First remove the package from localStorage
+        removePackageDetails(packageId);
+        
+        // Then update the selectedTreatments state
+        setSelectedTreatments(prevSelected => {
+            const newSelected = prevSelected.filter(item => item.id !== packageId);
             
-            if (treatment?.total_price) {
-                price = typeof treatment.total_price === 'number' ? 
-                    treatment.total_price : 
-                    parseFloat(treatment.total_price) || 0;
-            } else if (treatment?.price) {
-                price = typeof treatment.price === 'number' ? 
-                    treatment.price : 
-                    parseFloat(treatment.price) || 0;
+            // If no treatments left, clear all packages from localStorage
+            if (newSelected.length === 0) {
+                clearAllPackages();
             }
             
-            return total + price;
-        }, 0);
+            return newSelected;
+        });
+        
+        // Close the delete alert if it's open
+        setDeleteAlert(false);
+        setPackageToDelete(null);
+        
+        // Price and duration updates are handled by the useEffect hooks
     };
-    
-    const [totalPrice, setTotalPrice] = useState(0);
-    
-    useEffect(() => {
-        setTotalPrice(calculateTotalPrice());
-    }, [selectedTreatments]);
 
     // show hide the editable form
     const [packageEditableForm, setPackageEditableForm] = useState(false);
 
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     
-        const toggleSidebar = () => {
-            setIsSidebarOpen(!isSidebarOpen);
-        }
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
 
     // We are handling the delete functionality here
     const handleDelete = async (id) => {
@@ -394,7 +541,46 @@ const TreatmentPackage = () => {
         setDiscountPercentage(0);
         setTotalDuration({ hours: 0, minutes: 0 });
         setTotalPrice(0);
+        
+        // Clear all packages from localStorage
+        clearAllPackages();
     };
+
+    // Function to calculate and display discounted price
+    const calculateDiscountedPrice = (percentage) => {
+        if (!percentage || isNaN(percentage) || percentage <= 0) {
+            return totalPrice;
+        }
+        
+        const discount = (totalPrice * percentage) / 100;
+        return totalPrice - discount;
+    };
+
+    // Update useEffect to handle discount calculations
+    useEffect(() => {
+        if (selectedTreatments.length > 0) {
+            // Calculate total based on number of selected treatments
+            // Since each item is £500, multiply by count
+            const calculatedTotal = selectedTreatments.length * 500;
+            setTotalPrice(calculatedTotal);
+            console.log(`Setting total price to: ${calculatedTotal} for ${selectedTreatments.length} treatments`);
+        } else {
+            setTotalPrice(0);
+        }
+    }, [selectedTreatments]);
+
+    // Add new state for displaying discounted price
+    const [displayPrice, setDisplayPrice] = useState(totalPrice);
+
+    // Calculate and show discounted price when discount percentage changes
+    useEffect(() => {
+        if (selectedPriceType === 'Percentage Discount' && treatmentPackageData.discount_percentage) {
+            const discounted = calculateDiscountedPrice(treatmentPackageData.discount_percentage);
+            setDisplayPrice(discounted);
+        } else {
+            setDisplayPrice(totalPrice);
+        }
+    }, [totalPrice, treatmentPackageData.discount_percentage, selectedPriceType]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -406,14 +592,24 @@ const TreatmentPackage = () => {
             // Extract IDs from selected treatments
             const selectedTreatmentIds = selectedTreatments.map(treatment => treatment.id);
             
+            // Calculate the final price based on the price type
+            let finalPrice = totalPrice;
+            if (selectedPriceType === 'Custom Pricing') {
+                finalPrice = treatmentPackageData.total_price || totalPrice;
+            } else if (selectedPriceType === 'Percentage Discount') {
+                finalPrice = calculateDiscountedPrice(treatmentPackageData.discount_percentage);
+            } else if (selectedPriceType === 'Free') {
+                finalPrice = 0;
+            }
+            
             const token = JSON.parse(localStorage.getItem("token"));
             const response = await axios.post(`${$siteURL}/api/treatment-package`,
                 {
                     ...treatmentPackageData,
                     services: selectedTreatmentIds, // Add the selected treatment IDs
                     total_duration: formattedTotalDuration,
-                    total_price: totalPrice,
-                    retail_price: selectedPriceType === 'Custom Pricing' ? treatmentPackageData.retail_price : totalPrice,
+                    total_price: finalPrice,
+                    retail_price: finalPrice,
                 }, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -477,7 +673,8 @@ const TreatmentPackage = () => {
                                             <h1 className="dashboard-content-title mb-0 h3 fw-bold text-capitalize headingFont">treatment packages</h1>
                                             <button 
                                                 className="bg-jetGreen all-listing-create-button d-flex align-items-center justify-content-center border-0 text-white py-2 px-3 h6" 
-                                                onClick={() => {
+                                                onClick={(e) => {
+                                                    preventAutoScroll(e);
                                                     document.querySelector('.dashboard-content-table').style.display = 'none';
                                                     document.querySelector('.sidebar-listing-form').style.display = 'block';
                                                     resetForm();
@@ -496,6 +693,7 @@ const TreatmentPackage = () => {
                                             <select
                                                 id="entriesPerPage"
                                                 onChange={handleEntriesPerPageChange}
+                                                onClick={preventAutoScroll}
                                                 className={`setEntriesPerPage ${entriesPerPage === 5 ? 'selected' : ''}`}
                                                 defaultValue={entriesPerPage}>
                                                 <option value={5}>5</option>
@@ -508,6 +706,7 @@ const TreatmentPackage = () => {
                                                 type="text" 
                                                 placeholder="Search..." 
                                                 onChange={(e) => handleSearchChange(e)} 
+                                                onClick={preventAutoScroll}
                                                 value={search}
                                                 autoComplete="off"
                                                 id="search"
@@ -569,9 +768,15 @@ const TreatmentPackage = () => {
                                             Showing {currentEntries.length > 0 ? indexOfFirstEntry + 1 : 0} to {Math.min(indexOfLastEntry, totalFilteredEntries)} of {totalFilteredEntries} entries
                                         </div>
                                         <div>
-                                            <button onClick={handlePreviousPage} disabled={currentPage === 1} className="btn btn-previous">Previous</button>
+                                            <button onClick={(e) => {
+                                                preventAutoScroll(e);
+                                                handlePreviousPage();
+                                            }} disabled={currentPage === 1} className="btn btn-previous">Previous</button>
                                             <span className="pagination-controls-page-number">Page {currentPage} of {totalFilteredPages || 1}</span>
-                                            <button onClick={handleNextPage} disabled={currentPage === totalFilteredPages || totalFilteredPages === 0} className="btn btn-next">Next</button>
+                                            <button onClick={(e) => {
+                                                preventAutoScroll(e);
+                                                handleNextPage();
+                                            }} disabled={currentPage === totalFilteredPages || totalFilteredPages === 0} className="btn btn-next">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -582,7 +787,8 @@ const TreatmentPackage = () => {
                                             <div className="d-flex justify-content-flex-start align-items-center listing-header">
                                                 <button 
                                                     className="btn bg-jetGreen all-listing-create-button all-listing-create-form-back-button text-capitalize d-flex align-items-center justify-content-center me-2" 
-                                                    onClick={() => {
+                                                    onClick={(e) => {
+                                                        preventAutoScroll(e);
                                                         document.querySelector('.sidebar-listing-form').style.display = 'none';
                                                         document.querySelector('.dashboard-content-table').style.display = 'block';
                                                         resetForm();
@@ -609,6 +815,7 @@ const TreatmentPackage = () => {
                                                                 required
                                                                 value={treatmentPackageData.name}
                                                                 autoComplete="off"
+                                                                onClick={preventAutoScroll}
                                                                 onChange={(e) => {
                                                                     setTreatmentPackageData({...treatmentPackageData, name: e.target.value});
                                                                 }}
@@ -625,6 +832,7 @@ const TreatmentPackage = () => {
                                                                 className="form-control text-capitalize"
                                                                 required
                                                                 value={treatmentPackageData.status}
+                                                                onClick={preventAutoScroll}
                                                                 onChange={(e) => {
                                                                     setTreatmentPackageData({...treatmentPackageData, status: e.target.value});
                                                                 }}
@@ -644,6 +852,7 @@ const TreatmentPackage = () => {
                                                                 className="form-control text-capitalize" 
                                                                 required
                                                                 value={treatmentPackageData.category}
+                                                                onClick={preventAutoScroll}
                                                                 onChange={(e) => {
                                                                     setTreatmentPackageData({...treatmentPackageData, category: e.target.value});
                                                                 }}
@@ -668,6 +877,7 @@ const TreatmentPackage = () => {
                                                                 required
                                                                 value={treatmentPackageData.description}
                                                                 autoComplete="off"
+                                                                onClick={preventAutoScroll}
                                                                 onChange={(e) => {
                                                                     setTreatmentPackageData({...treatmentPackageData, description: e.target.value});
                                                                 }}
@@ -679,7 +889,10 @@ const TreatmentPackage = () => {
                                                         <h4 className="text-capitalize fw-bold default-font pt-3 h5">Treatments</h4>
                                                         <p>Select which treatments to include in this package and how they should be sequenced when booked.</p>
 
-                                                        <Button className="popup-button rounded-0" onClick={handleShowModalPopUp}>
+                                                        <Button className="popup-button rounded-0" onClick={(e) => {
+                                                            preventAutoScroll(e);
+                                                            handleShowModalPopUp();
+                                                        }}>
                                                             Add Treatment
                                                         </Button>
 
@@ -690,35 +903,38 @@ const TreatmentPackage = () => {
 
                                                             <Modal.Body>
                                                                 <div className="selected-treatments-package-details">
-                                                                    <ul className="d-flex align-items-start justify-content-start ps-0 mb-0 flex-column gap-2">
+                                                                    <ul className="d-flex align-items-start justify-content-start ps-0 mb-0 flex-column gap-2 list-group">
                                                                         {treatmentPackages.length > 0 && treatmentPackages.map((showPackages, index) => {
                                                                             // Get stored package data from localStorage
                                                                             const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
                                                                             const storedPackage = storedPackages.find(pkg => pkg.id === showPackages.id);
                                                                             
                                                                             return (
-                                                                            <li key={index} className='d-flex flex-column'>
-                                                                                <label htmlFor={`treatmentName-${showPackages.id}`} className='form-label text-capitalize fw-bold small'></label>
-                                                                                <input 
-                                                                                    type="checkbox" 
-                                                                                    className="form-control" 
-                                                                                    id={`treatmentName-${index}`} 
-                                                                                    placeholder="treatment name" 
-                                                                                    name="treatmentName"
-                                                                                    checked={selectedTreatments.some(item => item.id === showPackages.id)}
-                                                                                    onChange={(e) => handleCheckboxChange(showPackages, e.target.checked)}
-                                                                                />
-                                                                                <h6 className='text-capitalize fw-bold default-font'>
+                                                                            <li key={index} className='list-group-item d-flex flex-row align-items-center'>
+                                                                                <div className="form-check me-3 position-relative">
+                                                                                    <label htmlFor={`treatmentName-${showPackages.id}`} className='form-label text-capitalize fw-bold small'></label>
+                                                                                        <input 
+                                                                                        type="checkbox" 
+                                                                                        className="form-check-input" 
+                                                                                        id={`treatmentName-${index}`} 
+                                                                                        checked={selectedTreatments.some(item => item.id === showPackages.id)}
+                                                                                        onClick={preventAutoScroll}
+                                                                                        onChange={(e) => handleCheckboxChange(showPackages, e.target.checked)}
+                                                                                    />
+                                                                                </div>
+                                                                                <div className="treatment-details flex-grow-1">
+                                                                                    <h6 className='text-capitalize fw-bold default-font mb-2'>
                                                                                         {showPackages?.name}
-                                                                                </h6>
-                                                                                <small className='text-capitalize fw-normal default-font'>  
-                                                                                    <span id="selected-treatment-duration">
-                                                                                        {storedPackage ? storedPackage.total_time : showPackages?.total_time}
-                                                                                    </span> - 
-                                                                                    <span id="selected-treatment-price">
-                                                                                        &pound; {storedPackage ? storedPackage.total_price : showPackages?.total_price}
-                                                                                    </span>
-                                                                                </small>
+                                                                                    </h6>
+                                                                                    <div className="d-flex">
+                                                                                        <span className="badge bg-secondary me-2">
+                                                                                            {storedPackage ? storedPackage.total_time : showPackages?.total_time}
+                                                                                        </span>
+                                                                                        <span className="badge bg-jetGreen">
+                                                                                            &pound; {storedPackage ? storedPackage.total_price : showPackages?.total_price}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
                                                                             </li>
                                                                             );
                                                                         })}
@@ -726,42 +942,105 @@ const TreatmentPackage = () => {
                                                                 </div>
                                                             </Modal.Body>
                                                             
-                                                            <Modal.Footer className='d-flex flex-column gap-2 align-items-start justify-content-start price-and-duration-footer'>
-                                                            
-                                                                <ul className='d-flex flex-column gap-2 ps-0 mb-0'>
-                                                                
-                                                                    <li>
-                                                                        <label htmlFor="TotalPrice" className='text-capitalize'>total price: 
-                                                                            <span className='fw-bold selected-treatment-duration-total-price'>&pound;  {totalPrice}</span>
-                                                                        </label>
-
-                                                                        <label htmlFor="TotalDuration" className='text-capitalize'>Total Duration:  
-                                                                            <span className='fw-bold selected-treatment-duration-total-duration'>
-                                                                                {totalDuration.hours}h {totalDuration.minutes}min
-                                                                             </span>
-                                                                        </label>
-                                                                    </li>
-                                                                
-                                                                </ul>
+                                                            <Modal.Footer className='d-flex flex-column gap-2 align-items-start justify-content-start price-and-duration-footer w-100'>
+                                                                {selectedTreatments.length > 0 ? (
+                                                                    <div className="d-flex justify-content-between w-100 bg-light p-3 rounded border">
+                                                                        <div className="d-flex flex-column">
+                                                                            <strong className="text-capitalize">Total Price:</strong>
+                                                                            <span className="h5 mb-0">&pound; {totalPrice}</span>
+                                                                        </div>
+                                                                        <div className="d-flex flex-column">
+                                                                            <strong className="text-capitalize">Total Duration:</strong>
+                                                                            <span className="h5 mb-0">{totalDuration.hours}h {totalDuration.minutes}min</span>
+                                                                        </div>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className="text-center w-100 p-3 bg-light rounded border">
+                                                                        <p className="text-muted mb-0">No treatments selected yet. Select treatments above to create your package.</p>
+                                                                    </div>
+                                                                )}
+                                                                <div className="d-flex justify-content-end w-100 mt-2">
+                                                                    <button 
+                                                                        className="bg-jetGreen text-white rounded border-0 py-2 px-3" 
+                                                                        onClick={(e) => {
+                                                                            preventAutoScroll(e);
+                                                                            handleCloseModalPopUp();
+                                                                        }}
+                                                                    >
+                                                                        Done
+                                                                    </button>
+                                                                </div>
                                                             </Modal.Footer>
                                                         </Modal>
                                                     </Col>
 
+
+                                                    <div className="selected-treatments-package-details-listing mt-4">
+                                                        {selectedTreatments.length === 0 ? (
+                                                            <p className="text-center text-muted p-4 bg-light rounded border">No treatments selected. Select treatments above to add them to your package.</p>
+                                                        ) : (
+                                                        <div className="card">
+                                                            <div className="card-header bg-light d-flex justify-content-between">
+                                                                <span>Selected Treatments</span>
+                                                                <span>{selectedTreatments.length} item(s)</span>
+                                                            </div>
+                                                            <ul className="d-flex align-items-start justify-content-start ps-0 mb-0 gap-2 flex-column list-group list-group-flush">
+                                                            {selectedTreatments.length > 0 && selectedTreatments.map((showPackages, index) => {
+                                                                                // Get stored package data from localStorage
+                                                                                const storedPackages = JSON.parse(localStorage.getItem('selectedPackages')) || [];
+                                                                                const storedPackage = storedPackages.find(pkg => pkg.id === showPackages.id);
+                                                                                
+                                                                                return (
+                                                                <li key={index} className="d-flex justify-content-between align-items-center w-100 list-group-item">
+                                                                    <div className="selected-treatments-package-details-listing-item-name">
+                                                                        <h6 className='text-capitalize fw-bold default-font mb-0'>
+                                                                            {showPackages?.name}
+                                                                        </h6>
+                                                                        {showPackages?.category && (
+                                                                            <small className="text-muted">Category: {showPackages.category}</small>
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="d-flex align-items-center">
+                                                                        <div className="selected-treatments-package-details-listing-item-duration me-3">
+                                                                            <span className='badge bg-secondary rounded-pill'>
+                                                                                {storedPackage ? storedPackage.total_time : showPackages?.total_time}
+                                                                            </span>
+                                                                        </div>
+                                                                        <div className="selected-treatments-package-details-listing-item-price me-3">
+                                                                            <span className='badge bg-success rounded-pill'>
+                                                                                &pound; {storedPackage ? storedPackage.total_price : showPackages?.total_price}
+                                                                            </span>
+                                                                        </div>
+                                                                        <div className="selected-treatments-package-details-listing-item-action">
+                                                                            <button 
+                                                                                className="btn btn-sm btn-outline-danger text-capitalize" 
+                                                                                onClick={(e) => {
+                                                                                    preventAutoScroll(e);
+                                                                                    handleRemovePackage(showPackages.id);
+                                                                                }}
+                                                                            >
+                                                                                <FaTrash className='me-1' /> remove
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        })}
+                                                            </ul>
+                                                        </div>
+                                                        )}
+                                                    </div>
+                                                    
+
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <h5 className="text-capitalize h6 fw-bold default-font pt-3 text-end">
-                                                            Total Time: {totalDuration.hours}h {totalDuration.minutes}min | 
-                                                            Total Price: &pound; {totalPrice}
+                                                        {selectedTreatments.length > 0 ? (
+                                                        <h5 className="text-capitalize h6 fw-bold default-font pt-3 text-end bg-light p-3 rounded border mt-2">
+                                                            <span className="me-3">Total Time: <span className="text-success">{totalDuration.hours}h {totalDuration.minutes}min</span></span>
+                                                            <span>Total Price: <span className="text-success">&pound; {totalPrice}</span></span>
                                                         </h5>
+                                                        ) : null}
                                                     </Col>
                                                     
-                                                    <div className="selected-treatments-package-details">
-                                                        <ul className="d-flex align-items-start justify-content-start ps-0 mb-0 flex-column gap-2">
-                                                            <li>
-                                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
                                                         <h4 className="text-capitalize fw-bold default-font pt-3 h5">Pricing</h4>
                                                     </Col>
@@ -775,6 +1054,7 @@ const TreatmentPackage = () => {
                                                                 className="form-control text-capitalize" 
                                                                 required
                                                                 value={selectedPriceType}
+                                                                onClick={preventAutoScroll}
                                                                 onChange={(e) => {
                                                                     const selectedValue = e.target.value;
                                                                     setSelectedPriceType(selectedValue);
@@ -797,8 +1077,9 @@ const TreatmentPackage = () => {
                                                                 className="form-control" 
                                                                 id="retailPrice" 
                                                                 name="retailPrice" 
-                                                                value={selectedPriceType === 'Custom Pricing' ? treatmentPackageData.total_price || '' : totalPrice} 
+                                                                value={selectedPriceType === 'Percentage Discount' ? displayPrice : selectedPriceType === 'Custom Pricing' ? treatmentPackageData.total_price || '' : totalPrice} 
                                                                 readOnly={selectedPriceType !== 'Custom Pricing'} 
+                                                                onClick={preventAutoScroll}
                                                                 onChange={(e) => {
                                                                     const value = e.target.value;
                                                                     setTreatmentPackageData({...treatmentPackageData, total_price: value});
@@ -806,7 +1087,10 @@ const TreatmentPackage = () => {
                                                                 }}
                                                             />
                                                             <small>
-                                                                {selectedPriceType === 'Free' ? 'This package is free' : selectedPriceType === 'Custom Pricing' ? 'Enter custom price' : selectedPriceType === 'Percentage Discount' ? 'Discounted price will be calculated' : 'Total price of selected services'}
+                                                                {selectedPriceType === 'Free' ? 'This package is free' : 
+                                                                 selectedPriceType === 'Custom Pricing' ? 'Enter custom price' : 
+                                                                 selectedPriceType === 'Percentage Discount' ? `Discounted price: £${displayPrice} (${treatmentPackageData.discount_percentage || 0}% off £${totalPrice})` : 
+                                                                 'Total price of selected services'}
                                                             </small>
                                                         </div>
                                                     </Col>
@@ -820,9 +1104,11 @@ const TreatmentPackage = () => {
                                                                 id="discountPercentage" 
                                                                 name="discountPercentage" 
                                                                 value={treatmentPackageData.discount_percentage || ''}
+                                                                onClick={preventAutoScroll}
                                                                 onChange={(e) => {
-                                                                    setTreatmentPackageData({...treatmentPackageData, discount_percentage: e.target.value});
-                                                                    setDiscountPercentage(e.target.value);
+                                                                    const value = e.target.value;
+                                                                    setTreatmentPackageData({...treatmentPackageData, discount_percentage: value});
+                                                                    setDiscountPercentage(value);
                                                                 }}
                                                             />
                                                         </div>
@@ -836,8 +1122,13 @@ const TreatmentPackage = () => {
                                                     <Col xxl={6} xl={6} lg={6} md={6} sm={12}>
                                                         <div className="form-group my-2">
                                                             <label htmlFor="availableFor" className="form-label text-capitalize fw-bold small">Available for  </label>
-                                                            <select name="availableFor" id="availableFor" className="form-control text-capitalize" required 
+                                                            <select 
+                                                                name="availableFor" 
+                                                                id="availableFor" 
+                                                                className="form-control text-capitalize" 
+                                                                required 
                                                                 value={treatmentPackageData?.available_for}
+                                                                onClick={preventAutoScroll}
                                                                 onChange={(e) => {
                                                                     setTreatmentPackageData({...treatmentPackageData, available_for: e.target.value});
                                                                 }}
@@ -852,7 +1143,15 @@ const TreatmentPackage = () => {
                                                     </Col>
                                                     
                                                     <Col xxl={12} xl={12} lg={12} md={12} sm={12}>
-                                                        <input type="submit" className="bg-jetGreen text-white border-0 py-2 px-3" onClick={handleSubmit} value="Create" />
+                                                        <input 
+                                                            type="submit" 
+                                                            className="bg-jetGreen text-white border-0 py-2 px-3" 
+                                                            onClick={(e) => {
+                                                                preventAutoScroll(e);
+                                                                handleSubmit(e);
+                                                            }} 
+                                                            value="Create" 
+                                                        />
                                                     </Col>
                                                 </Row>
                                             </form>

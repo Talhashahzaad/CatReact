@@ -113,7 +113,7 @@ const Checkout = () => {
                         <blockquote className='text-left'>
                             {planData && (
                                 <div>
-                                    <h5>{planData.message}</h5>
+                                    {/* <h5>{planData.message}</h5> */}
                                     <strong className='lh-lg h-auto'>Your plan name is </strong>
                                     <h3>{planData.listing.name}</h3>
                                     <p className='text-capitalize mb-0'>Package Type: <strong>{planData.listing.type}</strong></p>
