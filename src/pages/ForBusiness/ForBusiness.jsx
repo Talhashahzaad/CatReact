@@ -135,10 +135,14 @@ const ForBusiness = () => {
                                             <p>Advanced Business Profile Listing</p>
                                             <p>Check a Treatment Online Store front <b>10% commission</b></p>
                                             <p>CaT Pro Social Media <br/><b>(Comming Soon)</b></p>
-                                            <Link to="/checkout" state={{ planId: subscriptionPlans[0].id }} className="btn form-control"
+                                            <Link to="/thank-you" state={{ planId: subscriptionPlans[0].id }} className="btn form-control"
                                             onClick={() => {
                                                 window.scrollTo(0, 0);
-                                            }}>activated</Link>
+                                                localStorage.setItem("planID", subscriptionPlans[0].id);
+                                                if (subscriptionPlans[0].id === planID && subscriptionPlans[0].type === 'free') {
+                                                    navigate('/thank-you');
+                                                }
+                                            }}>checkout</Link>
                                         </div>
 
                                         <div className="middle-side-subscription-plan-section text-center">

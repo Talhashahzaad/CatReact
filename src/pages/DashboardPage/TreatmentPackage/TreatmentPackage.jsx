@@ -26,6 +26,7 @@ const TreatmentPackage = () => {
     const [discountPercentage, setDiscountPercentage] = useState(0);
     const [totalDuration, setTotalDuration] = useState({ hours: 0, minutes: 0 });
     const [selectedTreatments, setSelectedTreatments] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(true);
     const [success, setSuccess] = useState(false);
     const [deleteAlert, setDeleteAlert] = useState(false);
@@ -68,7 +69,6 @@ const TreatmentPackage = () => {
                     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
                 }
             });
-            console.log(response.data.packages);
             
             // Check if the response contains the packages array
             if(response.data && response.data.packages && Array.isArray(response.data.packages)){
@@ -161,17 +161,19 @@ const TreatmentPackage = () => {
                 const minutesPart = parts[1] ? parts[1].replace(/\D/g, '') : '0';
                 const minutes = parseInt(minutesPart) || 0;
                 
-                console.log(`Duration for ${treatment.name}: ${hours}h ${minutes}min (${hours * 60 + minutes} minutes)`);
+                //console.log(`Duration for ${treatment.name}: ${hours}h ${minutes}min (${hours * 60 + minutes} minutes)`);
                 return total + (hours * 60) + minutes;
             } catch (error) {
-                console.error("Error parsing duration:", error, durationString);
+                //console.error("Error parsing duration:", error, durationString);
+                error.message = 'Error parsing duration';
+                throw error;
                 return total;
             }
         }, 0);
 
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
-        console.log(`Total duration: ${hours}h ${minutes}min (${totalMinutes} minutes)`);
+        //console.log(`Total duration: ${hours}h ${minutes}min (${totalMinutes} minutes)`);
         return { hours, minutes };
     };
 
@@ -220,7 +222,7 @@ const TreatmentPackage = () => {
             
             if (storedPackage) {
                 price = storedPackage.total_price;
-                console.log(`Using stored price for ${treatment?.name}: ${price}`);
+                //console.log(`Using stored price for ${treatment?.name}: ${price}`);
             } else {
                 // Fallback if not found in storage
                 if (treatment?.total_price) {
@@ -232,7 +234,7 @@ const TreatmentPackage = () => {
                 } else {
                     price = 0;
                 }
-                console.log(`Calculated price for ${treatment?.name}: ${price}`);
+                //console.log(`Calculated price for ${treatment?.name}: ${price}`);
             }
             
             if (isNaN(price)) {
@@ -265,9 +267,6 @@ const TreatmentPackage = () => {
         }
     };
 
-    // State declaration for totalPrice
-    const [totalPrice, setTotalPrice] = useState(0);
-    
     // Updated useEffect to use the more reliable storage-based price calculation
     useEffect(() => {
         if (selectedTreatments.length > 0) {
@@ -275,7 +274,7 @@ const TreatmentPackage = () => {
             // Since each item is £500, multiply by count
             const calculatedTotal = selectedTreatments.length * 500;
             setTotalPrice(calculatedTotal);
-            console.log(`Setting total price to: ${calculatedTotal} for ${selectedTreatments.length} treatments`);
+            //console.log(`Setting total price to: ${calculatedTotal} for ${selectedTreatments.length} treatments`);
         } else {
             setTotalPrice(0);
         }
@@ -385,13 +384,13 @@ const TreatmentPackage = () => {
                 price_type: packageData.price_type || ''
             };
             
-            console.log(`Storing package ${packageToStore.id} with price: ${packageToStore.total_price}`);
+            //console.log(`Storing package ${packageToStore.id} with price: ${packageToStore.total_price}`);
             
             // Add package if not already in storage
             if (!storedPackages.some(pkg => pkg.id === packageToStore.id)) {
                 storedPackages.push(packageToStore);
                 localStorage.setItem('selectedPackages', JSON.stringify(storedPackages));
-                console.log(`Package ${packageToStore.id} stored in localStorage with price ${price}`);
+                //console.log(`Package ${packageToStore.id} stored in localStorage with price ${price}`);
             }
         } catch (error) {
             console.error("Error storing package in localStorage:", error);
@@ -414,9 +413,11 @@ const TreatmentPackage = () => {
     const clearAllPackages = () => {
         try {
             localStorage.removeItem('selectedPackages');
-            console.log('All packages cleared from localStorage');
+            //console.log('All packages cleared from localStorage');
         } catch (error) {
-            console.error("Error clearing packages from localStorage:", error);
+            //console.error("Error clearing packages from localStorage:", error);
+            error.message = 'Error clearing packages from localStorage';
+            throw error;
         }
     };
 
@@ -547,40 +548,27 @@ const TreatmentPackage = () => {
     };
 
     // Function to calculate and display discounted price
-    const calculateDiscountedPrice = (percentage) => {
+    const calculateDiscountedPrice = (percentage, basePrice = totalPrice) => {
         if (!percentage || isNaN(percentage) || percentage <= 0) {
-            return totalPrice;
+            return basePrice;
         }
         
-        const discount = (totalPrice * percentage) / 100;
-        return totalPrice - discount;
+        const discount = (basePrice * percentage) / 100;
+        return basePrice - discount;
     };
 
-    // Update useEffect to handle discount calculations
+    // Update useEffect to handle price calculations
     useEffect(() => {
         if (selectedTreatments.length > 0) {
             // Calculate total based on number of selected treatments
             // Since each item is £500, multiply by count
             const calculatedTotal = selectedTreatments.length * 500;
             setTotalPrice(calculatedTotal);
-            console.log(`Setting total price to: ${calculatedTotal} for ${selectedTreatments.length} treatments`);
+            //console.log(`Setting total price to: ${calculatedTotal} for ${selectedTreatments.length} treatments`);
         } else {
             setTotalPrice(0);
         }
     }, [selectedTreatments]);
-
-    // Add new state for displaying discounted price
-    const [displayPrice, setDisplayPrice] = useState(totalPrice);
-
-    // Calculate and show discounted price when discount percentage changes
-    useEffect(() => {
-        if (selectedPriceType === 'Percentage Discount' && treatmentPackageData.discount_percentage) {
-            const discounted = calculateDiscountedPrice(treatmentPackageData.discount_percentage);
-            setDisplayPrice(discounted);
-        } else {
-            setDisplayPrice(totalPrice);
-        }
-    }, [totalPrice, treatmentPackageData.discount_percentage, selectedPriceType]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -912,7 +900,7 @@ const TreatmentPackage = () => {
                                                                             return (
                                                                             <li key={index} className='list-group-item d-flex flex-row align-items-center'>
                                                                                 <div className="form-check me-3 position-relative">
-                                                                                    <label htmlFor={`treatmentName-${showPackages.id}`} className='form-label text-capitalize fw-bold small'></label>
+                                                                                    <label htmlFor={`treatmentName-${showPackages.id}`} className='form-label text-capitalize fw-bold small' id={`treatmentName-${showPackages.id}`}></label>
                                                                                         <input 
                                                                                         type="checkbox" 
                                                                                         className="form-check-input" 
@@ -1077,7 +1065,13 @@ const TreatmentPackage = () => {
                                                                 className="form-control" 
                                                                 id="retailPrice" 
                                                                 name="retailPrice" 
-                                                                value={selectedPriceType === 'Percentage Discount' ? displayPrice : selectedPriceType === 'Custom Pricing' ? treatmentPackageData.total_price || '' : totalPrice} 
+                                                                value={
+                                                                    selectedPriceType === 'Percentage Discount' && treatmentPackageData.discount_percentage ? 
+                                                                    calculateDiscountedPrice(treatmentPackageData.discount_percentage) : 
+                                                                    selectedPriceType === 'Custom Pricing' ? 
+                                                                    treatmentPackageData.total_price || '' : 
+                                                                    totalPrice
+                                                                } 
                                                                 readOnly={selectedPriceType !== 'Custom Pricing'} 
                                                                 onClick={preventAutoScroll}
                                                                 onChange={(e) => {
@@ -1087,10 +1081,15 @@ const TreatmentPackage = () => {
                                                                 }}
                                                             />
                                                             <small>
-                                                                {selectedPriceType === 'Free' ? 'This package is free' : 
-                                                                 selectedPriceType === 'Custom Pricing' ? 'Enter custom price' : 
-                                                                 selectedPriceType === 'Percentage Discount' ? `Discounted price: £${displayPrice} (${treatmentPackageData.discount_percentage || 0}% off £${totalPrice})` : 
-                                                                 'Total price of selected services'}
+                                                                {
+                                                                    selectedPriceType === 'Free' ? 
+                                                                    'This package is free' : 
+                                                                    selectedPriceType === 'Custom Pricing' ? 
+                                                                    'Enter custom price' : 
+                                                                    selectedPriceType === 'Percentage Discount' ? 
+                                                                    `Discounted price: £${calculateDiscountedPrice(treatmentPackageData.discount_percentage || 0).toFixed(2)} (${treatmentPackageData.discount_percentage || 0}% off £${totalPrice})` : 
+                                                                    'Total price of selected services'
+                                                                }
                                                             </small>
                                                         </div>
                                                     </Col>

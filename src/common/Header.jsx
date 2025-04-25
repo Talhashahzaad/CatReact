@@ -52,7 +52,8 @@ function Header(){
                 }, 500);
             }
         } catch (error) {
-            console.error("Logout error:", error);
+            //console.error("Logout error:", error);
+            setError(error.message);
             errorNotify();
         }
     };
@@ -69,26 +70,52 @@ function Header(){
     }, [loggedOutMessage.show, navigate]);
 
     // We are fetching the profile info here
-    const fetchProfileInfo = async () => {
+    const fetchProfileInfo = async (retryCount = 0) => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
             if (!token) {
                 setProfileInfo(null);
                 return;
             }
-            const response = await axios.get(`${$siteURL}/api/user-profile`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+
+            const maxRetries = 3;
+            const retryDelay = 1000; // 1 second
+
+            try {
+                const response = await axios.get(`${$siteURL}/api/user-profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    timeout: 10000 // 10 second timeout
+                });
+                setProfileInfo(response.data);
+                
+            } catch (error) {
+                //console.error(`Attempt ${retryCount + 1} failed:`, error.message);
+                setError(error.message);
+                
+                if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+                    if (retryCount < maxRetries) {
+                        //console.log(`Retrying in ${retryDelay}ms...`);
+                        setError(`Retrying in ${retryDelay}ms...`);
+                        await new Promise(resolve => setTimeout(resolve, retryDelay));
+                        return fetchProfileInfo(retryCount + 1);
+                    }
                 }
-            });
-            setProfileInfo(response.data);
-            
-        } catch (error) {
-            console.error("Error fetching profile info:", error);
-            if (error.response?.status === 401) {
-                localStorage.removeItem("token");
-                setProfileInfo(null);
+
+                if (error.response?.status === 401) {
+                    localStorage.removeItem("token");
+                    setProfileInfo(null);
+                } else {
+                    throw error;
+                }
             }
+        } catch (error) {
+            console.error("Error in fetchProfileInfo:", error.message);
+            setProfileInfo(null);
+            // Don't remove token here as it might be a temporary connection issue
         }
     };
 

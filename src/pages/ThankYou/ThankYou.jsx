@@ -1,15 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './ThankYou.css';
+import { useLocation } from 'react-router-dom';
 
 const ThankYou = () => {
+    const location = useLocation();
+    const [message, setMessage] = useState('');
+    const [status, setStatus] = useState('');
+    const [planId, setPlanId] = useState('');
+    
+    useEffect(() => {
+        // Get data from either location state or localStorage
+        const planIdFromState = location.state?.planId || '';
+        const planIdFromStorage = localStorage.getItem('planID') || '';
+        
+        const statusFromState = location.state?.status || '';
+        const statusFromStorage = localStorage.getItem('status') || '';
+        
+        const messageFromState = location.state?.message || '';
+        const messageFromStorage = localStorage.getItem('successMessage') || '';
+        
+        // Use state values first, fall back to localStorage
+        setPlanId(planIdFromState || planIdFromStorage);
+        setStatus(statusFromState || statusFromStorage);
+        setMessage(messageFromState || messageFromStorage || 'Package Subscribed Successfully');
+    }, [location]);
+
     return (
         <>
             <Container>
                 <Row>
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                         <div className='thanks-container d-flex justify-content-center align-items-center flex-column py-5'>
-                            <h1 className="mb-0 display-3">Thank you</h1>
+                            {planId === '1' ? (
+                                <>
+                                    <h1 className="mb-0 display-3">Thank you</h1>
+                                    <strong>Your form has been submitted successfully. We will contact you soon.</strong>
+                                </>
+                            ) : (
+                                <>
+                                    <h1 className="mb-0 display-3">Thank you</h1>
+                                    <h4 className='b-0 pt-3 text-normal text-dark text-center lh-lg'>{message}</h4>
+                                </>
+                            )}
                             
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%', transform: 'translate3d(0px, 0px, 0px)', contentVisibility: 'visible' }}>
                 <defs>
@@ -86,8 +119,6 @@ const ThankYou = () => {
                             </g>
                         </g>
                     </svg>
-
-                    <h4 className="b-0 pt-3 text-normal text-dark text-center lh-lg">Your form has been submitted successfully. We will contact you soon.</h4>
                 </div>
                 </Col>
             </Row>

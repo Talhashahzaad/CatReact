@@ -6,7 +6,7 @@ left: 0%;margin-left: 0px;}
 .checkout-page .col-xxl-4 ul.ps-0.mb-0 li:nth-child(4) {border-top: 2px dashed rgba(0,0,0,0.08);padding-block: 20px;margin-top: 20px;font-weight: 600;}
 .checkout-page .col-xxl-4 ul.ps-0.mb-0 li a.btn.form-control {background-color: var(--jetGreen);color: var(--white);padding-block: 12px; border-radius: 100px;}
 .checkout-form-section {background-color: rgba(108, 139, 87, 0.08);padding: 18px;border-radius: 12px;}
-.checkout-form-section .checkoutButton {background-color: var(--jetGreen);border-radius: 100px;padding-block: 15px; color: var(--white); font-weight: 600;}
+.checkout-form-section .checkoutButton {background-color: var(--jetGreen);border-radius: 100px;padding-block: 15px; color: var(--white); font-weight: 600; margin-top: 15px;}
 .checkout-form-section .checkoutButton a {font-weight: 600; position: relative; z-index: 1111; cursor: pointer;}
 .checkout-form-section .checkoutButton:active {background-color: var(--jetGreen);}
 .checkout-page blockquote.text-left strong {background-color: #f3f6f2;padding-block: 8px;margin-block: 8px;padding-inline: 16px;border-radius: 8px;
@@ -15,7 +15,8 @@ display: inline-block;}
 line-height: 90px; font-weight: 600;}
 
 .checkout-page blockquote.text-left .boldness img {max-width: 60px;}
-.checkout-page .col-xxl-4 ul.ps-0.mb-0 li p.mb-0 img {max-width: 16px;}
+.checkout-page .col-xxl-4 ul.ps-0.mb-0 li p.mb-0 img {max-width: 12px;position: relative;top: -1px;left: -2px;}
+.resetCoupon {top: -46px;right: 5px;background-color: #cb4040;color: var(--white);z-index: 1111;}
 
 @media (max-width: 991px){
 .checkout-page .col-xxl-8 {padding-bottom: 50px;}
