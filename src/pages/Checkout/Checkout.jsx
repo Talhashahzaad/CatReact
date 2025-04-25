@@ -121,13 +121,13 @@ const Checkout = () => {
                 requestBody.coupon_code = couponCode;
             }
             
-            // console.log('Sending payment request with data:', { 
-            //     paymentUrl, 
-            //     requestBody, 
-            //     finalAmount, 
-            //     discount, 
-            //     couponCode 
-            // });
+            console.log('Sending payment request with data:', { 
+                paymentUrl, 
+                requestBody, 
+                finalAmount, 
+                discount, 
+                couponCode 
+            });
             
             const response = await axios.post(
                 paymentUrl,
@@ -140,7 +140,7 @@ const Checkout = () => {
                     }
                 }
             );
-            //console.log(response.data, 'response');
+            console.log(response.data, 'response');
             
             // Check if it's a free package or has a success message
             if (response.data?.status === 'success' && response.data?.message) {
@@ -162,7 +162,7 @@ const Checkout = () => {
                 setError('Failed to create payment');
             }
         } catch (error) {
-            //console.error('Payment creation error:', error);
+            console.error('Payment creation error:', error);
             setError(error.response?.data?.message || 'Failed to create payment. Please try again later.');
         } finally {
             setLoading(false);
@@ -346,7 +346,7 @@ const Checkout = () => {
                                             disabled={loading}
                                         >
                                             {loading ? 'Loading...' : payment_url ? 
-                                                <a href={payment_url} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-white">
+                                                <a href={payment_url} rel="noopener noreferrer" className="text-decoration-none text-white">
                                                     Proceed to Payment
                                                 </a> : 'Checkout'}
                                         </button>
