@@ -135,6 +135,10 @@ const BusinessRegistration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Get token and role from localStorage
+      const token = localStorage.getItem('token');
+      const role = localStorage.getItem('role');
+      
       // Create a copy of the form data to ensure proper formatting
       const formattedData = {
         ...formData,
@@ -142,22 +146,23 @@ const BusinessRegistration = () => {
         categories: Array.isArray(formData.categories) ? formData.categories : [formData.categories]
       };
       
-      console.log('Sending data:', formattedData); // Debug the data being sent
+      //console.log('Sending data:', formattedData);
+      // Debug the data being sent
       
       // Use formattedData instead of formData
       const response = await axios.post(`${$siteURL}/api/signup`, formattedData, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`,
-          'role': role
+          'Authorization': token ? `Bearer ${token}` : '',
+          'role': role || ''
         }
       });
       
       if (response.status >= 200 && response.status < 300) {
         toast.success('Registration successful');
         setTimeout(() => {
-          navigate('/login');
+          navigate('/business-login');
         }, 2000);
       } else {
         toast.error('Registration failed: ' + (response.data?.message || 'Unknown error'));

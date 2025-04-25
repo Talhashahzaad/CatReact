@@ -9,7 +9,7 @@ const PaypalSuccess = () => {
     const [error, setError] = useState({});
     const [order_id, setOrderid] = useState({});
     const [package_id, setPackageid] = useState({});
-    
+
     // PackageID get by import from Checkout
     const getSelectedPackageIdFromLocalStorage = () => {
         try {
@@ -63,6 +63,7 @@ const PaypalSuccess = () => {
             const response = await axios.get(
                 `${$siteURL}/api/paypal/success?token=${orderIdFromUrl}&package_id=${packageIdFromUrl}`,
                 {
+                    method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${parsedToken}`,
                         'Accept': 'application/json',
@@ -75,6 +76,7 @@ const PaypalSuccess = () => {
             setOrderid(response.data.order_id || orderIdFromUrl);
             setPackageid(response.data.package_id || packageIdFromUrl);
             setLoading(false);
+            console.log(response.data, 'response');
             
         } catch (error) {
             handleError(error);

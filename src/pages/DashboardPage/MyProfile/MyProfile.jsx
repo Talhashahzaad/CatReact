@@ -193,7 +193,7 @@ const handleUpdateProfile = async (e) => {
 
     try {
         const token = JSON.parse(localStorage.getItem("token"));
-        await axios.post(`${$siteURL}/api/user-profile-update`,
+        const response = await axios.post(`${$siteURL}/api/user-profile-update`,
             {
                 name: profileInfo.user.name,
                 phone: profileInfo.user.phone,
@@ -216,40 +216,46 @@ const handleUpdateProfile = async (e) => {
                 }
             }
         );
-        notifyProfileUpdateSuccess();
-
-        // Hide form and show dashboard content table
-        const sidebarForm = document.querySelector('.sidebar-listing-form');
-        const dashboardTable = document.querySelector('.dashboard-content-table');
         
-        if (sidebarForm && dashboardTable) {
-            sidebarForm.style.display = 'none';
-            dashboardTable.style.display = 'block';
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000);
-        }
+        if (response.data.success) {
+            notifyProfileUpdateSuccess();
 
-        // Refresh profile data
-        const response = await axios.get(`${$siteURL}/api/user-profile`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
-
-        // if (response.data && response.data.user) {
-        //     setProfileInfo(response.data);
-        // }
-
-        } catch (error) {
-            notifyProfileUpdateError();
+            // Hide form and show dashboard content table
+            const sidebarForm = document.querySelector('.sidebar-listing-form');
+            const dashboardTable = document.querySelector('.dashboard-content-table');
             
-        } finally {
-            isSubmitting.current = false;
+            if (sidebarForm && dashboardTable) {
+                sidebarForm.style.display = 'none';
+                dashboardTable.style.display = 'block';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            }
+
+            // Refresh profile data
+            fetchProfileInfo();
+        } else if (response.data.errors) {
+            // Handle validation errors
+            const errorMessages = Object.values(response.data.errors).flat();
+            errorMessages.forEach(message => toast.error(message));
         }
-    };
+    } catch (error) {
+        if (error.response && error.response.status === 422) {
+            // Handle validation errors from the server
+            if (error.response.data && error.response.data.errors) {
+                const errorMessages = Object.values(error.response.data.errors).flat();
+                errorMessages.forEach(message => toast.error(message));
+            } else {
+                notifyProfileUpdateError();
+            }
+        } else {
+            notifyProfileUpdateError();
+            console.error('Error updating profile:', error);
+        }
+    } finally {
+        isSubmitting.current = false;
+    }
+};
 
     // we are update the password functionality here
     const [password, setPassword] = useState({
