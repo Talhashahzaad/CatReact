@@ -28,7 +28,7 @@ function Login() {
         e.preventDefault(); // Prevent default form submission
         setErrorMessage(""); // Clear previous error messages
         try {
-            const response = await axios.post("http://3.8.140.227:8000/api/login", {
+            const response = await axios.post(`${$siteURL}/api/login`, {
                 email,
                 password
             });

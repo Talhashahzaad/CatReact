@@ -43,7 +43,7 @@ function Login() {
                 password
             });
             setData(response.data);
-            //console.log(response.data);
+            console.log(response.data);
 
             if (response.status === 200) {
                 localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -65,13 +65,13 @@ function Login() {
             }
             setShowMessage(!!response.data.message);
         } catch (error) {
-            setErrorMessage("Incorrect email or password. Please try again.");
+            //setErrorMessage("Incorrect email or password. Please try again.");
             errorNotify();
-            if (error.response && error.response.data && error.response.data.message) {
-                setErrorMessage(error.response.data.message);
-            } else {
-                setErrorMessage("Login failed. Please try again.");
-            }
+            // if (error.response && error.response.data && error.response.data.message) {
+            //     setErrorMessage(error.response.data.message);
+            // } else {
+            //     setErrorMessage("Login failed. Please try again.");
+            // }
         }
     };
 

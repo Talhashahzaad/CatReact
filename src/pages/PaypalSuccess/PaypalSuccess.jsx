@@ -101,8 +101,8 @@ const PaypalSuccess = () => {
                             ) : (
                                 <>
                                     <h1 className="mb-0 display-3">Payment Received</h1>
-                                    <h3 className="mb-0 display-6">your order id is {order_id}</h3>
-                                    <h3 className="mb-0 display-6">your package id is {package_id}</h3>
+                                    <h3 className="mb-0 display-6">your order id is {orderIdFromUrl}</h3>
+                                    <h3 className="mb-0 display-6">your package id is {packageIdFromUrl}</h3>
                                     
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%', transform: 'translate3d(0px, 0px, 0px)', contentVisibility: 'visible' }}>
                                         <defs>

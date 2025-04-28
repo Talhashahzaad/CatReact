@@ -65,12 +65,12 @@ export default function FeatureCarousel() {
             <h3>{item.name}</h3>
             <article>
             <p>{item.description}</p>
-            <aside className="priceCart">
+            {/* <aside className="priceCart">
               <Link to="/service-categories" className="cartbuttonStyle d-flex align-items-center">
                 <span className="button_text text-capitalize">learn more</span>
                 <span className="button_icon"><img src={arrowTopRight} alt="Learn More" className="mb-0 me-1" /></span>
               </Link>
-            </aside>
+            </aside> */}
           </article>
         </div>
       </div>

@@ -17,6 +17,7 @@ const BusinessRegistration = () => {
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
     const [showPassword, setShowPassword] = useState(false);
+    const [location, setLocation] = useState([]);
     
   // Validation functions
   const validateName = (name) => {
@@ -44,11 +45,11 @@ const BusinessRegistration = () => {
   };
 
   const validateTreatmentCategoryProvider = (categories) => {
-    return categories !== '';
+    return categories !== '' && categories !== 'Select Treatment Category';
   };
 
-  const validateBusinessLocation = (business_location) => {
-    return business_location !== '';
+  const validateBusinessLocation = (location) => {
+    return location !== '' && location !== 'Select a location';
   };
 
   const validateSizeOfBusiness = (business_size) => {
@@ -74,18 +75,18 @@ const BusinessRegistration = () => {
   // Step 02 validation
   const isStepTwoValid = () => {
     return (
-        formData.heard_about_options && validateHearAbout(formData.heard_about_options) &&
-        formData.categories && validateTreatmentCategoryProvider(formData.categories)
-    )
+      formData.heard_about_options && validateHearAbout(formData.heard_about_options) &&
+      formData.categories && validateTreatmentCategoryProvider(formData.categories)
+    );
   };
 
   // Step 03 validation
   const isStepThreeValid = () => {
     return (
-        formData.business_location && validateBusinessLocation(formData.business_location) &&
-        formData.business_size && validateSizeOfBusiness(formData.business_size) &&
-        formData.premises_count && validatePremisesNumber(formData.premises_count)
-    )
+      formData.location && validateBusinessLocation(formData.location) &&
+      formData.business_size && validateSizeOfBusiness(formData.business_size) &&
+      formData.premises_count && validatePremisesNumber(formData.premises_count)
+    );
   };
   
 
@@ -126,8 +127,8 @@ const BusinessRegistration = () => {
     phone: '',
     password: '',
     heard_about_options: '',
-    categories: [],
-    business_location: '',
+    categories: '',
+    location: '',
     business_size: '',
     premises_count: ''
   });
@@ -189,6 +190,7 @@ const BusinessRegistration = () => {
             const response = await axios.get(`${$siteURL}/api/category`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
                     'role': role
                 }
             });
@@ -201,6 +203,29 @@ const BusinessRegistration = () => {
     useEffect(() => {
         fetchCategory();
     }, []);
+
+    const fetchLocation = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
+            const response = await axios.get(`${$siteURL}/api/location`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'role': role
+                }
+            });
+            setLocation(response.data);
+        } catch (error) {
+            console.error(error || 'Error fetching location');
+            toast.error('Error fetching location');
+        }
+    };
+
+    useEffect(() => {
+        fetchLocation();
+    }, []);
+    
 
     return (
         <Container>
@@ -376,81 +401,23 @@ const BusinessRegistration = () => {
                                 {currentStep === 3 && (
                                 <div id="stepThree" className={`${stepThree ? 'd-block' : ''} handle-step-three`}>
                                     <div className="form-group">
-                                        <label htmlFor="treatmentCategories-registration">What treatment categories do you provide?</label>
-                                        <select className="form-control mb-4" id="treatmentCategories-registration" value={formData.business_location} onChange={(e) => setFormData({ ...formData, business_location: e.target.value })} required>
-                                            <option value="">Select Location</option>
-                                            <option value="Aberdeen">Aberdeen</option>
-                                            <option value="Bath">Bath</option>
-                                            <option value="Belfast and Derry">Belfast and Derry</option>
-                                            <option value="Birmingham">Birmingham</option>
-                                            <option value="Blackburn">Blackburn</option>
-                                            <option value="Blackpool">Blackpool</option>
-                                            <option value="Bolton">Bolton</option>
-                                            <option value="Bournemouth">Bournemouth</option>
-                                            <option value="Bradford">Bradford</option>
-                                            <option value="Brighton & Hove">Brighton & Hove</option>
-                                            <option value="Bristol">Bristol</option>
-                                            <option value="Cambridge">Cambridge</option>
-                                            <option value="Cardiff">Cardiff</option>
-                                            <option value="Canterbury">Canterbury</option>
-                                            <option value="Carlisle">Carlisle</option>
-                                            <option value="Chelmsford">Chelmsford</option>
-                                            <option value="Chester">Chester</option>
-                                            <option value="Coventry">Coventry</option>
-                                            <option value="Chichester">Chichester</option>
-                                            <option value="Colchester">Colchester</option>
-                                            <option value="Coventry">Coventry</option>
-                                            <option value="Derby">Derby</option>
-                                            <option value="Doncaster">Doncaster</option>
-                                            <option value="Durham">Durham</option>
-                                            <option value="Dundee">Dundee</option>
-                                            <option value="Ely">Ely</option>
-                                            <option value="Edinburgh">Edinburgh</option>
-                                            <option value="Exeter">Exeter</option>
-                                            <option value="Glasgow">Glasgow</option>
-                                            <option value="Gloucester">Gloucester</option>
-                                            <option value="Hereford">Hereford</option>
-                                            <option value="Kingston-upon-Hull">Kingston-upon-Hull</option>
-                                            <option value="Lancaster">Lancaster</option>
-                                            <option value="Londonderry">Londonderry</option>
-                                            <option value="Leeds">Leeds</option>
-                                            <option value="Leicester">Leicester</option>
-                                            <option value="Lichfield">Lichfield</option>
-                                            <option value="Lincoln">Lincoln</option>
-                                            <option value="Liverpool">Liverpool</option>
-                                            <option value="London">London</option>
-                                            <option value="Manchester">Manchester</option>
-                                            <option value="Milton Keynes">Milton Keynes</option>
-                                            <option value="Newcastle-upon-Tyne">Newcastle-upon-Tyne</option>
-                                            <option value="Newport">Newport</option>
-                                            <option value="Norwich">Norwich</option>
-                                            <option value="Nottingham">Nottingham</option>
-                                            <option value="Oxford">Oxford</option>
-                                            <option value="Peterborough">Peterborough</option>
-                                            <option value="Plymouth">Plymouth</option>
-                                            <option value="Portsmouth">Portsmouth</option>
-                                            <option value="Preston">Preston</option>
-                                            <option value="Ripon">Ripon</option>
-                                            <option value="Salford">Salford</option>
-                                            <option value="Swansea">Swansea</option>
-                                            <option value="Salisbury">Salisbury</option>
-                                            <option value="Sheffield">Sheffield</option>
-                                            <option value="Southampton">Southampton</option>
-                                            <option value="Southend-on-Sea">Southend-on-Sea</option>
-                                            <option value="St Albans">St Albans</option>
-                                            <option value="Swindon">Swindon</option>
-                                            <option value="Stoke on Trent">Stoke on Trent</option>
-                                            <option value="Sunderland">Sunderland</option>
-                                            <option value="Truro">Truro</option>
-                                            <option value="Wakefield">Wakefield</option>
-                                            <option value="Wells">Wells</option>
-                                            <option value="Westminster">Westminster</option>
-                                            <option value="Winchester">Winchester</option>
-                                            <option value="Wolverhampton">Wolverhampton</option>
-                                            <option value="Worcester">Worcester</option>
-                                            <option value="York">York</option>
+                                        <label htmlFor="treatmentCategories-location">Select your Location</label>
+                                        
+                                        <select 
+                                            id="treatmentCategories-location" 
+                                            name="location" 
+                                            className="form-control" 
+                                            value={formData.location}
+                                            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                                            required
+                                        >
+                                            <option value="">Select a location</option>
+                                            {location?.length > 0 && location?.map((item) => (
+                                                <option value={item?.id} key={item?.id}>{item?.name}</option>
+                                            ))}
                                         </select>
-                                        <small className="text-danger">{formData.business_location && !validateBusinessLocation(formData.business_location) && 'Please select a location'}</small>
+                                        
+                                        <small className="text-danger">{formData.location && !validateBusinessLocation(formData.location) && 'Please select a location'}</small>
                                     </div>
 
                                     <div className="form-group">
